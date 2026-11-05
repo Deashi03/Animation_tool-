@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.knåda.1",
+  "template": "tool-rhythm",
+  "senseId": "s.knåda.1",
+  "titleSv": "knåda",
+  "meaningHint": "Trycka och vika en deg med händerna länge",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 2800,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 48,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "navy"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 76,
+        "y": 100
+      },
+      "z": -1
+    },
+    {
+      "id": "dough",
+      "asset": "food.dough",
+      "at": {
+        "x": 76,
+        "y": 70
+      },
+      "z": 1,
+      "state": {
+        "rise": 0.3
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "dough",
+      "motion": "knead",
+      "bothHands": true,
+      "durationMs": 3800
+    }
+  ],
+  "focus": {
+    "targets": [
+      "dough"
+    ],
+    "feature": "both hands press and fold the dough in turn; the dough wobbles under them"
+  },
+  "contrast": {
+    "with": [
+      "anim.kavla.1"
+    ],
+    "distinctiveFeatures": [
+      "has:action:use",
+      "end:dough.flat<=0.2",
+      "motion:p>=0.5"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.kavla.1",
+      "s.mosa.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

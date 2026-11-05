@@ -280,5 +280,115 @@
       "reviewer": "claude-subagent (opus, fresh context)",
       "note": "resultat från scenen när den hette anim.sportig.1"
     }
+  ],
+  "anim.mosa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "mosa",
+      "expected": "mosa",
+      "description": "En person står vid ett bord och trycker ett grått verktyg med brett huvud upp och ner i en skål med en ljus, mjuk massa som plattas till – det ser ut som potatismos som mosas (verktyget kan dock även läsas som en kniv).",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.skala.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "skala",
+      "expected": "skala",
+      "description": "Personen håller ett litet mörkt verktyg mot en brun oval (potatis) som gradvis blir gulare – skalet tas bort; själva skalet syns inte, bara färgbytet.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.vispa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "vispa",
+      "expected": "vispa",
+      "description": "Personen rör med en ballongvisp i en skål där klumpar/äggulor successivt blir en jämn ljus smet – vispning.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.knåda.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "knåda",
+      "expected": "knåda",
+      "description": "Personen trycker och drar med båda händerna i en ljus degklump på bordet som växlar form (bredare/smalare) utan verktyg – knådning (gissning, rörelsen är liten).",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.kavla.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "kavla",
+      "expected": "kavla",
+      "description": "Personen rullar en kavel fram och tillbaka över en deg som blir allt plattare och bredare på bordet – kavla.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.riva.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "riva",
+      "expected": "riva",
+      "description": "Personen håller ett upprätt rivjärn och drar en gul ostbit mot det så att en hög gula strimlor växer på bordet – riva.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.röra.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "röra",
+      "expected": "röra",
+      "description": "Personen rör runt med en sked/slev i en skål där innehållet går från klumpigt till jämnt – röra om (mycket likt C, skillnaden är bara verktyget).",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.hacka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "hacka",
+      "expected": "hacka",
+      "description": "Personen hugger med en kniv rakt ner i en brun lök och en hög av små bitar/ringar växer bredvid; ögonen sluts en gång (lök i ögonen?) – hackning, men bitarna ser ut som ringar så det kan också vara skära.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.skära.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "skära",
+      "expected": "skära",
+      "description": "Personen för en kniv längs en orange morot som bit för bit blir till orangea skivor i rad på bordet – skära i skivor.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.salta.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "salta",
+      "expected": "salta",
+      "description": "Personen står vid en spis med en ångande kastrull och skakar en vit strödosa över den så att små korn faller ner – saltar; kunde lika gärna vara peppra eftersom dosan är vit utan tydlig markering.",
+      "reviewer": "claude-blind-subagent"
+    }
   ]
 }

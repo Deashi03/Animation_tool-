@@ -116,6 +116,19 @@ export const TEMPLATES: Record<string, Template> = {
       focus: { targets: ['castle'] }, pedagogy: { quizEligible: false, confusableWith: [] },
     }),
   },
+  'tool-rhythm': {
+    id: 'tool-rhythm', titleSv: 'Verktyg mot föremål med synlig förändring',
+    describes: 'Verb där en person bearbetar något med ett verktyg eller händerna i en rytm och föremålet förändras: skära, hacka, vispa, röra, knåda, skala, riva, kavla, mosa, salta, borsta, torka av, putsa, stryka, såga, spika. Handlingen `use` med ett rörelsemönster (motion) och en följd (effect) på föremålet. Verben skiljs genom verktyg, mönster, tempo och vad som händer med föremålet.',
+    contract: ['has:actors>=1', 'has:props>=2', 'has:action:use'],
+    make: (senseId, lemma, n) => ({
+      schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'tool-rhythm', meaningHint: 'TODO', category: 'action',
+      durationMs: 4200, loop: true, holdMs: 600, posterMs: 3200, environment: { id: 'kitchen', time: 'day' },
+      actors: [{ id: 'p', at: { x: 48, y: 100 }, facing: 'right' }],
+      props: [{ id: 'table', asset: 'table', at: { x: 76, y: 100 }, z: -1 }, { id: 'board', asset: 'container.board', at: { x: 76, y: 70 }, z: 0 }, { id: 'food', asset: 'food.carrot', at: { x: 76, y: 66 }, z: 1 }, { id: 'knife', asset: 'tool.knife', attachTo: { actor: 'p', hand: 'right' } }],
+      timeline: [{ t: 0, action: 'use', actor: 'p', on: 'food', tool: 'knife', motion: 'chop', durationMs: 3800, effect: [{ key: 'pieces', to: 1 }] }],
+      focus: { targets: ['food'] }, contrast: { with: ['anim.todo.1'], distinctiveFeatures: ['end:food.pieces>=0.9'] }, pedagogy: { quizEligible: false, group: 'matlagning', confusableWith: [] },
+    }),
+  },
   'cook-rhythm': {
     id: 'cook-rhythm', titleSv: 'Matlagning i panna med synlig förändring',
     describes: 'Matlagningsverb där råvaran förändras i en panna på en spis: steka, bryna, fräsa, smälta, vända, bränna, skvätta. En figur vid spisen, handen på handtaget, plattan glöder, maten fräser och byter färg. Vad som skiljer verben är hur långt färgen går, tempot och följden (vänd, bränd, stänk).',

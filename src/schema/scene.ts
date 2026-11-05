@@ -20,12 +20,15 @@ const Dur = z.number().int().min(1).max(60_000);
 
 export const CHARACTER_ASSETS = ['character.base'] as const;
 export const CHARACTER_VARIANTS = ['a', 'b', 'c'] as const;
-export const PROP_ASSETS = ['glass', 'jug', 'door', 'box', 'ball', 'football', 'sofa', 'bed', 'blanket', 'mug', 'phone', 'table', 'window', 'mat', 'ladder', 'castle', 'brawl', 'stove', 'pan', 'spatula'] as const;
+import { PROP_ASSET_IDS, isPropAsset, suggestAsset } from '../assets/catalog';
+export const PROP_ASSETS = PROP_ASSET_IDS;
 export const ENVIRONMENTS = ['neutral', 'room', 'bedroom', 'kitchen', 'outdoors.park', 'street'] as const;
 export const TIMES = ['day', 'evening', 'night'] as const;
 export const EYES = ['open', 'half', 'closed', 'wide'] as const;
 export const BROWS = ['neutral', 'up', 'down', 'worried'] as const;
 export const MOUTHS = ['smile', 'neutral', 'open', 'o', 'calm', 'frown'] as const;
+/** Hand motions for `use`: vertical (chop, tap, press, knead), horizontal (saw, wipe, scrub, sweep, spread, brush), circular (stir, whisk), outward (pull, peel, grate), shake (sprinkle), squeeze, hold (still). */
+export const USE_MOTIONS = ['chop', 'tap', 'press', 'knead', 'saw', 'wipe', 'scrub', 'sweep', 'spread', 'brush', 'stir', 'whisk', 'pull', 'peel', 'grate', 'sprinkle', 'squeeze', 'hold', 'roll'] as const;
 export const JOINTS = ['torso', 'head', 'uArmL', 'fArmL', 'uArmR', 'fArmR', 'thighL', 'shinL', 'thighR', 'shinR', 'footL', 'footR'] as const;
 export type Joint = (typeof JOINTS)[number];
 
@@ -49,7 +52,7 @@ export const Actor = z.object({
 
 export const Prop = z.object({
   id: Id,
-  asset: z.enum(PROP_ASSETS),
+  asset: z.string().refine(isPropAsset, (id) => ({ message: `unknown prop asset "${id}"${suggestAsset(id).length ? ` – did you mean ${suggestAsset(id).join(', ')}?` : ''}` })),
   at: Pt.optional(),
   scale: z.number().min(0.2).max(4).default(1),
   rotate: z.number().min(-360).max(360).default(0),
@@ -83,7 +86,7 @@ export const Action = z.discriminatedUnion('action', [
   // manipulation
   z.object({ ...Base, action: z.literal('reach'), actor: Id, hand: z.enum(['left', 'right']).default('right'), target: Id, durationMs: Dur.default(500) }).strict(),
   z.object({ ...Base, action: z.literal('grab'), actor: Id, hand: z.enum(['left', 'right']).default('right'), prop: Id, durationMs: Dur.default(500) }).strict(),
-  z.object({ ...Base, action: z.literal('release'), actor: Id, prop: Id, at: Pt.optional(), z: z.number().int().optional(), durationMs: Dur.default(400) }).strict(),
+  z.object({ ...Base, action: z.literal('release'), actor: Id, prop: Id, at: Pt.optional(), on: Id.optional(), z: z.number().int().optional(), durationMs: Dur.default(400) }).strict(),
   z.object({ ...Base, action: z.literal('pour'), actor: Id, from: Id, into: Id, amount: z.number().min(0.1).max(1).default(0.7), durationMs: Dur.default(1800) }).strict(),
   z.object({ ...Base, action: z.literal('open'), actor: Id, prop: Id, durationMs: Dur.default(900) }).strict(),
   z.object({ ...Base, action: z.literal('close'), actor: Id, prop: Id, durationMs: Dur.default(900) }).strict(),
@@ -107,6 +110,13 @@ export const Action = z.discriminatedUnion('action', [
   z.object({ ...Base, action: z.literal('cook'), actor: Id, pan: Id, kind: z.enum(['fry', 'brown', 'sear', 'burn', 'melt']).default('fry'), hand: z.enum(['left', 'right']).default('right'), tool: Id.optional(), durationMs: Dur }).strict(),
   /** Turn the food over: with `tool` (a held spatula) the tool lifts it; otherwise the pan tosses it. The cooked side becomes the visible side. */
   z.object({ ...Base, action: z.literal('flip'), actor: Id, pan: Id, tool: Id.optional(), durationMs: Dur.default(1000) }).strict(),
+  /** Work on a target with a tool (or bare hands): a named rhythmic motion of the hand at the target, and the target's state changing as the visible consequence. */
+  z.object({ ...Base, action: z.literal('use'), actor: Id, on: Id, tool: Id.optional(), hand: z.enum(['left', 'right']).default('left'),
+    motion: z.enum(USE_MOTIONS).default('chop'), durationMs: Dur, periodMs: z.number().int().min(80).max(4000).optional(),
+    /** state changes on the target (default) or another prop, tweened linearly over the action */
+    effect: z.array(z.object({ prop: Id.optional(), key: z.string(), to: z.union([z.number(), z.string(), z.boolean()]), from: z.number().optional(), at: z.number().min(0).max(1).optional() }).strict()).default([]),
+    /** where on the target the hand works: an offset from the target's `mouth` anchor */
+    offset: Pt.optional(), bothHands: z.boolean().default(false) }).strict(),
   /** Hot fat spatters out of the pan; the actor (if given) flinches. */
   z.object({ ...Base, action: z.literal('splash'), pan: Id, actor: Id.optional(), durationMs: Dur.default(900) }).strict(),
 ]);

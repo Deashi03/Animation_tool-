@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.skära.1",
+  "template": "tool-rhythm",
+  "senseId": "s.skära.1",
+  "titleSv": "skära",
+  "meaningHint": "Dela något i bitar med en kniv",
+  "category": "action",
+  "durationMs": 4400,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 3600,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 48,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "navy"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 76,
+        "y": 100
+      },
+      "z": -1
+    },
+    {
+      "id": "board",
+      "asset": "container.board",
+      "at": {
+        "x": 76,
+        "y": 70
+      },
+      "z": 0
+    },
+    {
+      "id": "food",
+      "asset": "food.carrot",
+      "at": {
+        "x": 76,
+        "y": 66
+      },
+      "z": 1
+    },
+    {
+      "id": "knife",
+      "asset": "tool.knife",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "food",
+      "tool": "knife",
+      "motion": "chop",
+      "durationMs": 4000,
+      "effect": [
+        {
+          "key": "pieces",
+          "to": 1
+        }
+      ]
+    }
+  ],
+  "focus": {
+    "targets": [
+      "food"
+    ],
+    "feature": "knife goes up and down slowly, the carrot separates into slices"
+  },
+  "contrast": {
+    "with": [
+      "anim.hacka.1"
+    ],
+    "distinctiveFeatures": [
+      "end:food.pieces>=0.9",
+      "prop:food.carrot",
+      "has:props>=3"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.hacka.1",
+      "s.skala.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.mosa.1",
+  "template": "tool-rhythm",
+  "senseId": "s.mosa.1",
+  "titleSv": "mosa",
+  "meaningHint": "Trycka sönder mjuk mat med en gaffel så att den blir helt mjuk",
+  "category": "action",
+  "durationMs": 4000,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 3400,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 48,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "navy"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 76,
+        "y": 100
+      },
+      "z": -1
+    },
+    {
+      "id": "bowl",
+      "asset": "container.bowl",
+      "at": {
+        "x": 76,
+        "y": 70
+      },
+      "z": 0,
+      "state": {
+        "fill": 0,
+        "contents": "#f3e3a8"
+      }
+    },
+    {
+      "id": "food",
+      "asset": "food.potato",
+      "at": {
+        "x": 76,
+        "y": 62
+      },
+      "z": 1,
+      "state": {
+        "peeled": 1
+      }
+    },
+    {
+      "id": "masher",
+      "asset": "tool.masher",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "food",
+      "tool": "masher",
+      "motion": "press",
+      "periodMs": 800,
+      "durationMs": 3600,
+      "effect": [
+        {
+          "key": "mashed",
+          "to": 1,
+          "at": 0.6
+        }
+      ]
+    }
+  ],
+  "focus": {
+    "targets": [
+      "food"
+    ],
+    "feature": "the fork presses down again and again; the potato collapses into a soft heap"
+  },
+  "contrast": {
+    "with": [
+      "anim.knåda.1"
+    ],
+    "distinctiveFeatures": [
+      "end:food.mashed>=0.9",
+      "has:action:use"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.knåda.1",
+      "s.pressa.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

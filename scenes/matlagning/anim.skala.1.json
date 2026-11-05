@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.skala.1",
+  "template": "tool-rhythm",
+  "senseId": "s.skala.1",
+  "titleSv": "skala",
+  "meaningHint": "Ta bort skalet från något, till exempel en potatis",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 3600,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 48,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "navy"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 76,
+        "y": 100
+      },
+      "z": -1
+    },
+    {
+      "id": "board",
+      "asset": "container.board",
+      "at": {
+        "x": 76,
+        "y": 70
+      },
+      "z": 0
+    },
+    {
+      "id": "food",
+      "asset": "food.potato",
+      "at": {
+        "x": 76,
+        "y": 66
+      },
+      "z": 1
+    },
+    {
+      "id": "peeler",
+      "asset": "tool.peeler",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "food",
+      "tool": "peeler",
+      "motion": "peel",
+      "durationMs": 3800,
+      "effect": [
+        {
+          "key": "peeled",
+          "to": 1
+        }
+      ]
+    }
+  ],
+  "focus": {
+    "targets": [
+      "food"
+    ],
+    "feature": "short strokes with a peeler; the potato goes from brown skin to pale flesh"
+  },
+  "contrast": {
+    "with": [
+      "anim.skära.1"
+    ],
+    "distinctiveFeatures": [
+      "end:food.peeled>=0.9",
+      "has:action:use"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.skära.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

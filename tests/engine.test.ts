@@ -8,7 +8,8 @@ import { renderFrame } from '../src/engine/render';
 import { frameToSvg } from '../src/engine/svgString';
 import { bboxOfId } from '../src/engine/frame';
 import { loadScenes } from '../src/tools/scenes';
-import { Scene } from '../src/schema/scene';
+import { Scene, PROP_ASSETS } from '../src/schema/scene';
+import { drawProp } from '../src/assets/props';
 import { validateScene } from '../src/compiler/validate';
 
 describe('tracks and easing', () => {
@@ -286,5 +287,40 @@ describe('cooking library', () => {
       const s = scenes.get(id)!; expect(['cook-rhythm', 'property-contrast']).toContain(s.template);
       const r = validateScene(s as unknown, scenes); expect(r.problems.filter((p) => p.level === 'error'), id).toEqual([]);
     }
+  });
+});
+
+describe('generic tool work (use) and the prop families', () => {
+  const { scenes } = loadScenes();
+  it('use: the tool is auto-attached, the hand cycles at the target and the effect reaches its value', () => {
+    const c = compileScene(scenes.get('anim.skära.1')!);
+    expect(sample(c.tracks, 'knife.attach', 100)).toBe('p:left');
+    const ys = [400, 500, 600, 700, 800, 900].map((t) => sample(c.tracks, 'p.j.uArmL', t) as number);
+    expect(Math.max(...ys) - Math.min(...ys)).toBeGreaterThan(5); // the arm really moves
+    expect(sample(c.tracks, 'food.s.pieces', 0) as number).toBe(0); expect(sample(c.tracks, 'food.s.pieces', c.durationMs) as number).toBeGreaterThan(0.95);
+  });
+  it('hacka is faster than skära and leaves a pile; vispa foams, röra does not', () => {
+    const h = compileScene(scenes.get('anim.hacka.1')!), s = compileScene(scenes.get('anim.skära.1')!);
+    const changes = (c: typeof h, id: string) => { let n = 0, prev = Math.sign((sample(c.tracks, id, 500) as number) - (sample(c.tracks, id, 470) as number)); for (let t = 530; t < 2500; t += 30) { const d = Math.sign((sample(c.tracks, id, t) as number) - (sample(c.tracks, id, t - 30) as number)); if (d && d !== prev) { n++; prev = d; } } return n; };
+    expect(changes(h, 'p.j.uArmL')).toBeGreaterThan(changes(s, 'p.j.uArmL') * 1.5);
+    expect(sample(h.tracks, 'pile.s.amount', h.durationMs) as number).toBeGreaterThan(0.9);
+    const v = compileScene(scenes.get('anim.vispa.1')!), r = compileScene(scenes.get('anim.röra.1')!);
+    expect(sample(v.tracks, 'bowl.s.foam', v.durationMs) as number).toBeGreaterThan(0.9); expect(sample(r.tracks, 'bowl.s.foam', r.durationMs) as number).toBe(0);
+  });
+  it('sliced food renders with clip paths in both renderers and the held-prop anchor follows a left-facing hand', () => {
+    const c = compileScene(scenes.get('anim.skära.1')!);
+    const svg = frameToSvg(renderFrame(c, c.durationMs));
+    expect(svg).toContain('<clipPath id="c1">'); expect((svg.match(/clip-path="url\(#/g) ?? []).length).toBeGreaterThan(2);
+    const salt = compileScene(scenes.get('anim.salta.1')!);
+    const f = renderFrame(salt, 2000);
+    const shaker = bboxOfId(f.root, 'entity.shaker')!, pot = bboxOfId(f.root, 'entity.pot')!;
+    expect(shaker.x1).toBeLessThan(pot.x2 + 4); // the shaker is over the pot, not behind the cook
+    const grains = [...frameToSvg(f).matchAll(/<circle cx="([\d.-]+)" cy="([\d.-]+)" r="0.95"/g)].map((m) => Number(m[1]));
+    expect(grains.length).toBeGreaterThan(2); for (const x of grains) { expect(x).toBeGreaterThan(pot.x1 - 6); expect(x).toBeLessThan(pot.x2 + 6); }
+  });
+  it('every catalogued prop draws with its defaults and the schema rejects unknown assets with a suggestion', () => {
+    for (const id of PROP_ASSETS) expect(() => drawProp(id, {})).not.toThrow();
+    const bad = Scene.safeParse({ ...scenes.get('anim.skära.1')!, props: [{ id: 'x', asset: 'tool.knive', at: { x: 10, y: 100 } }] });
+    expect(bad.success).toBe(false); if (!bad.success) expect(JSON.stringify(bad.error.issues)).toContain('tool.knife');
   });
 });

@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.röra.1",
+  "template": "tool-rhythm",
+  "senseId": "s.röra.1",
+  "titleSv": "röra",
+  "meaningHint": "Flytta en sked runt i något så att allt blir lika överallt",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 3400,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 48,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "navy"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 76,
+        "y": 100
+      },
+      "z": -1
+    },
+    {
+      "id": "bowl",
+      "asset": "container.bowl",
+      "at": {
+        "x": 76,
+        "y": 70
+      },
+      "z": 1,
+      "state": {
+        "fill": 0.6,
+        "contents": "#e9c791"
+      }
+    },
+    {
+      "id": "spoon",
+      "asset": "tool.spoon",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "bowl",
+      "tool": "spoon",
+      "motion": "stir",
+      "durationMs": 3800,
+      "effect": [
+        {
+          "key": "mixed",
+          "to": 1
+        }
+      ]
+    }
+  ],
+  "focus": {
+    "targets": [
+      "bowl"
+    ],
+    "feature": "slow wide circles with a wooden spoon; the lumps dissolve, no foam"
+  },
+  "contrast": {
+    "with": [
+      "anim.vispa.1"
+    ],
+    "distinctiveFeatures": [
+      "end:bowl.mixed>=0.9",
+      "end:bowl.foam<=0.1",
+      "has:action:use"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.vispa.1",
+      "s.blanda.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

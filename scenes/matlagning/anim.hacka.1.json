@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.hacka.1",
+  "template": "tool-rhythm",
+  "senseId": "s.hacka.1",
+  "titleSv": "hacka",
+  "meaningHint": "Skära något i mycket små bitar, snabbt",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 3000,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 48,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "navy"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 76,
+        "y": 100
+      },
+      "z": -1
+    },
+    {
+      "id": "board",
+      "asset": "container.board",
+      "at": {
+        "x": 76,
+        "y": 70
+      },
+      "z": 0
+    },
+    {
+      "id": "food",
+      "asset": "food.onion",
+      "at": {
+        "x": 72,
+        "y": 66
+      },
+      "z": 1
+    },
+    {
+      "id": "pile",
+      "asset": "food.pile",
+      "at": {
+        "x": 88,
+        "y": 66
+      },
+      "z": 1,
+      "state": {
+        "amount": 0,
+        "contents": "#f6efd8"
+      }
+    },
+    {
+      "id": "knife",
+      "asset": "tool.knife",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "food",
+      "tool": "knife",
+      "motion": "chop",
+      "periodMs": 210,
+      "durationMs": 3200,
+      "effect": [
+        {
+          "key": "pieces",
+          "to": 1,
+          "at": 0.6
+        },
+        {
+          "prop": "pile",
+          "key": "amount",
+          "to": 1
+        }
+      ]
+    }
+  ],
+  "focus": {
+    "targets": [
+      "food",
+      "pile"
+    ],
+    "feature": "fast knife strokes; the onion turns into a heap of tiny pieces"
+  },
+  "contrast": {
+    "with": [
+      "anim.skära.1"
+    ],
+    "distinctiveFeatures": [
+      "end:pile.amount>=0.9",
+      "has:action:use"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.skära.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

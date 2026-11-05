@@ -6,27 +6,16 @@
 import { circle, ellipse, g, line, path, rect, text, type FrameNode, r1 } from '../engine/frame';
 import { palette as C, color } from './palette';
 
-export type PropState = Record<string, number | string | boolean>;
+import { type PropSpec, type PropState, n, b } from './propSpec';
+import { TOOLS } from './props/tools';
+import { CONTAINERS } from './props/containers';
+import { FOODS } from './props/food';
+export type { PropSpec, PropState } from './propSpec';
 /** How far (degrees) a held prop rotates forward around its grip when `tilt` = 1. */
 export const HELD_TILT_DEG = 55;
-export type PropSpec = {
-  draw: (s: PropState, col?: string) => FrameNode;
-  /** grip point in local space (for attach) */
-  grip: [number, number];
-  /** where poured liquid lands / content top, local */
-  mouth?: [number, number];
-  /** default state */
-  defaults: PropState;
-  /** rotation pivot in local space (default: the base point) */
-  pivot?: (s: PropState) => [number, number];
-  /** seat/lying anchor for actors (local), and body rotation when lying */
-  seat?: { x: number; y: number; reclineDeg?: number };
-};
-const n = (s: PropState, k: string, d: number) => (typeof s[k] === 'number' ? (s[k] as number) : d);
-const b = (s: PropState, k: string, d: boolean) => (typeof s[k] === 'boolean' ? (s[k] as boolean) : d);
 const INK = C.ink;
 
-export const PROPS: Record<string, PropSpec> = {
+const BASE: Record<string, PropSpec> = {
   glass: {
     defaults: { fill: 0 }, grip: [0, -10], mouth: [0, -22],
     draw: (s) => { const f = Math.max(0, Math.min(1, n(s, 'fill', 0))); const h = 22, w = 16; const lvl = -h * f * 0.9;
@@ -264,6 +253,8 @@ export const PROPS: Record<string, PropSpec> = {
       ]); },
   },
 };
+
+export const PROPS: Record<string, PropSpec> = { ...BASE, ...TOOLS, ...CONTAINERS, ...FOODS };
 
 export function drawProp(asset: string, state: PropState, col?: string): FrameNode {
   const spec = PROPS[asset];

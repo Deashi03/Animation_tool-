@@ -33,7 +33,8 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
   for (const p of scene.props) {
     const attach = sampleString<string>(tracks, `${p.id}.attach`, t, '');
     const state: PropState = {};
-    for (const key of Object.keys({ ...(PROPS[p.asset]?.defaults ?? {}), ...p.state })) {
+    const keys = new Set(Object.keys({ ...(PROPS[p.asset]?.defaults ?? {}), ...p.state })); const pre = `${p.id}.s.`; for (const id of tracks.keys()) if (id.startsWith(pre)) keys.add(id.slice(pre.length));
+    for (const key of keys) {
       const v = tracks.get(`${p.id}.s.${key}`) ? (sampleNumber(tracks, `${p.id}.s.${key}`, t, NaN)) : NaN;
       state[key] = Number.isNaN(v) ? (sampleString(tracks, `${p.id}.s.${key}`, t, String(p.state[key] ?? '')) as string) : v;
       if (typeof tracks.get(`${p.id}.s.${key}`)?.keys[0]?.v === 'boolean') state[key] = sampleBool(tracks, `${p.id}.s.${key}`, t, true);
@@ -123,6 +124,20 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
       }
     }
   }
+  // sprinkle: small grains falling from a held tool's mouth onto the target
+  for (const key of [...scene.props.map((p) => p.id), ...scene.actors.map((a) => a.id)]) {
+    const target = sampleString<string>(tracks, `fx.sprinkle.${key}`, t, '');
+    if (!target) continue;
+    const from = worldAnchor(c, actorWorld, key, 'mouth', t) ?? (actorWorld.get(key) ? worldPoint(actorWorld.get(key)!, actorWorld.get(key)!.rig.handR) : null);
+    const to = worldAnchor(c, actorWorld, target, 'mouth', t);
+    if (!from || !to) continue;
+    for (let i = 0; i < 5; i++) { const u = ((t / 420) + i * 0.2) % 1; const x = from[0] + (to[0] - from[0]) * u + Math.sin(i * 2.1) * 2.5, y = from[1] + (to[1] - from[1]) * u * u; fx.push(circle(x, y, 0.95, { fill: C.white, stroke: C.ink, sw: 0.6, opacity: 0.9 * (1 - u * 0.5) })); }
+  }
+  // shake: a struck prop jitters for a moment (chop/tap)
+  for (const p of scene.props) {
+    const sh = sampleNumber(tracks, `fx.${p.id}.shake`, t, 0);
+    if (sh > 0.5) { const l = layers.find((l) => (l.node as { id?: string }).id === `entity.${p.id}`); if (l) l.node = g([l.node], { x: Math.sin(t * 0.9) * 0.8, y: -0.6 }); }
+  }
   for (const id of [...scene.actors.map((a) => a.id), ...scene.props.map((p) => p.id), ...scene.shapes.map((s) => s.id)]) {
     for (const kind of ['ring', 'glow', 'arrowDown'] as const) {
       const u = sampleNumber(tracks, `fx.${id}.${kind}`, t, -1);
@@ -169,8 +184,8 @@ function worldAnchor(c: CompiledScene, actors: Map<string, { pos: P; scale: numb
     const grip = spec?.grip ?? [0, 0];
     const lx = (a[0] - grip[0]) * scale, ly = (a[1] - grip[1]) * scale;
     const rx = lx * Math.cos(ang) - ly * Math.sin(ang), ry = lx * Math.sin(ang) + ly * Math.cos(ang);
-    // the character (and everything in its hands) is mirrored for facing left
-    return [aw.pos[0] + (handP[0] + rx) * aw.scale * aw.facing, aw.pos[1] + (handP[1] + ry) * aw.scale];
+    // the rig is already solved in screen orientation; only the held prop's local offset is mirrored for facing left
+    return [aw.pos[0] + (handP[0] + rx * aw.facing) * aw.scale, aw.pos[1] + (handP[1] + ry) * aw.scale];
   }
   const x = sampleNumber(c.tracks, `${propId}.x`, t, def.at?.x ?? 0), y = sampleNumber(c.tracks, `${propId}.y`, t, def.at?.y ?? 0);
   return [x + a[0] * scale, y + a[1] * scale];

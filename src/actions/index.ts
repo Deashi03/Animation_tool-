@@ -188,7 +188,7 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
       else {
         const f = facingAt(ctx, a.actor, a.t), [ax, ay] = actorPos(ctx, a.actor, a.t), sc = actorScale(ctx, a.actor, a.t);
         // knee position when the thigh is raised to ~86°: hip + thigh·(sin, cos)
-        const knee: P = [ax + f * (-SEG.hipW + SEG.thigh * Math.sin((86 * Math.PI) / 180)) * sc, ay - (SEG.hipH - SEG.thigh * Math.cos((86 * Math.PI) / 180)) * sc];
+        const knee: P = [ax + f * (-SEG.hipW + SEG.thigh * Math.sin((86 * Math.PI) / 180) + 3) * sc, ay - (SEG.hipH - SEG.thigh * Math.cos((86 * Math.PI) / 180)) * sc];
         addKey(ctx.tracks, `${a.ball}.attach`, { t: a.t, v: '' });
         M.kickUps(ctx.tracks, a.actor, a.ball, a.t, end, knee, f);
         addKey(ctx.tracks, `${a.actor}.gaze`, { t: a.t, v: f }); tween(ctx.tracks, M.J(a.actor, 'head'), a.t, a.t + 200, 14, 'easeOut');

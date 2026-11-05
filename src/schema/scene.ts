@@ -32,6 +32,8 @@ export type Joint = (typeof JOINTS)[number];
 const Wardrobe = z.object({
   top: z.string().optional(), bottom: z.string().optional(), shoes: z.string().optional(), hair: z.string().optional(), skin: z.string().optional(),
   hairStyle: z.enum(['short', 'long', 'bun', 'curly']).optional(), headband: z.string().optional(),
+  /** shorts: the shins show skin; number: a jersey number on the chest (1–2 characters) */
+  shorts: z.boolean().optional(), number: z.string().max(2).optional(),
 }).strict();
 
 export const Actor = z.object({

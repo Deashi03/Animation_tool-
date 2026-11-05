@@ -63,9 +63,14 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "b3c5a0b85db3",
   ],
   "anim.sportig.1": [
-    "a67c6fb0b5d4",
-    "928cf344fc8c",
-    "f83ff825bb04",
+    "d7ed4b615eb1",
+    "1b309e5c5037",
+    "a7450afbdcda",
+  ],
+  "anim.sportig.1.v2": [
+    "6a93599cd256",
+    "54b80f6c7c56",
+    "f2e9a6c5838b",
   ],
   "anim.springa.1": [
     "11e9ba873a12",

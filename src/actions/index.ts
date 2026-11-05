@@ -215,7 +215,7 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     if (a.lift !== undefined) tween(ctx.tracks, `${a.actor}.lift`, a.t, a.t + a.durationMs, a.lift);
     if (a.bodyRotate !== undefined) tween(ctx.tracks, `${a.actor}.bodyRotate`, a.t, a.t + a.durationMs, a.bodyRotate);
   },
-  set(ctx, a) { addKey(ctx.tracks, trackId(ctx, a.target, a.prop), { t: a.t, v: a.value }); },
+  set(ctx, a) { addKey(ctx.tracks, trackId(ctx, a.target, a.prop), { t: a.t, v: a.value, e: 'step' }); },
   tween(ctx, a) {
     const id = trackId(ctx, a.target, a.prop);
     const cur = sample(ctx.tracks, id, a.t);

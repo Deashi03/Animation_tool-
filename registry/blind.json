@@ -74,6 +74,24 @@
       "expected": "stormning",
       "description": "En grupp små figurer rusar mot ett slott med fartstreck, når porten, varpå ett stort moln med stjärnor och streck (slagsmålsmoln) uppstår framför slottet och till slut står slottet kvar med flaggan; det ser ut som ett anfall mot slottet, men det går inte att se om det erövras, så anfalla/stormning är tvetydigt och jag väljer anfalla.",
       "reviewer": "claude-subagent (opus, fresh context)"
+    },
+    {
+      "date": "2026-11-05",
+      "batch": "b2",
+      "passed": false,
+      "choice": "erövra",
+      "expected": "stormning",
+      "description": "En figur springer mot en borg, fler kommer efter, de trycker mot porten, det blir ett slagsmålsmoln med stjärnor på borgen och i slutet är flaggan på tornet bytt från röd till blå – de har tagit borgen. Slutläget (ny flagga) gör att jag väljer erövra snarare än anfalla/stormning, men stormning är en rimlig andragissning eftersom själva anloppet tar mest tid. Figurerna är mycket små och den första är avklippt i vänsterkanten.",
+      "reviewer": "claude-blind-subagent"
+    },
+    {
+      "date": "2026-11-05",
+      "batch": "b3",
+      "passed": true,
+      "choice": "stormning",
+      "expected": "stormning",
+      "description": "Några små figurer springer fram mot en borg med stängd port, trycker på porten, ett slagsmålsmoln med stjärnor uppstår vid porten, sedan är figurerna borta och flaggan på tornet har bytt från röd till blå, alltså borgen tas med storm.",
+      "reviewer": "claude-blind-subagent"
     }
   ],
   "anim.gå.1": [
@@ -118,6 +136,148 @@
       "expected": "sportig",
       "description": "Två figurer står bredvid varandra: en i vanliga kläder står stilla, medan den andra i orange tröja och rött pannband kickar en fotboll med knät gång på gång; kontrasten visar egenskapen att vara sportig/aktiv snarare än själva plaggen.",
       "reviewer": "claude-subagent (opus, fresh context)"
+    }
+  ],
+  "anim.fräsa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b2",
+      "passed": true,
+      "choice": "fräsa",
+      "expected": "fräsa",
+      "description": "En person står vid spisen med en stekpanna full av ljusa bitar (ser ut som lök eller strimlor); plattan tänds, ånga stiger och bitarna hoppar upp ur pannan samtidigt som de blir orangea – jag läser det som att maten fräser/puttrar i het panna. Osäker mellan fräsa (hoppande bitar + ånga är det mest synliga) och bryna (färgen går från vitt till orange).",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.vända.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b2",
+      "passed": true,
+      "choice": "vända",
+      "expected": "vända",
+      "description": "Personen har en stekspade; en ljus rund kaka ligger i pannan, spaden förs in under den och vid 3714 ms har kakan vänt sida och blivit orange/brun – alltså vända (t.ex. en pannkaka). Spaden ser dock lös ut: i flera rutor hänger den vid höften/vid spisen medan armen är uppe vid pannan.",
+      "reviewer": "claude-blind-subagent"
+    },
+    {
+      "date": "2026-11-05",
+      "batch": "b3",
+      "passed": false,
+      "choice": "steka",
+      "expected": "vända",
+      "description": "En person står vid en spis och håller en stekpanna med stekspade; innehållet i pannan går från ljust gulvitt till gyllenbrunt/orange medan det ryker, alltså något steks tills det får färg.",
+      "reviewer": "claude-blind-subagent"
+    },
+    {
+      "date": "2026-11-05",
+      "batch": "b4",
+      "passed": true,
+      "choice": "vända",
+      "expected": "vända",
+      "description": "Personen håller en stekspade; i pannan ligger något ljusgult (pannkaka/plätt), spaden lyfts över pannan och därefter byter innehållet färg till orangebrunt – jag gissar att plättens stekta sida visas efter att den vänts, alltså vända, men själva vändningen syns inte, så det kan lika gärna vara steka.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.steka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b2",
+      "passed": true,
+      "choice": "steka",
+      "expected": "steka",
+      "description": "Ett ägg knäcks i en ljusgrå panna, plattan går på, det bildas ånga och ägget får vit, stekt äggvita runt gulan – personen steker ett ägg. Ingen bränning, inget skvätt, ingen vändning, så steka.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.bryna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b2",
+      "passed": true,
+      "choice": "bryna",
+      "expected": "bryna",
+      "description": "En rosa, rå skiva (kött) läggs i pannan, plattan går på, ånga, och skivan går långsamt från rosa till gyllene till brun utan att bli svart och utan reaktion från personen – köttet bryns. Jag tvekar mellan bryna och steka; färgförloppet är det enda som skiljer, så delvis en gissning.",
+      "reviewer": "claude-blind-subagent"
+    },
+    {
+      "date": "2026-11-05",
+      "batch": "b4",
+      "passed": true,
+      "choice": "bryna",
+      "expected": "bryna",
+      "description": "Samma person steker en rosa skiva i pannan; under fem sekunder ändrar skivan färg gradvis från rosa via ljusbrun till mörk rödbrun med ånga hela tiden – innehållet får brun yta, dvs. det bryns (det blir inte svart och ingen svart rök, så inte bränna; kunde också läsas som steka).",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.skvätta.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b2",
+      "passed": false,
+      "choice": "stänka",
+      "expected": "skvätta",
+      "description": "Ägg i pannan, och vid 2286 ms flyger gula droppar upp ur pannan medan personen ryggar tillbaka med orolig min – fett/vätska skvätter. Stänka och skvätta går inte att skilja åt i bilden; jag väljer stänka. Dropparna är gula och kan misstas för äggbitar.",
+      "reviewer": "claude-blind-subagent"
+    },
+    {
+      "date": "2026-11-05",
+      "batch": "b3",
+      "passed": false,
+      "choice": "fräsa",
+      "expected": "skvätta",
+      "description": "En person står vid spisen med en panna med något rosa (kött) som ryker; plötsligt sprutar små orange droppar/gnistor upp ur pannan och personen rycker till och skyddar ansiktet med armen, alltså det fräser/stänker fett ur pannan (nästan lika gärna 'skvätta').",
+      "reviewer": "claude-blind-subagent"
+    },
+    {
+      "date": "2026-11-05",
+      "batch": "b4",
+      "passed": true,
+      "choice": "skvätta",
+      "expected": "skvätta",
+      "description": "En person står vid spisen med en stekpanna som innehåller en rosa platt skiva; det ryker, och i mitten av remsan (1714–2286 ms) skjuter små orange droppar/bubblor upp ur pannan medan personen rycker upp handen – jag tolkar det som att fettet skvätter/stänker ur pannan.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.gyllenbrun.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b2",
+      "passed": true,
+      "choice": "gyllenbrun",
+      "expected": "gyllenbrun",
+      "description": "Två pannor utan person: innehållet i den högra går från blekt till gyllenbrunt medan den vänstra förblir blek, och en pratbubbla med きつね色 dyker upp – en färgkontrast som betyder gyllenbrun.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.smälta.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b2",
+      "passed": true,
+      "choice": "smälta",
+      "expected": "smälta",
+      "description": "En gul smörklick (kub) ligger i pannan, plattan går på och kuben sjunker ihop och breder ut sig till en gul pöl – smöret smälter.",
+      "reviewer": "claude-blind-subagent"
+    },
+    {
+      "date": "2026-11-05",
+      "batch": "b4",
+      "passed": true,
+      "choice": "smälta",
+      "expected": "smälta",
+      "description": "En gul fyrkant (smörklick) ligger i pannan, blir mindre och plattare ruta för ruta och går till slut ut i en gul vätska som täcker hela pannbotten – smöret smälter.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.bränna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b2",
+      "passed": true,
+      "choice": "bränna",
+      "expected": "bränna",
+      "description": "En rosa skiva i pannan blir orange, brun och till slut svart med mörkgrå rök, och personen får en orolig/förskräckt min – maten bränns vid. Tydligt bränna.",
+      "reviewer": "claude-blind-subagent"
     }
   ]
 }

@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.bryna.1",
+  "template": "cook-rhythm",
+  "senseId": "s.bryna.1",
+  "titleSv": "bryna",
+  "meaningHint": "Steka på hög värme tills ytan blir brun",
+  "category": "action",
+  "durationMs": 5000,
+  "loop": true,
+  "holdMs": 600,
+  "posterMs": 4600,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "b",
+      "at": {
+        "x": 74,
+        "y": 100
+      },
+      "facing": "left",
+      "wardrobe": {
+        "top": "green"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "stove",
+      "asset": "stove",
+      "at": {
+        "x": 42,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "pan",
+      "asset": "pan",
+      "at": {
+        "x": 42,
+        "y": 70
+      },
+      "z": 1,
+      "state": {
+        "contents": "steak"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 300
+    },
+    {
+      "t": 300,
+      "action": "cook",
+      "actor": "p",
+      "pan": "pan",
+      "kind": "brown",
+      "durationMs": 4400
+    }
+  ],
+  "focus": {
+    "targets": [
+      "pan"
+    ],
+    "feature": "the meat goes from pink to brown; the brown surface is the point"
+  },
+  "contrast": {
+    "with": [
+      "anim.steka.1",
+      "anim.bränna.1"
+    ],
+    "distinctiveFeatures": [
+      "end:pan.browning>=0.9",
+      "end:pan.top>=0.8",
+      "end:pan.burnt<=0.1"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.steka.1",
+      "s.bränna.1",
+      "s.fräsa.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

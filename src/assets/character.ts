@@ -88,7 +88,8 @@ function faceNodes(head: P, f: Face, facing: 1 | -1, skin: string): FrameNode[] 
 /** Draw the character in local space (feet at origin). */
 export function drawCharacter(s: CharacterState): FrameNode {
   const w = s.wardrobe;
-  const rig = solveRig(s.pose, s.facing, s.lift);
+  // local space always faces +x; the renderer mirrors the whole figure for `facing: left`, so the rig must not mirror again
+  const rig = solveRig(s.pose, 1, s.lift);
   const gripL = !!s.holding.left, gripR = !!s.holding.right;
   const nodes: FrameNode[] = [];
   const armSw = 5.4, legSw = 6.4;

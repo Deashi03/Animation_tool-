@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.fräsa.1",
+  "template": "cook-rhythm",
+  "senseId": "s.fräsa.1",
+  "titleSv": "fräsa",
+  "meaningHint": "Steka snabbt på stark värme så att det fräser och sprakar",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 600,
+  "posterMs": 2600,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "b",
+      "at": {
+        "x": 74,
+        "y": 100
+      },
+      "facing": "left",
+      "wardrobe": {
+        "top": "green"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "stove",
+      "asset": "stove",
+      "at": {
+        "x": 42,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "pan",
+      "asset": "pan",
+      "at": {
+        "x": 42,
+        "y": 70
+      },
+      "z": 1,
+      "state": {
+        "contents": "onion"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 200
+    },
+    {
+      "t": 200,
+      "action": "cook",
+      "actor": "p",
+      "pan": "pan",
+      "kind": "sear",
+      "durationMs": 4000
+    }
+  ],
+  "focus": {
+    "targets": [
+      "pan"
+    ],
+    "feature": "onion tossed in the pan, strong sizzle marks and sparks, high heat"
+  },
+  "contrast": {
+    "with": [
+      "anim.steka.1",
+      "anim.bryna.1"
+    ],
+    "distinctiveFeatures": [
+      "end:pan.sizzle>=0.9",
+      "motion:p>=0.2"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.steka.1",
+      "s.bryna.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

@@ -165,24 +165,102 @@ export const PROPS: Record<string, PropSpec> = {
       nodes.push(line([[-28, -20], [-32, -24]], { stroke: INK, sw: 1.8 }), line([[28, -22], [32, -27]], { stroke: INK, sw: 1.8 }), line([[-26, -4], [-31, -3]], { stroke: INK, sw: 1.8 }), line([[27, -6], [32, -5]], { stroke: INK, sw: 1.8 }));
       return g(nodes, { scale: 0.4 + 0.6 * k }); },
   },
+  /** Stove (spis) standing on the floor with one hob plate on top. `heat` 0..1 makes the plate glow. The pan sits at `mouth`. */
+  stove: {
+    defaults: { heat: 0 }, grip: [0, -30], mouth: [0, -30],
+    draw: (s, col) => { const heat = Math.max(0, Math.min(1, n(s, 'heat', 0))); const c = color(col ?? '#eef0f2');
+      return g([
+        rect(-22, -28, 44, 28, { rx: 2, fill: c, stroke: INK, sw: 2.2 }),
+        rect(-16, -19, 32, 15, { rx: 2, fill: C.dark, stroke: INK, sw: 1.6 }), rect(-13, -16, 26, 10, { rx: 1, fill: '#4a4f5c' }),
+        line([[-14, -23], [14, -23]], { stroke: INK, sw: 2.4, linecap: 'round' }),
+        circle(-18, -24, 1.6, { fill: C.dark }), circle(18, -24, 1.6, { fill: C.dark }),
+        ellipse(0, -29, 15, 3.2, { fill: '#5a5f6a', stroke: INK, sw: 1.8 }),
+        heat > 0.02 ? ellipse(0, -29, 12, 2.3, { fill: '#e2452b', opacity: 0.35 + 0.65 * heat }) : g([]),
+        heat > 0.02 ? ellipse(0, -29, 7, 1.3, { fill: '#ff9a3c', opacity: heat }) : g([]),
+      ]); },
+  },
+  /** Frying pan (stekpanna) in a readable three-quarter view. Base = the pan bottom (put it on a stove's `mouth`). Handle points to +x; `grip` is the handle end.
+   * State: `contents` none|egg|pancake|butter|onion|steak, `browning` 0..1 (pale → golden → brown), `top` 0..1 browning of the visible side (pancake/steak after a flip),
+   * `burnt` 0..1 (→ black + smoke), `melt` 0..1 (butter block → pool), `toss` 0..1 (contents fly up and turn over), `sizzle` 0..1 + `phase` (steam/sizzle marks), `splash` 0..1 (fat spatters; <0 = off). */
+  pan: {
+    defaults: { contents: 'none', browning: 0, top: 0, burnt: 0, melt: 0, toss: 0, sizzle: 0, phase: 0, splash: -1 }, grip: [27, -11], mouth: [0, -8],
+    draw: (s, col) => {
+      const c = color(col ?? C.dark);
+      const br = Math.max(0, Math.min(1, n(s, 'browning', 0))), top = Math.max(0, Math.min(1, n(s, 'top', 0))), burnt = Math.max(0, Math.min(1, n(s, 'burnt', 0)));
+      const melt = Math.max(0, Math.min(1, n(s, 'melt', 0))), toss = Math.max(0, Math.min(1, n(s, 'toss', 0))), sizzle = Math.max(0, Math.min(1, n(s, 'sizzle', 0)));
+      const phase = n(s, 'phase', 0), splash = n(s, 'splash', -1), contents = typeof s.contents === 'string' ? s.contents : 'none';
+      const hex = (h: string): [number, number, number] => { if (h.startsWith('rgb')) { const m = (h.match(/\d+/g) ?? []).map(Number); return [m[0] ?? 0, m[1] ?? 0, m[2] ?? 0]; } return [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)]; };
+      const mix = (a: string, b: string, u: number) => { const A = hex(a), B = hex(b); return `rgb(${Math.round(A[0] + (B[0] - A[0]) * u)},${Math.round(A[1] + (B[1] - A[1]) * u)},${Math.round(A[2] + (B[2] - A[2]) * u)})`; };
+      const PALE = '#f7e6b8', GOLD = '#e0a243', BROWN = '#8d4a1c', BLACK = '#2b2a33';
+      const cookCol = (raw: string, u: number) => mix(u < 0.5 ? mix(raw, GOLD, u * 2) : mix(GOLD, BROWN, (u - 0.5) * 2), BLACK, burnt);
+      // contents lift + turn when tossed (parabola, the disc foreshortens as it turns over)
+      const lift = 24 * 4 * toss * (1 - toss), turn = Math.cos(Math.PI * toss);
+      const food: FrameNode[] = [];
+      const cy = -8 - lift;
+      if (contents === 'egg') {
+        const set = Math.min(1, br * 2); food.push(ellipse(0, cy, 8 + 4.5 * set, (2.6 + 1.6 * set) * Math.abs(turn) + 0.4, { fill: mix('#f6f3ea', '#ffffff', set), stroke: cookCol('#f0e6cf', Math.max(br, 0.15)), sw: 1.8, opacity: 0.3 + 0.7 * set }));
+        food.push(circle(-1.5, cy - 1.2, 3.4, { fill: mix('#f6b63b', '#e59a2a', br), stroke: INK, sw: 1.2 }));
+      } else if (contents === 'pancake' || contents === 'steak') {
+        const raw = contents === 'steak' ? '#e39a97' : PALE, rx = contents === 'steak' ? 12 : 12, ry = (contents === 'steak' ? 4.2 : 3.6) * Math.max(0.25, Math.abs(turn));
+        const side = cookCol(raw, br), face = cookCol(raw, turn >= 0 ? top : br);
+        food.push(ellipse(0, cy + 1.6, rx, ry, { fill: side, stroke: INK, sw: 1.4 }));
+        food.push(ellipse(0, cy, rx, ry, { fill: face, stroke: INK, sw: 1.4 }));
+        if (contents === 'steak' && burnt < 0.5) food.push(path(`M-5 ${r1(cy - 0.4)} h3 M1 ${r1(cy + 0.4)} h3`, { stroke: 'rgba(0,0,0,0.25)', sw: 1 }));
+      } else if (contents === 'butter') {
+        const bh = 7 * (1 - melt), bw = 9 + 4 * melt;
+        if (melt < 0.98) food.push(rect(-bw / 2, cy + 1 - bh, bw, bh, { rx: 1, fill: C.yellow, stroke: INK, sw: 1.4 }));
+        if (melt > 0.05) food.push(ellipse(0, cy + 1.2, 4 + 9 * melt, 1 + 1.4 * melt, { fill: mix(C.yellow, '#f4d26a', melt), stroke: INK, sw: 1.2, opacity: 0.95 }));
+        if (melt > 0.3) food.push(ellipse(-3, cy + 0.9, 2.2 * melt, 0.5, { fill: 'rgba(255,255,255,0.7)' }));
+      } else if (contents === 'onion') {
+        const col2 = cookCol('#fbf6ea', br);
+        const bits: [number, number, number][] = [[-7, 0, 0], [-2, -1, 1], [3, 0.5, 2], [7, -0.5, 3]];
+        for (const [x, y, i] of bits) { const l = 16 * 4 * toss * (1 - toss) * (0.6 + 0.4 * ((i * 7) % 3) / 2); food.push(path(`M${r1(x - 3)} ${r1(-8 + y - l)} q3 -3 6 0`, { fill: 'none', stroke: col2, sw: 2.2, linecap: 'round' }), path(`M${r1(x - 3)} ${r1(-8 + y - l)} q3 -3 6 0`, { fill: 'none', stroke: INK, sw: 0.8, opacity: 0.5 })); }
+      }
+      // sizzle: short wavy steam lines rising from the food, cycling with `phase`
+      const fx: FrameNode[] = [];
+      if (sizzle > 0.02 && contents !== 'none') {
+        for (let i = 0; i < 3; i++) { const u = (phase * 0.9 + i * 0.33) % 1; const x = -6 + i * 6 + Math.sin(u * 6) * 1.2, y = -12 - u * 12 - lift; fx.push(path(`M${r1(x)} ${r1(y)} q-1.5 -2.5 0 -5 q1.5 -2.5 0 -5`, { fill: 'none', stroke: INK, sw: 1.4, linecap: 'round', opacity: sizzle * 0.75 * (1 - u) })); }
+        if (sizzle > 0.7) for (let i = 0; i < 3; i++) { const u = (phase * 1.7 + i * 0.37) % 1; const x = -10 + i * 10 + Math.sin(i + phase) * 2, y = -11 - u * 6; fx.push(line([[x, y], [x + 1.5, y - 2.4]], { stroke: C.orange, sw: 1.6, linecap: 'round', opacity: (sizzle - 0.7) / 0.3 * (1 - u) })); }
+      }
+      if (burnt > 0.05) for (let i = 0; i < 3; i++) { const u = (phase * 0.5 + i * 0.33) % 1; fx.push(circle(-5 + i * 5 + Math.sin(u * 5 + i) * 3, -14 - u * 22, 2.5 + u * 4, { fill: '#6b6f78', opacity: burnt * 0.55 * (1 - u) })); }
+      if (splash >= 0 && splash <= 1) { const drops: [number, number][] = [[-1, 1], [1, 1.2], [-0.6, 1.5], [1.3, 0.8], [0.3, 1.6], [-1.4, 0.7], [0.8, 1.9]]; for (const [dx, k] of drops) { const u = splash; const x = -2 + dx * 26 * u, y = -10 - 34 * k * u + 36 * k * u * u; fx.push(circle(x, y, 2 + 0.5 * k, { fill: '#fff3c4', stroke: C.orange, sw: 1.4, opacity: 1 - u * u * u })); fx.push(line([[x - dx * 2.5, y + 2 * k * (1 - 2 * u)], [x, y]], { stroke: C.orange, sw: 1.2, opacity: 0.6 * (1 - u) })); } }
+      return g([
+        line([[17, -7], [29, -12]], { stroke: INK, sw: 5.2, linecap: 'round' }), line([[17, -7], [29, -12]], { stroke: c, sw: 3, linecap: 'round' }),
+        path('M-18 -8 l2 8 h32 l2 -8 Z', { fill: c, stroke: INK, sw: 2.2 }),
+        ellipse(0, -8, 18, 6, { fill: '#52565f', stroke: INK, sw: 2 }),
+        ellipse(0, -8, 15, 4.4, { fill: '#3e424b' }),
+        ...food, ...fx,
+      ]); },
+  },
+  /** Spatula (stekspade): held upright, blade down. `grip` is mid-handle. */
+  spatula: {
+    defaults: {}, grip: [0, -19],
+    draw: (_s, col) => g([
+      line([[0, -2], [0, -22]], { stroke: INK, sw: 4, linecap: 'round' }), line([[0, -2], [0, -22]], { stroke: color(col ?? C.brown), sw: 2.2, linecap: 'round' }),
+      path('M-4 -3 h8 l1 8 h-10 Z', { fill: '#b9bec8', stroke: INK, sw: 1.6 }), line([[-1.5, -1], [-1.5, 3]], { stroke: INK, sw: 0.8 }), line([[1.5, -1], [1.5, 3]], { stroke: INK, sw: 0.8 }),
+    ]),
+  },
   castle: {
-    defaults: { flag: 'red', gate: 0, w: 56, h: 52 }, grip: [0, -20],
-    /** Wall with battlements and a tower; `flag` colour is the holder's banner, `gate` 0..1 opens the gate. */
-    draw: (s, col) => { const c = color(col ?? C.grey2); const w = n(s, 'w', 56), h = n(s, 'h', 52); const gate = Math.max(0, Math.min(1, n(s, 'gate', 0)));
+    defaults: { flag: 'red', gate: 0, w: 56, h: 52, raise: 0, banner: 'navy', broken: 0 }, grip: [0, -20],
+    /** Wall with battlements and a tower. `flag` = defender's small flag, `raise` 0..1 hoists the attackers' big `banner` and lowers the small flag, `gate` opens the gate, `broken` 0..1 breaks it. */
+    draw: (s, col) => { const c = color(col ?? C.grey2); const w = n(s, 'w', 56), h = n(s, 'h', 52); const gate = Math.max(0, Math.min(1, n(s, 'gate', 0))), raise = Math.max(0, Math.min(1, n(s, 'raise', 0))), broken = Math.max(0, Math.min(1, n(s, 'broken', 0)));
       const merlons: FrameNode[] = []; for (let x = -w / 2; x < w / 2; x += 10) merlons.push(rect(x, -h - 6, 5, 7, { fill: c, stroke: INK, sw: 1.6 }));
       const stones: FrameNode[] = []; for (let y = -h + 10; y < -6; y += 10) for (let x = -w / 2 + ((y / 10) % 2 ? 4 : 0); x < w / 2 - 6; x += 12) stones.push(rect(x + 2, y, 8, 4, { rx: 1, fill: 'rgba(0,0,0,0.07)' }));
-      const tw = 18, th = h + 22;
+      const tw = 18, th = h + 22, px = w / 2 + 3, poleTop = -th - 30; const dir = n(s, 'bannerDir', -1);
+      const smallY = -th - 24 + raise * 22; // the defenders' flag slides down as the banner goes up
+      const bannerH = 14 * raise, bannerW = 20 * raise;
       return g([
         rect(-w / 2, -h, w, h, { fill: c, stroke: INK, sw: 2.2 }), ...stones, ...merlons,
         rect(w / 2 - 6, -th, tw, th, { fill: c, stroke: INK, sw: 2.2 }),
         ...[0, 1].map((k) => rect(w / 2 - 5 + k * 9, -th - 6, 5, 7, { fill: c, stroke: INK, sw: 1.6 })),
-        line([[w / 2 + 3, -th - 4], [w / 2 + 3, -th - 24]], { stroke: INK, sw: 1.8 }),
-        path(`M${r1(w / 2 + 3)} ${r1(-th - 24)} l14 4 l-14 4 Z`, { fill: color(s.flag as string), stroke: INK, sw: 1.4 }),
+        line([[px, -th - 4], [px, poleTop]], { stroke: INK, sw: 1.8 }),
+        raise < 0.95 ? path(`M${r1(px)} ${r1(smallY)} l${r1(12 * dir)} 3 l${r1(-12 * dir)} 3 Z`, { fill: color(s.flag as string), stroke: INK, sw: 1.2, opacity: 1 - raise }) : g([]),
+        raise > 0.02 ? path(`M${r1(px)} ${r1(poleTop)} l${r1(bannerW * dir)} ${r1(bannerH * 0.3)} l${r1(-bannerW * 0.3 * dir)} ${r1(bannerH * 0.3)} l${r1(bannerW * 0.3 * dir)} ${r1(bannerH * 0.4)} l${r1(-bannerW * dir)} ${r1(bannerH * 0.25)} Z`, { fill: color(s.banner as string), stroke: INK, sw: 1.6 }) : g([]),
         rect(w / 2 + 1, -th + 10, 4, 7, { rx: 2, fill: C.night }),
-        // gate: an arch that opens (dark opening grows)
-        path(`M-10 0 v-16 a10 10 0 0 1 20 0 v16 Z`, { fill: gate > 0.5 ? C.night : C.brown, stroke: INK, sw: 2 }),
+        path(`M-10 0 v-16 a10 10 0 0 1 20 0 v16 Z`, { fill: gate > 0.5 || broken > 0.5 ? C.night : C.brown, stroke: INK, sw: 2 }),
         gate > 0 ? path(`M-10 0 v-16 a10 10 0 0 1 20 0 v16 Z`, { fill: C.night, opacity: gate }) : g([]),
-        line([[-6, -2], [-6, -20]], { stroke: INK, sw: 1, opacity: gate > 0.5 ? 0 : 0.5 }), line([[0, -2], [0, -24]], { stroke: INK, sw: 1, opacity: gate > 0.5 ? 0 : 0.5 }), line([[6, -2], [6, -20]], { stroke: INK, sw: 1, opacity: gate > 0.5 ? 0 : 0.5 }),
+        broken > 0 ? g([path('M-9 -2 l6 -8 l-2 -6 l5 -4', { fill: 'none', stroke: INK, sw: 1.6 }), path('M-14 -1 l-4 -3 l1 3 Z', { fill: C.brown, stroke: INK, sw: 1.2 }), path('M12 -2 l5 -3 l-2 4 Z', { fill: C.brown, stroke: INK, sw: 1.2 })], undefined, { opacity: broken }) : g([]),
+        line([[-6, -2], [-6, -20]], { stroke: INK, sw: 1, opacity: gate > 0.5 || broken > 0.5 ? 0 : 0.5 }), line([[0, -2], [0, -24]], { stroke: INK, sw: 1, opacity: gate > 0.5 || broken > 0.5 ? 0 : 0.5 }), line([[6, -2], [6, -20]], { stroke: INK, sw: 1, opacity: gate > 0.5 || broken > 0.5 ? 0 : 0.5 }),
       ]); },
   },
 };

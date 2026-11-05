@@ -4,12 +4,12 @@
   "template": "event",
   "senseId": "s.stormning.1",
   "titleSv": "stormning",
-  "meaningHint": "Ett anfall där många soldater rusar in i en borg eller stad och tar den med våld",
+  "meaningHint": "Ett anfall där många soldater rusar in i en borg eller stad och tar den med våld; de tar över och hissar sin fana",
   "category": "action",
-  "durationMs": 5600,
+  "durationMs": 6400,
   "loop": true,
-  "holdMs": 900,
-  "posterMs": 3800,
+  "holdMs": 1200,
+  "posterMs": 6100,
   "environment": {
     "id": "neutral",
     "time": "day"
@@ -87,7 +87,9 @@
         "flag": "red",
         "w": 44,
         "h": 38,
-        "gate": 0
+        "gate": 0,
+        "raise": 0,
+        "banner": "navy"
       }
     },
     {
@@ -255,13 +257,6 @@
       "ease": "linear"
     },
     {
-      "t": 4800,
-      "action": "set",
-      "target": "castle",
-      "prop": "flag",
-      "value": "navy"
-    },
-    {
       "t": 5000,
       "action": "tween",
       "target": "fight",
@@ -269,6 +264,15 @@
       "to": 0,
       "durationMs": 500,
       "ease": "easeIn"
+    },
+    {
+      "t": 4600,
+      "action": "tween",
+      "target": "castle",
+      "prop": "raise",
+      "to": 1,
+      "durationMs": 900,
+      "ease": "easeOut"
     }
   ],
   "focus": {
@@ -276,7 +280,7 @@
       "castle",
       "fight"
     ],
-    "feature": "soldiers rush in through the gate, a fight cloud rises above the walls, the banner changes"
+    "feature": "soldiers rush in through the gate, a fight cloud rises, then the attackers' big banner is hoisted on the tower"
   },
   "contrast": {
     "with": [
@@ -285,7 +289,7 @@
     "distinctiveFeatures": [
       "motion:a1>=0.3",
       "prop:brawl",
-      "end:castle.gate>=0.9"
+      "end:castle.raise>=0.9"
     ]
   },
   "pedagogy": {

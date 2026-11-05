@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.skvätta.1",
+  "template": "cook-rhythm",
+  "senseId": "s.skvätta.1",
+  "titleSv": "skvätta",
+  "meaningHint": "Stänka i små droppar, t.ex. hett fett som skvätter ur pannan",
+  "category": "action",
+  "durationMs": 4000,
+  "loop": true,
+  "holdMs": 600,
+  "posterMs": 2200,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "b",
+      "at": {
+        "x": 74,
+        "y": 100
+      },
+      "facing": "left",
+      "wardrobe": {
+        "top": "green"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "stove",
+      "asset": "stove",
+      "at": {
+        "x": 42,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "pan",
+      "asset": "pan",
+      "at": {
+        "x": 42,
+        "y": 70
+      },
+      "z": 1,
+      "state": {
+        "contents": "steak"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "cook",
+      "actor": "p",
+      "pan": "pan",
+      "kind": "fry",
+      "durationMs": 1600
+    },
+    {
+      "t": 1700,
+      "action": "splash",
+      "pan": "pan",
+      "actor": "p",
+      "durationMs": 900
+    },
+    {
+      "t": 2800,
+      "action": "cook",
+      "actor": "p",
+      "pan": "pan",
+      "kind": "fry",
+      "durationMs": 1200
+    }
+  ],
+  "focus": {
+    "targets": [
+      "pan"
+    ],
+    "feature": "fat droplets fly out of the pan (meat in it) and the cook flinches back"
+  },
+  "contrast": {
+    "with": [
+      "anim.steka.1"
+    ],
+    "distinctiveFeatures": [
+      "has:action:splash",
+      "actor.p.eyes:wide>=0.1"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.steka.1",
+      "s.stänka.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

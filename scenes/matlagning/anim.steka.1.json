@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.steka.1",
+  "template": "cook-rhythm",
+  "senseId": "s.steka.1",
+  "titleSv": "steka",
+  "meaningHint": "Laga mat i en het panna med lite fett; maten blir gyllene",
+  "category": "action",
+  "durationMs": 4600,
+  "loop": true,
+  "holdMs": 600,
+  "posterMs": 3800,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "b",
+      "at": {
+        "x": 74,
+        "y": 100
+      },
+      "facing": "left",
+      "wardrobe": {
+        "top": "green"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "stove",
+      "asset": "stove",
+      "at": {
+        "x": 42,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "pan",
+      "asset": "pan",
+      "at": {
+        "x": 42,
+        "y": 70
+      },
+      "z": 1,
+      "state": {
+        "contents": "egg"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 300
+    },
+    {
+      "t": 300,
+      "action": "cook",
+      "actor": "p",
+      "pan": "pan",
+      "kind": "fry",
+      "durationMs": 4300
+    }
+  ],
+  "focus": {
+    "targets": [
+      "pan"
+    ],
+    "feature": "hand on the pan handle, plate glows, the egg sets and turns golden at the edge"
+  },
+  "contrast": {
+    "with": [
+      "anim.bryna.1",
+      "anim.koka.1"
+    ],
+    "distinctiveFeatures": [
+      "end:pan.browning>=0.5",
+      "end:pan.browning<=0.7",
+      "end:pan.burnt<=0.1"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.bryna.1",
+      "s.fräsa.1",
+      "s.koka.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

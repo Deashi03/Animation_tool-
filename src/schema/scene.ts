@@ -20,7 +20,7 @@ const Dur = z.number().int().min(1).max(60_000);
 
 export const CHARACTER_ASSETS = ['character.base'] as const;
 export const CHARACTER_VARIANTS = ['a', 'b', 'c'] as const;
-export const PROP_ASSETS = ['glass', 'jug', 'door', 'box', 'ball', 'football', 'sofa', 'bed', 'blanket', 'mug', 'phone', 'table', 'window', 'mat', 'ladder', 'castle', 'brawl'] as const;
+export const PROP_ASSETS = ['glass', 'jug', 'door', 'box', 'ball', 'football', 'sofa', 'bed', 'blanket', 'mug', 'phone', 'table', 'window', 'mat', 'ladder', 'castle', 'brawl', 'stove', 'pan', 'spatula'] as const;
 export const ENVIRONMENTS = ['neutral', 'room', 'bedroom', 'kitchen', 'outdoors.park', 'street'] as const;
 export const TIMES = ['day', 'evening', 'night'] as const;
 export const EYES = ['open', 'half', 'closed', 'wide'] as const;
@@ -101,6 +101,12 @@ export const Action = z.discriminatedUnion('action', [
   // objects without people
   z.object({ ...Base, action: z.literal('roll'), prop: Id, to: Pt, durationMs: Dur, z: z.number().int().optional() }).strict(),
   z.object({ ...Base, action: z.literal('climb'), actor: Id, prop: Id, durationMs: Dur }).strict(),
+  /** Cook in a pan on a stove: the hand holds the handle, the stove glows, the food sizzles and changes colour. `kind` fixes how far: fry (golden), brown (brown), sear (high heat, tossing), burn (black + smoke), melt (butter → pool). */
+  z.object({ ...Base, action: z.literal('cook'), actor: Id, pan: Id, kind: z.enum(['fry', 'brown', 'sear', 'burn', 'melt']).default('fry'), hand: z.enum(['left', 'right']).default('right'), tool: Id.optional(), durationMs: Dur }).strict(),
+  /** Turn the food over: with `tool` (a held spatula) the tool lifts it; otherwise the pan tosses it. The cooked side becomes the visible side. */
+  z.object({ ...Base, action: z.literal('flip'), actor: Id, pan: Id, tool: Id.optional(), durationMs: Dur.default(1000) }).strict(),
+  /** Hot fat spatters out of the pan; the actor (if given) flinches. */
+  z.object({ ...Base, action: z.literal('splash'), pan: Id, actor: Id.optional(), durationMs: Dur.default(900) }).strict(),
 ]);
 export type Action = z.infer<typeof Action>;
 export type ActionOf<K extends Action['action']> = Extract<Action, { action: K }>;
@@ -163,9 +169,9 @@ export const Scene = z.object({
   }
   s.timeline.forEach((a, i) => {
     const path = ['timeline', i];
-    if ('actor' in a && !actorIds.has(a.actor)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown actor "${a.actor}"`, path });
+    if ('actor' in a && typeof a.actor === 'string' && !actorIds.has(a.actor)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown actor "${a.actor}"`, path });
     const rec = a as unknown as Record<string, unknown>;
-    for (const k of ['prop', 'from', 'into', 'on', 'ball'] as const) if (a.action !== 'set' && a.action !== 'tween' && typeof rec[k] === 'string' && !propIds.has(rec[k] as string)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown prop "${rec[k]}"`, path });
+    for (const k of ['prop', 'from', 'into', 'on', 'ball', 'pan', 'tool'] as const) if (a.action !== 'set' && a.action !== 'tween' && typeof rec[k] === 'string' && !propIds.has(rec[k] as string)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown prop "${rec[k]}"`, path });
     if ('target' in a && typeof a.target === 'string' && !ids.has(a.target)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown target "${a.target}"`, path });
     if (a.t > s.durationMs) ctx.addIssue({ code: 'custom', message: `${a.action} starts at ${a.t} ms, after the scene ends (${s.durationMs} ms)`, path });
     const d = 'durationMs' in a ? a.durationMs : 0;

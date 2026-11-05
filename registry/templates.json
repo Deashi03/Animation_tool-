@@ -24,6 +24,9 @@
     },
     "ui": {
       "approved": false
+    },
+    "cook-rhythm": {
+      "approved": false
     }
   }
 }

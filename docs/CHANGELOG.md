@@ -46,3 +46,14 @@
 - **anim:blindtest** (`make`/`grade`): omärkta remsor med bokstäver, frågefil med alternativ (ordet, kontrastpartner, förväxlingsord, distraktorer), dolt facit; rättning registreras i `registry/blind.json`. `anim:validate` varnar för scener utan blindtest, stoppar scener med underkänt test och kräver godkänt test för `validated`/`reviewed`. `anim:report` visar mallar, godkännanden och blindstatus.
 - **Posterregel:** en `quizEligible`-scen får inte visa japansk text i posterbilden.
 - Tester 48.
+
+## 0.3.0 – 2026-11-05 (matlagningsbibliotek, speglingsfel rättat)
+- **Ny begreppsfamilj `cook-rhythm`** (kontrakt: aktör, `pan`, `stove`, `cook|flip|splash`) med godkänd startscen. Planeraren föreslår den för steka, bryna, fräsa, smälta, vända, bränna, skvätta.
+- **Nya föremål:** `stove` (platta som glöder, `heat`), `pan` (råvara `egg|pancake|butter|onion|steak`, `browning`, `top`, `burnt`, `melt`, `toss`, `sizzle`+`phase`, `splash`), `spatula`.
+- **Nya handlingar:** `cook` (kind `fry|brown|sear|burn|melt`; hand på handtaget med IK som följer pannans skakningar, plattan tänds, fräsmärken, färgförändring; valfritt verktyg i andra handen), `flip` (stekspade lyfter och vänder, eller pannan kastar; stekta sidan blir synlig), `splash` (fettdroppar i parabler, figuren ryggar).
+- **Scener (8):** steka, bryna, fräsa, smälta, vända, bränna, skvätta, gyllenbrun (kontrast utan människa, きつね色). Alla har godkänt blindtest.
+- **stormning:** anfallarnas fana hissas på tornet (`castle.raise`, `banner`, `broken`); blindtest godkänt i b3.
+- **Motorfel rättat:** vänstervända figurer speglades två gånger (rigg + renderare), så framåtriktade leder pekade bakåt. Alla scener med `facing: left` ser nu rätt ut; regressionstest tillagt. Snapshot av bildhashar uppdaterad avsiktligt.
+- **Blindtest:** alternativen är ordet + kontrastpartner + distraktorer; deklarerade `confusableWith`-synonymer erbjuds inte (bildfrågorna gör det inte heller). Remsorna tar 12 rutor så korta händelser fångas. Resultat: b2 7/9, b3 1/3, b4 4/4 – alla 20 ordscener har nu minst ett godkänt blindtest.
+- Tester: 53.
+

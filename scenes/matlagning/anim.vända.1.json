@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.vända.1",
+  "template": "cook-rhythm",
+  "senseId": "s.vända.1",
+  "titleSv": "vända",
+  "meaningHint": "Lägga åt andra hållet, t.ex. vända en pannkaka så att den stekta sidan kommer upp",
+  "category": "action",
+  "durationMs": 5200,
+  "loop": true,
+  "holdMs": 600,
+  "posterMs": 4300,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "b",
+      "at": {
+        "x": 74,
+        "y": 100
+      },
+      "facing": "left",
+      "wardrobe": {
+        "top": "green"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "stove",
+      "asset": "stove",
+      "at": {
+        "x": 42,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "pan",
+      "asset": "pan",
+      "at": {
+        "x": 42,
+        "y": 70
+      },
+      "z": 1,
+      "state": {
+        "contents": "pancake"
+      }
+    },
+    {
+      "id": "spatula",
+      "asset": "spatula",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "cook",
+      "actor": "p",
+      "pan": "pan",
+      "kind": "fry",
+      "tool": "spatula",
+      "durationMs": 2400
+    },
+    {
+      "t": 2500,
+      "action": "flip",
+      "actor": "p",
+      "pan": "pan",
+      "tool": "spatula",
+      "durationMs": 1500
+    },
+    {
+      "t": 4000,
+      "action": "cook",
+      "actor": "p",
+      "pan": "pan",
+      "kind": "fry",
+      "tool": "spatula",
+      "durationMs": 1200
+    }
+  ],
+  "focus": {
+    "targets": [
+      "pan"
+    ],
+    "feature": "the spatula lifts the pancake, it turns over in the air and lands golden side up"
+  },
+  "contrast": {
+    "with": [
+      "anim.steka.1"
+    ],
+    "distinctiveFeatures": [
+      "end:pan.top>=0.5",
+      "has:action:flip"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.steka.1",
+      "s.vända-sig.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

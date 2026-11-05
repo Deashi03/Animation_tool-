@@ -42,6 +42,10 @@ Koordinater i dukenheter, origo uppe till vänster, markplan y ≈ 100. Färger:
 | `brawl` | `intensity` 0..1, `phase` (tweena 0→N för skakning) | tecknat slagsmålsmoln med stjärnor och nävar |
 | `box` | `w`, `h`, `lidOpen` | |
 | `table`, `window`, `mat` | (`window.time` följer miljön) | |
+| `castle` (forts.) | `raise` 0..1 hissar `banner` (färg) och halar `flag`; `broken` 0..1 | |
+| `stove` | `heat` 0..1 | mouth = plattan (pannans `at` sätts där: `y = marken − 30`) |
+| `pan` | `contents: none|egg|pancake|butter|onion|steak`, `browning` 0..1 (blek → gyllene → brun), `top` (synliga sidans färg efter vändning), `burnt` 0..1 (svart + rök), `melt` 0..1, `toss` 0..1, `sizzle` 0..1 + `phase`, `splash` (−1 av, 0..1 fas) | grip = handtagets ände (åt +x), mouth = pannans mitt |
+| `spatula` | – | hålls upprätt, bladet nedåt; `tilt` via handlingen |
 
 Ett föremål med `attachTo` ritas i aktörens hand, upprätt; `tilt` roterar det framåt kring greppet (55° vid 1).
 
@@ -68,6 +72,9 @@ Ett föremål med `attachTo` ritas i aktörens hand, upprätt; `tilt` roterar de
 | `emphasis` | `target, kind: ring|glow|arrowDown` | markering |
 | `roll` | `prop, to, durationMs, z?` | föremål rullar på marken: konstant inbromsning, rotation = sträcka/radie |
 | `climb` | `actor, prop (ladder), durationMs` | klättrar längs en rest stege |
+| `cook` | `actor, pan, kind: fry|brown|sear|burn|melt, hand, tool?, durationMs` | handen på handtaget (IK följer pannans skakningar), spisen under pannan tänds, fräsmärken, råvaran byter färg så långt `kind` säger; `sear` kastar innehållet; `tool` (hållen stekspade) petar då och då |
+| `flip` | `actor, pan, tool?, durationMs` | med `tool`: spaden under, snabbt lyft, maten flyger upp och vänder; utan: pannan kastar. Den stekta sidan (`browning`) blir `top` |
+| `splash` | `pan, actor?, durationMs` | fettdroppar flyger ur pannan i parabler (två skurar); aktören ryggar med vida ögon och skyddande arm |
 
 Easing: `linear easeIn easeOut easeInOut anticipate overshoot bounce step`.
 
@@ -100,6 +107,7 @@ Varje ordscen anger `template`. Kontraktet kontrolleras av validatorn; produktä
 | `emotion` | arg, glad, förvånad … | aktör; `express` |
 | `state` | slappa, sova, vila … | aktör; `relax`/`sleep`/`idle`; kontrastpar |
 | `event` | stormning, flytt, fest … | ≥ 2 aktörer; ≥ 1 föremål |
+| `cook-rhythm` | steka, bryna, fräsa, smälta, vända, bränna, skvätta | aktör; `pan` + `stove`; `cook`/`flip`/`splash`. Verben skiljs genom hur långt färgen går, tempot och följden |
 | `ui` | paneler, bockar | – |
 
 Extra `has:`-features för kontrakt och kontrastpar: `has:actors>=N`, `has:actors==0`, `has:props>=N`, `has:entities>=N`, `has:action:a|b`, `has:icon:a|b`, `has:cjk-text`, `has:contrast`.

@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.gyllenbrun.1",
+  "template": "property-contrast",
+  "senseId": "s.gyllenbrun.1",
+  "titleSv": "gyllenbrun",
+  "meaningHint": "Som har den varma gulbruna färgen av något välstekt",
+  "category": "property",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2900,
+  "environment": {
+    "id": "neutral",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "pale",
+      "asset": "pan",
+      "at": {
+        "x": 24,
+        "y": 94
+      },
+      "z": 1,
+      "state": {
+        "contents": "pancake",
+        "browning": 0.05,
+        "top": 0.05
+      },
+      "scale": 1.3
+    },
+    {
+      "id": "gold",
+      "asset": "pan",
+      "at": {
+        "x": 78,
+        "y": 94
+      },
+      "z": 1,
+      "state": {
+        "contents": "pancake",
+        "browning": 0.05,
+        "top": 0.05
+      },
+      "scale": 1.3
+    }
+  ],
+  "shapes": [
+    {
+      "type": "text",
+      "id": "ja",
+      "x": 60,
+      "y": -20,
+      "text": "きつね色",
+      "size": 12,
+      "weight": 800,
+      "fill": "ink",
+      "anchor": "middle",
+      "bg": "panel",
+      "pad": 6,
+      "opacity": 0,
+      "z": 5
+    }
+  ],
+  "timeline": [
+    {
+      "t": 300,
+      "action": "tween",
+      "target": "gold",
+      "prop": "browning",
+      "to": 0.75,
+      "durationMs": 1400,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 300,
+      "action": "tween",
+      "target": "gold",
+      "prop": "top",
+      "to": 0.75,
+      "durationMs": 1400,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 1700,
+      "action": "emphasis",
+      "target": "gold",
+      "kind": "ring",
+      "durationMs": 900
+    },
+    {
+      "t": 1700,
+      "action": "set",
+      "target": "ja",
+      "prop": "opacity",
+      "value": 1
+    },
+    {
+      "t": 1700,
+      "action": "tween",
+      "target": "ja",
+      "prop": "y",
+      "from": -20,
+      "to": 26,
+      "durationMs": 450,
+      "ease": "easeOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "gold"
+    ],
+    "feature": "two pancakes, the right one turns golden brown and is marked"
+  },
+  "contrast": {
+    "with": [
+      "anim.bränna.1"
+    ],
+    "distinctiveFeatures": [
+      "end:gold.browning>=0.7",
+      "end:gold.burnt<=0.1",
+      "has:actors==0"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.brun.1",
+      "s.bränd.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

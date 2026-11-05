@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.brumma.1",
+  "template": "process",
+  "senseId": "s.brumma.1",
+  "titleSv": "brumma",
+  "meaningHint": "Låta lågt och hela tiden, som ett gammalt kylskåp",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 0,
+  "posterMs": 1800,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "fridge",
+      "asset": "fixture.fridge",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": 1
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "sound",
+      "target": "fridge",
+      "kind": "hum",
+      "durationMs": 3600
+    }
+  ],
+  "focus": {
+    "targets": [
+      "fridge"
+    ],
+    "feature": "a fridge with sound arcs beside it"
+  },
+  "contrast": {
+    "with": [
+      "anim.dunka.1"
+    ],
+    "distinctiveFeatures": [
+      "has:sound:hum"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "ljud",
+    "confusableWith": [
+      "s.surra.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

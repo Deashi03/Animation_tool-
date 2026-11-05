@@ -14,6 +14,7 @@
  *   has:icon:<a|b>                                         (a shape icon of one of these kinds)
  *   has:cjk-text                                           (a text shape with Japanese characters)
  *   has:contrast                                           (a contrast pair is declared)
+ *   has:say-icon:<a|b> | has:say-mood:<a|b> | has:sound:<a|b> | has:prop:<asset|asset>
  */
 import { JOINTS } from '../schema/scene';
 import { fractionEqual, sample, sampleNumber } from '../engine/track';
@@ -38,6 +39,10 @@ export function evaluateFeature(c: CompiledScene, feature: string): { ok: boolea
     if (rhsRaw.startsWith('icon:')) { const names = rhsRaw.slice(5).split('|'); const have = sc.shapes.filter((x) => x.type === 'icon').map((x) => (x as { icon: string }).icon); return { ok: names.some((x) => have.includes(x)), detail: `icons: ${have.join(', ') || 'none'}` }; }
     if (rhsRaw === 'cjk-text') { const ok = sc.shapes.some((x) => x.type === 'text' && /[\u3000-\u9fff\uf900-\ufaff\uff00-\uffef]/.test((x as { text: string }).text)); return { ok, detail: ok ? 'has Japanese text' : 'no Japanese text shape' }; }
     if (rhsRaw === 'contrast') return { ok: !!sc.contrast, detail: sc.contrast ? `contrast with ${sc.contrast.with.join(', ')}` : 'no contrast pair' };
+    if (rhsRaw.startsWith('say-icon:')) { const names = rhsRaw.slice(9).split('|'); const have = sc.timeline.filter((x) => x.action === 'say').map((x) => (x as { icon?: string }).icon ?? ''); return { ok: names.some((x) => have.includes(x)), detail: `say icons: ${have.filter(Boolean).join(', ') || 'none'}` }; }
+    if (rhsRaw.startsWith('say-mood:')) { const names = rhsRaw.slice(9).split('|'); const have = sc.timeline.filter((x) => x.action === 'say').map((x) => (x as { mood: string }).mood); return { ok: names.some((x) => have.includes(x)), detail: `say moods: ${have.join(', ') || 'none'}` }; }
+    if (rhsRaw.startsWith('sound:')) { const names = rhsRaw.slice(6).split('|'); const have = sc.timeline.filter((x) => x.action === 'sound').map((x) => (x as { kind: string }).kind); return { ok: names.some((x) => have.includes(x)), detail: `sounds: ${have.join(', ') || 'none'}` }; }
+    if (rhsRaw.startsWith('prop:')) { const names = rhsRaw.slice(5).split('|'); const have = sc.props.map((x) => x.asset); return { ok: names.some((x) => have.includes(x)), detail: `props: ${have.join(', ') || 'none'}` }; }
     return { ok: false, detail: `unknown has-feature "${rhsRaw}"` };
   }
   if (lhs === 'speed') {

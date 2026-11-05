@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.servera.1",
+  "template": "social",
+  "senseId": "s.servera.1",
+  "titleSv": "servera",
+  "meaningHint": "Ge mat eller dryck till någon, till exempel vid bordet",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 1900,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "c",
+      "at": {
+        "x": 34,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "dark"
+      },
+      "scale": 0.85
+    },
+    {
+      "id": "q",
+      "variant": "a",
+      "at": {
+        "x": 78,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.85
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 102,
+        "y": 100
+      },
+      "z": -1,
+      "scale": 0.7
+    },
+    {
+      "id": "plate",
+      "asset": "container.plate",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      },
+      "scale": 0.8,
+      "state": {
+        "food": 1
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 3600
+    },
+    {
+      "t": 200,
+      "action": "walk",
+      "actor": "p",
+      "to": {
+        "x": 54,
+        "y": 100
+      }
+    },
+    {
+      "t": 1500,
+      "action": "put",
+      "actor": "p",
+      "prop": "plate",
+      "at": {
+        "x": 102,
+        "y": 79
+      },
+      "durationMs": 800
+    },
+    {
+      "t": 2400,
+      "action": "say",
+      "actor": "p",
+      "icon": "smile",
+      "mood": "happy",
+      "to": "q",
+      "durationMs": 900,
+      "gesture": false
+    },
+    {
+      "t": 2300,
+      "action": "express",
+      "actor": "q",
+      "emotion": "happy",
+      "durationMs": 400
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "a waiter carries a plate of food to the table and sets it down in front of the guest"
+  },
+  "contrast": {
+    "with": [
+      "anim.beställa.1"
+    ],
+    "distinctiveFeatures": [
+      "has:action:put",
+      "prop:container.plate"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "samtal",
+    "confusableWith": [
+      "s.duka.1",
+      "s.bjuda-på.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

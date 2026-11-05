@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.köa.1",
+  "template": "communicate",
+  "senseId": "s.köa.1",
+  "titleSv": "köa",
+  "meaningHint": "Stå i kö och vänta på sin tur",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 2200,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 30,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.78
+    },
+    {
+      "id": "q",
+      "variant": "b",
+      "at": {
+        "x": 50,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.78
+    },
+    {
+      "id": "r",
+      "variant": "c",
+      "at": {
+        "x": 70,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.78
+    }
+  ],
+  "props": [
+    {
+      "id": "door",
+      "asset": "door",
+      "at": {
+        "x": 108,
+        "y": 100
+      },
+      "z": -1,
+      "scale": 0.9
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 4200
+    },
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 4200
+    },
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "r",
+      "durationMs": 4200
+    },
+    {
+      "t": 800,
+      "action": "lookAt",
+      "actor": "p",
+      "target": "door"
+    },
+    {
+      "t": 1800,
+      "action": "express",
+      "actor": "q",
+      "emotion": "tired",
+      "durationMs": 600
+    },
+    {
+      "t": 2600,
+      "action": "say",
+      "actor": "p",
+      "icon": "hourglass",
+      "mood": "neutral",
+      "durationMs": 1200,
+      "gesture": false
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "three people stand in a line toward a door, shifting their weight, one checks the time"
+  },
+  "contrast": {
+    "with": [
+      "anim.vänta.1"
+    ],
+    "distinctiveFeatures": [
+      "has:actors>=3",
+      "motion:p<=0.2"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "vänta",
+    "confusableWith": [
+      "s.vänta.1",
+      "s.stå.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

@@ -397,6 +397,50 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     // settle: upright, tool stays in hand
     tween(tr, M.J(A, 'torso'), end, end + 400, 4, 'easeInOut'); tween(tr, M.J(A, 'head'), end, end + 400, -6, 'easeInOut');
   },
+  say(ctx, a) {
+    const tr = ctx.tracks, A = a.actor, end = a.t + a.durationMs;
+    if (a.to) { const tp = targetPoint(ctx, a.to, a.t); faceToward(ctx, A, a.t, tp[0]); if (ctx.actors.has(a.to)) { faceToward(ctx, a.to, a.t, actorPos(ctx, A, a.t)[0]); addKey(tr, `${a.to}.gaze`, { t: a.t, v: facingAt(ctx, a.to, a.t) }); } }
+    const payload = `${a.icon ? `icon:${a.icon}` : `text:${a.text ?? ''}`}|${a.mood}`;
+    fxStart(tr, `fx.${A}.say`, a.t, ''); addKey(tr, `fx.${A}.say`, { t: a.t, v: payload }); addKey(tr, `fx.${A}.say`, { t: end, v: '' });
+    // the mouth moves while speaking
+    const restMouth = sampleString<string>(tr, `${A}.mouth`, a.t, 'smile');
+    for (let t = a.t; t < end - 150; t += 300) { addKey(tr, `${A}.mouth`, { t, v: 'open' }); addKey(tr, `${A}.mouth`, { t: t + 150, v: a.mood === 'happy' ? 'smile' : 'neutral' }); }
+    addKey(tr, `${A}.mouth`, { t: end, v: restMouth });
+    const brows: Record<string, string> = { neutral: 'neutral', happy: 'up', angry: 'down', sad: 'worried', question: 'asym', surprised: 'up' };
+    const eyes: Record<string, string> = { neutral: 'open', happy: 'open', angry: 'open', sad: 'half', question: 'open', surprised: 'wide' };
+    addKey(tr, `${A}.brows`, { t: a.t, v: brows[a.mood] ?? 'neutral' }); addKey(tr, `${A}.eyes`, { t: a.t, v: eyes[a.mood] ?? 'open' });
+    addKey(tr, `${A}.brows`, { t: end + 200, v: 'neutral' });
+    if (a.gesture) {
+      // a small open-hand gesture with the near hand, lowered again at the end
+      const g0 = poseAt(ctx, A, a.t);
+      M.poseTo(tr, A, a.t, a.t + 350, { uArmL: a.mood === 'angry' ? 50 : 34, fArmL: a.mood === 'angry' ? 110 : 80 }, 'easeOut');
+      if (a.mood === 'angry') for (let t = a.t + 400; t + 400 < end; t += 500) { tween(tr, M.J(A, 'fArmL'), t, t + 200, 90, 'easeInOut'); tween(tr, M.J(A, 'fArmL'), t + 200, t + 400, 115, 'easeInOut'); }
+      if (a.mood === 'sad') M.poseTo(tr, A, a.t, a.t + 500, { torso: 8, head: 12 }, 'easeInOut');
+      if (a.mood === 'surprised') M.poseTo(tr, A, a.t, a.t + 250, { torso: -6, head: -6, uArmL: 70, fArmL: 90 }, 'easeOut');
+      M.poseTo(tr, A, end, end + 400, { uArmL: g0.uArmL, fArmL: g0.fArmL, torso: g0.torso, head: g0.head }, 'easeInOut');
+    }
+  },
+  sound(ctx, a) {
+    fxStart(ctx.tracks, `fx.${a.target}.sound`, a.t, ''); addKey(ctx.tracks, `fx.${a.target}.sound`, { t: a.t, v: a.kind }); addKey(ctx.tracks, `fx.${a.target}.sound`, { t: a.t + a.durationMs, v: '' });
+  },
+  give(ctx, a) {
+    const tr = ctx.tracks, d = a.durationMs, mid = a.t + d * 0.55;
+    const [fx] = actorPos(ctx, a.from, a.t), [tx] = actorPos(ctx, a.to, a.t);
+    faceToward(ctx, a.from, a.t, tx); faceToward(ctx, a.to, a.t, fx);
+    const owner = sampleString<string>(tr, `${a.prop}.attach`, a.t, '');
+    const fromHand: 'left' | 'right' = owner.endsWith(':right') ? 'right' : 'left';
+    if (!owner) addKey(tr, `${a.prop}.attach`, { t: a.t, v: `${a.from}:${fromHand}` });
+    const meet: P = [(fx + tx) / 2, Math.min(actorPos(ctx, a.from, a.t)[1], actorPos(ctx, a.to, a.t)[1]) - 44];
+    M.poseTo(tr, a.from, a.t, mid, reachJoints(ctx, a.from, fromHand, meet, a.t), 'easeInOut');
+    M.poseTo(tr, a.to, a.t + d * 0.15, mid, reachJoints(ctx, a.to, 'left', meet, a.t), 'easeInOut');
+    addKey(tr, `${a.to}.gaze`, { t: a.t, v: facingAt(ctx, a.to, a.t) }); addKey(tr, `${a.from}.gaze`, { t: a.t, v: facingAt(ctx, a.from, a.t) });
+    addKey(tr, `${a.prop}.attach`, { t: mid, v: `${a.to}:left` });
+    M.poseTo(tr, a.from, mid + 100, a.t + d, { uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR }, 'easeInOut');
+    M.poseTo(tr, a.to, mid + 100, a.t + d, { uArmL: 30, fArmL: 70 }, 'easeInOut');
+    addKey(tr, `${a.to}.mouth`, { t: mid, v: 'smile' });
+  },
+  put(ctx, a) { (H.release as (c: Ctx, x: ActionOf<'release'>) => void)(ctx, { action: 'release', t: a.t, actor: a.actor, prop: a.prop, at: a.at, on: a.on, z: a.z, durationMs: a.durationMs }); },
+  take(ctx, a) { (H.grab as (c: Ctx, x: ActionOf<'grab'>) => void)(ctx, { action: 'grab', t: a.t, actor: a.actor, prop: a.prop, hand: a.hand, durationMs: a.durationMs }); },
   emphasis(ctx, a) { fxStart(ctx.tracks, `fx.${a.target}.${a.kind}`, a.t, -1); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t, v: 0 }); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t + a.durationMs, v: 1, e: 'linear' }); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t + a.durationMs + 1, v: -1 }); },
 };
 

@@ -116,10 +116,35 @@ export const TEMPLATES: Record<string, Template> = {
       focus: { targets: ['castle'] }, pedagogy: { quizEligible: false, confusableWith: [] },
     }),
   },
+  communicate: {
+    id: 'communicate', titleSv: 'Säga något till någon',
+    describes: 'Kommunikationsverb: beställa, klaga, förklara, varna, skämta, ursäkta, rekommendera, fråga, svara. En talare med pratbubbla (ikon eller kort text, alltid på vitt) och oftast en lyssnare som reagerar. Stämningen (mood) och ikonen bär skillnaden; lyssnarens reaktion förstärker.',
+    contract: ['has:actors>=1', 'has:action:say'],
+    make: (senseId, lemma, n) => ({
+      schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'communicate', meaningHint: 'TODO', category: 'action',
+      durationMs: 3600, loop: true, holdMs: 600, posterMs: 1800, environment: { id: 'room', time: 'day' },
+      actors: [{ id: 'p', variant: 'a', at: { x: 38, y: 100 }, facing: 'right', scale: 0.85 }, { id: 'q', variant: 'b', at: { x: 84, y: 100 }, facing: 'left', scale: 0.85 }],
+      timeline: [{ t: 0, action: 'idle', actor: 'q', durationMs: 3600 }, { t: 400, action: 'say', actor: 'p', icon: 'question', mood: 'question', to: 'q', durationMs: 1800 }, { t: 2400, action: 'say', actor: 'q', icon: 'check', mood: 'happy', to: 'p', durationMs: 1000 }],
+      focus: { targets: ['p'] }, pedagogy: { quizEligible: false, group: 'samtal', confusableWith: [] },
+    }),
+  },
+  social: {
+    id: 'social', titleSv: 'Två personer och ett föremål',
+    describes: 'Verb mellan människor med ett föremål: ge, servera, lämna över, skicka, bjuda på, dela, låna. En ger, en tar emot; föremålet byter hand mitt i rörelsen.',
+    contract: ['has:actors>=2', 'has:props>=1', 'has:action:give|put|take'],
+    make: (senseId, lemma, n) => ({
+      schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'social', meaningHint: 'TODO', category: 'action',
+      durationMs: 3200, loop: true, holdMs: 700, posterMs: 1700, environment: { id: 'room', time: 'day' },
+      actors: [{ id: 'p', variant: 'a', at: { x: 40, y: 100 }, facing: 'right' }, { id: 'q', variant: 'c', at: { x: 80, y: 100 }, facing: 'left' }],
+      props: [{ id: 'thing', asset: 'container.bag', attachTo: { actor: 'p', hand: 'left' }, scale: 0.8 }],
+      timeline: [{ t: 0, action: 'idle', actor: 'q', durationMs: 400 }, { t: 400, action: 'give', from: 'p', to: 'q', prop: 'thing', durationMs: 1600 }, { t: 2000, action: 'idle', actor: 'p', durationMs: 1200 }],
+      focus: { targets: ['thing'] }, pedagogy: { quizEligible: false, group: 'mellan människor', confusableWith: [] },
+    }),
+  },
   process: {
     id: 'process', titleSv: 'Föremål som förändras av sig självt',
     describes: 'Verb för processer utan en handlande person: koka, sjuda, smälta, mogna, ruttna, brinna, slockna, droppa, rinna, läcka, jäsa, växa, vissna, flagna, regna. Ett eller två föremål i närbild, tillståndet tweenas, effekter (bubblor, ånga, droppar, rök) bär förloppet. Kontrastpar skiljer grad och tempo (koka/sjuda, droppa/rinna).',
-    contract: ['has:actors==0', 'has:props>=1', 'has:action:tween|set'],
+    contract: ['has:actors==0', 'has:props>=1', 'has:action:tween|set|sound'],
     make: (senseId, lemma, n) => ({
       schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'process', meaningHint: 'TODO', category: 'action',
       durationMs: 4000, loop: true, holdMs: 800, posterMs: 3000, environment: { id: 'kitchen', time: 'day' },

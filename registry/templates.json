@@ -38,6 +38,12 @@
     },
     "process": {
       "approved": false
+    },
+    "communicate": {
+      "approved": false
+    },
+    "social": {
+      "approved": false
     }
   }
 }

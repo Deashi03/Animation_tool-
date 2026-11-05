@@ -12,7 +12,7 @@ import { ENVS } from '../assets/environments';
 import { palette as C, color } from '../assets/palette';
 import { solveRig, type P, type Pose } from './rig';
 import { JOINTS, type ShapeDef } from '../schema/scene';
-import { drawIcon } from '../assets/icons';
+import { drawIcon, type IconName } from '../assets/icons';
 
 export type RenderOptions = { showLabel?: boolean };
 
@@ -123,6 +123,40 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
         fx.push(text(Math.max(8, Math.min(w - 8, x)), Math.max(10, y), 'z', (6 + u * 5) * aw.scale, { fill: C.navy, weight: 800, opacity: Math.max(0, 0.9 - u * 0.9) }));
       }
     }
+  }
+  // speech bubbles: icon or short text on white, with a tail to the mouth; drawn last so they stay on top
+  for (const a of scene.actors) {
+    const say = sampleString<string>(tracks, `fx.${a.id}.say`, t, '');
+    const aw = actorWorld.get(a.id);
+    if (!say || !aw) continue;
+    const [content, mood] = say.split('|') as [string, string];
+    const head = worldPoint(aw, aw.rig.head);
+    const mouth: P = [head[0] + aw.facing * 5 * aw.scale, head[1] + 4 * aw.scale];
+    const isIcon = content.startsWith('icon:');
+    const body = isIcon ? content.slice(5) : content.slice(5);
+    const bw = isIcon ? 22 : Math.min(60, textWidth(body, 8) + 10), bh = isIcon ? 20 : 15;
+    // the bubble sits above and in front of the head, clamped inside the canvas
+    let bx = head[0] + aw.facing * (9 + bw / 2) * Math.min(1, aw.scale), by = head[1] - 20 * aw.scale - bh / 2;
+    bx = Math.max(bw / 2 + 2, Math.min(w - bw / 2 - 2, bx)); by = Math.max(bh / 2 + 2, by);
+    const pop = Math.min(1, (t - (tracks.get(`fx.${a.id}.say`)?.keys.filter((k) => k.t <= t && k.v === say).pop()?.t ?? t)) / 180);
+    const tailBase = 5, dx = mouth[0] - bx, dy = mouth[1] - by, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len;
+    const ex = bx + (dx / len) * Math.min(bw / 2, bh / 2) * 0.9, ey = by + (dy / len) * Math.min(bw / 2, bh / 2) * 0.9;
+    const bubble = g([
+      path(`M${r1(ex + nx * tailBase)} ${r1(ey + ny * tailBase)} L${r1(mouth[0])} ${r1(mouth[1])} L${r1(ex - nx * tailBase)} ${r1(ey - ny * tailBase)} Z`, { fill: C.white, stroke: C.ink, sw: 1.4 }),
+      rect(bx - bw / 2, by - bh / 2, bw, bh, { rx: mood === 'angry' ? 2 : bh / 2, fill: C.white, stroke: C.ink, sw: mood === 'angry' ? 2 : 1.4 }),
+      path(`M${r1(ex + nx * tailBase * 0.8)} ${r1(ey + ny * tailBase * 0.8)} L${r1(mouth[0])} ${r1(mouth[1])} L${r1(ex - nx * tailBase * 0.8)} ${r1(ey - ny * tailBase * 0.8)}`, { fill: C.white, stroke: 'none' }),
+      isIcon ? g([drawIcon(body as IconName, 14, pop, undefined, C.ink)], { x: bx, y: by }) : text(bx, by + 3, body, 8, { fill: C.ink, weight: 800, anchor: 'middle' }),
+    ], { scale: 0.6 + 0.4 * pop, px: mouth[0], py: mouth[1] });
+    fx.push(bubble);
+  }
+  // sound marks beside a source: arcs for continuous sounds, spikes for impacts
+  for (const id of [...scene.actors.map((a) => a.id), ...scene.props.map((p) => p.id)]) {
+    const kind = sampleString<string>(tracks, `fx.${id}.sound`, t, '');
+    if (!kind) continue;
+    const node = layers.find((l) => (l.node as { id?: string }).id === `entity.${id}`)?.node; const b = node ? bboxOf(node) : null; if (!b) continue;
+    const cx = b.x2 + 3, cy = (b.y1 + b.y2) / 2, u = (t % 600) / 600;
+    if (kind === 'thump' || kind === 'crunch') { for (let i = 0; i < 5; i++) { const ang = -1.1 + i * 0.55 + (kind === 'crunch' ? Math.sin(t) * 0.1 : 0); const r0 = 4 + ((u + i * 0.2) % 1) * 6; fx.push(line([[cx + Math.cos(ang) * r0, cy + Math.sin(ang) * r0], [cx + Math.cos(ang) * (r0 + 4), cy + Math.sin(ang) * (r0 + 4)]], { stroke: C.ink, sw: kind === 'crunch' ? 1.4 : 2.2, opacity: 0.8 })); } }
+    else for (let i = 0; i < 3; i++) { const ph = (u + i * 0.33) % 1; const rr = 5 + ph * 10; fx.push(path(`M${r1(cx + rr * 0.5)} ${r1(cy - rr * 0.85)} q${r1(rr * 0.9)} ${r1(rr * 0.85)} 0 ${r1(rr * 1.7)}`, { fill: 'none', stroke: kind === 'bark' ? C.red : C.ink, sw: 1.8, linecap: 'round', opacity: 0.85 * (1 - ph) })); }
   }
   // sprinkle: small grains falling from a held tool's mouth onto the target
   for (const key of [...scene.props.map((p) => p.id), ...scene.actors.map((a) => a.id)]) {

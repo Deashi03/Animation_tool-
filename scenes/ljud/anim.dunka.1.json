@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.dunka.1",
+  "template": "process",
+  "senseId": "s.dunka.1",
+  "titleSv": "dunka",
+  "meaningHint": "Låta med ett tungt ljud som kommer om och om igen",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 0,
+  "posterMs": 1800,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "wm",
+      "asset": "fixture.washingmachine",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": 1,
+      "state": {
+        "spin": 1
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "wm",
+      "prop": "phase",
+      "from": 0,
+      "to": 3,
+      "durationMs": 3600,
+      "ease": "linear"
+    },
+    {
+      "t": 0,
+      "action": "sound",
+      "target": "wm",
+      "kind": "thump",
+      "durationMs": 3600
+    }
+  ],
+  "focus": {
+    "targets": [
+      "wm"
+    ],
+    "feature": "a washing machine thumps: impact marks beside it"
+  },
+  "contrast": {
+    "with": [
+      "anim.brumma.1"
+    ],
+    "distinctiveFeatures": [
+      "has:sound:thump"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "ljud",
+    "confusableWith": [
+      "s.bulta.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

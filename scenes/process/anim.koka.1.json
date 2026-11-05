@@ -36,7 +36,8 @@
       "scale": 1.4,
       "state": {
         "fill": 0.7,
-        "boil": 0
+        "boil": 0,
+        "lid": 0
       }
     }
   ],
@@ -74,6 +75,15 @@
       "from": 0,
       "to": 5,
       "durationMs": 4000,
+      "ease": "linear"
+    },
+    {
+      "t": 2000,
+      "action": "tween",
+      "target": "pot",
+      "prop": "lid",
+      "to": 1,
+      "durationMs": 1,
       "ease": "linear"
     }
   ],

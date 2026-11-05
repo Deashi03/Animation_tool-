@@ -390,5 +390,170 @@
       "description": "Personen står vid en spis med en ångande kastrull och skakar en vit strödosa över den så att små korn faller ner – saltar; kunde lika gärna vara peppra eftersom dosan är vit utan tydlig markering.",
       "reviewer": "claude-blind-subagent"
     }
+  ],
+  "anim.läcka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "läcka",
+      "expected": "läcka",
+      "description": "En hink står på ett bord inomhus (dagsljus i fönstret); vattendroppar faller från hinkens botten genom bordet och en pöl på golvet växer medan vattennivån i hinken sjunker – hinken läcker.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.ruttna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "ruttna",
+      "expected": "ruttna",
+      "description": "Ett rött äpple på ett bord får gradvis bruna fläckar, blir brunt och grågrönt mögligt – det ruttnar.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.växa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "växa",
+      "expected": "växa",
+      "description": "Ett litet grönt skott i en kruka på ett bord blir högre och får fler blad medan solen skiner i fönstret – plantan växer.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.brinna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "brinna",
+      "expected": "brinna",
+      "description": "En lägereld med vedträn utomhus; lågorna fladdrar och byter form ruta för ruta men elden varken tänds eller släcks – den brinner.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.koka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "koka",
+      "expected": "koka",
+      "description": "En kastrull med vatten på en spisplatta med röd glöd; ånga stiger och stora bubblor väller upp vid ytan – vattnet kokar kraftigt.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.flagna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "flagna",
+      "expected": "flagna",
+      "description": "Från en blå målad vägg lossnar små ljusa flagor en efter en, faller ner och samlas i en hög på marken medan ljusa fläckar blir kvar på väggen – färgen flagnar.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.jäsa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "jäsa",
+      "expected": "jäsa",
+      "description": "En skål med en ljus degklump på ett bord; klumpen sväller långsamt uppåt tills den puffar upp över skålens kant – degen jäser.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.vissna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "vissna",
+      "expected": "vissna",
+      "description": "En rosa blomma på ett bord tappar färg, blir brun och böjer sig ner med hängande huvud och blad – den vissnar.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.rinna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "rinna",
+      "expected": "rinna",
+      "description": "En kran med en jämn, tjock vattenstråle som rinner ner mot golvet där en pöl växer – vattnet rinner.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.regna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "regna",
+      "expected": "regna",
+      "description": "Ett vitt moln utomhus mörknar till ett grått regnmoln, blå streck faller snett ner och en pöl bildas och växer på gräset – det regnar.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.sjuda.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "sjuda",
+      "expected": "sjuda",
+      "description": "En kastrull med vatten på spisen; svag ånga och några små bubblor vid ytan, tydligt lugnare än den kraftigt kokande kastrullen i E – vattnet sjuder.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.släcka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "släcka",
+      "expected": "släcka",
+      "description": "En hink med vatten lyfts upp och tippas över en lägereld; vatten hälls ner, lågorna krymper och försvinner och grå rökpuffar stiger från de våta vedträna – elden släcks.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.smälta.1.v2": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "smälta",
+      "expected": "smälta",
+      "description": "En ljusblå iskub på ett bord i solsken blir mindre och mindre medan en vattenpöl breder ut sig på bordsskivan tills bara vatten är kvar – isen smälter.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.mogna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "mogna",
+      "expected": "mogna",
+      "description": "Ett grönt äpple som hänger i ett träd skiftar långsamt färg via gult och orange till rött – äpplet mognar.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.droppa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "droppa",
+      "expected": "droppa",
+      "description": "En kran som är avstängd släpper en enstaka droppe i taget som faller och sakta bygger upp en liten pöl på golvet – det droppar.",
+      "reviewer": "claude-blind-subagent"
+    }
   ]
 }

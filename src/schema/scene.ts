@@ -21,6 +21,7 @@ const Dur = z.number().int().min(1).max(60_000);
 export const CHARACTER_ASSETS = ['character.base'] as const;
 export const CHARACTER_VARIANTS = ['a', 'b', 'c'] as const;
 import { PROP_ASSET_IDS, isPropAsset, suggestAsset } from '../assets/catalog';
+import { ICON_NAMES } from '../assets/icons';
 export const PROP_ASSETS = PROP_ASSET_IDS;
 export const ENVIRONMENTS = ['neutral', 'room', 'bedroom', 'kitchen', 'outdoors.park', 'street'] as const;
 export const TIMES = ['day', 'evening', 'night'] as const;
@@ -69,7 +70,7 @@ export const Shape = z.discriminatedUnion('type', [
   z.object({ type: z.literal('text'), id: Id, x: z.number(), y: z.number(), text: z.string().max(40), size: z.number().min(4).max(60), weight: z.number().min(100).max(900).optional(), fill: z.string().optional(), anchor: z.enum(['start', 'middle', 'end']).optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0),
     /** Text in a word scene always sits on white: a pill, a speech bubble (with `tail` pointing at something) or a panel that can slide in from an edge. `none` is allowed only in ui scenes. */
     bg: z.enum(['pill', 'bubble', 'panel', 'none']).default('pill'), tail: z.object({ x: z.number(), y: z.number() }).strict().optional(), pad: z.number().min(0).max(30).optional() }).strict(),
-  z.object({ type: z.literal('icon'), id: Id, icon: z.enum(['check', 'cross', 'star', 'arrow-right', 'arrow-up', 'arrow-down', 'arc-arrow', 'flag', 'heart', 'exclaim']), x: z.number(), y: z.number(), size: z.number().min(4).max(120), fill: z.string().optional(), stroke: z.string().optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0) }).strict(),
+  z.object({ type: z.literal('icon'), id: Id, icon: z.enum(ICON_NAMES), x: z.number(), y: z.number(), size: z.number().min(4).max(120), fill: z.string().optional(), stroke: z.string().optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0) }).strict(),
 ]);
 
 const Target = z.string().min(1); // actor / prop / shape id
@@ -117,6 +118,15 @@ export const Action = z.discriminatedUnion('action', [
     effect: z.array(z.object({ prop: Id.optional(), key: z.string(), to: z.union([z.number(), z.string(), z.boolean()]), from: z.number().optional(), at: z.number().min(0).max(1).optional() }).strict()).default([]),
     /** where on the target the hand works: an offset from the target's `mouth` anchor */
     offset: Pt.optional(), bothHands: z.boolean().default(false) }).strict(),
+  /** Speak: a speech bubble with an icon or a short text follows the head; the mouth moves; `to` makes both face each other. Mood sets brows/mouth. */
+  z.object({ ...Base, action: z.literal('say'), actor: Id, icon: z.enum(ICON_NAMES).optional(), text: z.string().max(14).optional(), mood: z.enum(['neutral', 'happy', 'angry', 'sad', 'question', 'surprised']).default('neutral'), to: Id.optional(), durationMs: Dur.default(1600), gesture: z.boolean().default(true) }).strict(),
+  /** A sound comes from a thing or a person: arcs ")))" or impact marks beside it. */
+  z.object({ ...Base, action: z.literal('sound'), target: Target, kind: z.enum(['hum', 'ring', 'bark', 'thump', 'crunch', 'splash']).default('hum'), durationMs: Dur.default(1500) }).strict(),
+  /** Hand a held prop to another actor: both reach, the prop changes hands midway. */
+  z.object({ ...Base, action: z.literal('give'), from: Id, to: Id, prop: Id, durationMs: Dur.default(1400) }).strict(),
+  /** Put a held prop down on a prop (its top/mouth) or at a point; `take` picks it up (alias of grab). */
+  z.object({ ...Base, action: z.literal('put'), actor: Id, prop: Id, on: Id.optional(), at: Pt.optional(), z: z.number().int().optional(), durationMs: Dur.default(700) }).strict(),
+  z.object({ ...Base, action: z.literal('take'), actor: Id, prop: Id, hand: z.enum(['left', 'right']).default('left'), durationMs: Dur.default(600) }).strict(),
   /** Hot fat spatters out of the pan; the actor (if given) flinches. */
   z.object({ ...Base, action: z.literal('splash'), pan: Id, actor: Id.optional(), durationMs: Dur.default(900) }).strict(),
 ]);
@@ -182,8 +192,12 @@ export const Scene = z.object({
   s.timeline.forEach((a, i) => {
     const path = ['timeline', i];
     if ('actor' in a && typeof a.actor === 'string' && !actorIds.has(a.actor)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown actor "${a.actor}"`, path });
+    if (a.action === 'give') { for (const k of ['from', 'to'] as const) if (!actorIds.has(a[k])) ctx.addIssue({ code: 'custom', message: `give: unknown actor "${a[k]}"`, path }); }
+    if (a.action === 'say' && !a.icon && !a.text) ctx.addIssue({ code: 'custom', message: 'say needs an icon or a text', path });
+    if (a.action === 'say' && a.to && !ids.has(a.to)) ctx.addIssue({ code: 'custom', message: `say: unknown target "${a.to}"`, path });
     const rec = a as unknown as Record<string, unknown>;
-    for (const k of ['prop', 'from', 'into', 'on', 'ball', 'pan', 'tool'] as const) if (a.action !== 'set' && a.action !== 'tween' && typeof rec[k] === 'string' && !propIds.has(rec[k] as string)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown prop "${rec[k]}"`, path });
+    for (const k of ['prop', 'from', 'into', 'on', 'ball', 'pan', 'tool'] as const) if (a.action !== 'set' && a.action !== 'tween' && a.action !== 'give' && !(a.action === 'say' && k === 'on') && typeof rec[k] === 'string' && !propIds.has(rec[k] as string)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown prop "${rec[k]}"`, path });
+    if (a.action === 'give' && !propIds.has(a.prop)) ctx.addIssue({ code: 'custom', message: `give: unknown prop "${a.prop}"`, path });
     if ('target' in a && typeof a.target === 'string' && !ids.has(a.target)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown target "${a.target}"`, path });
     if (a.t > s.durationMs) ctx.addIssue({ code: 'custom', message: `${a.action} starts at ${a.t} ms, after the scene ends (${s.durationMs} ms)`, path });
     const d = 'durationMs' in a ? a.durationMs : 0;

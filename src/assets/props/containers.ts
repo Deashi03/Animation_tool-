@@ -51,7 +51,7 @@ const S: Record<ContainerShape, PropSpec> = {
         f > 0.05 ? ellipse(0, top, 13.5, 2.4, { fill: mix(contentsCol(s, '#9fd0ea'), '#ffffff', 0.25), stroke: INK, sw: 1 }) : g([]),
         ...bubbles(0, top, 27, boil, ph),
         ellipse(0, -16, 15, 3, { fill: 'none', stroke: INK, sw: 2 }),
-        lid > 0.05 ? g([ellipse(0, -17, 15.5, 3.2, { fill: C.grey, stroke: INK, sw: 1.8 }), circle(0, -19.5, 1.8, { fill: C.dark, stroke: INK, sw: 1 })], { y: -(1 - lid) * 14 }, { opacity: lid }) : g([]),
+        lid > 0.05 ? g([ellipse(0, -17, 15.5, 3.2, { fill: C.grey, stroke: INK, sw: 1.8 }), circle(0, -19.5, 1.8, { fill: C.dark, stroke: INK, sw: 1 })], { y: -(1 - lid) * 14 - (boil > 0.8 ? Math.abs(Math.sin(ph * 14)) * 1.6 : 0), rotate: boil > 0.8 ? Math.sin(ph * 14) * 3 : 0, px: 0, py: -17 }, { opacity: lid }) : g([]),
         ...steam(0, -16, st * (lid > 0.5 ? 0.3 : 1), ph),
       ]); },
   },

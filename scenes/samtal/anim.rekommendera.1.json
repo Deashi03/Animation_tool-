@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.rekommendera.1",
+  "template": "communicate",
+  "senseId": "s.rekommendera.1",
+  "titleSv": "rekommendera",
+  "meaningHint": "Säga att något är bra och att någon borde välja det",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 1500,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "c",
+      "at": {
+        "x": 38,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.85
+    },
+    {
+      "id": "q",
+      "variant": "b",
+      "at": {
+        "x": 84,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.85
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": -1,
+      "scale": 0.7
+    },
+    {
+      "id": "plate",
+      "asset": "container.plate",
+      "at": {
+        "x": 60,
+        "y": 79
+      },
+      "z": 0,
+      "scale": 0.8,
+      "state": {
+        "food": 1
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 3600
+    },
+    {
+      "t": 200,
+      "action": "lookAt",
+      "actor": "p",
+      "target": "plate"
+    },
+    {
+      "t": 400,
+      "action": "say",
+      "actor": "p",
+      "icon": "star",
+      "mood": "happy",
+      "to": "q",
+      "durationMs": 1800
+    },
+    {
+      "t": 1400,
+      "action": "express",
+      "actor": "q",
+      "emotion": "happy",
+      "durationMs": 400
+    },
+    {
+      "t": 2400,
+      "action": "say",
+      "actor": "q",
+      "icon": "check",
+      "mood": "happy",
+      "to": "p",
+      "durationMs": 900,
+      "gesture": false
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "one points at a dish with a star in the bubble; the other agrees"
+  },
+  "contrast": {
+    "with": [
+      "anim.klaga.1"
+    ],
+    "distinctiveFeatures": [
+      "has:say-icon:star",
+      "has:say-mood:happy"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "samtal",
+    "confusableWith": [
+      "s.föreslå.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

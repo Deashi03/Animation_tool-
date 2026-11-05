@@ -172,7 +172,7 @@ describe('physics rules (the golden rule)', () => {
     const body = bboxOfId(f.root, 'entity.p')!, blanket = bboxOfId(f.root, 'entity.blanket')!;
     expect(blanket.y1).toBeLessThan(body.y1 + 4); // covers the body's top edge
     expect(blanket.x2).toBeGreaterThan(body.x2 - 2); // covers the feet
-    const k = compileScene(scenes.get('anim.sportig.1')!);
+    const k = compileScene(scenes.get('anim.kicka.1')!);
     const ys = Array.from({ length: 19 }, (_, i) => num(k, 'ball.y', i * 40));
     const minY = Math.min(...ys), maxY = Math.max(...ys);
     expect(maxY - minY).toBeGreaterThan(12); // it really flies

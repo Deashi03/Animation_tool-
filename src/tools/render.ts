@@ -6,7 +6,7 @@ import { compileScene, type CompiledScene } from '../compiler/compile';
 import { renderFrame } from '../engine/render';
 import { frameToSvg } from '../engine/svgString';
 import type { Scene } from '../schema/scene';
-import { REVIEW_DIR } from './scenes';
+import { reviewDir } from './scenes';
 
 export function posterSvg(scene: Scene, size = 180, showLabel = false): string {
   const c = compileScene(scene);
@@ -61,7 +61,7 @@ export async function htmlToPng(htmlFile: string, pngFile: string, width = 1240)
   return true;
 }
 export async function writeReview(kind: 'strips' | 'compare' | 'posters' | 'sheet', name: string, html: string, width = 1240): Promise<{ html: string; png: string | null }> {
-  const dir = path.join(REVIEW_DIR, kind); fs.mkdirSync(dir, { recursive: true });
+  const dir = path.join(reviewDir(), kind); fs.mkdirSync(dir, { recursive: true });
   const h = path.join(dir, `${name}.html`), p = path.join(dir, `${name}.png`);
   fs.writeFileSync(h, page(html, width));
   const ok = await htmlToPng(h, p, width);

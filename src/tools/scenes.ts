@@ -5,7 +5,9 @@ import { Scene, type Scene as SceneT } from '../schema/scene';
 import { migrateScene } from '../schema/migrate';
 
 export const SCENES_DIR = path.resolve(process.cwd(), 'scenes');
-export const REVIEW_DIR = path.resolve(process.cwd(), 'review');
+export const reviewDir = (): string => path.resolve(process.cwd(), 'review');
+/** @deprecated use reviewDir() */
+export const REVIEW_DIR = reviewDir();
 
 export function sceneFiles(dir = SCENES_DIR): string[] {
   if (!fs.existsSync(dir)) return [];

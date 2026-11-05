@@ -2,7 +2,7 @@
 
 **Version 2 · 2026-11-05.** Ersätter den första specifikationen (bevarad som bilaga A längst ner – den gäller fortfarande där inget här säger annat). Version 2 är skriven av Claude till Claude efter produktägarens utvärdering av Swechans bildpilot 0.6 och innehåller tre saker som saknades: *varför* verktyget behövs (vad som gick fel med stillbilderna), den nya **visualiseringspolicyn med tre typer**, och en konkret, kodnära plan för ett verktyg som gör att Claude kan producera **många, begripliga, enhetliga animationer snabbt** – utan löpande kostnader.
 
-Läs hela dokumentet innan du skriver kod. Läs därefter Swechans repository enligt avsnitt 4.
+Läs hela dokumentet innan du skriver kod. Läs därefter Swechans repository enligt avsnitt 4. **Arbetar du med scener (inte motorn):** läs `README.md` (arbetsflödet), `docs/SCENE_FORMAT.md` och `docs/STYLE_GUIDE.md`, titta på bildremsorna, och lägg aldrig till TypeScript för ett enskilt ord – saknas en byggsten, lägg till den i `assets/`, `motions/` eller `actions/` med test och remsa.
 
 ---
 
@@ -10,7 +10,7 @@ Läs hela dokumentet innan du skriver kod. Läs därefter Swechans repository en
 
 Bygg ett kostnadsfritt, statiskt, AI-styrt verktyg (TypeScript/React/Vite/SVG) som från **strukturerad scendata** renderar **deterministiska, pedagogiska 2D-animationer** för språkinlärningsappen Swechan, med en arbetsgång där Claude kan skapa, **se**, jämföra, validera och exportera animationer i stor skala, och där produktägaren kan granska dem i en enkel webbstudio.
 
-- **Repository:** `Deashi03/Animation_tool-` (detta repo). I dag innehåller det bara denna fil och en README.
+- **Repository:** `Deashi03/Animation_tool-` (detta repo). **Status 2026-11-05: fas 1 levererad** – se `README.md`, `docs/CHANGELOG.md`, `docs/REVIEW_LOG.md`. Nästa steg: fas 2 enligt avsnitt 12 och `docs/ROADMAP.md`.
 - **Konsument:** `Deashi03/Swechan` (React 19, TypeScript, Vite, Zod, GitHub Pages, local-first-PWA). Ändras **inte** i detta uppdrag.
 - **Publicering:** GitHub Pages på `https://deashi03.github.io/Animation_tool-/` (kräver engångsinställning, se avsnitt 12).
 
@@ -71,7 +71,15 @@ Produktägarens beslut 2026-11-05. Detta ersätter 0.6-pilotens "illustration el
 - `senseId` (Swechans `s.<lemma>.<n>`), `kind` (`animation | image | symbol`), `quiz` (entydig nog för bildfrågor), `group` (visuell grupp; distraktorer tas aldrig från samma grupp), `confusableWith` (betydelser som får aldrig bli alternativ), `reviewStatus` (`ai-draft | validated | reviewed`), `posterMs` (vilken bildruta som representerar animationen som stillbild).
 - **Symboler och känslor är aldrig `quiz: true`.** Animationer är `quiz: true` bara om posterbilden *ensam* är entydig (regeln i Swechan gäller stillbilden i övningen, inte uppspelningen).
 
-### 2.3 Vad policyn betyder för Swechan (senare, separat uppdrag)
+### 2.3 Rörelsekvalitet (produktägaren 2026-11-05)
+
+Animationerna ska vara **snygga, mjuka och proffsiga – aldrig kusliga**. Produktägaren såg i de första skisserna att armarna ibland hamnade onaturligt. Därför: ledgränser i riggen (armbågar bara framåt, knän bara bakåt), eased övergångar, cykler från sinusfunktioner, anticipation före varje rörelse och ett lugnt slutläge. En pose som ser fel ut i bildremsan är ett fel, även om den validerar. Nivå B valdes som detaljnivå (bläckkontur, läsbart ansikte, vanthänder, skor) – tillräcklig för att allt pedagogiskt syns utan att bli svår att animera konsekvent.
+
+### 2.4 Motorn är generell (produktägaren 2026-11-05)
+
+Samma motor ska även göra **gränssnittsanimationer** för Swechan – t.ex. den gröna resultatpanelen som glider upp vid rätt svar, start och avslut av en modul – och vara användbar i andra program. Därför: `kind: "ui"`-scener med fria former (`shapes`), ikoner och `tween`/`set`, valfri dukstorlek, transparent bakgrund, Fjord-färger som palettnycklar, och **ingen Swechan-specifik kod i `engine/`**. Två referensscener finns: `ui.feedback.correct` och `ui.module.complete`.
+
+### 2.5 Vad policyn betyder för Swechan (senare, separat uppdrag)
 
 Swechans `wordImages.json` (en bild per betydelse, `illustration | photo`) ska på sikt bli ett register över **visualiseringar** (`animation | image | symbol`). Förslag i avsnitt 11. **Rör inte Swechan nu.**
 

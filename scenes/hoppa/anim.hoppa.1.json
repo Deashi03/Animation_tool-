@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.hoppa.1",
+  "senseId": "s.hoppa.1",
+  "titleSv": "hoppa",
+  "meaningHint": "Lämna marken med båda fötterna och landa igen",
+  "category": "action",
+  "durationMs": 3200,
+  "loop": true,
+  "holdMs": 200,
+  "posterMs": 1500,
+  "environment": {
+    "id": "outdoors.park",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "c",
+      "at": {
+        "x": 40,
+        "y": 100
+      },
+      "facing": "right"
+    }
+  ],
+  "props": [
+    {
+      "id": "stone",
+      "asset": "box",
+      "at": {
+        "x": 62,
+        "y": 100
+      },
+      "scale": 0.5,
+      "color": "grey",
+      "z": -1
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 500
+    },
+    {
+      "t": 500,
+      "action": "jump",
+      "actor": "p",
+      "height": 24,
+      "to": {
+        "x": 84,
+        "y": 100
+      },
+      "durationMs": 1300
+    },
+    {
+      "t": 1900,
+      "action": "express",
+      "actor": "p",
+      "emotion": "happy",
+      "durationMs": 400
+    },
+    {
+      "t": 2300,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 900
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "both feet in the air over the stone"
+  },
+  "contrast": {
+    "with": [
+      "anim.springa.1"
+    ],
+    "distinctiveFeatures": [
+      "peaklift:p>=18"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": true,
+    "group": "rörelse",
+    "confusableWith": [
+      "s.hoppa-över.1"
+    ]
+  }
+}

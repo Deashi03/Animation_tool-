@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.öppna.1",
+  "senseId": "s.öppna.1",
+  "titleSv": "öppna",
+  "meaningHint": "Göra så att något stängt blir öppet, t.ex. en dörr",
+  "category": "action",
+  "durationMs": 3200,
+  "loop": true,
+  "holdMs": 400,
+  "posterMs": 2000,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 40,
+        "y": 100
+      },
+      "facing": "right"
+    }
+  ],
+  "props": [
+    {
+      "id": "door",
+      "asset": "door",
+      "at": {
+        "x": 86,
+        "y": 100
+      },
+      "z": -1
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 400
+    },
+    {
+      "t": 400,
+      "action": "open",
+      "actor": "p",
+      "prop": "door",
+      "durationMs": 1400
+    },
+    {
+      "t": 1900,
+      "action": "express",
+      "actor": "p",
+      "emotion": "content",
+      "durationMs": 300
+    },
+    {
+      "t": 2000,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 1200
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p",
+      "door"
+    ],
+    "feature": "the hand on the handle and the door swinging open"
+  },
+  "contrast": {
+    "with": [
+      "anim.stänga.1"
+    ],
+    "distinctiveFeatures": [
+      "end:door.angle>=0.9",
+      "motion:p>=0.3"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "dörr",
+    "confusableWith": [
+      "s.stänga.1"
+    ],
+    "note": "quiz false: posterbilden (öppen dörr) kan också läsas som 'dörr' eller 'öppen'."
+  }
+}

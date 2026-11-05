@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.sportig.1",
+  "senseId": "s.sportig.1",
+  "titleSv": "sportig",
+  "meaningHint": "Som hör till sport och träning; aktiv och vältränad",
+  "category": "property",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 0,
+  "posterMs": 900,
+  "environment": { "id": "outdoors.park", "time": "day" },
+  "actors": [{ "id": "p", "variant": "b", "at": { "x": 58, "y": 100 }, "facing": "right", "wardrobe": { "top": "orange", "bottom": "dark", "shoes": "white", "headband": "red", "hairStyle": "bun" } }],
+  "timeline": [
+    { "t": 0, "action": "exercise", "actor": "p", "kind": "jog", "durationMs": 2200 },
+    { "t": 2200, "action": "exercise", "actor": "p", "kind": "stretch", "durationMs": 2000 }
+  ],
+  "focus": { "targets": ["p"], "feature": "sportswear, headband, jogging then stretching" },
+  "contrast": { "with": ["anim.välklädd.1"], "distinctiveFeatures": ["motion:p>=0.7"] },
+  "pedagogy": { "quizEligible": false, "group": "stil", "confusableWith": ["s.träningskläder.1", "s.springa.1"], "note": "Egenskap visad som aktivitet + kläder; inte entydig nog för bildfrågor." }
+}

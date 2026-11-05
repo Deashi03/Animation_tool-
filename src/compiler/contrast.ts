@@ -1,0 +1,81 @@
+/**
+ * Machine-checkable contrast claims. Supported forms:
+ *   actor.<id>.eyes:<open|half|closed|wide>[>=fraction]   (fraction of the scene, default 0.6)
+ *   actor.<id>.posture:<standing|reclined|lying>[>=fraction]
+ *   environment.time:<day|evening|night>
+ *   prop:<asset>                                           (scene contains a prop of that asset)
+ *   motion:<actor>[>=fraction]                             (actor travels or any joint moves)
+ *   speed:<actor>>=<units/s> | speed:<actor><=<units/s>    (average horizontal speed while travelling)
+ *   airborne:<actor>[>=fraction|<=fraction]                (both feet off the ground: lift > 3)
+ *   end:<prop>.<stateKey>>=value | <=value                 (prop state at the end of the scene)
+ *   peaklift:<actor>>=units | <=units                       (highest point the hips reach above standing)
+ */
+import { JOINTS } from '../schema/scene';
+import { fractionEqual, sample, sampleNumber } from '../engine/track';
+import type { CompiledScene } from './compile';
+import type { Problem } from './validate';
+import type { Scene } from '../schema/scene';
+import { compileScene } from './compile';
+
+export function evaluateFeature(c: CompiledScene, feature: string): { ok: boolean; detail: string } {
+  const [lhs, rhsRaw] = feature.split(':');
+  if (!lhs || rhsRaw === undefined) return { ok: false, detail: `cannot parse "${feature}"` };
+  const le = rhsRaw.includes('<=');
+  const [rhs, fracRaw] = le ? rhsRaw.split('<=') : rhsRaw.split('>=');
+  const minFrac = fracRaw ? Number(fracRaw) : 0.6;
+  const D = c.durationMs;
+  if (lhs === 'speed') {
+    const a = rhs!; let dist = 0, moving = 0;
+    for (let t = 0; t < D; t += 80) { const dx = Math.abs(sampleNumber(c.tracks, `${a}.x`, t + 80, 0) - sampleNumber(c.tracks, `${a}.x`, t, 0)); if (dx > 0.2) { dist += dx; moving += 80; } }
+    const v = moving ? dist / (moving / 1000) : 0;
+    return { ok: le ? v <= minFrac : v >= minFrac, detail: `${a} travels at ${v.toFixed(0)} units/s` };
+  }
+  if (lhs === 'airborne') {
+    const a = rhs!; let n = 0, hit = 0;
+    for (let t = 0; t <= D; t += 40) { n++; if (sampleNumber(c.tracks, `${a}.lift`, t, 0) > 3) hit++; }
+    return { ok: le ? hit / n <= minFrac : hit / n >= minFrac, detail: `${a} is airborne ${((hit / n) * 100).toFixed(0)}% of the time` };
+  }
+  if (lhs === 'peaklift') {
+    const a = rhs!; let peak = 0; for (let t = 0; t <= D; t += 40) peak = Math.max(peak, sampleNumber(c.tracks, `${a}.lift`, t, 0));
+    return { ok: le ? peak <= minFrac : peak >= minFrac, detail: `${a} peak lift is ${peak.toFixed(1)}` };
+  }
+  if (lhs === 'end') {
+    const [prop, key] = rhs!.split('.'); const v = sampleNumber(c.tracks, `${prop}.s.${key}`, D, NaN);
+    return { ok: Number.isNaN(v) ? false : le ? v <= minFrac : v >= minFrac, detail: `${prop}.${key} ends at ${Number.isNaN(v) ? 'undefined' : v.toFixed(2)}` };
+  }
+  if (lhs === 'environment.time') return { ok: c.scene.environment.time === rhs, detail: `environment.time is ${c.scene.environment.time}` };
+  if (lhs === 'prop') return { ok: c.scene.props.some((p) => p.asset === rhs), detail: `props: ${c.scene.props.map((p) => p.asset).join(', ') || 'none'}` };
+  if (lhs === 'motion') {
+    const a = rhs!; let moved = 0;
+    for (let t = 0; t <= D; t += 80) { const x = sampleNumber(c.tracks, `${a}.x`, t, 0), x2 = sampleNumber(c.tracks, `${a}.x`, t + 80, 0); const jointMoved = JOINTS.some((j) => Math.abs(sampleNumber(c.tracks, `${a}.j.${j}`, t, 0) - sampleNumber(c.tracks, `${a}.j.${j}`, t + 80, 0)) > 1); if (Math.abs(x - x2) > 0.5 || jointMoved) moved++; }
+    const frac = moved / Math.max(1, Math.floor(D / 80));
+    return { ok: frac >= minFrac, detail: `${a} moves during ${(frac * 100).toFixed(0)}% of the scene` };
+  }
+  const m = /^actor\.([^.]+)\.(eyes|posture)$/.exec(lhs);
+  if (m) {
+    const [, a, what] = m;
+    if (what === 'eyes') { const frac = fractionEqual(c.tracks, `${a}.eyes`, 0, D, rhs!); return { ok: frac >= minFrac, detail: `${a}.eyes is "${rhs}" ${(frac * 100).toFixed(0)}% of the time` }; }
+    let hit = 0, n = 0;
+    for (let t = 0; t <= D; t += 80) { n++; const rot = Math.abs(sampleNumber(c.tracks, `${a}.bodyRotate`, t, 0)), torso = sampleNumber(c.tracks, `${a}.j.torso`, t, 0); const posture = rot > 60 ? 'lying' : torso < -12 ? 'reclined' : 'standing'; if (posture === rhs) hit++; }
+    return { ok: hit / n >= minFrac, detail: `${a} posture is "${rhs}" ${((hit / n) * 100).toFixed(0)}% of the time` };
+  }
+  void sample;
+  return { ok: false, detail: `unknown feature "${feature}"` };
+}
+
+export function checkContrast(c: CompiledScene, others: Map<string, Scene>): Problem[] {
+  const out: Problem[] = [];
+  const contrast = c.scene.contrast!;
+  for (const f of contrast.distinctiveFeatures) {
+    const r = evaluateFeature(c, f);
+    if (!r.ok) out.push({ level: 'error', message: `contrast feature "${f}" does not hold in this scene (${r.detail})` });
+  }
+  for (const otherId of contrast.with) {
+    const other = others.get(otherId);
+    if (!other) { out.push({ level: 'warning', message: `contrast partner "${otherId}" not found – cannot verify the difference` }); continue; }
+    const oc = compileScene(other);
+    const differs = contrast.distinctiveFeatures.some((f) => !evaluateFeature(oc, f).ok);
+    if (!differs) out.push({ level: 'error', message: `every distinctive feature also holds in "${otherId}" – the pair is not visibly different` });
+  }
+  return out;
+}

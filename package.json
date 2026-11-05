@@ -1,0 +1,40 @@
+{
+  "name": "animation-tool",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "node scripts/e2e-smoke.mjs",
+    "anim:new": "vite-node scripts/cli/anim-new.ts",
+    "anim:validate": "vite-node scripts/cli/anim-validate.ts",
+    "anim:strip": "vite-node scripts/cli/anim-strip.ts",
+    "anim:compare": "vite-node scripts/cli/anim-compare.ts",
+    "anim:poster": "vite-node scripts/cli/anim-poster.ts",
+    "anim:sheet": "vite-node scripts/cli/anim-sheet.ts",
+    "anim:report": "vite-node scripts/cli/anim-report.ts",
+    "anim:export": "vite-node scripts/cli/anim-export.ts"
+  },
+  "dependencies": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "6.6.3",
+    "@testing-library/react": "16.3.0",
+    "@types/node": "22.15.3",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
+    "@vitejs/plugin-react": "4.5.2",
+    "jsdom": "26.1.0",
+    "typescript": "5.8.3",
+    "vite": "6.3.5",
+    "vitest": "3.2.4"
+  }
+}

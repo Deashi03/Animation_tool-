@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "animationId": "ui.module.complete",
+  "kind": "ui",
+  "titleSv": "Modul klar",
+  "meaningHint": "Flaggan reses och stjärnorna poppar när en modul är klar",
+  "category": "ui",
+  "durationMs": 1600,
+  "loop": false,
+  "holdMs": 1000,
+  "posterMs": 1500,
+  "canvas": { "w": 240, "h": 160 },
+  "shapes": [
+    { "type": "circle", "id": "disc", "cx": 120, "cy": 80, "r": 44, "fill": "uiAccent", "opacity": 0, "z": 0 },
+    { "type": "icon", "id": "flag", "icon": "flag", "x": 120, "y": 80, "size": 56, "fill": "uiAccent", "stroke": "uiText", "opacity": 0, "z": 2 },
+    { "type": "icon", "id": "s1", "icon": "star", "x": 62, "y": 44, "size": 20, "opacity": 0, "z": 3 },
+    { "type": "icon", "id": "s2", "icon": "star", "x": 180, "y": 40, "size": 24, "opacity": 0, "z": 3 },
+    { "type": "icon", "id": "s3", "icon": "star", "x": 176, "y": 118, "size": 16, "opacity": 0, "z": 3 },
+    { "type": "text", "id": "title", "x": 120, "y": 150, "text": "Modulen är klar!", "size": 15, "weight": 800, "fill": "uiText", "anchor": "middle", "opacity": 0, "z": 1 }
+  ],
+  "timeline": [
+    { "t": 0, "action": "tween", "target": "disc", "prop": "opacity", "to": 1, "durationMs": 200, "ease": "easeOut" },
+    { "t": 0, "action": "tween", "target": "disc", "prop": "scale", "from": 0.3, "to": 1, "durationMs": 420, "ease": "overshoot" },
+    { "t": 200, "action": "set", "target": "flag", "prop": "opacity", "value": 1 },
+    { "t": 200, "action": "tween", "target": "flag", "prop": "progress", "from": 0, "to": 1, "durationMs": 500, "ease": "easeOut" },
+    { "t": 600, "action": "tween", "target": "s1", "prop": "opacity", "to": 1, "durationMs": 120, "ease": "easeOut" },
+    { "t": 600, "action": "tween", "target": "s1", "prop": "progress", "from": 0, "to": 1, "durationMs": 380, "ease": "overshoot" },
+    { "t": 720, "action": "tween", "target": "s2", "prop": "opacity", "to": 1, "durationMs": 120, "ease": "easeOut" },
+    { "t": 720, "action": "tween", "target": "s2", "prop": "progress", "from": 0, "to": 1, "durationMs": 380, "ease": "overshoot" },
+    { "t": 840, "action": "tween", "target": "s3", "prop": "opacity", "to": 1, "durationMs": 120, "ease": "easeOut" },
+    { "t": 840, "action": "tween", "target": "s3", "prop": "progress", "from": 0, "to": 1, "durationMs": 380, "ease": "overshoot" },
+    { "t": 900, "action": "tween", "target": "title", "prop": "opacity", "to": 1, "durationMs": 400, "ease": "easeOut" },
+    { "t": 900, "action": "tween", "target": "title", "prop": "y", "from": 158, "to": 150, "durationMs": 400, "ease": "easeOut" }
+  ],
+  "pedagogy": { "quizEligible": false, "confusableWith": [] },
+  "label": { "show": "never" }
+}

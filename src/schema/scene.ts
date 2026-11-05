@@ -224,3 +224,6 @@ export type ShapeDef = z.infer<typeof Shape>;
 export function formatIssues(err: z.ZodError): string[] {
   return err.issues.map((i) => `${i.path.length ? i.path.map((p) => (typeof p === 'number' ? `[${p}]` : p)).join('.').replace(/\.\[/g, '[') + ': ' : ''}${i.message}`);
 }
+
+/** The closed set of action names (for tools that check recipes). */
+export const ACTION_NAMES: readonly string[] = Action.options.map((o) => (o.shape.action as z.ZodLiteral<string>).value);

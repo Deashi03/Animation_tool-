@@ -9,7 +9,7 @@
   "durationMs": 3400,
   "loop": true,
   "holdMs": 900,
-  "posterMs": 2800,
+  "posterMs": 3000,
   "environment": {
     "id": "bedroom",
     "time": "day"
@@ -25,7 +25,8 @@
       "facing": "right",
       "wardrobe": {
         "top": "navy",
-        "sleeves": "long"
+        "sleeves": "long",
+        "bottom": "tan"
       }
     }
   ],

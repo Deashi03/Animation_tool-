@@ -9,7 +9,7 @@
   "durationMs": 3800,
   "loop": true,
   "holdMs": 900,
-  "posterMs": 2200,
+  "posterMs": 2600,
   "environment": {
     "id": "bedroom",
     "time": "day"
@@ -41,36 +41,28 @@
       "garment": "hat",
       "on": true,
       "value": "red",
-      "durationMs": 1400
+      "durationMs": 1600
     },
     {
       "t": 1900,
-      "action": "dress",
-      "actor": "p",
-      "garment": "glasses",
-      "on": true,
-      "durationMs": 1300
-    },
-    {
-      "t": 3200,
       "action": "idle",
       "actor": "p",
-      "durationMs": 600
+      "durationMs": 1900
     }
   ],
   "focus": {
     "targets": [
       "p"
     ],
-    "feature": "a red hat goes on the head, then glasses on the nose"
+    "feature": "a red hat goes on the head"
   },
   "contrast": {
     "with": [
       "anim.ta-på-sig.1"
     ],
     "distinctiveFeatures": [
-      "wear:p.glasses>=1",
-      "wear:p.hat==red"
+      "wear:p.hat==red",
+      "wear-start:p.hat==none"
     ]
   },
   "pedagogy": {

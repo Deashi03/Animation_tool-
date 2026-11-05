@@ -29,7 +29,7 @@ const outlinedLimb = (pts: P[], col: string, sw: number): FrameNode[] => [
 ];
 /** An arm: sleeve all the way, or short/rolled sleeve (forearm in skin, a cuff at the elbow when rolled). */
 const arm = (pts: P[], w: Wardrobe, sw: number): FrameNode[] => w.sleeves && w.sleeves !== 'long'
-  ? [...outlinedLimb([pts[0]!, pts[1]!], w.top, sw), ...outlinedLimb([pts[1]!, pts[2]!], w.skin, sw - 1.2), ...(w.sleeves === 'rolled' ? [circle(pts[1]![0], pts[1]![1], sw / 2 + 0.6, { fill: w.top, stroke: INK, sw: 1.6 })] : [])]
+  ? [...outlinedLimb([pts[0]!, pts[1]!], w.top, sw), ...outlinedLimb([pts[1]!, pts[2]!], w.skin, sw - 1.2), ...(w.sleeves === 'rolled' ? [circle(pts[1]![0], pts[1]![1], sw / 2 + 1.4, { fill: w.top, stroke: INK, sw: 1.8 })] : [])]
   : outlinedLimb(pts, w.top, sw);
 /** A leg: trousers all the way, or shorts (thigh in cloth, shin in skin, a little thinner). */
 const leg = (pts: P[], w: Wardrobe, sw: number): FrameNode[] => w.shorts

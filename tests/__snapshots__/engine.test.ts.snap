@@ -108,9 +108,9 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "0b2a676d3a6c",
   ],
   "anim.kavla-upp.1": [
-    "9dc29a8d8d68",
-    "e7effeb84870",
-    "efdae9fca283",
+    "47b69eeb121d",
+    "bd3f16864339",
+    "cfb430f378fe",
   ],
   "anim.kavla.1": [
     "78dbd6797f9c",
@@ -139,7 +139,7 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
   ],
   "anim.knyta.1": [
     "18301450d494",
-    "d0241b48db2d",
+    "b1de0ecd91e4",
     "8d2f3de85725",
   ],
   "anim.knäppa-upp.1": [
@@ -314,8 +314,8 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
   ],
   "anim.sätta-på-sig.1": [
     "297d07568c97",
-    "be8a60023f3f",
-    "052eaaecc0a9",
+    "bff344655b09",
+    "6f5f4c5e31f1",
   ],
   "anim.ta-av-sig.1": [
     "297d07568c97",

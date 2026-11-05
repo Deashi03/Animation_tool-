@@ -514,10 +514,15 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
         tween(tr, `${A}.w.zipper`, t0 + 350, end - 250, a.on ? 1 : 0, 'easeInOut');
         break; }
       case 'laces': {
-        M.poseTo(tr, A, t0, t0 + d * 0.3, { torso: 42, head: -6, thighL: 72, shinL: -84, uArmL: 85, fArmL: 20, uArmR: 60, fArmR: 30 }, 'easeInOut');
-        for (let t = t0 + d * 0.3; t + 300 < end - d * 0.25; t += 300) { tween(tr, M.J(A, 'fArmL'), t, t + 150, 32, 'easeInOut'); tween(tr, M.J(A, 'fArmL'), t + 150, t + 300, 18, 'easeInOut'); }
+        // crouch on one knee: the knot is tied at the front foot, hands down there
+        M.poseTo(tr, A, t0, t0 + d * 0.3, { torso: 40, head: -4, thighL: 70, shinL: -110, thighR: 20, shinR: -100, footL: -10 }, 'easeInOut');
+        tween(tr, `${A}.lift`, t0, t0 + d * 0.3, -14, 'easeInOut');
+        { const [ax, ay] = actorPos(ctx, A, t0), f = facingAt(ctx, A, t0), sc = actorScale(ctx, A, t0); const foot: P = [ax + f * 12 * sc, ay - 4 * sc];
+          M.poseTo(tr, A, t0 + d * 0.1, t0 + d * 0.35, { ...reachJoints(ctx, A, 'left', [foot[0] + f * 2, foot[1] - 2], t0 + d * 0.3), ...reachJoints(ctx, A, 'right', [foot[0] - f * 2, foot[1] - 1], t0 + d * 0.3) }, 'easeInOut');
+          for (let t = t0 + d * 0.35; t + 300 < end - d * 0.25; t += 300) { tween(tr, M.J(A, 'fArmL'), t, t + 150, (sampleNumber(tr, M.J(A, 'fArmL'), t0 + d * 0.35, 40)) + 14, 'easeInOut'); tween(tr, M.J(A, 'fArmL'), t + 150, t + 300, sampleNumber(tr, M.J(A, 'fArmL'), t0 + d * 0.35, 40), 'easeInOut'); } }
+        tween(tr, `${A}.lift`, end - d * 0.25, end, 0, 'easeInOut');
         ensureWardrobeStart(ctx, A, 'laces', a.on ? 1 : 0); addKey(tr, `${A}.w.laces`, { t: t0 + d * 0.6, v: a.on ? 1 : 0, e: 'step' });
-        M.poseTo(tr, A, end - d * 0.25, end, { torso: 0, head: 0, thighL: 0, shinL: 0, uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR }, 'easeInOut');
+        M.poseTo(tr, A, end - d * 0.25, end, { torso: 0, head: 0, thighL: 0, shinL: 0, thighR: 0, shinR: 0, footL: 0, uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR }, 'easeInOut');
         break; }
       case 'sleeves': {
         // the right hand pushes the left sleeve up (or pulls it down), then the other way
@@ -526,7 +531,7 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
         ensureWardrobeStart(ctx, A, 'sleeves', a.on ? 'rolled' : 'long'); addKey(tr, `${A}.w.sleeves`, { t: t0 + d * 0.45, v: a.on ? 'rolled' : 'long', e: 'step' });
         M.poseTo(tr, A, t0 + d * 0.5, t0 + d * 0.7, { uArmR: -40, fArmR: 60, uArmL: 30 + 60, fArmL: 100 }, 'easeInOut');
         M.poseTo(tr, A, t0 + d * 0.7, t0 + d * 0.85, { uArmL: 55 + 60, fArmL: 70 }, 'easeInOut');
-        M.poseTo(tr, A, t0 + d * 0.85, end, { uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR }, 'easeInOut');
+        M.poseTo(tr, A, t0 + d * 0.85, end, { uArmL: 20, fArmL: 80, uArmR: 20, fArmR: 80 }, 'easeInOut'); // forearms out: the rolled sleeves show
         break; }
     }
   },

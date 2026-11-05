@@ -1,0 +1,3358 @@
+{
+ "_comment": "Recept per lemma: mall + handlingar + byggstenar. anim:coverage kontrollerar att byggstenarna finns. Noteringar markerar svaga recept.",
+ "recipes": {
+  "skära": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.knife",
+    "container.board",
+    "food.carrot"
+   ],
+   "note": ""
+  },
+  "hacka": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.knife",
+    "container.board",
+    "food.carrot"
+   ],
+   "note": ""
+  },
+  "halvera": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.knife",
+    "container.board",
+    "food.carrot"
+   ],
+   "note": ""
+  },
+  "vispa": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.whisk",
+    "container.bowl"
+   ],
+   "note": ""
+  },
+  "röra": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.spoon",
+    "container.bowl"
+   ],
+   "note": ""
+  },
+  "blanda": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.spoon",
+    "container.bowl"
+   ],
+   "note": ""
+  },
+  "knåda": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "food.dough"
+   ],
+   "note": ""
+  },
+  "kavla": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.rollingpin",
+    "food.dough"
+   ],
+   "note": ""
+  },
+  "skala": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.peeler",
+    "food.potato"
+   ],
+   "note": ""
+  },
+  "riva": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.grater",
+    "food.cheese"
+   ],
+   "note": "riva = rivjärn; riva (hus) = event med vägg som faller"
+  },
+  "mosa": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.masher",
+    "food.potato"
+   ],
+   "note": ""
+  },
+  "pressa": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.masher",
+    "food.potato"
+   ],
+   "note": ""
+  },
+  "salta": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.shaker",
+    "container.pot"
+   ],
+   "note": ""
+  },
+  "peppra": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.shaker",
+    "container.pot"
+   ],
+   "note": ""
+  },
+  "krydda": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.shaker",
+    "container.pot"
+   ],
+   "note": ""
+  },
+  "strö": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.shaker",
+    "container.pot"
+   ],
+   "note": ""
+  },
+  "söta": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.shaker",
+    "container.pot"
+   ],
+   "note": ""
+  },
+  "bre": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.knife",
+    "food.bread"
+   ],
+   "note": "smörklick på brödet: effect bread.toast? behöver bread.butter-tillstånd"
+  },
+  "garnera": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "food.cake"
+   ],
+   "note": "effect cake.decorated 0→1"
+  },
+  "dekorera": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "food.cake"
+   ],
+   "note": "effect cake.decorated 0→1"
+  },
+  "mala": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use",
+    "tween"
+   ],
+   "props": [
+    "container.jar",
+    "food.pile"
+   ],
+   "note": "kvarn/mixer saknas – använd container + pile som växer; markera som svag"
+  },
+  "mixa": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use",
+    "tween"
+   ],
+   "props": [
+    "container.jar",
+    "food.pile"
+   ],
+   "note": "kvarn/mixer saknas – använd container + pile som växer; markera som svag"
+  },
+  "sila": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "container.pot",
+    "container.bowl"
+   ],
+   "note": "vattnet silas av: pot.fill↓, bowl.fill↑ via tween"
+  },
+  "borsta": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.toothbrush"
+   ],
+   "note": "tänder: handen vid munnen (offset)"
+  },
+  "raka sig": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.razor",
+    "fixture.mirror"
+   ],
+   "note": ""
+  },
+  "damma": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.cloth",
+    "table",
+    "fixture.window"
+   ],
+   "note": "effect: plate.dirty↓ eller eget smutsföremål"
+  },
+  "torka av": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.cloth",
+    "table",
+    "fixture.window"
+   ],
+   "note": "effect: plate.dirty↓ eller eget smutsföremål"
+  },
+  "våttorka": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.cloth",
+    "table",
+    "fixture.window"
+   ],
+   "note": "effect: plate.dirty↓ eller eget smutsföremål"
+  },
+  "putsa": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.cloth",
+    "table",
+    "fixture.window"
+   ],
+   "note": "effect: plate.dirty↓ eller eget smutsföremål"
+  },
+  "moppa": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.mop",
+    "fixture.puddle"
+   ],
+   "note": ""
+  },
+  "sopa": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.broom",
+    "food.pile"
+   ],
+   "note": ""
+  },
+  "dammsuga": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.nozzle",
+    "food.pile"
+   ],
+   "note": "dammsugare: tool.nozzle + pile som försvinner"
+  },
+  "skrapa": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.scraper",
+    "container.plate"
+   ],
+   "note": ""
+  },
+  "skölja": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "fixture.sink",
+    "food.carrot"
+   ],
+   "note": ""
+  },
+  "rensa": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "fixture.sink",
+    "food.carrot"
+   ],
+   "note": ""
+  },
+  "diska": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.sponge",
+    "fixture.sink",
+    "container.plate"
+   ],
+   "note": "plate.dirty 1→0 + sink.foam"
+  },
+  "handtvätta": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "container.tub",
+    "garment.shirt"
+   ],
+   "note": "shirt.stain↓, tub.foam"
+  },
+  "tvätta": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "container.tub",
+    "garment.shirt"
+   ],
+   "note": "shirt.stain↓, tub.foam"
+  },
+  "stryka": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.iron",
+    "fixture.ironingboard",
+    "garment.shirt"
+   ],
+   "note": ""
+  },
+  "vika": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "garment.shirt",
+    "table"
+   ],
+   "note": ""
+  },
+  "spika": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.hammer",
+    "fixture.wall"
+   ],
+   "note": ""
+  },
+  "borra": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.drill",
+    "fixture.wall"
+   ],
+   "note": ""
+  },
+  "limma": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "container.crate"
+   ],
+   "note": "två delar som sätts ihop: box-variant"
+  },
+  "tejpa": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "container.crate"
+   ],
+   "note": "två delar som sätts ihop: box-variant"
+  },
+  "montera": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.screwdriver",
+    "fixture.chair"
+   ],
+   "note": "laga (mat) = cook-rhythm"
+  },
+  "reparera": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.screwdriver",
+    "fixture.chair"
+   ],
+   "note": "laga (mat) = cook-rhythm"
+  },
+  "laga": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "stove",
+    "container.pot"
+   ],
+   "note": "laga = person + spis: cook-rhythm"
+  },
+  "tapetsera": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.roller",
+    "fixture.wall"
+   ],
+   "note": "wall.paper 0→1"
+  },
+  "färga": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.paintbrush",
+    "fixture.wall"
+   ],
+   "note": "wall.paint"
+  },
+  "måla": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "tool.paintbrush",
+    "fixture.wall"
+   ],
+   "note": "wall.paint"
+  },
+  "linda": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "garment.towel"
+   ],
+   "note": "behöver bandage-/lindningstillstånd – svag"
+  },
+  "kompostera": {
+   "template": "social",
+   "actions": [
+    "put",
+    "take"
+   ],
+   "props": [
+    "container.bin",
+    "container.bag"
+   ],
+   "note": "föremål läggs i rätt kärl; källsortera = flera kärl"
+  },
+  "källsortera": {
+   "template": "social",
+   "actions": [
+    "put",
+    "take"
+   ],
+   "props": [
+    "container.bin",
+    "container.bag"
+   ],
+   "note": "föremål läggs i rätt kärl; källsortera = flera kärl"
+  },
+  "sortera": {
+   "template": "social",
+   "actions": [
+    "put",
+    "take"
+   ],
+   "props": [
+    "container.bin",
+    "container.bag"
+   ],
+   "note": "föremål läggs i rätt kärl; källsortera = flera kärl"
+  },
+  "slänga": {
+   "template": "social",
+   "actions": [
+    "put",
+    "take"
+   ],
+   "props": [
+    "container.bin",
+    "container.bag"
+   ],
+   "note": "föremål läggs i rätt kärl; källsortera = flera kärl"
+  },
+  "panta": {
+   "template": "social",
+   "actions": [
+    "put",
+    "take"
+   ],
+   "props": [
+    "container.bin",
+    "container.bag"
+   ],
+   "note": "föremål läggs i rätt kärl; källsortera = flera kärl"
+  },
+  "återvinna": {
+   "template": "social",
+   "actions": [
+    "put",
+    "take"
+   ],
+   "props": [
+    "container.bin",
+    "container.bag"
+   ],
+   "note": "föremål läggs i rätt kärl; källsortera = flera kärl"
+  },
+  "vattna": {
+   "template": "manipulate-prop",
+   "actions": [
+    "grab",
+    "pour"
+   ],
+   "props": [
+    "jug",
+    "fixture.plant"
+   ],
+   "note": ""
+  },
+  "hälla": {
+   "template": "manipulate-prop",
+   "actions": [
+    "grab",
+    "pour"
+   ],
+   "props": [
+    "jug",
+    "fixture.plant"
+   ],
+   "note": ""
+  },
+  "odla": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use",
+    "take"
+   ],
+   "props": [
+    "fixture.plant",
+    "food.apple"
+   ],
+   "note": "skörda: plant/tree + basket.full↑"
+  },
+  "skörda": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use",
+    "take"
+   ],
+   "props": [
+    "fixture.plant",
+    "food.apple"
+   ],
+   "note": "skörda: plant/tree + basket.full↑"
+  },
+  "plocka": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use",
+    "take"
+   ],
+   "props": [
+    "fixture.plant",
+    "food.apple"
+   ],
+   "note": "skörda: plant/tree + basket.full↑"
+  },
+  "mjölka": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "fixture.cow",
+    "container.bucket"
+   ],
+   "note": ""
+  },
+  "fiska": {
+   "template": "tool-rhythm",
+   "actions": [
+    "hold"
+   ],
+   "props": [
+    "fixture.puddle"
+   ],
+   "note": "behöver spö/vatten – svag"
+  },
+  "tugga": {
+   "template": "manipulate-prop",
+   "actions": [
+    "sip",
+    "sound"
+   ],
+   "props": [
+    "food.apple",
+    "container.cup"
+   ],
+   "note": "sound: crunch/splash vid munnen"
+  },
+  "knapra": {
+   "template": "manipulate-prop",
+   "actions": [
+    "sip",
+    "sound"
+   ],
+   "props": [
+    "food.apple",
+    "container.cup"
+   ],
+   "note": "sound: crunch/splash vid munnen"
+  },
+  "smaska": {
+   "template": "manipulate-prop",
+   "actions": [
+    "sip",
+    "sound"
+   ],
+   "props": [
+    "food.apple",
+    "container.cup"
+   ],
+   "note": "sound: crunch/splash vid munnen"
+  },
+  "sörpla": {
+   "template": "manipulate-prop",
+   "actions": [
+    "sip",
+    "sound"
+   ],
+   "props": [
+    "food.apple",
+    "container.cup"
+   ],
+   "note": "sound: crunch/splash vid munnen"
+  },
+  "skåla": {
+   "template": "social",
+   "actions": [
+    "take",
+    "pose",
+    "say"
+   ],
+   "props": [
+    "glass"
+   ],
+   "note": "två glas höjs: pose + say icon cup"
+  },
+  "duka": {
+   "template": "social",
+   "actions": [
+    "put",
+    "walk"
+   ],
+   "props": [
+    "container.plate",
+    "table"
+   ],
+   "note": ""
+  },
+  "lägga upp": {
+   "template": "social",
+   "actions": [
+    "put",
+    "walk"
+   ],
+   "props": [
+    "container.plate",
+    "table"
+   ],
+   "note": ""
+  },
+  "servera": {
+   "template": "social",
+   "actions": [
+    "put",
+    "walk"
+   ],
+   "props": [
+    "container.plate",
+    "table"
+   ],
+   "note": ""
+  },
+  "duka av": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.plate",
+    "container.tray",
+    "table"
+   ],
+   "note": ""
+  },
+  "plocka undan": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.plate",
+    "container.tray",
+    "table"
+   ],
+   "note": ""
+  },
+  "packa": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.suitcase",
+    "container.crate",
+    "fixture.cart"
+   ],
+   "note": ""
+  },
+  "lasta": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.suitcase",
+    "container.crate",
+    "fixture.cart"
+   ],
+   "note": ""
+  },
+  "packa upp": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.suitcase",
+    "container.crate"
+   ],
+   "note": ""
+  },
+  "lasta av": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.suitcase",
+    "container.crate"
+   ],
+   "note": ""
+  },
+  "stapla": {
+   "template": "social",
+   "actions": [
+    "put"
+   ],
+   "props": [
+    "container.crate"
+   ],
+   "note": "flera lådor på varandra"
+  },
+  "placera": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.jar",
+    "fixture.shelf"
+   ],
+   "note": ""
+  },
+  "förvara": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.jar",
+    "fixture.shelf"
+   ],
+   "note": ""
+  },
+  "ersätta": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.jar",
+    "fixture.shelf"
+   ],
+   "note": ""
+  },
+  "byta ut": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.jar",
+    "fixture.shelf"
+   ],
+   "note": ""
+  },
+  "hänga upp": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put"
+   ],
+   "props": [
+    "garment.shirt",
+    "fixture.clothesline",
+    "fixture.hanger"
+   ],
+   "note": "garment.hanging"
+  },
+  "hänga": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put"
+   ],
+   "props": [
+    "garment.shirt",
+    "fixture.clothesline",
+    "fixture.hanger"
+   ],
+   "note": "garment.hanging"
+  },
+  "bädda": {
+   "template": "tool-rhythm",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "bed",
+    "blanket"
+   ],
+   "note": "blanket.cover 0→1"
+  },
+  "möblera": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put",
+    "walk"
+   ],
+   "props": [
+    "sofa",
+    "table",
+    "fixture.chair"
+   ],
+   "note": "flytta (bostad) = event med lådor"
+  },
+  "ommöblera": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put",
+    "walk"
+   ],
+   "props": [
+    "sofa",
+    "table",
+    "fixture.chair"
+   ],
+   "note": "flytta (bostad) = event med lådor"
+  },
+  "flytta": {
+   "template": "social",
+   "actions": [
+    "take",
+    "put",
+    "walk"
+   ],
+   "props": [
+    "sofa",
+    "table",
+    "fixture.chair"
+   ],
+   "note": "flytta (bostad) = event med lådor"
+  },
+  "dela": {
+   "template": "social",
+   "actions": [
+    "give",
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.plate",
+    "container.bag"
+   ],
+   "note": ""
+  },
+  "dela upp": {
+   "template": "social",
+   "actions": [
+    "give",
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.plate",
+    "container.bag"
+   ],
+   "note": ""
+  },
+  "ge": {
+   "template": "social",
+   "actions": [
+    "give",
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.plate",
+    "container.bag"
+   ],
+   "note": ""
+  },
+  "skicka": {
+   "template": "social",
+   "actions": [
+    "give",
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.plate",
+    "container.bag"
+   ],
+   "note": ""
+  },
+  "lämna över": {
+   "template": "social",
+   "actions": [
+    "give",
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.plate",
+    "container.bag"
+   ],
+   "note": ""
+  },
+  "bjuda på": {
+   "template": "social",
+   "actions": [
+    "give",
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.plate",
+    "container.bag"
+   ],
+   "note": ""
+  },
+  "ta för sig": {
+   "template": "social",
+   "actions": [
+    "give",
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.plate",
+    "container.bag"
+   ],
+   "note": ""
+  },
+  "ta om": {
+   "template": "social",
+   "actions": [
+    "give",
+    "take",
+    "put"
+   ],
+   "props": [
+    "container.plate",
+    "container.bag"
+   ],
+   "note": ""
+  },
+  "steka": {
+   "template": "cook-rhythm",
+   "actions": [
+    "cook",
+    "flip",
+    "splash"
+   ],
+   "props": [
+    "stove",
+    "pan"
+   ],
+   "note": ""
+  },
+  "bryna": {
+   "template": "cook-rhythm",
+   "actions": [
+    "cook",
+    "flip",
+    "splash"
+   ],
+   "props": [
+    "stove",
+    "pan"
+   ],
+   "note": ""
+  },
+  "fräsa": {
+   "template": "cook-rhythm",
+   "actions": [
+    "cook",
+    "flip",
+    "splash"
+   ],
+   "props": [
+    "stove",
+    "pan"
+   ],
+   "note": ""
+  },
+  "bränna": {
+   "template": "cook-rhythm",
+   "actions": [
+    "cook",
+    "flip",
+    "splash"
+   ],
+   "props": [
+    "stove",
+    "pan"
+   ],
+   "note": ""
+  },
+  "vända": {
+   "template": "cook-rhythm",
+   "actions": [
+    "cook",
+    "flip",
+    "splash"
+   ],
+   "props": [
+    "stove",
+    "pan"
+   ],
+   "note": ""
+  },
+  "skvätta": {
+   "template": "cook-rhythm",
+   "actions": [
+    "cook",
+    "flip",
+    "splash"
+   ],
+   "props": [
+    "stove",
+    "pan"
+   ],
+   "note": ""
+  },
+  "smälta": {
+   "template": "cook-rhythm",
+   "actions": [
+    "cook"
+   ],
+   "props": [
+    "stove",
+    "pan"
+   ],
+   "note": "alt. process: fixture.ice"
+  },
+  "grilla": {
+   "template": "cook-rhythm",
+   "actions": [
+    "cook"
+   ],
+   "props": [
+    "stove",
+    "pan"
+   ],
+   "note": "grill saknas – svag"
+  },
+  "koka": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "stove",
+    "container.pot"
+   ],
+   "note": "laga = person + spis: cook-rhythm"
+  },
+  "sjuda": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "stove",
+    "container.pot"
+   ],
+   "note": "laga = person + spis: cook-rhythm"
+  },
+  "puttra": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "stove",
+    "container.pot"
+   ],
+   "note": "laga = person + spis: cook-rhythm"
+  },
+  "stuva": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "stove",
+    "container.pot"
+   ],
+   "note": "laga = person + spis: cook-rhythm"
+  },
+  "sylta": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "stove",
+    "container.pot"
+   ],
+   "note": "laga = person + spis: cook-rhythm"
+  },
+  "tillaga": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "stove",
+    "container.pot"
+   ],
+   "note": "laga = person + spis: cook-rhythm"
+  },
+  "fritera": {
+   "template": "cook-rhythm",
+   "actions": [
+    "cook"
+   ],
+   "props": [
+    "stove",
+    "container.pot"
+   ],
+   "note": "pot med olja + bubblor"
+  },
+  "grädda": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.oven",
+    "fixture.microwave",
+    "food.bread"
+   ],
+   "note": ""
+  },
+  "rosta": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "fixture.wall"
+   ],
+   "note": "rosta (metall): rust-tillstånd saknas – svag"
+  },
+  "värma upp": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.oven",
+    "fixture.microwave",
+    "food.bread"
+   ],
+   "note": ""
+  },
+  "mikra": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.oven",
+    "fixture.microwave",
+    "food.bread"
+   ],
+   "note": ""
+  },
+  "tina": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "fixture.ice",
+    "fixture.fridge",
+    "food.fish"
+   ],
+   "note": ""
+  },
+  "kyla ner": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "fixture.ice",
+    "fixture.fridge",
+    "food.fish"
+   ],
+   "note": ""
+  },
+  "frysa in": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "fixture.ice",
+    "fixture.fridge",
+    "food.fish"
+   ],
+   "note": ""
+  },
+  "marinera": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "container.bowl",
+    "container.jar",
+    "food.fish"
+   ],
+   "note": ""
+  },
+  "blötlägga": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "container.bowl",
+    "container.jar",
+    "food.fish"
+   ],
+   "note": ""
+  },
+  "konservera": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "container.bowl",
+    "container.jar",
+    "food.fish"
+   ],
+   "note": ""
+  },
+  "provsmaka": {
+   "template": "manipulate-prop",
+   "actions": [
+    "sip",
+    "express"
+   ],
+   "props": [
+    "tool.spoon",
+    "container.pot"
+   ],
+   "note": ""
+  },
+  "smaka av": {
+   "template": "manipulate-prop",
+   "actions": [
+    "sip",
+    "express"
+   ],
+   "props": [
+    "tool.spoon",
+    "container.pot"
+   ],
+   "note": ""
+  },
+  "brinna": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.fire",
+    "fixture.candle",
+    "fixture.lamp"
+   ],
+   "note": "tända/släcka lampa = person + reach + set lamp.on"
+  },
+  "släcka": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.fire",
+    "fixture.candle",
+    "fixture.lamp"
+   ],
+   "note": "tända/släcka lampa = person + reach + set lamp.on"
+  },
+  "tända": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.fire",
+    "fixture.candle",
+    "fixture.lamp"
+   ],
+   "note": "tända/släcka lampa = person + reach + set lamp.on"
+  },
+  "lysa": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "fixture.lamp",
+    "fixture.sun"
+   ],
+   "note": ""
+  },
+  "glittra": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "fixture.lamp",
+    "fixture.sun"
+   ],
+   "note": ""
+  },
+  "droppa": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.tap",
+    "fixture.puddle",
+    "fixture.drip",
+    "fixture.toilet",
+    "tool.sponge"
+   ],
+   "note": ""
+  },
+  "rinna": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.tap",
+    "fixture.puddle",
+    "fixture.drip",
+    "fixture.toilet",
+    "tool.sponge"
+   ],
+   "note": ""
+  },
+  "läcka": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.tap",
+    "fixture.puddle",
+    "fixture.drip",
+    "fixture.toilet",
+    "tool.sponge"
+   ],
+   "note": ""
+  },
+  "stänka": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.tap",
+    "fixture.puddle",
+    "fixture.drip",
+    "fixture.toilet",
+    "tool.sponge"
+   ],
+   "note": ""
+  },
+  "spola": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.tap",
+    "fixture.puddle",
+    "fixture.drip",
+    "fixture.toilet",
+    "tool.sponge"
+   ],
+   "note": ""
+  },
+  "suga upp": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.tap",
+    "fixture.puddle",
+    "fixture.drip",
+    "fixture.toilet",
+    "tool.sponge"
+   ],
+   "note": ""
+  },
+  "jäsa": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "food.dough",
+    "container.bowl"
+   ],
+   "note": ""
+  },
+  "svälla": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "food.dough",
+    "container.bowl"
+   ],
+   "note": ""
+  },
+  "mjukna": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "food.dough",
+    "container.bowl"
+   ],
+   "note": ""
+  },
+  "mogna": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "food.apple",
+    "fixture.tree"
+   ],
+   "note": ""
+  },
+  "ruttna": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "food.apple",
+    "fixture.tree"
+   ],
+   "note": ""
+  },
+  "mögla": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "food.apple",
+    "fixture.tree"
+   ],
+   "note": ""
+  },
+  "krympa": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "garment.shirt",
+    "fixture.washingmachine"
+   ],
+   "note": "nöta/noppa: garment.holes/pills saknas – svag"
+  },
+  "blekna": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "garment.shirt",
+    "fixture.washingmachine"
+   ],
+   "note": "nöta/noppa: garment.holes/pills saknas – svag"
+  },
+  "nöta": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "garment.shirt",
+    "fixture.washingmachine"
+   ],
+   "note": "nöta/noppa: garment.holes/pills saknas – svag"
+  },
+  "noppa sig": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "garment.shirt",
+    "fixture.washingmachine"
+   ],
+   "note": "nöta/noppa: garment.holes/pills saknas – svag"
+  },
+  "missfärga": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "garment.shirt",
+    "fixture.washingmachine"
+   ],
+   "note": "nöta/noppa: garment.holes/pills saknas – svag"
+  },
+  "gå sönder": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "garment.shirt",
+    "fixture.washingmachine"
+   ],
+   "note": "nöta/noppa: garment.holes/pills saknas – svag"
+  },
+  "flagna": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "fixture.wall"
+   ],
+   "note": "rosta (metall): rust-tillstånd saknas – svag"
+  },
+  "torka ut": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "garment.towel",
+    "fixture.puddle"
+   ],
+   "note": ""
+  },
+  "torka sig": {
+   "template": "process",
+   "actions": [
+    "tween"
+   ],
+   "props": [
+    "garment.towel",
+    "fixture.puddle"
+   ],
+   "note": ""
+  },
+  "växa": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.plant",
+    "fixture.flower",
+    "fixture.nest",
+    "fixture.hen"
+   ],
+   "note": ""
+  },
+  "vissna": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.plant",
+    "fixture.flower",
+    "fixture.nest",
+    "fixture.hen"
+   ],
+   "note": ""
+  },
+  "kläcka": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.plant",
+    "fixture.flower",
+    "fixture.nest",
+    "fixture.hen"
+   ],
+   "note": ""
+  },
+  "värpa": {
+   "template": "process",
+   "actions": [
+    "tween",
+    "set"
+   ],
+   "props": [
+    "fixture.plant",
+    "fixture.flower",
+    "fixture.nest",
+    "fixture.hen"
+   ],
+   "note": ""
+  },
+  "brumma": {
+   "template": "process",
+   "actions": [
+    "sound"
+   ],
+   "props": [
+    "fixture.fridge",
+    "fixture.washingmachine"
+   ],
+   "note": "skälla: hund saknas"
+  },
+  "dunka": {
+   "template": "process",
+   "actions": [
+    "sound"
+   ],
+   "props": [
+    "fixture.fridge",
+    "fixture.washingmachine"
+   ],
+   "note": "skälla: hund saknas"
+  },
+  "krasa": {
+   "template": "process",
+   "actions": [
+    "sound"
+   ],
+   "props": [
+    "fixture.fridge",
+    "fixture.washingmachine"
+   ],
+   "note": "skälla: hund saknas"
+  },
+  "skälla": {
+   "template": "process",
+   "actions": [
+    "sound"
+   ],
+   "props": [
+    "fixture.fridge",
+    "fixture.washingmachine"
+   ],
+   "note": "skälla: hund saknas"
+  },
+  "reagera": {
+   "template": "attribute-gloss",
+   "actions": [
+    "tween",
+    "say"
+   ],
+   "props": [
+    "fixture.radiator"
+   ],
+   "note": "kemi/fysik: symbolisk scen + gloss"
+  },
+  "binda": {
+   "template": "attribute-gloss",
+   "actions": [
+    "tween",
+    "say"
+   ],
+   "props": [
+    "fixture.radiator"
+   ],
+   "note": "kemi/fysik: symbolisk scen + gloss"
+  },
+  "bestå": {
+   "template": "attribute-gloss",
+   "actions": [
+    "tween",
+    "say"
+   ],
+   "props": [
+    "fixture.radiator"
+   ],
+   "note": "kemi/fysik: symbolisk scen + gloss"
+  },
+  "isolera": {
+   "template": "attribute-gloss",
+   "actions": [
+    "tween",
+    "say"
+   ],
+   "props": [
+    "fixture.radiator"
+   ],
+   "note": "kemi/fysik: symbolisk scen + gloss"
+  },
+  "andas": {
+   "template": "attribute-gloss",
+   "actions": [
+    "tween",
+    "say"
+   ],
+   "props": [
+    "fixture.radiator"
+   ],
+   "note": "kemi/fysik: symbolisk scen + gloss"
+  },
+  "sjunka": {
+   "template": "locomotion",
+   "actions": [
+    "walk",
+    "tween",
+    "pose"
+   ],
+   "props": [
+    "container.bucket",
+    "fixture.puddle"
+   ],
+   "note": "kräver små rörelsemönster: halka = pose + lift, vingla = walk med kroppsrotation (saknas)"
+  },
+  "halka": {
+   "template": "locomotion",
+   "actions": [
+    "walk",
+    "tween",
+    "pose"
+   ],
+   "props": [
+    "container.bucket",
+    "fixture.puddle"
+   ],
+   "note": "kräver små rörelsemönster: halka = pose + lift, vingla = walk med kroppsrotation (saknas)"
+  },
+  "vingla": {
+   "template": "locomotion",
+   "actions": [
+    "walk",
+    "tween",
+    "pose"
+   ],
+   "props": [
+    "container.bucket",
+    "fixture.puddle"
+   ],
+   "note": "kräver små rörelsemönster: halka = pose + lift, vingla = walk med kroppsrotation (saknas)"
+  },
+  "kretsa": {
+   "template": "locomotion",
+   "actions": [
+    "walk",
+    "tween",
+    "pose"
+   ],
+   "props": [
+    "container.bucket",
+    "fixture.puddle"
+   ],
+   "note": "kräver små rörelsemönster: halka = pose + lift, vingla = walk med kroppsrotation (saknas)"
+  },
+  "beställa": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "klaga": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "förklara": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "varna": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "skämta": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "ursäkta": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "rekommendera": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "beskriva": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "hota": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "avbryta": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "fråga": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "svara": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "uttrycka": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "påminna": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "inspirera": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "reklamera": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "felanmäla": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "ansöka": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "boka": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "säga upp": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "godkänna": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "översätta": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "störa": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "skriva under": {
+   "template": "communicate",
+   "actions": [
+    "say",
+    "express"
+   ],
+   "props": [
+    "container.plate",
+    "tool.pen"
+   ],
+   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+  },
+  "köa": {
+   "template": "communicate",
+   "actions": [
+    "idle",
+    "say",
+    "express"
+   ],
+   "props": [
+    "door"
+   ],
+   "note": ""
+  },
+  "vänta in": {
+   "template": "communicate",
+   "actions": [
+    "idle",
+    "say",
+    "express"
+   ],
+   "props": [
+    "door"
+   ],
+   "note": ""
+  },
+  "turas om": {
+   "template": "communicate",
+   "actions": [
+    "idle",
+    "say",
+    "express"
+   ],
+   "props": [
+    "door"
+   ],
+   "note": ""
+  },
+  "festa": {
+   "template": "event",
+   "actions": [
+    "say",
+    "sip",
+    "idle"
+   ],
+   "props": [
+    "container.cup",
+    "table"
+   ],
+   "note": "fika = två personer, kopp, bulle; festa = flera personer + musik-ikon"
+  },
+  "fika": {
+   "template": "event",
+   "actions": [
+    "say",
+    "sip",
+    "idle"
+   ],
+   "props": [
+    "container.cup",
+    "table"
+   ],
+   "note": "fika = två personer, kopp, bulle; festa = flera personer + musik-ikon"
+  },
+  "äta ute": {
+   "template": "event",
+   "actions": [
+    "say",
+    "sip",
+    "idle"
+   ],
+   "props": [
+    "container.cup",
+    "table"
+   ],
+   "note": "fika = två personer, kopp, bulle; festa = flera personer + musik-ikon"
+  },
+  "sova middag": {
+   "template": "event",
+   "actions": [
+    "say",
+    "sip",
+    "idle"
+   ],
+   "props": [
+    "container.cup",
+    "table"
+   ],
+   "note": "fika = två personer, kopp, bulle; festa = flera personer + musik-ikon"
+  },
+  "kämpa": {
+   "template": "event",
+   "actions": [
+    "run",
+    "pose",
+    "tween",
+    "set"
+   ],
+   "props": [
+    "castle",
+    "brawl",
+    "fixture.tent"
+   ],
+   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+  },
+  "anfalla": {
+   "template": "event",
+   "actions": [
+    "run",
+    "pose",
+    "tween",
+    "set"
+   ],
+   "props": [
+    "castle",
+    "brawl",
+    "fixture.tent"
+   ],
+   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+  },
+  "storma": {
+   "template": "event",
+   "actions": [
+    "run",
+    "pose",
+    "tween",
+    "set"
+   ],
+   "props": [
+    "castle",
+    "brawl",
+    "fixture.tent"
+   ],
+   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+  },
+  "försvara": {
+   "template": "event",
+   "actions": [
+    "run",
+    "pose",
+    "tween",
+    "set"
+   ],
+   "props": [
+    "castle",
+    "brawl",
+    "fixture.tent"
+   ],
+   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+  },
+  "belägra": {
+   "template": "event",
+   "actions": [
+    "run",
+    "pose",
+    "tween",
+    "set"
+   ],
+   "props": [
+    "castle",
+    "brawl",
+    "fixture.tent"
+   ],
+   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+  },
+  "omringa": {
+   "template": "event",
+   "actions": [
+    "run",
+    "pose",
+    "tween",
+    "set"
+   ],
+   "props": [
+    "castle",
+    "brawl",
+    "fixture.tent"
+   ],
+   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+  },
+  "erövra": {
+   "template": "event",
+   "actions": [
+    "run",
+    "pose",
+    "tween",
+    "set"
+   ],
+   "props": [
+    "castle",
+    "brawl",
+    "fixture.tent"
+   ],
+   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+  },
+  "besegra": {
+   "template": "event",
+   "actions": [
+    "run",
+    "pose",
+    "tween",
+    "set"
+   ],
+   "props": [
+    "castle",
+    "brawl",
+    "fixture.tent"
+   ],
+   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+  },
+  "kapitulera": {
+   "template": "event",
+   "actions": [
+    "run",
+    "pose",
+    "tween",
+    "set"
+   ],
+   "props": [
+    "castle",
+    "brawl",
+    "fixture.tent"
+   ],
+   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+  },
+  "ge upp": {
+   "template": "event",
+   "actions": [
+    "run",
+    "pose",
+    "tween",
+    "set"
+   ],
+   "props": [
+    "castle",
+    "brawl",
+    "fixture.tent"
+   ],
+   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+  },
+  "befästa": {
+   "template": "event",
+   "actions": [
+    "run",
+    "pose",
+    "tween",
+    "set"
+   ],
+   "props": [
+    "castle",
+    "brawl",
+    "fixture.tent"
+   ],
+   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+  },
+  "ta på sig": {
+   "template": "dress-self",
+   "actions": [
+    "dress"
+   ],
+   "props": [],
+   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+  },
+  "ta av sig": {
+   "template": "dress-self",
+   "actions": [
+    "dress"
+   ],
+   "props": [],
+   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+  },
+  "klä på sig": {
+   "template": "dress-self",
+   "actions": [
+    "dress"
+   ],
+   "props": [],
+   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+  },
+  "klä av sig": {
+   "template": "dress-self",
+   "actions": [
+    "dress"
+   ],
+   "props": [],
+   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+  },
+  "klä sig": {
+   "template": "dress-self",
+   "actions": [
+    "dress"
+   ],
+   "props": [],
+   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+  },
+  "klä upp sig": {
+   "template": "dress-self",
+   "actions": [
+    "dress"
+   ],
+   "props": [],
+   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+  },
+  "byta om": {
+   "template": "dress-self",
+   "actions": [
+    "dress"
+   ],
+   "props": [],
+   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+  },
+  "sätta på sig": {
+   "template": "dress-self",
+   "actions": [
+    "dress"
+   ],
+   "props": [],
+   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+  },
+  "ha på sig": {
+   "template": "dress-self",
+   "actions": [
+    "dress"
+   ],
+   "props": [],
+   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+  },
+  "stoppa in": {
+   "template": "dress-self",
+   "actions": [
+    "dress"
+   ],
+   "props": [],
+   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+  },
+  "knäppa": {
+   "template": "dress-self",
+   "actions": [
+    "fasten"
+   ],
+   "props": [],
+   "note": ""
+  },
+  "knäppa upp": {
+   "template": "dress-self",
+   "actions": [
+    "fasten"
+   ],
+   "props": [],
+   "note": ""
+  },
+  "dra upp": {
+   "template": "dress-self",
+   "actions": [
+    "fasten"
+   ],
+   "props": [],
+   "note": ""
+  },
+  "dra ner": {
+   "template": "dress-self",
+   "actions": [
+    "fasten"
+   ],
+   "props": [],
+   "note": ""
+  },
+  "kavla upp": {
+   "template": "dress-self",
+   "actions": [
+    "fasten"
+   ],
+   "props": [],
+   "note": ""
+  },
+  "knyta": {
+   "template": "dress-self",
+   "actions": [
+    "fasten"
+   ],
+   "props": [],
+   "note": ""
+  },
+  "impregnera": {
+   "template": "attribute-gloss",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "garment.shirt",
+    "tool.brush"
+   ],
+   "note": "symbolisk + gloss"
+  },
+  "klacka om": {
+   "template": "attribute-gloss",
+   "actions": [
+    "use"
+   ],
+   "props": [
+    "garment.shirt",
+    "tool.brush"
+   ],
+   "note": "symbolisk + gloss"
+  },
+  "gå in": {
+   "template": "locomotion",
+   "actions": [
+    "walk",
+    "run",
+    "jump",
+    "exercise"
+   ],
+   "props": [
+    "football"
+   ],
+   "note": ""
+  },
+  "duscha": {
+   "template": "state",
+   "actions": [
+    "idle",
+    "tween"
+   ],
+   "props": [
+    "fixture.shower",
+    "container.tub"
+   ],
+   "note": ""
+  },
+  "bada": {
+   "template": "state",
+   "actions": [
+    "idle",
+    "tween"
+   ],
+   "props": [
+    "fixture.shower",
+    "container.tub"
+   ],
+   "note": ""
+  },
+  "slappa": {
+   "template": "state",
+   "actions": [
+    "relax",
+    "sleep"
+   ],
+   "props": [
+    "sofa",
+    "bed"
+   ],
+   "note": ""
+  },
+  "slappna av": {
+   "template": "state",
+   "actions": [
+    "relax",
+    "sleep"
+   ],
+   "props": [
+    "sofa",
+    "bed"
+   ],
+   "note": ""
+  },
+  "sova": {
+   "template": "state",
+   "actions": [
+    "relax",
+    "sleep"
+   ],
+   "props": [
+    "sofa",
+    "bed"
+   ],
+   "note": ""
+  },
+  "vila": {
+   "template": "state",
+   "actions": [
+    "relax",
+    "sleep"
+   ],
+   "props": [
+    "sofa",
+    "bed"
+   ],
+   "note": ""
+  },
+  "svettas": {
+   "template": "emotion",
+   "actions": [
+    "express",
+    "say"
+   ],
+   "props": [],
+   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+  },
+  "klia": {
+   "template": "emotion",
+   "actions": [
+    "express",
+    "say"
+   ],
+   "props": [],
+   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+  },
+  "svida": {
+   "template": "emotion",
+   "actions": [
+    "express",
+    "say"
+   ],
+   "props": [],
+   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+  },
+  "lida": {
+   "template": "emotion",
+   "actions": [
+    "express",
+    "say"
+   ],
+   "props": [],
+   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+  },
+  "sakna": {
+   "template": "emotion",
+   "actions": [
+    "express",
+    "say"
+   ],
+   "props": [],
+   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+  },
+  "känna": {
+   "template": "emotion",
+   "actions": [
+    "express",
+    "say"
+   ],
+   "props": [],
+   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+  },
+  "dofta": {
+   "template": "emotion",
+   "actions": [
+    "express",
+    "say"
+   ],
+   "props": [],
+   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+  },
+  "stinka": {
+   "template": "emotion",
+   "actions": [
+    "express",
+    "say"
+   ],
+   "props": [],
+   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+  },
+  "tåla": {
+   "template": "emotion",
+   "actions": [
+    "express",
+    "say"
+   ],
+   "props": [],
+   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+  },
+  "vänja sig": {
+   "template": "emotion",
+   "actions": [
+    "express",
+    "say"
+   ],
+   "props": [],
+   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+  },
+  "hyra": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "äga": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "buda": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "swisha": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "dela på notan": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "handla": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "importera": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "tillverka": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "slösa": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "ta vara på": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "räcka till": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "rymma": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "väga": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "jämföra": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "kombinera": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "passa": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "kontrollera": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "granska": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "justera": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "planera": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "förbereda": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "ansvara": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "avstå": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "glömma kvar": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "åtgärda": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "förlänga": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "kopplain": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "koppla in": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "centrifugera": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "garva": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "slakta": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "renovera": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "flyttstäda": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "städa": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "vädra": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "fälla ihop": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "fälla upp": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "märka": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "sänka": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "släppa in": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "hoppa över": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "lämna": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "slarva": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "skydda": {
+   "template": "attribute-gloss",
+   "actions": [
+    "say",
+    "tween",
+    "set"
+   ],
+   "props": [],
+   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+  },
+  "komma": {
+   "template": "locomotion",
+   "actions": [
+    "walk",
+    "run",
+    "jump",
+    "exercise"
+   ],
+   "props": [
+    "football"
+   ],
+   "note": ""
+  },
+  "springa": {
+   "template": "locomotion",
+   "actions": [
+    "walk",
+    "run",
+    "jump",
+    "exercise"
+   ],
+   "props": [
+    "football"
+   ],
+   "note": ""
+  },
+  "gå": {
+   "template": "locomotion",
+   "actions": [
+    "walk",
+    "run",
+    "jump",
+    "exercise"
+   ],
+   "props": [
+    "football"
+   ],
+   "note": ""
+  },
+  "hoppa": {
+   "template": "locomotion",
+   "actions": [
+    "walk",
+    "run",
+    "jump",
+    "exercise"
+   ],
+   "props": [
+    "football"
+   ],
+   "note": ""
+  },
+  "kicka": {
+   "template": "locomotion",
+   "actions": [
+    "walk",
+    "run",
+    "jump",
+    "exercise"
+   ],
+   "props": [
+    "football"
+   ],
+   "note": ""
+  }
+ }
+}

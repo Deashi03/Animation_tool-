@@ -75,11 +75,23 @@ Produktägarens beslut 2026-11-05. Detta ersätter 0.6-pilotens "illustration el
 
 Animationerna ska vara **snygga, mjuka och proffsiga – aldrig kusliga**. Produktägaren såg i de första skisserna att armarna ibland hamnade onaturligt. Därför: ledgränser i riggen (armbågar bara framåt, knän bara bakåt), eased övergångar, cykler från sinusfunktioner, anticipation före varje rörelse och ett lugnt slutläge. En pose som ser fel ut i bildremsan är ett fel, även om den validerar. Nivå B valdes som detaljnivå (bläckkontur, läsbart ansikte, vanthänder, skor) – tillräcklig för att allt pedagogiskt syns utan att bli svår att animera konsekvent.
 
-### 2.4 Motorn är generell (produktägaren 2026-11-05)
+### 2.4 Den gyllene regeln: fysiken (produktägaren 2026-11-05)
+
+> "En gyllene regel är att animationen ska se ut att inte helt strida mot fysikens lagar."
+
+Allt behöver inte vara perfekt, men inget får bryta mot fysiken på ett sätt som ögat ser. Konkreta regler som motorn upprätthåller (inte scenerna):
+- **Planterade fötter glider aldrig.** Benen styrs av fotplacering + IK (`motions/gait`): under stödfasen rör sig foten bakåt under höften i exakt markhastigheten; under svängfasen i en båge framåt. Går figuren fortare än duken räcker till rullar världen (`env.scrollX`) i resterande hastighet – träd långsammare än buskar (parallax).
+- **Kroppen hänger ihop.** Bålen ritas mellan den verkliga axellinjen och den verkliga höftlinjen, med ett bäcken som binder ihop benen; lutning flyttar aldrig magen från höfterna.
+- **Tyngdlagen.** Hopp och bollar följer parabler (konstant nedåtacceleration), vågrät hastighet är konstant i luften, landningar har nedsjunkning (squash) och återhämtning. Höfterna är lägst strax efter fotisättning ("down") och högst i flykt ("up").
+- **Löpning är mer än ben:** framåtlutning, motsatt armpendling med böjda armbågar, flygfas, huvud som hålls plant, sparsamma fartstreck.
+- **Föremål respekterar volym.** Ett täcke ligger *ovanpå* kroppen med en puckel som följer den, en hållen kanna sitter upprätt i handen tills den lutas.
+- **Kontrollera i remsan** med tider som inte är multiplar av cykeln, annars ser varje ruta likadan ut.
+
+### 2.5 Motorn är generell (produktägaren 2026-11-05)
 
 Samma motor ska även göra **gränssnittsanimationer** för Swechan – t.ex. den gröna resultatpanelen som glider upp vid rätt svar, start och avslut av en modul – och vara användbar i andra program. Därför: `kind: "ui"`-scener med fria former (`shapes`), ikoner och `tween`/`set`, valfri dukstorlek, transparent bakgrund, Fjord-färger som palettnycklar, och **ingen Swechan-specifik kod i `engine/`**. Två referensscener finns: `ui.feedback.correct` och `ui.module.complete`.
 
-### 2.5 Vad policyn betyder för Swechan (senare, separat uppdrag)
+### 2.6 Vad policyn betyder för Swechan (senare, separat uppdrag)
 
 Swechans `wordImages.json` (en bild per betydelse, `illustration | photo`) ska på sikt bli ett register över **visualiseringar** (`animation | image | symbol`). Förslag i avsnitt 11. **Rör inte Swechan nu.**
 
@@ -205,7 +217,7 @@ En handling är det Claude skriver i scenen. Kompilatorn omsätter den till rör
 | `placeBehind { prop, ref }` | `carry`, `release` | djupordning byts, delvis skymning | relationen etableras i tid, slutläget hålls |
 | `relax { on }` | `sitDown/lieDown` + `idle`, ögon öppna, fot vickar, telefon/kopp | dagsljus | vaken, lugn, aktiv i låg grad |
 | `sleep { on }` | `lieDown`, ögon slutna, långsam andning | nattljus, täcke | sovande – kontrast till `relax` |
-| `exercise { kind: jog|stretch|jumpingJacks }` | motsvarande cykler, svett sparsamt | sportkläder, svettband | *sportig* som rörelse |
+| `exercise { kind: jog|stretch|kickups }` | motsvarande cykler; kickups = boll i parabel mot knät | sportkläder, svettband, boll | *sportig* som aktivitet, helst i kontrast mot en vardaglig figur i samma scen |
 | `chop`, `stir`, `whisk`, `knead`, `peel`, `grate` | rytmiska cykler | råvaran ändrar form | matlagningsverben i Swechan |
 | `express { emotion, cause? }` | `react`, hållning, blick | utlösaren visas | känsla med orsak |
 

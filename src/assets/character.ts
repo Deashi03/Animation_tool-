@@ -98,12 +98,17 @@ export function drawCharacter(s: CharacterState): FrameNode {
   nodes.push(...outlinedLimb(backArm, w.top, armSw), hand(rig.handR, w.skin, gripR));
   if (s.holding.right) nodes.push(g([s.holding.right], { x: rig.handR[0], y: rig.handR[1] }));
   nodes.push(...outlinedLimb(backLeg, w.bottom, legSw), shoe(rig.ankleR, rig.toeR, w.shoes));
-  // torso: a slightly tapered shirt following the torso angle
-  const t = rig.angles.torso;
-  nodes.push(g([
-    path(`M-10 -1 q10 -4 20 0 l1.5 ${SEG.torso + 1} q-11.5 3.2 -23 0 Z`, { fill: w.top, stroke: INK, sw: 2.2 }),
-    path(`M-6 ${SEG.torso - 4} q6 2 12 0`, { stroke: 'rgba(0,0,0,0.12)', sw: 1.6, fill: 'none' }),
-  ], { x: rig.shoulder[0], y: rig.shoulder[1], rotate: -t }));
+  // pelvis: trousers block that joins the legs to the torso so the body never "detaches"
+  const hw = SEG.hipW + 2.6;
+  nodes.push(path(`M${r1(rig.hip[0] - hw)} ${r1(rig.hip[1] - 6)} L${r1(rig.hip[0] + hw)} ${r1(rig.hip[1] - 6)} L${r1(rig.hip[0] + hw)} ${r1(rig.hip[1] + 4)} Q${r1(rig.hip[0])} ${r1(rig.hip[1] + 7)} ${r1(rig.hip[0] - hw)} ${r1(rig.hip[1] + 4)} Z`, { fill: w.bottom, stroke: INK, sw: 2.2 }));
+  // torso: a quad between the real shoulder line and the real hip line (follows the torso angle, stays attached)
+  const sw = SEG.shoulderW + 3, hwT = SEG.hipW + 3.4;
+  const [sx, sy] = rig.shoulder, [hx0, hy0] = rig.hip;
+  const ux = Math.sin(((rig.angles.torso) * Math.PI) / 180), uy = -Math.cos(((rig.angles.torso) * Math.PI) / 180); // torso up-vector
+  const px = -uy, py = ux; // perpendicular (lateral)
+  const P4 = (x: number, y: number) => `${r1(x)} ${r1(y)}`;
+  nodes.push(path(`M${P4(sx - px * sw - ux * 1.5, sy - py * sw - uy * 1.5)} Q${P4(sx - ux * 5, sy - uy * 5)} ${P4(sx + px * sw - ux * 1.5, sy + py * sw - uy * 1.5)} L${P4(hx0 + px * hwT, hy0 + py * hwT)} Q${P4(hx0 + ux * -2, hy0 + uy * -2)} ${P4(hx0 - px * hwT, hy0 - py * hwT)} Z`, { fill: w.top, stroke: INK, sw: 2.2 }));
+  nodes.push(path(`M${P4(hx0 - px * 5 - ux * 5, hy0 - py * 5 - uy * 5)} Q${P4(hx0 - ux * 3, hy0 - uy * 3)} ${P4(hx0 + px * 5 - ux * 5, hy0 + py * 5 - uy * 5)}`, { stroke: 'rgba(0,0,0,0.12)', sw: 1.6, fill: 'none' }));
   nodes.push(...outlinedLimb(frontLeg, w.bottom, legSw), shoe(rig.ankleL, rig.toeL, w.shoes));
   // neck + head
   nodes.push(line([rig.shoulder, [rig.head[0], rig.head[1] + 6]], { stroke: w.skin, sw: 4.6 }));

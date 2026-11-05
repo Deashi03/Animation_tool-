@@ -89,6 +89,13 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
     }
   }
   for (const a of scene.actors) {
+    // speed lines behind a fast-moving actor (treadmill): short, few, fading
+    const sp = sampleNumber(tracks, `fx.${a.id}.speed`, t, 0);
+    const aw0 = actorWorld.get(a.id);
+    if (Math.abs(sp) > 60 && aw0) {
+      const back = -Math.sign(sp), hipY = aw0.pos[1] - 34 * aw0.scale, phase = (t % 180) / 180;
+      for (let i = 0; i < 3; i++) { const y = hipY - 16 + i * 10, len = 8 + (i % 2) * 4, x0 = aw0.pos[0] + back * (16 + i * 3 + phase * 6); fx.push(line([[x0, y], [x0 + back * len, y]], { stroke: C.ink, sw: 1.6, opacity: 0.35 * (1 - phase * 0.5) })); }
+    }
     const z = sampleNumber(tracks, `fx.${a.id}.zzz`, t, -1);
     const aw = actorWorld.get(a.id);
     if (z >= 0 && aw) {
@@ -110,7 +117,7 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
     }
   }
   const children: FrameNode[] = [];
-  if (scene.kind === 'word') children.push(env.background(w, h, c.ground, time));
+  if (scene.kind === 'word') children.push(env.background(w, h, c.ground, time, sampleNumber(tracks, 'env.scrollX', t, 0)));
   children.push(...layers.map((l) => l.node), ...fx);
   const showLabel = scene.label.show === 'always' || (scene.label.show === 'optional' && !!opts.showLabel);
   if (showLabel) {

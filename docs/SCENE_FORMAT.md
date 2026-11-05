@@ -35,7 +35,8 @@ Koordinater i dukenheter, origo uppe till vänster, markplan y ≈ 100. Färger:
 | `box` | `lidOpen` | |
 | `ball`, `mug`, `phone` | (`mug.level`, `phone.on`) | grip |
 | `sofa`, `bed` | – | `seat` används av `relax`/`sleep` |
-| `blanket` | `cover` 0..1 | läggs som eget föremål med högre `z` än aktören |
+| `blanket` | `cover` 0..1, `length`, `bulge` | förankrat vid fotänden på madrasskanten; puckeln följer kroppen; högre `z` än aktören |
+| `football` | – | boll för `kickups` |
 | `table`, `window`, `mat` | (`window.time` följer miljön) | |
 
 Ett föremål med `attachTo` ritas i aktörens hand, upprätt; `tilt` roterar det framåt kring greppet (55° vid 1).
@@ -44,7 +45,7 @@ Ett föremål med `attachTo` ritas i aktörens hand, upprätt; `tilt` roterar de
 
 | handling | parametrar | ger |
 |---|---|---|
-| `walk` / `run` | `actor, to, durationMs?` | vänder sig, förflyttar, gång-/löpcykel, blinkningar, vila i slutet |
+| `walk` / `run` | `actor, to, durationMs?` | gångmodell med fotplacering (inga glidande fötter); räcker inte duken rullar miljön (`env.scrollX`) i resterande hastighet med parallax och fartstreck |
 | `jump` | `actor, height, to?, durationMs` | anticipation, luft (`lift`), landning |
 | `turn` | `actor, facing` | |
 | `idle` | `actor, durationMs, style: breathe|footWiggle|none` | |
@@ -55,7 +56,7 @@ Ett föremål med `attachTo` ritas i aktörens hand, upprätt; `tilt` roterar de
 | `lookAt` | `actor, target` | blick + huvud |
 | `relax` | `actor, on, durationMs, legsUp` | sitter tillbakalutad på möbeln, ögon halvöppna, fot vickar, telefon-tumme |
 | `sleep` | `actor, on, durationMs, zzz` | ligger, ögon slutna, långsam andning, valfria z |
-| `exercise` | `actor, kind: jog|stretch, durationMs` | |
+| `exercise` | `actor, kind: jog|stretch|kickups, durationMs, ball?` | `kickups` kräver en `football`/`ball`-prop: bollen studsar i parabel mot knät |
 | `express` | `actor, emotion: happy|surprised|angry|sad|tired|content` | ansikte + hållning |
 | `face` | `actor, eyes?, brows?, mouth?, gaze?` | direkt ansiktsstyrning |
 | `pose` | `actor, joints{}, durationMs, ease, lift?, bodyRotate?` | lågnivå (undvik i vanliga scener) |

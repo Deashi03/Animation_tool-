@@ -107,9 +107,19 @@ export const PROPS: Record<string, PropSpec> = {
       ]); },
   },
   blanket: {
-    defaults: { cover: 1 }, grip: [0, -10],
-    draw: (s, col) => { const cv = Math.max(0, Math.min(1, n(s, 'cover', 1))); const w = 58 * cv;
-      return cv <= 0 ? g([]) : g([path(`M${r1(-w)} -11 h${r1(w)} q4 0 4 4 v7 h${r1(-w - 4)} q-5 -5 0 -11 Z`, { fill: color(col ?? C.lilac), stroke: INK, sw: 2.2 }), line([[-w + 6, -5], [-w + 6, -1]], { stroke: 'rgba(0,0,0,0.15)', sw: 1.2 })]); },
+    defaults: { cover: 1, length: 66, bulge: 22 }, grip: [0, -10],
+    /** Anchored at the foot end on the mattress top; a hump follows the body underneath and tucks at the chest. */
+    draw: (s, col) => { const cv = Math.max(0, Math.min(1, n(s, 'cover', 1))); const L = n(s, 'length', 66) * cv, B = n(s, 'bulge', 22);
+      if (cv <= 0) return g([]);
+      return g([
+        path(`M0 1 L${r1(-L)} 1 L${r1(-L)} ${r1(-B * 0.95)} Q${r1(-L + 4)} ${r1(-B - 1)} ${r1(-L + 10)} ${r1(-B)} L${r1(-L * 0.45)} ${r1(-B)} Q${r1(-L * 0.25)} ${r1(-B * 0.92)} ${r1(-L * 0.12)} ${r1(-B * 0.55)} Q-2 ${r1(-B * 0.38)} 0 ${r1(-B * 0.3)} Z`, { fill: color(col ?? C.lilac), stroke: INK, sw: 2.2 }),
+        path(`M${r1(-L + 3)} ${r1(-B * 0.5)} L${r1(-L + 9)} ${r1(-B * 0.5)}`, { stroke: 'rgba(0,0,0,0.15)', sw: 1.6, fill: 'none' }),
+        path(`M${r1(-L * 0.6)} ${r1(-B * 0.72)} Q${r1(-L * 0.5)} ${r1(-B * 0.42)} ${r1(-L * 0.42)} ${r1(-B * 0.2)}`, { stroke: 'rgba(0,0,0,0.12)', sw: 1.4, fill: 'none' }),
+      ]); },
+  },
+  football: {
+    defaults: {}, grip: [0, -6],
+    draw: (_s, col) => g([circle(0, -6, 6, { fill: color(col ?? C.white), stroke: INK, sw: 2 }), path('M0 -8.5 l2.2 1.6 -0.8 2.6 h-2.8 l-0.8 -2.6 Z', { fill: C.dark }), path('M-5.5 -4 l2 -1.2 M5.5 -4 l-2 -1.2 M-2 -0.6 l1 -2 M2 -0.6 l-1 -2', { stroke: C.dark, sw: 1.2, fill: 'none' })]),
   },
   table: {
     defaults: {}, grip: [0, -30],

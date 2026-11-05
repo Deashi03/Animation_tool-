@@ -9,6 +9,9 @@
 - Vanthänder (greppande = rund), skor som pekar åt det håll figuren vänder sig. Den främre armen ritas framför ansiktet så att en lyft hand inte försvinner bakom huvudet.
 - Inga stereotyper; varianterna ska kännas lika självklara.
 
+## Fysik (gyllene regeln)
+Inget får synbart strida mot fysiken: planterade fötter glider inte (gångmodell med fotplacering + IK, världen rullar vid behov), kroppen hänger ihop (bål mellan axel- och höftlinje, bäcken), tyngdlagen ger parabler för hopp och bollar, landningar har squash, föremål har volym (täcket ligger ovanpå). Se CLAUDE.md 2.4.
+
 ## Rörelse
 - Alltid **anticipation → handling → tydligt slutläge med `hold`**. En handling läses på 2–4 s, loopar 3–6 s.
 - Cykler (gå, springa, jogga) skrivs som täta nyckelbilder från sinusfunktioner, aldrig linjära hopp. Övergångar in/ut ur cykler eased.

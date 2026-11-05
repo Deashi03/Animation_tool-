@@ -59,7 +59,7 @@ export function bbox(node: FrameNode): { x1: number; y1: number; x2: number; y2:
     case 'rect': push(node.x, node.y); push(node.x + node.w, node.y + node.h); break;
     case 'line': for (const p of node.points) push(p[0], p[1]); break;
     case 'text': push(node.x - node.size * node.text.length * 0.3, node.y - node.size); push(node.x + node.size * node.text.length * 0.3, node.y); break;
-    case 'path': for (const m of node.d.matchAll(/(-?\d+(?:\.\d+)?)[ ,](-?\d+(?:\.\d+)?)/g)) push(Number(m[1]), Number(m[2])); break;
+    case 'path': for (const p of pathPoints(node.d)) push(p[0], p[1]); break;
   }
   if (!pts.length) return null;
   return { x1: Math.min(...pts.map((p) => p[0])), y1: Math.min(...pts.map((p) => p[1])), x2: Math.max(...pts.map((p) => p[0])), y2: Math.max(...pts.map((p) => p[1])) };
@@ -102,4 +102,27 @@ export function bboxOfId(root: FrameNode, id: string): { x1: number; y1: number;
     return null;
   };
   return walk(root, []);
+}
+
+/** Points touched by an SVG path (end points and control points), with relative commands resolved. */
+export function pathPoints(d: string): [number, number][] {
+  const out: [number, number][] = [];
+  const tokens = d.match(/[MmLlHhVvCcQqZzAaSsTt]|-?\d*\.?\d+(?:e-?\d+)?/g) ?? [];
+  let cmd = 'M', x = 0, y = 0, sx = 0, sy = 0, i = 0;
+  const num = () => Number(tokens[i++]);
+  while (i < tokens.length) {
+    const tok = tokens[i]!;
+    if (/[A-Za-z]/.test(tok)) { cmd = tok; i++; if (cmd === 'Z' || cmd === 'z') { x = sx; y = sy; } continue; }
+    const rel = cmd === cmd.toLowerCase();
+    switch (cmd.toUpperCase()) {
+      case 'M': case 'L': case 'T': { const nx = num(), ny = num(); x = rel ? x + nx : nx; y = rel ? y + ny : ny; out.push([x, y]); if (cmd.toUpperCase() === 'M') { sx = x; sy = y; cmd = rel ? 'l' : 'L'; } break; }
+      case 'H': { const nx = num(); x = rel ? x + nx : nx; out.push([x, y]); break; }
+      case 'V': { const ny = num(); y = rel ? y + ny : ny; out.push([x, y]); break; }
+      case 'C': { const pts = [num(), num(), num(), num(), num(), num()]; for (let k = 0; k < 6; k += 2) out.push([rel ? x + pts[k]! : pts[k]!, rel ? y + pts[k + 1]! : pts[k + 1]!]); x = out[out.length - 1]![0]; y = out[out.length - 1]![1]; break; }
+      case 'Q': case 'S': { const pts = [num(), num(), num(), num()]; for (let k = 0; k < 4; k += 2) out.push([rel ? x + pts[k]! : pts[k]!, rel ? y + pts[k + 1]! : pts[k + 1]!]); x = out[out.length - 1]![0]; y = out[out.length - 1]![1]; break; }
+      case 'A': { num(); num(); num(); num(); num(); const nx = num(), ny = num(); x = rel ? x + nx : nx; y = rel ? y + ny : ny; out.push([x, y]); break; }
+      default: i++;
+    }
+  }
+  return out;
 }

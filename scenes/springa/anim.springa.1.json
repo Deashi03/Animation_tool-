@@ -3,12 +3,12 @@
   "animationId": "anim.springa.1",
   "senseId": "s.springa.1",
   "titleSv": "springa",
-  "meaningHint": "Förflytta sig snabbt till fots, med språng",
+  "meaningHint": "Förflytta sig snabbt till fots; båda fötterna lämnar marken",
   "category": "action",
-  "durationMs": 3000,
+  "durationMs": 3400,
   "loop": true,
-  "holdMs": 200,
-  "posterMs": 1300,
+  "holdMs": 0,
+  "posterMs": 1500,
   "environment": {
     "id": "outdoors.park",
     "time": "day"
@@ -18,7 +18,7 @@
       "id": "p",
       "variant": "b",
       "at": {
-        "x": 18,
+        "x": 44,
         "y": 100
       },
       "facing": "right",
@@ -35,10 +35,10 @@
       "action": "run",
       "actor": "p",
       "to": {
-        "x": 92,
+        "x": 64,
         "y": 100
       },
-      "durationMs": 2600
+      "durationMs": 3400
     }
   ],
   "focus": {
@@ -52,8 +52,8 @@
       "anim.gå.1"
     ],
     "distinctiveFeatures": [
-      "airborne:p>=0.3",
-      "speed:p>=24"
+      "airborne:p>=0.2",
+      "speed:p>=55"
     ]
   },
   "pedagogy": {

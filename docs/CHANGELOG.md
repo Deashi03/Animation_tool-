@@ -56,4 +56,5 @@
 - **Motorfel rättat:** vänstervända figurer speglades två gånger (rigg + renderare), så framåtriktade leder pekade bakåt. Alla scener med `facing: left` ser nu rätt ut; regressionstest tillagt. Snapshot av bildhashar uppdaterad avsiktligt.
 - **Blindtest:** alternativen är ordet + kontrastpartner + distraktorer; deklarerade `confusableWith`-synonymer erbjuds inte (bildfrågorna gör det inte heller). Remsorna tar 12 rutor så korta händelser fångas. Resultat: b2 7/9, b3 1/3, b4 4/4 – alla 20 ordscener har nu minst ett godkänt blindtest.
 - Tester: 53.
+- **0.3.1:** experimentell mall `attribute-gloss` (egenskap buren av utseende + japanskt ord, utan verb) med `anim.sportig.1.v2`; garderob: `shorts`, `number`. Bollen i `kickups` längre fram. Normativ regel skrivs efter produktägarens dom.
 

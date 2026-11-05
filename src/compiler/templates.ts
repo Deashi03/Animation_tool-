@@ -129,6 +129,19 @@ export const TEMPLATES: Record<string, Template> = {
       focus: { targets: ['pan'] }, contrast: { with: ['anim.todo.1'], distinctiveFeatures: ['end:pan.browning>=0.5'] }, pedagogy: { quizEligible: false, group: 'matlagning', confusableWith: [] },
     }),
   },
+  'attribute-gloss': {
+    id: 'attribute-gloss', titleSv: 'Egenskap buren av utseende + japanskt ord (experiment)',
+    describes: 'Adjektiv och abstraktioner där egenskapen syns på kläder, föremål eller utseende utan att någon utför en aktivitet: sportig, elegant, randig. En figur eller ett föremål bär egenskapen, lugn andning, och det japanska ordet glider in på vitt. Ingen handling som kan läsas som ett verb. Prövas 2026-11-05 på produktägarens förslag; normativ regel skrivs när utfallet är klart.',
+    contract: ['has:entities>=1', 'has:cjk-text'],
+    make: (senseId, lemma, n) => ({
+      schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'attribute-gloss', meaningHint: 'TODO', category: 'property',
+      durationMs: 3200, loop: true, holdMs: 800, posterMs: 2400, environment: { id: 'neutral', time: 'day' },
+      actors: [{ id: 'p', at: { x: 56, y: 100 }, facing: 'right' }],
+      shapes: [{ type: 'text', id: 'ja', x: 60, y: -20, text: 'TODO 日本語', size: 12, weight: 800, fill: 'ink', anchor: 'middle', bg: 'panel', pad: 6, opacity: 0, z: 5 }],
+      timeline: [{ t: 0, action: 'idle', actor: 'p', durationMs: 3200 }, { t: 700, action: 'set', target: 'ja', prop: 'opacity', value: 1 }, { t: 700, action: 'tween', target: 'ja', prop: 'y', from: -20, to: 22, durationMs: 450, ease: 'easeOut' }],
+      focus: { targets: ['p'] }, pedagogy: { quizEligible: false, confusableWith: [] },
+    }),
+  },
   ui: {
     id: 'ui', titleSv: 'Gränssnittsanimation',
     describes: 'Paneler, bockar, stjärnor: feedback och övergångar i appen. Egen duk, transparent bakgrund, Fjord-färger.',

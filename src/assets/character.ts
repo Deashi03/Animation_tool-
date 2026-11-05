@@ -3,7 +3,7 @@
  * shoes. Drawn from a solved rig + face/wardrobe state into a FrameTree.
  * Feet at (0,0) in local space; the caller positions, scales and flips.
  */
-import { circle, ellipse, g, line, path, rect, type FrameNode, type Paint, r1 } from '../engine/frame';
+import { circle, ellipse, g, line, path, rect, text, type FrameNode, type Paint, r1 } from '../engine/frame';
 import { palette as C, color } from './palette';
 import { SEG, solveRig, type P, type Pose } from '../engine/rig';
 import type { EYES, BROWS, MOUTHS } from '../schema/scene';
@@ -11,7 +11,7 @@ import type { EYES, BROWS, MOUTHS } from '../schema/scene';
 export type Eyes = (typeof EYES)[number];
 export type Brows = (typeof BROWS)[number];
 export type Mouth = (typeof MOUTHS)[number];
-export type Wardrobe = { top: string; bottom: string; shoes: string; hair: string; skin: string; hairStyle: 'short' | 'long' | 'bun' | 'curly'; headband?: string };
+export type Wardrobe = { top: string; bottom: string; shoes: string; hair: string; skin: string; hairStyle: 'short' | 'long' | 'bun' | 'curly'; headband?: string; shorts?: boolean; number?: string };
 export type Face = { eyes: Eyes; brows: Brows; mouth: Mouth; gaze: number; blush: boolean; blink: boolean };
 export type CharacterState = { pose: Pose; facing: 1 | -1; lift: number; bodyRotate: number; face: Face; wardrobe: Wardrobe; holding: { left?: FrameNode; right?: FrameNode } };
 
@@ -27,6 +27,10 @@ const outlinedLimb = (pts: P[], col: string, sw: number): FrameNode[] => [
   line(pts, { stroke: INK, sw: sw + 2.4 }),
   line(pts, { stroke: col, sw }),
 ];
+/** A leg: trousers all the way, or shorts (thigh in cloth, shin in skin, a little thinner). */
+const leg = (pts: P[], w: Wardrobe, sw: number): FrameNode[] => w.shorts
+  ? [...outlinedLimb([pts[0]!, pts[1]!], w.bottom, sw), ...outlinedLimb([pts[1]!, pts[2]!], w.skin, sw - 1.2), circle(pts[1]![0], pts[1]![1], sw / 2, { fill: w.bottom, stroke: INK, sw: 2 })]
+  : outlinedLimb(pts, w.bottom, sw);
 const hand = (p: P, skin: string, gripping: boolean): FrameNode => gripping
   ? circle(p[0], p[1], 3.2, { fill: skin, stroke: INK, sw: 1.6 })
   : ellipse(p[0], p[1] + 0.6, 3.1, 3.6, { fill: skin, stroke: INK, sw: 1.6 });
@@ -98,7 +102,7 @@ export function drawCharacter(s: CharacterState): FrameNode {
   const backLeg: P[] = [rig.hipR, rig.kneeR, rig.ankleR], frontLeg: P[] = [rig.hipL, rig.kneeL, rig.ankleL];
   nodes.push(...outlinedLimb(backArm, w.top, armSw), hand(rig.handR, w.skin, gripR));
   if (s.holding.right) nodes.push(g([s.holding.right], { x: rig.handR[0], y: rig.handR[1] }));
-  nodes.push(...outlinedLimb(backLeg, w.bottom, legSw), shoe(rig.ankleR, rig.toeR, w.shoes));
+  nodes.push(...leg(backLeg, w, legSw), shoe(rig.ankleR, rig.toeR, w.shoes));
   // pelvis: trousers block that joins the legs to the torso so the body never "detaches"
   const hw = SEG.hipW + 2.6;
   nodes.push(path(`M${r1(rig.hip[0] - hw)} ${r1(rig.hip[1] - 6)} L${r1(rig.hip[0] + hw)} ${r1(rig.hip[1] - 6)} L${r1(rig.hip[0] + hw)} ${r1(rig.hip[1] + 4)} Q${r1(rig.hip[0])} ${r1(rig.hip[1] + 7)} ${r1(rig.hip[0] - hw)} ${r1(rig.hip[1] + 4)} Z`, { fill: w.bottom, stroke: INK, sw: 2.2 }));
@@ -110,7 +114,8 @@ export function drawCharacter(s: CharacterState): FrameNode {
   const P4 = (x: number, y: number) => `${r1(x)} ${r1(y)}`;
   nodes.push(path(`M${P4(sx - px * sw - ux * 1.5, sy - py * sw - uy * 1.5)} Q${P4(sx - ux * 5, sy - uy * 5)} ${P4(sx + px * sw - ux * 1.5, sy + py * sw - uy * 1.5)} L${P4(hx0 + px * hwT, hy0 + py * hwT)} Q${P4(hx0 + ux * -2, hy0 + uy * -2)} ${P4(hx0 - px * hwT, hy0 - py * hwT)} Z`, { fill: w.top, stroke: INK, sw: 2.2 }));
   nodes.push(path(`M${P4(hx0 - px * 5 - ux * 5, hy0 - py * 5 - uy * 5)} Q${P4(hx0 - ux * 3, hy0 - uy * 3)} ${P4(hx0 + px * 5 - ux * 5, hy0 + py * 5 - uy * 5)}`, { stroke: 'rgba(0,0,0,0.12)', sw: 1.6, fill: 'none' }));
-  nodes.push(...outlinedLimb(frontLeg, w.bottom, legSw), shoe(rig.ankleL, rig.toeL, w.shoes));
+  if (w.number) { const cx = (sx + hx0) / 2 - ux * 2 + 3.5, cy = (sy + hy0) / 2 - uy * 2; nodes.push(text(cx, cy + 3, w.number, 8, { fill: '#ffffff', weight: 800, anchor: 'middle' })); }
+  nodes.push(...leg(frontLeg, w, legSw), shoe(rig.ankleL, rig.toeL, w.shoes));
   // neck + head
   nodes.push(line([rig.shoulder, [rig.head[0], rig.head[1] + 6]], { stroke: w.skin, sw: 4.6 }));
   const headA = -(rig.angles.torso + rig.angles.head);

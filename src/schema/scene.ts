@@ -20,7 +20,7 @@ const Dur = z.number().int().min(1).max(60_000);
 
 export const CHARACTER_ASSETS = ['character.base'] as const;
 export const CHARACTER_VARIANTS = ['a', 'b', 'c'] as const;
-export const PROP_ASSETS = ['glass', 'jug', 'door', 'box', 'ball', 'football', 'sofa', 'bed', 'blanket', 'mug', 'phone', 'table', 'window', 'mat'] as const;
+export const PROP_ASSETS = ['glass', 'jug', 'door', 'box', 'ball', 'football', 'sofa', 'bed', 'blanket', 'mug', 'phone', 'table', 'window', 'mat', 'ladder', 'castle'] as const;
 export const ENVIRONMENTS = ['neutral', 'room', 'bedroom', 'kitchen', 'outdoors.park', 'street'] as const;
 export const TIMES = ['day', 'evening', 'night'] as const;
 export const EYES = ['open', 'half', 'closed', 'wide'] as const;
@@ -96,6 +96,9 @@ export const Action = z.discriminatedUnion('action', [
   z.object({ ...Base, action: z.literal('set'), target: Target, prop: z.string(), value: z.union([z.number(), z.string(), z.boolean()]) }).strict(),
   z.object({ ...Base, action: z.literal('tween'), target: Target, prop: z.string(), to: z.number(), from: z.number().optional(), durationMs: Dur, ease: Ease.default('easeInOut') }).strict(),
   z.object({ ...Base, action: z.literal('emphasis'), target: Target, kind: z.enum(['ring', 'glow', 'arrowDown']).default('ring'), durationMs: Dur.default(800) }).strict(),
+  // objects without people
+  z.object({ ...Base, action: z.literal('roll'), prop: Id, to: Pt, durationMs: Dur, z: z.number().int().optional() }).strict(),
+  z.object({ ...Base, action: z.literal('climb'), actor: Id, prop: Id, durationMs: Dur }).strict(),
 ]);
 export type Action = z.infer<typeof Action>;
 export type ActionOf<K extends Action['action']> = Extract<Action, { action: K }>;

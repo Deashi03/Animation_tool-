@@ -19,3 +19,7 @@ Kvarstående svagheter: ansiktet i profil (sova), arm-IK:s armbåge i övergång
 | 2026-11-05 | anim.sova.1 | Täcket låg "i" figuren | Täcke med puckel ovanpå kroppen, armar under, höfter 9 över madrassen | ai-draft, remsa granskad |
 | 2026-11-05 | anim.sportig.1 | Produktägaren: ser bara ut som stretchning | Omgjord till kontrast i samma scen (vardaglig vs sportig med keepy-uppies, pannband, träningskläder). Osäkert om adjektivet alls går att visa entydigt – kräver produktägarens dom | ai-draft, remsa granskad |
 | 2026-11-05 | anim.hoppa.1 | Huvudet gick ur bild i apex (13-provskontrollen) | Figur 0.88, höjd 16, armar lägre | ai-draft |
+| 2026-11-05 | anim.bakom.1 | Produktägaren: fysiken glömd, bollen "ovanpå/bredvid/bakom", och personen la ner bollen – missförstånd. Ingen människa behövs | Omgjord: boll rullar in bakom låg låda med riktig inbromsning och rotation; första versionen snurrade kring kontaktpunkten (rättat med pivot) | ai-draft, remsa granskad |
+| 2026-11-05 | anim.sova.1 | zzz långt från huvudet och ur bild | Huvudets världsposition tar hänsyn till kroppsrotation; zzz nära munnen, kort stigning | ai-draft, remsa granskad |
+| 2026-11-05 | anim.springa.1 | Fartstreck bara första sekunden och små | Spåret stegas i stället för att tona; fler, längre, strömmande streck | ai-draft, remsa granskad |
+| 2026-11-05 | anim.stormning.1 | Ny på produktägarens begäran | Borg, stege, tre anfallare, fana byter färg, port öppnas; gul "glow" på borgen togs bort (såg ut som en fläck) | ai-draft, remsa granskad |

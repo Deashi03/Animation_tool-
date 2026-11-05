@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.stormning.1",
+  "senseId": "s.stormning.1",
+  "titleSv": "stormning",
+  "meaningHint": "Ett anfall där angriparna rusar fram och klättrar över murarna för att ta en borg med våld",
+  "category": "action",
+  "durationMs": 6200,
+  "loop": true,
+  "holdMs": 1200,
+  "posterMs": 4600,
+  "environment": {
+    "id": "neutral",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "a1",
+      "variant": "a",
+      "at": {
+        "x": 6,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.5,
+      "wardrobe": {
+        "top": "navy",
+        "bottom": "dark",
+        "hairStyle": "short"
+      }
+    },
+    {
+      "id": "a2",
+      "variant": "b",
+      "at": {
+        "x": -6,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.5,
+      "wardrobe": {
+        "top": "navy",
+        "bottom": "dark"
+      }
+    },
+    {
+      "id": "a3",
+      "variant": "c",
+      "at": {
+        "x": -18,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.5,
+      "wardrobe": {
+        "top": "navy",
+        "bottom": "dark",
+        "hairStyle": "short"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "castle",
+      "asset": "castle",
+      "at": {
+        "x": 80,
+        "y": 100
+      },
+      "z": -1,
+      "state": {
+        "flag": "red",
+        "w": 44,
+        "h": 38
+      }
+    },
+    {
+      "id": "ladder",
+      "asset": "ladder",
+      "at": {
+        "x": 44,
+        "y": 100
+      },
+      "z": 0,
+      "state": {
+        "length": 44,
+        "lean": 0
+      },
+      "scale": 1
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "run",
+      "actor": "a1",
+      "to": {
+        "x": 40,
+        "y": 100
+      },
+      "durationMs": 1100
+    },
+    {
+      "t": 150,
+      "action": "run",
+      "actor": "a2",
+      "to": {
+        "x": 26,
+        "y": 100
+      },
+      "durationMs": 1150
+    },
+    {
+      "t": 300,
+      "action": "run",
+      "actor": "a3",
+      "to": {
+        "x": 12,
+        "y": 100
+      },
+      "durationMs": 1200
+    },
+    {
+      "t": 1200,
+      "action": "tween",
+      "target": "ladder",
+      "prop": "lean",
+      "to": 1,
+      "durationMs": 700,
+      "ease": "easeOut"
+    },
+    {
+      "t": 1200,
+      "action": "pose",
+      "actor": "a1",
+      "joints": {
+        "uArmL": 150,
+        "uArmR": 140,
+        "fArmL": 10,
+        "fArmR": 10,
+        "torso": -6
+      },
+      "durationMs": 500
+    },
+    {
+      "t": 1900,
+      "action": "climb",
+      "actor": "a1",
+      "prop": "ladder",
+      "durationMs": 2400
+    },
+    {
+      "t": 4300,
+      "action": "set",
+      "target": "a1",
+      "prop": "z",
+      "value": -2
+    },
+    {
+      "t": 2100,
+      "action": "express",
+      "actor": "a2",
+      "emotion": "angry",
+      "durationMs": 300
+    },
+    {
+      "t": 2100,
+      "action": "express",
+      "actor": "a3",
+      "emotion": "angry",
+      "durationMs": 300
+    },
+    {
+      "t": 2400,
+      "action": "walk",
+      "actor": "a2",
+      "to": {
+        "x": 36,
+        "y": 100
+      },
+      "durationMs": 1200
+    },
+    {
+      "t": 3600,
+      "action": "pose",
+      "actor": "a2",
+      "joints": {
+        "uArmL": 150,
+        "uArmR": 140,
+        "fArmL": 10,
+        "fArmR": 10
+      },
+      "durationMs": 400
+    },
+    {
+      "t": 3700,
+      "action": "climb",
+      "actor": "a2",
+      "prop": "ladder",
+      "durationMs": 2400
+    },
+    {
+      "t": 4300,
+      "action": "set",
+      "target": "castle",
+      "prop": "flag",
+      "value": "navy"
+    },
+    {
+      "t": 4600,
+      "action": "tween",
+      "target": "castle",
+      "prop": "gate",
+      "to": 1,
+      "durationMs": 900,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 4800,
+      "action": "run",
+      "actor": "a3",
+      "to": {
+        "x": 84,
+        "y": 100
+      },
+      "durationMs": 1300
+    },
+    {
+      "t": 6100,
+      "action": "set",
+      "target": "a2",
+      "prop": "z",
+      "value": -2
+    }
+  ],
+  "focus": {
+    "targets": [
+      "castle",
+      "ladder"
+    ],
+    "feature": "attackers rush the wall, raise a ladder, climb over; the banner changes and the gate opens"
+  },
+  "contrast": {
+    "with": [
+      "anim.belägring.1"
+    ],
+    "distinctiveFeatures": [
+      "motion:a1>=0.5",
+      "prop:ladder",
+      "end:castle.gate>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "krig",
+    "confusableWith": [
+      "s.belägring.1",
+      "s.anfalla.1",
+      "s.erövra.1"
+    ],
+    "note": "Substantiv som betecknar en händelse → animation enligt policyn. Kontrast mot belägring (väntan utanför muren) saknas ännu."
+  }
+}

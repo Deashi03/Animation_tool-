@@ -37,6 +37,9 @@ Koordinater i dukenheter, origo uppe till vänster, markplan y ≈ 100. Färger:
 | `sofa`, `bed` | – | `seat` används av `relax`/`sleep` |
 | `blanket` | `cover` 0..1, `length`, `bulge` | förankrat vid fotänden på madrasskanten; puckeln följer kroppen; högre `z` än aktören |
 | `football` | – | boll för `kickups` |
+| `ladder` | `length`, `lean` 0..1 | står på marken; 0 = ligger, 1 = rest mot vägg (72°) |
+| `castle` | `flag` (färg), `gate` 0..1, `w`, `h` | mur med torn och fana; porten öppnas |
+| `box` | `w`, `h`, `lidOpen` | |
 | `table`, `window`, `mat` | (`window.time` följer miljön) | |
 
 Ett föremål med `attachTo` ritas i aktörens hand, upprätt; `tilt` roterar det framåt kring greppet (55° vid 1).
@@ -62,6 +65,8 @@ Ett föremål med `attachTo` ritas i aktörens hand, upprätt; `tilt` roterar de
 | `pose` | `actor, joints{}, durationMs, ease, lift?, bodyRotate?` | lågnivå (undvik i vanliga scener) |
 | `set` / `tween` | `target, prop, value|to, from?, durationMs, ease` | vilken spårbar egenskap som helst: `x y opacity scale rotate w h r progress`, ledvinklar, föremålstillstånd |
 | `emphasis` | `target, kind: ring|glow|arrowDown` | markering |
+| `roll` | `prop, to, durationMs, z?` | föremål rullar på marken: konstant inbromsning, rotation = sträcka/radie |
+| `climb` | `actor, prop (ladder), durationMs` | klättrar längs en rest stege |
 
 Easing: `linear easeIn easeOut easeInOut anticipate overshoot bounce step`.
 

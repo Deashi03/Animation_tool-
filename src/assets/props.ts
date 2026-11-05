@@ -17,6 +17,8 @@ export type PropSpec = {
   mouth?: [number, number];
   /** default state */
   defaults: PropState;
+  /** rotation pivot in local space (default: the base point) */
+  pivot?: (s: PropState) => [number, number];
   /** seat/lying anchor for actors (local), and body rotation when lying */
   seat?: { x: number; y: number; reclineDeg?: number };
 };
@@ -62,16 +64,17 @@ export const PROPS: Record<string, PropSpec> = {
       ]); },
   },
   box: {
-    defaults: { lidOpen: 0 }, grip: [0, -14],
-    draw: (_s, col) => { const c = color(col ?? C.tan); const w = 30, h = 20;
+    defaults: { lidOpen: 0, w: 30, h: 20 }, grip: [0, -14],
+    draw: (s, col) => { const c = color(col ?? C.tan); const w = n(s, 'w', 30), h = n(s, 'h', 20);
       return g([
         rect(-w / 2, -h, w, h, { rx: 2, fill: c, stroke: INK, sw: 2.2 }),
         line([[-w / 2, -h + 6], [w / 2, -h + 6]], { stroke: INK, sw: 1.4 }),
       ]); },
   },
   ball: {
-    defaults: {}, grip: [0, -6],
-    draw: (_s, col) => g([circle(0, -6, 6, { fill: color(col ?? C.red), stroke: INK, sw: 2 }), path('M-5 -7 q5 -4 10 0', { fill: 'none', stroke: INK, sw: 1.4 })]),
+    defaults: { r: 6 }, grip: [0, -6], pivot: (s) => [0, -n(s, 'r', 6)],
+    /** A spot and a seam make rotation visible when the ball rolls. */
+    draw: (s, col) => { const r = n(s, 'r', 6); return g([circle(0, -r, r, { fill: color(col ?? C.red), stroke: INK, sw: 2 }), path(`M${r1(-r * 0.8)} ${r1(-r - r * 0.2)} q${r1(r * 0.8)} ${r1(-r * 0.7)} ${r1(r * 1.6)} 0`, { fill: 'none', stroke: INK, sw: 1.4 }), circle(r * 0.35, -r - r * 0.45, r * 0.22, { fill: C.white, opacity: 0.8 })]); },
   },
   mug: {
     defaults: { level: 0.8 }, grip: [0, -4], mouth: [0, -10],
@@ -137,6 +140,33 @@ export const PROPS: Record<string, PropSpec> = {
   mat: {
     defaults: {}, grip: [0, 0],
     draw: (_s, col) => ellipse(0, 0, 30, 4, { fill: color(col ?? C.lilac), stroke: INK, sw: 1.6 }),
+  },
+  ladder: {
+    defaults: { length: 70, lean: 0 }, grip: [0, -20],
+    /** Stands on the ground at its base; `lean` 0 = flat on the ground pointing +x, 1 = raised against a wall (≈ 72°). */
+    draw: (s, col) => { const L = n(s, 'length', 70), lean = Math.max(0, Math.min(1, n(s, 'lean', 0))); const ang = 90 - 72 * lean; const c = color(col ?? C.brown);
+      const rungs: FrameNode[] = []; for (let y = 8; y < L - 4; y += 8) rungs.push(line([[-4, -y], [4, -y]], { stroke: c, sw: 2.6 }));
+      return g([line([[-4, 0], [-4, -L]], { stroke: c, sw: 3 }), line([[4, 0], [4, -L]], { stroke: c, sw: 3 }), ...rungs, line([[-4, 0], [-4, -L]], { stroke: INK, sw: 0.8, opacity: 0.6 }), line([[4, 0], [4, -L]], { stroke: INK, sw: 0.8, opacity: 0.6 })], { rotate: ang }); },
+  },
+  castle: {
+    defaults: { flag: 'red', gate: 0, w: 56, h: 52 }, grip: [0, -20],
+    /** Wall with battlements and a tower; `flag` colour is the holder's banner, `gate` 0..1 opens the gate. */
+    draw: (s, col) => { const c = color(col ?? C.grey2); const w = n(s, 'w', 56), h = n(s, 'h', 52); const gate = Math.max(0, Math.min(1, n(s, 'gate', 0)));
+      const merlons: FrameNode[] = []; for (let x = -w / 2; x < w / 2; x += 10) merlons.push(rect(x, -h - 6, 5, 7, { fill: c, stroke: INK, sw: 1.6 }));
+      const stones: FrameNode[] = []; for (let y = -h + 10; y < -6; y += 10) for (let x = -w / 2 + ((y / 10) % 2 ? 4 : 0); x < w / 2 - 6; x += 12) stones.push(rect(x + 2, y, 8, 4, { rx: 1, fill: 'rgba(0,0,0,0.07)' }));
+      const tw = 18, th = h + 22;
+      return g([
+        rect(-w / 2, -h, w, h, { fill: c, stroke: INK, sw: 2.2 }), ...stones, ...merlons,
+        rect(w / 2 - 6, -th, tw, th, { fill: c, stroke: INK, sw: 2.2 }),
+        ...[0, 1].map((k) => rect(w / 2 - 5 + k * 9, -th - 6, 5, 7, { fill: c, stroke: INK, sw: 1.6 })),
+        line([[w / 2 + 3, -th - 4], [w / 2 + 3, -th - 24]], { stroke: INK, sw: 1.8 }),
+        path(`M${r1(w / 2 + 3)} ${r1(-th - 24)} l14 4 l-14 4 Z`, { fill: color(s.flag as string), stroke: INK, sw: 1.4 }),
+        rect(w / 2 + 1, -th + 10, 4, 7, { rx: 2, fill: C.night }),
+        // gate: an arch that opens (dark opening grows)
+        path(`M-10 0 v-16 a10 10 0 0 1 20 0 v16 Z`, { fill: gate > 0.5 ? C.night : C.brown, stroke: INK, sw: 2 }),
+        gate > 0 ? path(`M-10 0 v-16 a10 10 0 0 1 20 0 v16 Z`, { fill: C.night, opacity: gate }) : g([]),
+        line([[-6, -2], [-6, -20]], { stroke: INK, sw: 1, opacity: gate > 0.5 ? 0 : 0.5 }), line([[0, -2], [0, -24]], { stroke: INK, sw: 1, opacity: gate > 0.5 ? 0 : 0.5 }), line([[6, -2], [6, -20]], { stroke: INK, sw: 1, opacity: gate > 0.5 ? 0 : 0.5 }),
+      ]); },
   },
 };
 

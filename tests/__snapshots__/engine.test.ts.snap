@@ -3,9 +3,9 @@
 exports[`renderFrame determinism > snapshot of frame hashes (update deliberately when the look changes) 1`] = `
 {
   "anim.bakom.1": [
-    "69ab8511bcf7",
-    "e5a772b2f350",
-    "8877c1980d47",
+    "1e323ca804eb",
+    "7b7e983a088d",
+    "3238b729bdd9",
   ],
   "anim.gå.1": [
     "109e9b1377b8",
@@ -29,8 +29,8 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
   ],
   "anim.sova.1": [
     "26e2641035e6",
-    "efad4ba818d2",
-    "8e747b983b6e",
+    "a336d6afc4c8",
+    "b3c5a0b85db3",
   ],
   "anim.sportig.1": [
     "6586ab48011c",
@@ -38,9 +38,14 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "af72d679a226",
   ],
   "anim.springa.1": [
-    "06abbc51a4be",
-    "22eb611214a4",
+    "11e9ba873a12",
+    "148eae92b840",
     "26ab91aee118",
+  ],
+  "anim.stormning.1": [
+    "889beef0443a",
+    "ab6c845f69b2",
+    "303e9a6513cc",
   ],
   "anim.stänga.1": [
     "2b51e1879e32",

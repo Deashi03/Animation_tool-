@@ -7,6 +7,26 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "381810f458fc",
     "6969d04e5ca7",
   ],
+  "anim.bryna.1": [
+    "3e33cbc714bb",
+    "572e6b0467c9",
+    "d4364e7e1bf1",
+  ],
+  "anim.bränna.1": [
+    "3e33cbc714bb",
+    "61b6d5b79927",
+    "d02190d9373f",
+  ],
+  "anim.fräsa.1": [
+    "996889aa0ff2",
+    "6b1a5238db13",
+    "cea6e8725bf4",
+  ],
+  "anim.gyllenbrun.1": [
+    "1ed535699573",
+    "a44739d57dfd",
+    "a0bde95aaadb",
+  ],
   "anim.gå.1": [
     "109e9b1377b8",
     "1d3d672eb277",
@@ -22,10 +42,20 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "783c4263b7dd",
     "ec69e3f476dc",
   ],
+  "anim.skvätta.1": [
+    "41542ab4d2c0",
+    "5d34769a13cb",
+    "be70c2338e1b",
+  ],
   "anim.slappa.1": [
     "e9fc150f2afd",
     "62644e644f82",
     "ad0ac6a980c4",
+  ],
+  "anim.smälta.1": [
+    "a391f184f00e",
+    "4ee72edc1b73",
+    "a67719542f3b",
   ],
   "anim.sova.1": [
     "26e2641035e6",
@@ -33,24 +63,34 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "b3c5a0b85db3",
   ],
   "anim.sportig.1": [
-    "6586ab48011c",
-    "2100951a6b68",
-    "af72d679a226",
+    "a67c6fb0b5d4",
+    "928cf344fc8c",
+    "f83ff825bb04",
   ],
   "anim.springa.1": [
     "11e9ba873a12",
     "148eae92b840",
     "26ab91aee118",
   ],
+  "anim.steka.1": [
+    "f1cca6e7eb40",
+    "f8fa8f428990",
+    "7692f3205bca",
+  ],
   "anim.stormning.1": [
-    "ab2117a9da92",
-    "a196428602e6",
-    "8c9eec1c7d58",
+    "17359425cd6b",
+    "27548a62881c",
+    "24af621637df",
   ],
   "anim.stänga.1": [
     "2b51e1879e32",
     "57962ac63940",
     "2b291b3880b1",
+  ],
+  "anim.vända.1": [
+    "03a901c8024a",
+    "1db85ce0a314",
+    "307f4da227b9",
   ],
   "anim.öppna.1": [
     "ff9db568212a",

@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.bränna.1",
+  "template": "cook-rhythm",
+  "senseId": "s.bränna.1",
+  "titleSv": "bränna",
+  "meaningHint": "Låta något bli svart och förstört av för mycket värme",
+  "category": "action",
+  "durationMs": 5200,
+  "loop": true,
+  "holdMs": 600,
+  "posterMs": 4400,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "b",
+      "at": {
+        "x": 74,
+        "y": 100
+      },
+      "facing": "left",
+      "wardrobe": {
+        "top": "green"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "stove",
+      "asset": "stove",
+      "at": {
+        "x": 42,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "pan",
+      "asset": "pan",
+      "at": {
+        "x": 42,
+        "y": 70
+      },
+      "z": 1,
+      "state": {
+        "contents": "steak"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 200
+    },
+    {
+      "t": 200,
+      "action": "cook",
+      "actor": "p",
+      "pan": "pan",
+      "kind": "burn",
+      "durationMs": 4200
+    },
+    {
+      "t": 3900,
+      "action": "express",
+      "actor": "p",
+      "emotion": "surprised",
+      "durationMs": 400
+    },
+    {
+      "t": 4400,
+      "action": "face",
+      "actor": "p",
+      "eyes": "wide",
+      "brows": "worried",
+      "mouth": "o"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "pan"
+    ],
+    "feature": "the meat goes brown then black, smoke rises, the cook jumps"
+  },
+  "contrast": {
+    "with": [
+      "anim.bryna.1",
+      "anim.steka.1"
+    ],
+    "distinctiveFeatures": [
+      "end:pan.burnt>=0.9",
+      "actor.p.eyes:wide>=0.1"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.bryna.1",
+      "s.steka.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

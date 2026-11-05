@@ -23,6 +23,7 @@ export type PlanRow = {
 export type Plan = { moduleId: string; titleSv: string; generatedAt: string; rows: PlanRow[] };
 
 const LOCOMOTION = new Set(['gå', 'springa', 'hoppa', 'smyga', 'jogga', 'promenera', 'klättra', 'simma', 'cykla', 'åka', 'resa', 'flytta', 'halka', 'vingla', 'kretsa', 'rymma', 'gå in', 'gå ut', 'komma', 'lämna']);
+const PAN_VERBS = new Set(['steka', 'bryna', 'fräsa', 'smälta', 'vända', 'bränna', 'skvätta', 'vända på']);
 const COOKING = new Set(['skära', 'hacka', 'vispa', 'röra', 'knåda', 'skala', 'riva', 'steka', 'bryna', 'koka', 'sjuda', 'grädda', 'baka', 'grilla', 'fräsa', 'fritera', 'mala', 'mosa', 'blanda', 'krydda', 'salta', 'peppra', 'sila', 'servera', 'duka', 'diska', 'smaka av', 'provsmaka', 'tina', 'frysa in', 'marinera', 'panera', 'kavla']);
 const CLEANING = new Set(['städa', 'dammsuga', 'moppa', 'sopa', 'torka av', 'våttorka', 'tvätta', 'hänga upp', 'vika', 'stryka', 'skölja', 'damma', 'putsa', 'sortera', 'slänga', 'källsortera', 'bädda', 'vädra']);
 const STATE = new Set(['slappa', 'sova', 'vila', 'vänta', 'slappna av', 'sitta', 'ligga', 'stå', 'drömma']);
@@ -66,6 +67,7 @@ export function buildPlan(swechanDir: string, moduleId: string, existingAnimatio
     if (pos === 'verb' || pos === 'phrase') {
       row.kind = 'animation';
       if (LOCOMOTION.has(lemma)) { row.template = 'locomotion'; row.confidence = 'high'; }
+      else if (PAN_VERBS.has(lemma)) { row.template = 'cook-rhythm'; row.confidence = 'high'; row.note = 'panna + spis finns i biblioteket; välj råvara och kind'; }
       else if (COOKING.has(lemma) || CLEANING.has(lemma)) { row.template = 'manipulate-prop'; row.confidence = 'medium'; row.note = 'rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket'; }
       else if (STATE.has(lemma)) { row.template = 'state'; row.confidence = 'high'; }
       else { row.template = 'manipulate-prop'; row.confidence = 'low'; row.note = 'verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering'; }

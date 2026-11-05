@@ -257,6 +257,54 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     dense(ctx.tracks, M.J(a.actor, 'shinR'), a.t, end, (t) => -60 + 30 * Math.sin((2 * Math.PI * (t - a.t)) / T), 0, 40);
     dense(ctx.tracks, M.J(a.actor, 'torso'), a.t, end, () => 10, 0, 40); dense(ctx.tracks, M.J(a.actor, 'head'), a.t, end, () => -18, 0, 40);
   },
+  cook(ctx, a) { cookIn(ctx, a.actor, a.pan, a.kind, a.hand, a.t, a.durationMs, a.tool); },
+  flip(ctx, a) {
+    const d = a.durationMs, t0 = a.t, t1 = t0 + d * 0.3, t2 = t1 + d * 0.5, end = t0 + d;
+    const br = sampleNumber(ctx.tracks, `${a.pan}.s.browning`, t0, 0);
+    const owner = a.tool ? sampleString<string>(ctx.tracks, `${a.tool}.attach`, t0, '') : '';
+    const toolHand: 'left' | 'right' | null = owner.startsWith(`${a.actor}:`) ? (owner.endsWith(':left') ? 'left' : 'right') : null;
+    const mouth = propWorld(ctx, a.pan, t0, 'mouth');
+    faceToward(ctx, a.actor, t0, mouth[0]);
+    const f = facingAt(ctx, a.actor, t0);
+    addKey(ctx.tracks, `${a.actor}.gaze`, { t: t0, v: f }); tween(ctx.tracks, M.J(a.actor, 'head'), t0, t1, -14, 'easeInOut');
+    if (toolHand) {
+      // the spatula slides under the food (anticipation), lifts it quickly, comes back down
+      tween(ctx.tracks, M.J(a.actor, 'torso'), t0, t1, 24, 'easeInOut');
+      const under: P = [mouth[0] - f * 2, mouth[1] - 4];
+      M.poseTo(ctx.tracks, a.actor, t0, t1, reachJoints(ctx, a.actor, toolHand, under, t0), 'easeInOut');
+      tween(ctx.tracks, `${a.tool}.s.tilt`, t0, t1, 1, 'easeInOut');
+      M.poseTo(ctx.tracks, a.actor, t1, t1 + (t2 - t1) * 0.45, reachJoints(ctx, a.actor, toolHand, [under[0] - f * 2, under[1] - 18], t0), 'easeOut');
+      M.poseTo(ctx.tracks, a.actor, t1 + (t2 - t1) * 0.45, t2, reachJoints(ctx, a.actor, toolHand, under, t0), 'easeIn');
+      M.poseTo(ctx.tracks, a.actor, t2, end, toolHand === 'left' ? { uArmL: 30, fArmL: 60 } : { uArmR: 30, fArmR: 60 }, 'easeInOut');
+      tween(ctx.tracks, `${a.tool}.s.tilt`, t2, end, 0.4, 'easeInOut');
+    } else {
+      // the pan itself dips and jerks up: the food flies and turns over
+      const y0 = sampleNumber(ctx.tracks, `${a.pan}.y`, t0, ctx.props.get(a.pan)?.at?.y ?? ctx.ground);
+      tween(ctx.tracks, `${a.pan}.y`, t0, t1, y0 + 1.5, 'easeInOut', 0, y0);
+      tween(ctx.tracks, `${a.pan}.y`, t1, t1 + 120, y0 - 4, 'easeOut'); tween(ctx.tracks, `${a.pan}.y`, t1 + 120, t2, y0, 'easeInOut');
+      tween(ctx.tracks, `${a.pan}.rotate`, t0, t1, 3, 'easeInOut', 0, 0); tween(ctx.tracks, `${a.pan}.rotate`, t1, t1 + 120, -8, 'easeOut'); tween(ctx.tracks, `${a.pan}.rotate`, t1 + 120, t2, 0, 'easeInOut');
+      followGrip(ctx, a.actor, a.pan, 'right', t0, t2);
+    }
+    addKey(ctx.tracks, `${a.pan}.s.toss`, { t: t1, v: 0 }); addKey(ctx.tracks, `${a.pan}.s.toss`, { t: t2, v: 1, e: 'linear' }); addKey(ctx.tracks, `${a.pan}.s.toss`, { t: t2 + 1, v: 0 });
+    addKey(ctx.tracks, `${a.pan}.s.top`, { t: (t1 + t2) / 2, v: br, e: 'step' });
+    tween(ctx.tracks, M.J(a.actor, 'head'), t2, end, -8, 'easeInOut');
+  },
+  splash(ctx, a) {
+    const d = a.durationMs, id = `${a.pan}.s.splash`;
+    addKey(ctx.tracks, id, { t: Math.max(0, a.t - 1), v: -1 });
+    addKey(ctx.tracks, id, { t: a.t, v: 0 }); addKey(ctx.tracks, id, { t: a.t + d * 0.55, v: 1, e: 'linear' });
+    addKey(ctx.tracks, id, { t: a.t + d * 0.55 + 1, v: 0 }); addKey(ctx.tracks, id, { t: a.t + d, v: 1, e: 'linear' }); addKey(ctx.tracks, id, { t: a.t + d + 1, v: -1 });
+    if (a.actor) {
+      const A = a.actor, t0 = a.t + 80;
+      const held = [...ctx.props.values()].some((p) => sampleString<string>(ctx.tracks, `${p.id}.attach`, a.t, '') === `${A}:left`);
+      addKey(ctx.tracks, `${A}.eyes`, { t: t0, v: 'wide' }); addKey(ctx.tracks, `${A}.brows`, { t: t0, v: 'up' }); addKey(ctx.tracks, `${A}.mouth`, { t: t0, v: 'o' });
+      // flinch back, free hand up to shield the face, then relax
+      M.poseTo(ctx.tracks, A, t0, t0 + 180, { torso: -14, head: -8, ...(held ? {} : { uArmL: 70, fArmL: 95 }) }, 'easeOut');
+      tween(ctx.tracks, `${A}.lift`, t0, t0 + 120, 2, 'easeOut'); tween(ctx.tracks, `${A}.lift`, t0 + 120, t0 + 400, 0, 'easeInOut');
+      M.poseTo(ctx.tracks, A, a.t + d, a.t + d + 500, { torso: 4, head: -10, ...(held ? {} : { uArmL: 30, fArmL: 60 }) }, 'easeInOut');
+      addKey(ctx.tracks, `${A}.mouth`, { t: a.t + d + 400, v: 'neutral' }); addKey(ctx.tracks, `${A}.brows`, { t: a.t + d + 400, v: 'worried' });
+    }
+  },
   emphasis(ctx, a) { fxStart(ctx.tracks, `fx.${a.target}.${a.kind}`, a.t, -1); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t, v: 0 }); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t + a.durationMs, v: 1, e: 'linear' }); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t + a.durationMs + 1, v: -1 }); },
 };
 
@@ -297,6 +345,74 @@ function locomote(ctx: Ctx, a: string, t: number, to: { x: number; y: number }, 
   // settle into rest at the end
   M.restPose(ctx.tracks, a, t + d, t + d + 260);
   tween(ctx.tracks, `${a}.lift`, t + d, t + d + 260, 0, 'easeOut');
+}
+
+/** Keep a hand on a prop's grip while the prop moves (dense IK follow). */
+function followGrip(ctx: Ctx, actor: string, prop: string, hand: 'left' | 'right', from: number, to: number, dx: (t: number) => number = () => 0): void {
+  const joints = hand === 'left' ? (['uArmL', 'fArmL'] as const) : (['uArmR', 'fArmR'] as const);
+  const vals = new Map<string, (t: number) => number>();
+  for (const j of joints) vals.set(j, (t) => { const gp = propWorld(ctx, prop, t, 'grip'); const r = reachJoints(ctx, actor, hand, [gp[0] + dx(t), gp[1]], from); return r[j] ?? 0; });
+  for (const j of joints) dense(ctx.tracks, M.J(actor, j), from, to, (t) => vals.get(j)!(t), 0, 40);
+}
+
+/**
+ * Cooking in a pan: the actor stands at the stove with a hand on the handle,
+ * the plate glows, the food sizzles and changes colour. The colour change is
+ * the pedagogical core – the kind decides how far it goes.
+ */
+function cookIn(ctx: Ctx, actor: string, pan: string, kind: 'fry' | 'brown' | 'sear' | 'burn' | 'melt', hand: 'left' | 'right', t: number, d: number, tool?: string): void {
+  const end = t + d, tr = ctx.tracks;
+  const grip = propWorld(ctx, pan, t, 'grip');
+  faceToward(ctx, actor, t, grip[0]);
+  const f = facingAt(ctx, actor, t);
+  // the stove under the pan heats up
+  const [px, py] = propWorld(ctx, pan, t, 'base');
+  for (const p of ctx.props.values()) {
+    if (p.asset !== 'stove') continue;
+    const top = propWorld(ctx, p.id, t, 'mouth');
+    if (Math.abs(top[0] - px) < 10 && Math.abs(top[1] - py) < 6) tween(tr, `${p.id}.s.heat`, t, t + 500, 1, 'easeOut', 0, sampleNumber(tr, `${p.id}.s.heat`, t, 0));
+  }
+  // posture: lean in a little, look down at the pan
+  const other = hand === 'left' ? 'right' : 'left';
+  const toolHeld = tool && sampleString<string>(tr, `${tool}.attach`, t, '') === `${actor}:${other}`;
+  tween(tr, M.J(actor, 'torso'), t, t + 400, toolHeld ? 22 : 10, 'easeInOut'); tween(tr, M.J(actor, 'head'), t, t + 400, -14, 'easeInOut');
+  addKey(tr, `${actor}.gaze`, { t, v: f }); addKey(tr, `${actor}.eyes`, { t, v: 'open' }); addKey(tr, `${actor}.mouth`, { t, v: 'smile' });
+  // hand on the handle; the pan is shaken in short bursts (sear: tossed continuously)
+  const amp = kind === 'sear' ? 2.6 : kind === 'melt' ? 0 : 1.4, T = kind === 'sear' ? 380 : 1000, burstEvery = 2400, burstLen = 760;
+  const shake = (tt: number): number => { if (amp === 0 || tt < t + 400) return 0; const u = tt - t - 400; const env = kind === 'sear' ? 1 : Math.max(0, Math.sin((Math.PI * (u % burstEvery)) / burstLen)) * ((u % burstEvery) < burstLen ? 1 : 0); return amp * env * Math.sin((2 * Math.PI * u) / T); };
+  const x0 = sampleNumber(tr, `${pan}.x`, t, ctx.props.get(pan)?.at?.x ?? 60);
+  dense(tr, `${pan}.x`, t, end, (tt) => x0 + shake(tt), 0, 40);
+  M.poseTo(tr, actor, t, t + 400, reachJoints(ctx, actor, hand, grip, t + 400), 'easeInOut');
+  followGrip(ctx, actor, pan, hand, t + 400, end);
+  if (kind === 'sear') { addKey(tr, `${pan}.s.toss`, { t: t + 400, v: 0 }); dense(tr, `${pan}.s.toss`, t + 400, end, (tt) => { const u = ((tt - t - 400) % 1500) / 1500; return u < 0.5 ? u * 2 * 0.35 : 0; }, 0, 40); addKey(tr, `${pan}.s.toss`, { t: end + 1, v: 0 }); }
+  // the other hand: a held tool presses/pokes now and then, otherwise it rests at the hip
+  if (toolHeld) {
+    const mouth = propWorld(ctx, pan, t, 'mouth');
+    tween(tr, `${tool}.s.tilt`, t, t + 400, 1, 'easeInOut');
+    M.poseTo(tr, actor, t, t + 400, reachJoints(ctx, actor, other, [mouth[0] - f * 11, mouth[1] - 3], t + 400), 'easeInOut'); // ready at the near rim
+    for (let k = t + 400; k + 1200 <= end; k += 1800) {
+      M.poseTo(tr, actor, k, k + 350, reachJoints(ctx, actor, other, [mouth[0] - f * 3, mouth[1] - 6], t + 400), 'easeInOut');
+      M.poseTo(tr, actor, k + 350, k + 700, reachJoints(ctx, actor, other, [mouth[0] + f * 3, mouth[1] - 5], t + 400), 'easeInOut');
+      M.poseTo(tr, actor, k + 700, k + 1200, reachJoints(ctx, actor, other, [mouth[0] - f * 2, mouth[1] - 12], t + 400), 'easeInOut');
+    }
+  }
+  // food: sizzle marks + colour change
+  const level = { fry: 0.6, brown: 0.85, sear: 1, burn: 0.9, melt: 0.3 }[kind];
+  tween(tr, `${pan}.s.sizzle`, t + 200, t + 800, level, 'easeOut', 0, sampleNumber(tr, `${pan}.s.sizzle`, t, 0));
+  const ph0 = sampleNumber(tr, `${pan}.s.phase`, t, 0);
+  dense(tr, `${pan}.s.phase`, t, end, (tt) => ph0 + (tt - t) / 1000, 0, 60);
+  const br0 = sampleNumber(tr, `${pan}.s.browning`, t, 0);
+  if (kind === 'melt') { tween(tr, `${pan}.s.melt`, t + 300, t + d * 0.8, 1, 'easeInOut', 0, sampleNumber(tr, `${pan}.s.melt`, t, 0)); }
+  else if (kind === 'burn') {
+    tween(tr, `${pan}.s.browning`, t + 300, t + d * 0.5, 1, 'linear', 0, br0);
+    tween(tr, `${pan}.s.top`, t + 300, t + d * 0.5, 1, 'linear', 0, sampleNumber(tr, `${pan}.s.top`, t, 0));
+    tween(tr, `${pan}.s.burnt`, t + d * 0.45, t + d * 0.85, 1, 'linear', 0, sampleNumber(tr, `${pan}.s.burnt`, t, 0));
+  } else {
+    const target = { fry: 0.55, brown: 1, sear: 0.6 }[kind];
+    tween(tr, `${pan}.s.browning`, t + 300, end - 200, Math.max(br0, target), 'linear', 0, br0);
+    if (kind !== 'fry') tween(tr, `${pan}.s.top`, t + 300, end - 200, Math.max(sampleNumber(tr, `${pan}.s.top`, t, 0), target * 0.9), 'linear', 0, sampleNumber(tr, `${pan}.s.top`, t, 0)); // tossed/thin food colours on the visible side too
+  }
+  M.blinks(tr, actor, t, end);
 }
 
 function swing(ctx: Ctx, actor: string, prop: string, t: number, d: number, target: 0 | 1): void {

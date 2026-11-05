@@ -214,7 +214,7 @@ describe('objects without people', () => {
     expect(sample(c.tracks, 'castle.s.gate', 1400) as number).toBeLessThan(0.1); expect(sample(c.tracks, 'castle.s.gate', 2100) as number).toBeCloseTo(1, 2);
     for (const a of ['a1', 'a2', 'a3', 'a4']) { expect(sample(c.tracks, `${a}.x`, c.durationMs) as number).toBeGreaterThan(80); expect(sample(c.tracks, `${a}.z`, c.durationMs) as number).toBeLessThan(sample(c.tracks, 'castle.z', 0) as number); }
     expect(sample(c.tracks, 'fight.s.intensity', 2000)).toBe(0); expect(sample(c.tracks, 'fight.s.intensity', 3500) as number).toBeGreaterThan(0.9); expect(sample(c.tracks, 'fight.s.intensity', c.durationMs) as number).toBeLessThan(0.05);
-    expect(sample(c.tracks, 'castle.s.flag', 4000)).toBe('red'); expect(sample(c.tracks, 'castle.s.flag', 5000)).toBe('navy');
+    expect(sample(c.tracks, 'castle.s.raise', 4000) as number).toBeLessThan(0.05); expect(sample(c.tracks, 'castle.s.raise', c.durationMs) as number).toBeGreaterThan(0.95); // the attackers' banner is hoisted
   });
   it('effects stay attached: zzz near the sleeper\'s head, speed lines for the whole run', () => {
     const s = compileScene(scenes.get('anim.sova.1')!);
@@ -242,5 +242,49 @@ describe('text backing', () => {
     expect(sample(c.tracks, 'ja.x', 1500) as number).toBeLessThan(110); // slides in, never covering the whole scene
     const f = renderFrame(c, 1800); const panel = bboxOfId(f.root, 'entity.ja')!;
     expect(panel.x2 - panel.x1).toBeLessThan(60); expect(panel.y2 - panel.y1).toBeLessThan(30);
+  });
+});
+
+describe('cooking library', () => {
+  const { scenes } = loadScenes();
+  it('a left-facing actor reaches forward: the hand lands on the pan handle and the spatula hand over the pan', () => {
+    const c = compileScene(scenes.get('anim.vända.1')!);
+    const svg = frameToSvg(renderFrame(c, 1300));
+    expect(svg).toBeTruthy();
+    // local rig is solved unmirrored; the compiled angles put the hands forward (toward -x on screen for facing left)
+    const pose = {} as Record<string, number>; for (const j of ['torso', 'head', 'uArmL', 'fArmL', 'uArmR', 'fArmR', 'thighL', 'shinL', 'thighR', 'shinR', 'footL', 'footR']) pose[j] = sample(c.tracks, `p.j.${j}`, 1300) as number;
+    const rig = solveRig(pose as never, -1, 0);
+    expect(rig.handL[0]).toBeLessThan(-20); // over the pan (pan centre is 30 units in front)
+    expect(rig.handR[0]).toBeLessThan(0); // on the handle, in front of the body
+  });
+  it('cook: the stove heats up, the food sizzles and browns as far as the kind says', () => {
+    const fry = compileScene(scenes.get('anim.steka.1')!), brown = compileScene(scenes.get('anim.bryna.1')!), burn = compileScene(scenes.get('anim.bränna.1')!), melt = compileScene(scenes.get('anim.smälta.1')!);
+    expect(sample(fry.tracks, 'stove.s.heat', 0) as number).toBeLessThan(0.1); expect(sample(fry.tracks, 'stove.s.heat', 1500) as number).toBeCloseTo(1, 1);
+    expect(sample(fry.tracks, 'pan.s.sizzle', 2000) as number).toBeGreaterThan(0.5);
+    const bFry = sample(fry.tracks, 'pan.s.browning', fry.durationMs) as number, bBrown = sample(brown.tracks, 'pan.s.browning', brown.durationMs) as number;
+    expect(bFry).toBeGreaterThan(0.45); expect(bFry).toBeLessThan(0.7); expect(bBrown).toBeGreaterThan(0.95);
+    expect(sample(burn.tracks, 'pan.s.burnt', burn.durationMs) as number).toBeGreaterThan(0.95); expect(sample(brown.tracks, 'pan.s.burnt', brown.durationMs) as number).toBe(0);
+    expect(sample(melt.tracks, 'pan.s.melt', melt.durationMs) as number).toBeGreaterThan(0.95);
+  });
+  it('flip: the food goes up and turns over, and the cooked side becomes the visible side', () => {
+    const c = compileScene(scenes.get('anim.vända.1')!);
+    expect(sample(c.tracks, 'pan.s.top', 2800) as number).toBeLessThan(0.05);
+    const toss = [3200, 3300, 3400].map((t) => sample(c.tracks, 'pan.s.toss', t) as number);
+    expect(Math.max(...toss)).toBeGreaterThan(0.2);
+    expect(sample(c.tracks, 'pan.s.top', 3900) as number).toBeGreaterThan(0.4);
+    expect(sample(c.tracks, 'pan.s.toss', c.durationMs) as number).toBe(0);
+  });
+  it('splash: fat flies out of the pan and the cook flinches with wide eyes', () => {
+    const c = compileScene(scenes.get('anim.skvätta.1')!);
+    expect(sample(c.tracks, 'pan.s.splash', 1000) as number).toBe(-1);
+    expect(sample(c.tracks, 'pan.s.splash', 1950) as number).toBeGreaterThan(0); expect(sample(c.tracks, 'pan.s.splash', 3500) as number).toBe(-1);
+    expect(sample(c.tracks, 'p.eyes', 2000)).toBe('wide');
+    expect(frameToSvg(renderFrame(c, 1950)).length).toBeGreaterThan(frameToSvg(renderFrame(c, 1000)).length); // droplets drawn
+  });
+  it('every cooking scene instantiates cook-rhythm or property-contrast and validates', () => {
+    for (const id of ['anim.steka.1', 'anim.bryna.1', 'anim.fräsa.1', 'anim.smälta.1', 'anim.vända.1', 'anim.bränna.1', 'anim.skvätta.1', 'anim.gyllenbrun.1']) {
+      const s = scenes.get(id)!; expect(['cook-rhythm', 'property-contrast']).toContain(s.template);
+      const r = validateScene(s as unknown, scenes); expect(r.problems.filter((p) => p.level === 'error'), id).toEqual([]);
+    }
   });
 });

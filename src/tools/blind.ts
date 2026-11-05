@@ -1,7 +1,10 @@
 /**
  * Blind test: a reviewer who has not seen the scene files looks at unlabeled
  * filmstrips and says what each one means, choosing among the word, its
- * declared confusables and distractors. This reproduces the product owner's
+ * contrast partners (the words it is designed to differ from) and distractors.
+ * Declared `confusableWith` words are NOT offered unless they are also contrast
+ * partners: they are by definition too close to tell apart in a picture, which
+ * is exactly why the quiz never offers them either. This reproduces the product owner's
  * own test ("say what it means without the label") and is the semantic gate
  * that validation cannot provide.
  */
@@ -30,14 +33,14 @@ export async function makeBlindBatch(scenes: Map<string, Scene>, ids: string[], 
   const all = [...scenes.values()].filter((s) => s.kind === 'word');
   const items: BlindKey['items'] = order.map((id, i) => {
     const s = scenes.get(id)!;
-    const confusables = s.pedagogy.confusableWith.map(lemmaOf);
-    const partners = (s.contrast?.with ?? []).map((w) => scenes.get(w)?.titleSv).filter((x): x is string => !!x);
-    const pool = shuffled(all.filter((o) => o.animationId !== id && o.titleSv !== s.titleSv).map((o) => o.titleSv), batch + id);
-    const options = [...new Set([s.titleSv, ...partners, ...confusables, ...pool])].slice(0, 5);
+    const confusables = new Set(s.pedagogy.confusableWith.map(lemmaOf));
+    const partners = (s.contrast?.with ?? []).map((w) => scenes.get(w)?.titleSv ?? lemmaOf(w.replace(/^anim\./, 's.'))).filter((x): x is string => !!x && x !== s.titleSv);
+    const pool = shuffled(all.filter((o) => o.animationId !== id && o.titleSv !== s.titleSv && !confusables.has(o.titleSv)).map((o) => o.titleSv), batch + id);
+    const options = [...new Set([s.titleSv, ...partners, ...pool])].slice(0, 5);
     return { letter: letters[i]!, animationId: id, expected: s.titleSv, options: shuffled(options, batch + id + 'opt') };
   });
   // strips without titles, labels or ids
-  const html = items.map((it) => stripHtml(scenes.get(it.animationId)!, { frames: 8, size: 140, label: false, title: `Remsa ${it.letter}` })).join('');
+  const html = items.map((it) => stripHtml(scenes.get(it.animationId)!, { frames: 12, size: 140, label: false, title: `Remsa ${it.letter}` })).join('');
   const sheet = await writeReview('strips', `blind-${batch}`, html.replace(/<small>.*?<\/small>/g, '<small></small>'), 1240);
   const dir = path.join(reviewDir(), 'blind'); fs.mkdirSync(dir, { recursive: true });
   const key: BlindKey = { batch, createdAt: new Date().toISOString().slice(0, 10), items };

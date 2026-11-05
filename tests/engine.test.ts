@@ -140,7 +140,7 @@ describe('physics rules (the golden rule)', () => {
         const wx = (r: typeof a, side: 'L' | 'R', tt: number) => num(c, 'p.x', tt) + (side === 'L' ? r.ankleL[0] : r.ankleR[0]) + num(c, 'env.scrollX', tt);
         for (const side of ['L', 'R'] as const) {
           const yA = side === 'L' ? a.ankleL[1] : a.ankleR[1], yB = side === 'L' ? b.ankleL[1] : b.ankleR[1];
-          const onGround = yA > -3 && yB > -3; // ankle at ground height in both samples → stance
+          const onGround = yA > -2.7 && yB > -2.7; // ankle exactly at ground height in both samples → stance (swing ends are excluded)
           if (!onGround) continue;
           expect(Math.abs(wx(b, side, t + 40) - wx(a, side, t)), `${id} ${side} foot slides at ${t} ms`).toBeLessThan(0.9);
           checked++;

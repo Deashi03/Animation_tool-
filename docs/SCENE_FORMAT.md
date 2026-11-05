@@ -49,6 +49,20 @@ Koordinater i dukenheter, origo uppe till vänster, markplan y ≈ 100. Färger:
 
 Ett föremål med `attachTo` ritas i aktörens hand, upprätt; `tilt` roterar det framåt kring greppet (55° vid 1).
 
+### Föremålsfamiljer (`<familj>.<form>`)
+
+Katalogblad: `npm run anim:props -- --filter <familj>` → `review/sheet/props-<familj>.png`. Alla är ritfunktioner av sitt tillstånd; okänt id ger ett schemafel med förslag.
+
+| familj | former | tillstånd (0..1 om inget annat anges) |
+|---|---|---|
+| `tool.*` (hålls i handen, spetsen nedåt, `heldTilt` svänger spetsen framåt) | knife, masher, spoon, ladle, fork, whisk, peeler, grater, rollingpin, brush, toothbrush, cloth, sponge, broom, mop, hammer, saw, drill, screwdriver, pen, iron, shaker, scraper, razor, scissors, needle, paintbrush, roller, tongs, nozzle | `tilt` (sätts av `use`) |
+| `container.*` (står på en yta, `mouth` = där innehåll/arbete sker) | bowl, pot, plate, board, bucket, bin, bag, basket, cup, bottle, jar, tray, tub, suitcase, crate | bowl: `fill`, `mixed`, `foam`, `contents` (färg); pot: `fill`, `boil` (0.3 = sjuda, 1 = koka), `steam`, `lid`, `phase`; plate: `food`, `dirty`; bucket/cup: `fill`, `steam`; bin/suitcase: `open`, `full`; tub: `foam` |
+| `food.*` (ligger på bräda/tallrik/bord) | apple, banana, carrot, tomato, onion, potato, bread, dough, egg, cheese, pile, fish, pancake, cake | `pieces` (skivas), `peeled`, `ripeness` (grön → gul → röd), `rot` (fläckar, mögel), `mashed`, `squash`; dough: `rise`, `flat`; egg: `cracked`; cheese: `grated`; bread: `toast`; pile: `amount`, `contents` |
+| `fixture.*` (inventarier och sådant som förändras av sig självt) | lamp, candle, tap, sink, shower, ice, fire, plant, flower, puddle, drip, washingmachine, oven, fridge, microwave, radiator, clothesline, hanger, ironingboard, chair, shelf, wall, bike, cart, tent, tree, bush, cloud, sun, clock, scale, mirror, toilet, cow, hen, nest | `on`, `lit`, `flow`, `melt`, `burn`, `smoke`, `grow`, `wilt`, `bloom`, `size`, `spin`, `open`, `paint`, `paper`, `flake`, `rain`, `dark`, `hour`/`minute`, `weight`, `flush`, `items`, `eggs`, `phase` |
+| `garment.*` (plagg som föremål) | shirt, trousers, sock, towel, dress, jacket | `folded`, `hanging`, `wrinkled`, `wet`, `stain`, `shrink`, `faded`, `phase` |
+
+Figurens **garderob** (`actors[].wardrobe`): `top`, `bottom`, `shoes`, `hair`, `skin`, `hairStyle`, `headband`, `shorts`, `number` (tröjnummer), `hat` (`none` = ingen), `glasses`, `scarf`, `buttons` 0..1 (stängda; odefinierad = inga knappar), `zipper` 0..1, `sleeves` long|short|rolled, `apron`, `laces`. Allt kan animeras via spåren `<aktör>.w.<nyckel>` (handlingarna `dress`/`fasten` gör det).
+
 ## Handlingar
 
 | handling | parametrar | ger |
@@ -75,6 +89,13 @@ Ett föremål med `attachTo` ritas i aktörens hand, upprätt; `tilt` roterar de
 | `cook` | `actor, pan, kind: fry|brown|sear|burn|melt, hand, tool?, durationMs` | handen på handtaget (IK följer pannans skakningar), spisen under pannan tänds, fräsmärken, råvaran byter färg så långt `kind` säger; `sear` kastar innehållet; `tool` (hållen stekspade) petar då och då |
 | `flip` | `actor, pan, tool?, durationMs` | med `tool`: spaden under, snabbt lyft, maten flyger upp och vänder; utan: pannan kastar. Den stekta sidan (`browning`) blir `top` |
 | `splash` | `pan, actor?, durationMs` | fettdroppar flyger ur pannan i parabler (två skurar); aktören ryggar med vida ögon och skyddande arm |
+| `use` | `actor, on, tool?, hand (standard: närmaste), motion, durationMs, periodMs?, effect[], offset?, bothHands` | **generellt verktygsarbete**: handen (med verktyget, fästs automatiskt) går till målets `mouth` och utför ett mönster – `chop tap press knead saw wipe scrub sweep spread brush stir whisk pull peel grate sprinkle squeeze hold roll` – medan `effect` tweenar målets tillstånd (`{key, to, from?, at?, prop?}`). Slag skakar målet, `sprinkle` strör korn, `knead`/`press` trycker ihop målet (`squash`) |
+| `say` | `actor, icon? | text? (≤14), mood: neutral|happy|angry|sad|question|surprised, to?, durationMs, gesture` | pratbubbla på vitt som följer huvudet (ikon eller kort text), munnen rör sig, bryn efter stämning, liten handgest; `to` vänder båda mot varandra |
+| `sound` | `target, kind: hum|ring|bark|thump|crunch|splash, durationMs` | ljudbågar `)))` eller slagstreck intill källan |
+| `give` | `from, to, prop, durationMs` | båda sträcker sig, föremålet byter hand mitt i |
+| `put` / `take` | `actor, prop, on? | at?, z?` / `actor, prop, hand` | ställa ner på ett föremåls topp (`mouth`) eller en punkt; plocka upp (= `grab`) |
+| `dress` | `actor, garment: top|bottom|shoes|hat|glasses|scarf|apron, on, value? (färg), durationMs` | plaggets koreografi (armar över huvudet, böja sig, lyfta foten …); garderoben byts mitt i |
+| `fasten` | `actor, what: buttons|zipper|laces|sleeves, on, durationMs` | händer vid skjortfronten/skon/ärmen; knapparna stängs en i taget, dragkedjan tweenas, snören knyts, ärmar kavlas |
 
 Easing: `linear easeIn easeOut easeInOut anticipate overshoot bounce step`.
 
@@ -109,6 +130,13 @@ Varje ordscen anger `template`. Kontraktet kontrolleras av validatorn; produktä
 | `event` | stormning, flytt, fest … | ≥ 2 aktörer; ≥ 1 föremål |
 | `attribute-gloss` | sportig, randig, skrynklig, mogen … | ≥ 1 entitet som bär egenskapen; japanskt ord på vitt; ingen verbhandling. **Standardmall för egenskaper** (normativ 2026-11-05) |
 | `cook-rhythm` | steka, bryna, fräsa, smälta, vända, bränna, skvätta | aktör; `pan` + `stove`; `cook`/`flip`/`splash`. Verben skiljs genom hur långt färgen går, tempot och följden |
+| `tool-rhythm` | skära, hacka, vispa, röra, knåda, kavla, skala, riva, mosa, salta, vika, stryka, borsta, såga … | aktör; ≥ 2 föremål; `use` |
+| `process` | koka, sjuda, smälta, mogna, ruttna, brinna, släcka, droppa, rinna, läcka, jäsa, växa, vissna, flagna, regna, krympa, blekna, brumma, dunka | inga människor; ≥ 1 föremål; `tween`/`set`/`sound` |
+| `communicate` | beställa, klaga, varna, skämta, förklara, rekommendera, ursäkta, köa | aktör; `say` |
+| `social` | servera, lämna över, ge, skicka, bjuda på | ≥ 2 aktörer; föremål; `give`/`put`/`take` |
+| `dress-self` | ta på/av sig, klä på/av sig, byta om, knäppa (upp), dra upp/ner, kavla upp, knyta, sätta på sig | aktör; `dress`/`fasten` |
 | `ui` | paneler, bockar | – |
+
+Garderob: `wear:<aktör>.<nyckel>>=v | <=v | ==värde` (vid slutet), `wear-start:…` (vid starten, t.ex. `wear-start:p.top==red`, `wear:p.buttons>=0.9`). Tal och ljud: `has:say-icon:a|b`, `has:say-mood:a|b`, `has:sound:a|b`, `has:prop:asset|asset`.
 
 Extra `has:`-features för kontrakt och kontrastpar: `has:actors>=N`, `has:actors==0`, `has:props>=N`, `has:entities>=N`, `has:action:a|b`, `has:icon:a|b`, `has:cjk-text`, `has:contrast`.

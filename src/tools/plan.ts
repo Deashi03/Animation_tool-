@@ -74,7 +74,7 @@ export function buildPlan(swechanDir: string, moduleId: string, existingAnimatio
     } else if (pos === 'adjective') {
       if (EMOTION_ADJ.has(lemma)) { row.kind = 'animation'; row.template = 'emotion'; row.confidence = 'high'; }
       else if (STATIC_ADJ_HINTS.test(lemma)) { row.kind = 'image'; row.confidence = 'high'; row.note = 'statisk synlig egenskap → bild (Swechan wordArt)'; }
-      else { row.kind = 'animation'; row.template = 'property-contrast'; row.confidence = antonym ? 'medium' : 'low'; row.note = antonym ? 'kontrast mot antonymen i samma bild' : 'egenskap utan antonym i ordboken – kontrast mot "det vanliga" eller ingen visualisering'; }
+      else { row.kind = 'animation'; row.template = 'attribute-gloss'; row.confidence = 'medium'; row.note = antonym ? `egenskap buren av utseende/föremål + japanskt ord; antonym ${antonym} finns – property-contrast bara om motsatsen är poängen` : 'egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)'; }
     } else if (pos === 'noun') {
       if (ACTIVITY_NOUN.test(lemma) || /^Att /.test(sense?.defSv ?? '')) { row.kind = 'animation'; row.template = 'event'; row.confidence = 'low'; row.note = 'substantiv som kan vara en händelse – avgör animation eller bild'; }
       else { row.kind = 'image'; row.confidence = 'high'; row.note = img ? 'bild finns i Swechan' : 'konkret ting → bild (Swechan wordArt)'; }

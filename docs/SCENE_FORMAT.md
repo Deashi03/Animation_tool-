@@ -107,6 +107,7 @@ Varje ordscen anger `template`. Kontraktet kontrolleras av validatorn; produktä
 | `emotion` | arg, glad, förvånad … | aktör; `express` |
 | `state` | slappa, sova, vila … | aktör; `relax`/`sleep`/`idle`; kontrastpar |
 | `event` | stormning, flytt, fest … | ≥ 2 aktörer; ≥ 1 föremål |
+| `attribute-gloss` | sportig, randig, skrynklig, mogen … | ≥ 1 entitet som bär egenskapen; japanskt ord på vitt; ingen verbhandling. **Standardmall för egenskaper** (normativ 2026-11-05) |
 | `cook-rhythm` | steka, bryna, fräsa, smälta, vända, bränna, skvätta | aktör; `pan` + `stove`; `cook`/`flip`/`splash`. Verben skiljs genom hur långt färgen går, tempot och följden |
 | `ui` | paneler, bockar | – |
 

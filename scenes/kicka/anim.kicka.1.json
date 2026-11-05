@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.kicka.1",
+  "template": "manipulate-prop",
+  "senseId": "s.kicka.1",
+  "titleSv": "kicka",
+  "meaningHint": "Sparka till en boll med foten eller knät så att den studsar upp (keepy-uppies)",
+  "category": "action",
+  "durationMs": 4320,
+  "loop": true,
+  "holdMs": 0,
+  "posterMs": 1500,
+  "environment": {
+    "id": "outdoors.park",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "b",
+      "at": {
+        "x": 66,
+        "y": 100
+      },
+      "facing": "left",
+      "wardrobe": {
+        "top": "orange",
+        "bottom": "dark",
+        "shoes": "white",
+        "headband": "red",
+        "hairStyle": "bun"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "ball",
+      "asset": "football",
+      "at": {
+        "x": 52,
+        "y": 100
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "exercise",
+      "actor": "p",
+      "kind": "kickups",
+      "ball": "ball",
+      "durationMs": 4320
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p",
+      "ball"
+    ],
+    "feature": "the knee meets the ball again and again; the ball follows a parabola"
+  },
+  "contrast": {
+    "with": [
+      "anim.sportig.1"
+    ],
+    "distinctiveFeatures": [
+      "prop:football",
+      "motion:p>=0.5"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "boll",
+    "confusableWith": [
+      "s.sparka.1",
+      "s.jonglera.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Återanvänd keepy-uppies-scen från sportig (produktägaren 2026-11-05: 'perfekt för ordet kicka'). Betydelsen s.kicka.1 finns ännu inte i Swechans ordbok – mallen locomotion är tillfällig tills en bollspelsfamilj finns."
+  }
+}

@@ -4,7 +4,7 @@
  *   actor.<id>.posture:<standing|reclined|lying>[>=fraction]
  *   environment.time:<day|evening|night>
  *   prop:<asset>                                           (scene contains a prop of that asset)
- *   motion:<actor>[>=fraction]                             (actor travels or any joint moves)
+ *   motion:<actor>[>=fraction|<=fraction]                  (actor travels or any joint moves)
  *   speed:<actor>>=<units/s> | speed:<actor><=<units/s>    (ground speed while moving, incl. world scroll)
  *   airborne:<actor>[>=fraction|<=fraction]                (both feet off the ground: hips lifted > 1 unit)
  *   end:<prop>.<stateKey>>=value | <=value                 (prop state at the end of the scene)
@@ -65,7 +65,7 @@ export function evaluateFeature(c: CompiledScene, feature: string): { ok: boolea
     const a = rhs!; let moved = 0;
     for (let t = 0; t <= D; t += 80) { const x = sampleNumber(c.tracks, `${a}.x`, t, 0), x2 = sampleNumber(c.tracks, `${a}.x`, t + 80, 0); const jointMoved = JOINTS.some((j) => Math.abs(sampleNumber(c.tracks, `${a}.j.${j}`, t, 0) - sampleNumber(c.tracks, `${a}.j.${j}`, t + 80, 0)) > 1); if (Math.abs(x - x2) > 0.5 || jointMoved) moved++; }
     const frac = moved / Math.max(1, Math.floor(D / 80));
-    return { ok: frac >= minFrac, detail: `${a} moves during ${(frac * 100).toFixed(0)}% of the scene` };
+    return { ok: le ? frac <= minFrac : frac >= minFrac, detail: `${a} moves during ${(frac * 100).toFixed(0)}% of the scene` };
   }
   const m = /^actor\.([^.]+)\.(eyes|posture)$/.exec(lhs);
   if (m) {

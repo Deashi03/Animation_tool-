@@ -42,6 +42,11 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "783c4263b7dd",
     "ec69e3f476dc",
   ],
+  "anim.kicka.1": [
+    "0c739025a2c4",
+    "b5b28bd17e1c",
+    "50ff92941259",
+  ],
   "anim.skvätta.1": [
     "41542ab4d2c0",
     "5d34769a13cb",
@@ -63,11 +68,6 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "b3c5a0b85db3",
   ],
   "anim.sportig.1": [
-    "d7ed4b615eb1",
-    "1b309e5c5037",
-    "a7450afbdcda",
-  ],
-  "anim.sportig.1.v2": [
     "6a93599cd256",
     "54b80f6c7c56",
     "f2e9a6c5838b",

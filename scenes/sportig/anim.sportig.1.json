@@ -1,123 +1,119 @@
 {
   "schemaVersion": 1,
   "animationId": "anim.sportig.1",
-  "template": "property-contrast",
+  "template": "attribute-gloss",
   "senseId": "s.sportig.1",
   "titleSv": "sportig",
-  "meaningHint": "Som hör till sport och träning: aktiv, i träningskläder. Visas som kontrast mot en vardaglig person.",
+  "meaningHint": "Som ser ut som kläder för sport och är lätta att röra sig i",
   "category": "property",
-  "durationMs": 4320,
+  "durationMs": 3600,
   "loop": true,
-  "holdMs": 0,
-  "posterMs": 1500,
+  "holdMs": 900,
+  "posterMs": 2600,
   "environment": {
     "id": "outdoors.park",
     "time": "day"
   },
   "actors": [
     {
-      "id": "q",
-      "variant": "a",
-      "at": {
-        "x": 28,
-        "y": 100
-      },
-      "facing": "right",
-      "wardrobe": {
-        "top": "beige",
-        "bottom": "navy",
-        "shoes": "brown"
-      }
-    },
-    {
       "id": "p",
       "variant": "b",
       "at": {
-        "x": 78,
+        "x": 50,
         "y": 100
       },
-      "facing": "left",
+      "facing": "right",
       "wardrobe": {
         "top": "orange",
         "bottom": "dark",
         "shoes": "white",
         "headband": "red",
-        "hairStyle": "bun"
+        "hairStyle": "bun",
+        "shorts": true,
+        "number": "10"
       }
     }
   ],
   "props": [
     {
-      "id": "mug",
-      "asset": "mug",
-      "attachTo": {
-        "actor": "q",
-        "hand": "left"
-      }
-    },
-    {
       "id": "ball",
       "asset": "football",
       "at": {
-        "x": 64,
+        "x": 69,
         "y": 100
-      }
+      },
+      "z": 1
+    }
+  ],
+  "shapes": [
+    {
+      "type": "text",
+      "id": "ja",
+      "x": 72,
+      "y": -20,
+      "text": "スポーティー",
+      "size": 11,
+      "weight": 800,
+      "fill": "ink",
+      "anchor": "middle",
+      "bg": "bubble",
+      "tail": {
+        "x": -16,
+        "y": 34
+      },
+      "pad": 6,
+      "opacity": 0,
+      "z": 5
     }
   ],
   "timeline": [
     {
       "t": 0,
       "action": "idle",
-      "actor": "q",
-      "durationMs": 4320,
+      "actor": "p",
+      "durationMs": 3600,
       "style": "breathe"
     },
     {
-      "t": 300,
-      "action": "lookAt",
-      "actor": "q",
-      "target": "p",
-      "durationMs": 400
+      "t": 900,
+      "action": "set",
+      "target": "ja",
+      "prop": "opacity",
+      "value": 1
     },
     {
-      "t": 0,
-      "action": "exercise",
-      "actor": "p",
-      "kind": "kickups",
-      "ball": "ball",
-      "durationMs": 4320
-    },
-    {
-      "t": 200,
-      "action": "emphasis",
-      "target": "p",
-      "kind": "ring",
-      "durationMs": 900
+      "t": 900,
+      "action": "tween",
+      "target": "ja",
+      "prop": "y",
+      "from": -20,
+      "to": 22,
+      "durationMs": 450,
+      "ease": "easeOut"
     }
   ],
   "focus": {
     "targets": [
-      "p",
-      "ball"
+      "p"
     ],
-    "feature": "sportswear + headband + keepy-uppies, next to an everyday person standing still"
+    "feature": "sports kit: jersey with number, shorts, sneakers, headband; a football at her feet; the Japanese word in a bubble pointing at the kit"
   },
   "contrast": {
     "with": [
-      "anim.gå.1"
+      "anim.kicka.1"
     ],
     "distinctiveFeatures": [
-      "prop:football",
-      "motion:p>=0.5"
+      "has:cjk-text",
+      "motion:p<=0.1"
     ]
   },
   "pedagogy": {
     "quizEligible": false,
     "group": "stil",
     "confusableWith": [
-      "s.träningskläder.1",
-      "s.springa.1"
+      "s.träningskläder.1"
     ],
-    "note": "Egenskap visad som aktivitet + kläder i kontrast mot en vardaglig person. Inte entydig nog för bildfrågor."
+    "reviewStatus": "ai-draft",
+    "note": "Produktägaren valde 2026-11-05 denna variant (kläder + japanskt ord) framför sportutövande. Regel: se CLAUDE.md 2.1 och STYLE_GUIDE."
   }
 }

@@ -34,7 +34,7 @@ export const TEMPLATES: Record<string, Template> = {
   'manipulate-prop': {
     id: 'manipulate-prop', titleSv: 'Hantera föremål med synlig följd',
     describes: 'Verb där en person gör något med ett föremål och föremålet förändras: öppna, stänga, hälla, knäppa, tända. Följden måste synas på föremålet.',
-    contract: ['has:actors>=1', 'has:props>=1', 'has:action:open|close|pour|grab|release|sip|tween|set'],
+    contract: ['has:actors>=1', 'has:props>=1', 'has:action:open|close|pour|grab|release|sip|tween|set|exercise'],
     make: (senseId, lemma, n) => ({
       schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'manipulate-prop', meaningHint: 'TODO', category: 'action',
       durationMs: 3200, loop: true, posterMs: 2000, environment: { id: 'room', time: 'day' },
@@ -130,8 +130,8 @@ export const TEMPLATES: Record<string, Template> = {
     }),
   },
   'attribute-gloss': {
-    id: 'attribute-gloss', titleSv: 'Egenskap buren av utseende + japanskt ord (experiment)',
-    describes: 'Adjektiv och abstraktioner där egenskapen syns på kläder, föremål eller utseende utan att någon utför en aktivitet: sportig, elegant, randig. En figur eller ett föremål bär egenskapen, lugn andning, och det japanska ordet glider in på vitt. Ingen handling som kan läsas som ett verb. Prövas 2026-11-05 på produktägarens förslag; normativ regel skrivs när utfallet är klart.',
+    id: 'attribute-gloss', titleSv: 'Egenskap buren av utseende + japanskt ord',
+    describes: 'Adjektiv och abstraktioner där egenskapen syns på kläder, föremål eller utseende utan att någon utför en aktivitet: sportig, elegant, randig. En figur eller ett föremål bär egenskapen, lugn andning, och det japanska ordet glider in på vitt. Ingen handling som kan läsas som ett verb. Normativ sedan 2026-11-05 (produktägaren valde den framför sportutövande för *sportig*): egenskaper bärs av utseende, föremål eller läge – inte av en aktivitet som själv är ett verb.',
     contract: ['has:entities>=1', 'has:cjk-text'],
     make: (senseId, lemma, n) => ({
       schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'attribute-gloss', meaningHint: 'TODO', category: 'property',

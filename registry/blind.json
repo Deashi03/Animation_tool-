@@ -127,17 +127,6 @@
       "reviewer": "claude-subagent (opus, fresh context)"
     }
   ],
-  "anim.sportig.1": [
-    {
-      "date": "2026-11-05",
-      "batch": "b1",
-      "passed": true,
-      "choice": "sportig",
-      "expected": "sportig",
-      "description": "Två figurer står bredvid varandra: en i vanliga kläder står stilla, medan den andra i orange tröja och rött pannband kickar en fotboll med knät gång på gång; kontrasten visar egenskapen att vara sportig/aktiv snarare än själva plaggen.",
-      "reviewer": "claude-subagent (opus, fresh context)"
-    }
-  ],
   "anim.fräsa.1": [
     {
       "date": "2026-11-05",
@@ -278,6 +267,18 @@
       "expected": "bränna",
       "description": "En rosa skiva i pannan blir orange, brun och till slut svart med mörkgrå rök, och personen får en orolig/förskräckt min – maten bränns vid. Tydligt bränna.",
       "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.kicka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": true,
+      "choice": "sportig",
+      "expected": "sportig",
+      "description": "Två figurer står bredvid varandra: en i vanliga kläder står stilla, medan den andra i orange tröja och rött pannband kickar en fotboll med knät gång på gång; kontrasten visar egenskapen att vara sportig/aktiv snarare än själva plaggen.",
+      "reviewer": "claude-subagent (opus, fresh context)",
+      "note": "resultat från scenen när den hette anim.sportig.1"
     }
   ]
 }

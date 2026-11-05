@@ -18,7 +18,9 @@
     "anim:poster": "vite-node scripts/cli/anim-poster.ts",
     "anim:sheet": "vite-node scripts/cli/anim-sheet.ts",
     "anim:report": "vite-node scripts/cli/anim-report.ts",
-    "anim:export": "vite-node scripts/cli/anim-export.ts"
+    "anim:export": "vite-node scripts/cli/anim-export.ts",
+    "anim:blindtest": "vite-node scripts/cli/anim-blindtest.ts",
+    "anim:plan": "vite-node scripts/cli/anim-plan.ts"
   },
   "dependencies": {
     "react": "19.1.0",

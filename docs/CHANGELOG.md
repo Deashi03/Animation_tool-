@@ -39,3 +39,10 @@
 - Produktägarens regel: all text i ordscener ligger på vit bakgrund – `bg: pill` (standard), `bubble` (pratbubbla med `tail`), `panel` (vit panel som glider in från en kant; tweena `x`/`y` från utanför duken). Validatorn avvisar `bg: none` i ordscener; UI-scener får välja bort eftersom de har egna paneler. Etiketten är helvit. Breddberäkning tar hänsyn till CJK-tecken.
 - *bakom*: 後ろ glider in på en vit panel från höger kant.
 - Tester 44.
+
+## 0.2.0 – 2026-11-05 (pålitlighet: mallar, plan, blindtest)
+- **Mallar med kontrakt** (`src/compiler/templates.ts`): åtta begreppsfamiljer; varje ordscen anger `template`, validatorn kontrollerar kontraktet (nya `has:`-features: actors/props/entities-antal, action, icon, cjk-text, contrast). Godkännande per mall i `registry/templates.json` (bara produktägaren); ogodkänd mall → varning, saknad mall → varning, brutet kontrakt → fel.
+- **anim:plan** läser en Swechan-modul från en lokal klon och skriver en plan per ord: typ, mall, kontrastkandidater (antonymer/near/synonymer i ordboken, confusableWith i bildregistret, samma ordklass i modulen), japanskt ord utan furigana och parenteser, säkerhet. Markdown för läsning, JSON för maskin.
+- **anim:blindtest** (`make`/`grade`): omärkta remsor med bokstäver, frågefil med alternativ (ordet, kontrastpartner, förväxlingsord, distraktorer), dolt facit; rättning registreras i `registry/blind.json`. `anim:validate` varnar för scener utan blindtest, stoppar scener med underkänt test och kräver godkänt test för `validated`/`reviewed`. `anim:report` visar mallar, godkännanden och blindstatus.
+- **Posterregel:** en `quizEligible`-scen får inte visa japansk text i posterbilden.
+- Tester 48.

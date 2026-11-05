@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "animationId": "anim.sportig.1",
+  "template": "property-contrast",
   "senseId": "s.sportig.1",
   "titleSv": "sportig",
   "meaningHint": "Som hör till sport och träning: aktiv, i träningskläder. Visas som kontrast mot en vardaglig person.",

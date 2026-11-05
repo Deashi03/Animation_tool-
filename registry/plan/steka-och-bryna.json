@@ -1,0 +1,239 @@
+{
+  "moduleId": "m.steka-och-bryna",
+  "titleSv": "Steka och bryna",
+  "generatedAt": "2026-11-05",
+  "rows": [
+    {
+      "senseId": "s.steka.1",
+      "lemma": "steka",
+      "pos": "verb",
+      "defSv": "Laga mat i en het panna med lite fett.",
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.smälta.1",
+        "s.fräsa.1",
+        "s.bryna.1"
+      ],
+      "jaGloss": "（フライパンで）焼く",
+      "note": "rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.stekpanna.1",
+      "lemma": "stekpanna",
+      "pos": "noun",
+      "defSv": "En platt panna som man steker mat i.",
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.platta.1",
+        "s.fett.1",
+        "s.stekspade.1"
+      ],
+      "jaGloss": "フライパン",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.platta.1",
+      "lemma": "platta",
+      "pos": "noun",
+      "labelSv": "på spisen",
+      "defSv": "Den del av spisen som blir varm, där man ställer kastrullen eller pannan.",
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.stekpanna.1",
+        "s.fett.1",
+        "s.stekspade.1"
+      ],
+      "jaGloss": "（コンロの）プレート",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.fett.1",
+      "lemma": "fett",
+      "pos": "noun",
+      "defSv": "Smör, olja eller något annat som är fett och som man steker i. Fett finns också i maten.",
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.stekpanna.1",
+        "s.platta.1",
+        "s.stekspade.1"
+      ],
+      "jaGloss": "脂",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.smälta.1",
+      "lemma": "smälta",
+      "pos": "verb",
+      "defSv": "Bli varm och gå från fast till flytande form, som is.",
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.steka.1",
+        "s.fräsa.1",
+        "s.bryna.1"
+      ],
+      "jaGloss": "溶ける",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.fräsa.1",
+      "lemma": "fräsa",
+      "pos": "verb",
+      "defSv": "Steka snabbt i fett med hög värme, så att det låter.",
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.steka.1",
+        "s.smälta.1",
+        "s.bryna.1"
+      ],
+      "jaGloss": "（強火で）さっと炒める",
+      "note": "rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.bryna.1",
+      "lemma": "bryna",
+      "pos": "verb",
+      "defSv": "Steka något tills ytan blir brun och får mer smak.",
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.steka.1",
+        "s.smälta.1",
+        "s.fräsa.1"
+      ],
+      "jaGloss": "（表面を）焦げ目がつくまで焼く",
+      "existingImage": "photo (quiz)",
+      "note": "rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.gyllenbrun.1",
+      "lemma": "gyllenbrun",
+      "pos": "adjective",
+      "defSv": "Fint brun, som guld. Så ska mat ofta se ut när den är färdigstekt.",
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [],
+      "jaGloss": "こんがりきつね色の",
+      "note": "egenskap utan antonym i ordboken – kontrast mot \"det vanliga\" eller ingen visualisering",
+      "template": "property-contrast"
+    },
+    {
+      "senseId": "s.vända.1",
+      "lemma": "vända",
+      "pos": "verb",
+      "labelSv": "lägga åt andra hållet",
+      "defSv": "Lägga något så att den andra sidan kommer upp.",
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.steka.1",
+        "s.smälta.1",
+        "s.fräsa.1"
+      ],
+      "jaGloss": "裏返す",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.stekspade.1",
+      "lemma": "stekspade",
+      "pos": "noun",
+      "defSv": "En platt sak med handtag som man vänder mat med i pannan.",
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.stekpanna.1",
+        "s.platta.1",
+        "s.fett.1"
+      ],
+      "jaGloss": "フライ返し",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.bränna.1",
+      "lemma": "bränna",
+      "pos": "verb",
+      "defSv": "Göra så att mat blir svart av för mycket värme. Man kan också bränna sig, om man tar i något hett.",
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.steka.1",
+        "s.smälta.1",
+        "s.fräsa.1"
+      ],
+      "jaGloss": "焦がす；やけどさせる",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.skvätta.1",
+      "lemma": "skvätta",
+      "pos": "verb",
+      "defSv": "När små droppar av något flytande hoppar upp, till exempel fett i en het panna.",
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.steka.1",
+        "s.smälta.1",
+        "s.fräsa.1"
+      ],
+      "jaGloss": "はねる",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.smet.1",
+      "lemma": "smet",
+      "pos": "noun",
+      "defSv": "Mjöl, ägg och mjölk som man har rört ihop och som man steker eller bakar.",
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.stekpanna.1",
+        "s.platta.1",
+        "s.fett.1"
+      ],
+      "jaGloss": "（パンケーキなどの）生地",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.omelett.1",
+      "lemma": "omelett",
+      "pos": "noun",
+      "defSv": "Ägg som man har rört ihop och stekt i en panna.",
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.stekpanna.1",
+        "s.platta.1",
+        "s.fett.1"
+      ],
+      "jaGloss": "オムレツ",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.pannkaka.1",
+      "lemma": "pannkaka",
+      "pos": "noun",
+      "defSv": "Tunn, rund mat av mjöl, ägg och mjölk som man steker i en panna.",
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.stekpanna.1",
+        "s.platta.1",
+        "s.fett.1"
+      ],
+      "jaGloss": "パンケーキ",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    }
+  ]
+}

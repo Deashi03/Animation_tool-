@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "animationId": "ui.module.complete",
   "kind": "ui",
+  "template": "ui",
   "titleSv": "Modul klar",
   "meaningHint": "Flaggan reses och stjärnorna poppar när en modul är klar",
   "category": "ui",

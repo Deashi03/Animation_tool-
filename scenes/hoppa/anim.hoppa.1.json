@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "animationId": "anim.hoppa.1",
+  "template": "locomotion",
   "senseId": "s.hoppa.1",
   "titleSv": "hoppa",
   "meaningHint": "Lämna marken med båda fötterna och landa igen",

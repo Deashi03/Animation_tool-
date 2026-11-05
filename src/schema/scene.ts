@@ -129,6 +129,8 @@ export const Scene = z.object({
   motionsVersion: z.number().int().min(1).default(MOTIONS_VERSION),
   animationId: AnimationId,
   kind: z.enum(['word', 'ui']).default('word'),
+  /** concept family (see compiler/templates.ts); its contract is validated */
+  template: z.string().regex(/^[a-z][a-z0-9-]*$/).optional(),
   senseId: SenseId.optional(),
   titleSv: z.string().min(1).max(60),
   meaningHint: z.string().max(200).optional(),

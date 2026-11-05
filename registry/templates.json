@@ -1,0 +1,29 @@
+{
+  "_comment": "Mallar godkända av produktägaren. Bara en människa ändrar approved.",
+  "templates": {
+    "locomotion": {
+      "approved": false
+    },
+    "manipulate-prop": {
+      "approved": false
+    },
+    "relation-arrow": {
+      "approved": false
+    },
+    "property-contrast": {
+      "approved": false
+    },
+    "emotion": {
+      "approved": false
+    },
+    "state": {
+      "approved": false
+    },
+    "event": {
+      "approved": false
+    },
+    "ui": {
+      "approved": false
+    }
+  }
+}

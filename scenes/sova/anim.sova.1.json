@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "animationId": "anim.sova.1",
+  "template": "state",
   "senseId": "s.sova.1",
   "titleSv": "sova",
   "meaningHint": "Vara i sömn, med slutna ögon",

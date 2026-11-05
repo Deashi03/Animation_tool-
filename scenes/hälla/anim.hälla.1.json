@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "animationId": "anim.hälla.1",
+  "template": "manipulate-prop",
   "senseId": "s.hälla.1",
   "titleSv": "hälla",
   "meaningHint": "Låta vätska rinna ur ett kärl ner i ett annat",

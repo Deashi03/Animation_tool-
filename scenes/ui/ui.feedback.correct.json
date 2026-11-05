@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "animationId": "ui.feedback.correct",
   "kind": "ui",
+  "template": "ui",
   "titleSv": "Rätt svar",
   "meaningHint": "Resultatpanelen för rätt svar glider upp, bocken ritas, texten tonar in",
   "category": "ui",

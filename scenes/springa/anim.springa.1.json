@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "animationId": "anim.springa.1",
+  "template": "locomotion",
   "senseId": "s.springa.1",
   "titleSv": "springa",
   "meaningHint": "Förflytta sig snabbt till fots; båda fötterna lämnar marken",

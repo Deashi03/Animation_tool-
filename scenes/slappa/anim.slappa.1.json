@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "animationId": "anim.slappa.1",
+  "template": "state",
   "senseId": "s.slappa.1",
   "titleSv": "slappa",
   "meaningHint": "Vila vaken och avslappnat utan att göra något särskilt",
@@ -9,16 +10,79 @@
   "loop": true,
   "holdMs": 200,
   "posterMs": 2600,
-  "environment": { "id": "room", "time": "day" },
-  "actors": [{ "id": "p", "variant": "a", "at": { "x": 60, "y": 100 }, "facing": "right", "wardrobe": { "top": "orange", "bottom": "grey2" } }],
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "orange",
+        "bottom": "grey2"
+      }
+    }
+  ],
   "props": [
-    { "id": "sofa", "asset": "sofa", "at": { "x": 60, "y": 100 }, "z": -1 },
-    { "id": "phone", "asset": "phone", "attachTo": { "actor": "p", "hand": "left" } }
+    {
+      "id": "sofa",
+      "asset": "sofa",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": -1
+    },
+    {
+      "id": "phone",
+      "asset": "phone",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
   ],
   "timeline": [
-    { "t": 0, "action": "relax", "actor": "p", "on": "sofa", "durationMs": 4400, "legsUp": true }
+    {
+      "t": 0,
+      "action": "relax",
+      "actor": "p",
+      "on": "sofa",
+      "durationMs": 4400,
+      "legsUp": true
+    }
   ],
-  "focus": { "targets": ["p"], "feature": "awake (eyes half open), reclined on the sofa, phone in hand, daylight, foot wiggling" },
-  "contrast": { "with": ["anim.sova.1"], "distinctiveFeatures": ["actor.p.eyes:half>=0.7", "environment.time:day", "prop:phone", "actor.p.posture:reclined>=0.7"] },
-  "pedagogy": { "quizEligible": false, "group": "vila", "confusableWith": ["s.sova.1", "s.slappna-av.1", "s.vila.1"], "note": "Aldrig i bildfrågor bredvid sova/vila." }
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "awake (eyes half open), reclined on the sofa, phone in hand, daylight, foot wiggling"
+  },
+  "contrast": {
+    "with": [
+      "anim.sova.1"
+    ],
+    "distinctiveFeatures": [
+      "actor.p.eyes:half>=0.7",
+      "environment.time:day",
+      "prop:phone",
+      "actor.p.posture:reclined>=0.7"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "vila",
+    "confusableWith": [
+      "s.sova.1",
+      "s.slappna-av.1",
+      "s.vila.1"
+    ],
+    "note": "Aldrig i bildfrågor bredvid sova/vila."
+  }
 }

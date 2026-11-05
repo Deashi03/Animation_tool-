@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "animationId": "anim.öppna.1",
+  "template": "manipulate-prop",
   "senseId": "s.öppna.1",
   "titleSv": "öppna",
   "meaningHint": "Göra så att något stängt blir öppet, t.ex. en dörr",

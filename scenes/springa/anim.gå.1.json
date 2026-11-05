@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "animationId": "anim.gå.1",
+  "template": "locomotion",
   "senseId": "s.gå.1",
   "titleSv": "gå",
   "meaningHint": "Förflytta sig till fots i lugnt tempo",

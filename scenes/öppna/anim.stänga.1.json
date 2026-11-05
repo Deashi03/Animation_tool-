@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "animationId": "anim.stänga.1",
+  "template": "manipulate-prop",
   "senseId": "s.stänga.1",
   "titleSv": "stänga",
   "meaningHint": "Göra så att något öppet blir stängt",

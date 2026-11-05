@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "animationId": "anim.stormning.1",
+  "template": "event",
   "senseId": "s.stormning.1",
   "titleSv": "stormning",
   "meaningHint": "Ett anfall där många soldater rusar in i en borg eller stad och tar den med våld",

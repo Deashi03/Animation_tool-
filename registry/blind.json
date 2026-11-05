@@ -1,0 +1,159 @@
+{
+  "anim.sova.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "test",
+      "passed": true,
+      "choice": "sova",
+      "expected": "sova",
+      "description": "x",
+      "reviewer": "test"
+    },
+    {
+      "date": "2026-11-05",
+      "batch": "test",
+      "passed": true,
+      "choice": "sova",
+      "expected": "sova",
+      "description": "x",
+      "reviewer": "test"
+    },
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": true,
+      "choice": "sova",
+      "expected": "sova",
+      "description": "Nattscen med mörkt fönster och måne: en person ligger i en säng under ett lila täcke med slutna ögon och små zzz vid huvudet, nästan ingen rörelse; animationen betyder att sova.",
+      "reviewer": "claude-subagent (opus, fresh context)"
+    }
+  ],
+  "anim.slappa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "test",
+      "passed": false,
+      "choice": "vila",
+      "expected": "slappa",
+      "description": "x",
+      "reviewer": "test"
+    },
+    {
+      "date": "2026-11-05",
+      "batch": "test",
+      "passed": false,
+      "choice": "vila",
+      "expected": "slappa",
+      "description": "x",
+      "reviewer": "test"
+    },
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": true,
+      "choice": "slappa",
+      "expected": "slappa",
+      "description": "Dagtid vid ett fönster ligger en person tillbakalutad på en grön soffa med öppna ögon och lätt leende, håller en telefon framför sig och vickar lite på fötterna; personen är vaken och tar det lugnt utan att göra något särskilt, vilket passar slappa (vila ligger nära men slappa är mest sannolikt).",
+      "reviewer": "claude-subagent (opus, fresh context)"
+    }
+  ],
+  "anim.bakom.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": true,
+      "choice": "bakom",
+      "expected": "bakom",
+      "description": "En röd boll ligger först bredvid en låda, sedan böjer sig en pil över lådan ner mot bollen som nu är till hälften dold bakom lådan, och en skylt med 後ろ visas; animationen lär ut rumsrelationen att något är bakom något annat.",
+      "reviewer": "claude-subagent (opus, fresh context)"
+    }
+  ],
+  "anim.hoppa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": true,
+      "choice": "hoppa",
+      "expected": "hoppa",
+      "description": "En person i röd tröja står vid en liten låda på gräset, böjer knäna, lyfter armarna och hoppar upp i luften för att sedan landa igen; det ser ut som ett hopp på stället snarare än över något, så valet mellan hoppa och hoppa över är något tvetydigt, men hoppa är mest sannolikt.",
+      "reviewer": "claude-subagent (opus, fresh context)"
+    }
+  ],
+  "anim.öppna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": true,
+      "choice": "öppna",
+      "expected": "öppna",
+      "description": "En person står vid en stängd brun dörr, sträcker fram handen mot handtaget och dörren svängs upp så att ljusblå himmel syns genom öppningen; animationen visar att öppna en dörr.",
+      "reviewer": "claude-subagent (opus, fresh context)"
+    }
+  ],
+  "anim.springa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": true,
+      "choice": "springa",
+      "expected": "springa",
+      "description": "En person i orange tröja rör sig fort åt höger med framåtlutning, böjda armbågar, långa steg med flygfas och fartstreck bakom kroppen medan buskarna rullar förbi; det visar snabb löpning, tydligt snabbare än gång men gränsen mot jogga är inte helt skarp.",
+      "reviewer": "claude-subagent (opus, fresh context)"
+    }
+  ],
+  "anim.stormning.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": false,
+      "choice": "anfalla",
+      "expected": "stormning",
+      "description": "En grupp små figurer rusar mot ett slott med fartstreck, når porten, varpå ett stort moln med stjärnor och streck (slagsmålsmoln) uppstår framför slottet och till slut står slottet kvar med flaggan; det ser ut som ett anfall mot slottet, men det går inte att se om det erövras, så anfalla/stormning är tvetydigt och jag väljer anfalla.",
+      "reviewer": "claude-subagent (opus, fresh context)"
+    }
+  ],
+  "anim.gå.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": true,
+      "choice": "gå",
+      "expected": "gå",
+      "description": "En person i blå tröja går lugnt åt höger med upprätt hållning, korta steg och alltid minst en fot i marken, medan buskarna sakta rullar förbi; animationen visar att gå i vanligt tempo.",
+      "reviewer": "claude-subagent (opus, fresh context)"
+    }
+  ],
+  "anim.stänga.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": true,
+      "choice": "stänga",
+      "expected": "stänga",
+      "description": "En person står vid en öppen dörr med ljus himmel bakom, tar tag i dörren och svänger igen den tills den är helt stängd och brun; animationen visar att stänga en dörr.",
+      "reviewer": "claude-subagent (opus, fresh context)"
+    }
+  ],
+  "anim.hälla.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": true,
+      "choice": "hälla",
+      "expected": "hälla",
+      "description": "En person håller en gul kanna över ett tomt glas på ett bord, lutar kannan så att en blå stråle rinner ner och glaset fylls gradvis, därefter ställs kannan upprätt igen; animationen betyder att hälla (upp något i ett glas).",
+      "reviewer": "claude-subagent (opus, fresh context)"
+    }
+  ],
+  "anim.sportig.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": true,
+      "choice": "sportig",
+      "expected": "sportig",
+      "description": "Två figurer står bredvid varandra: en i vanliga kläder står stilla, medan den andra i orange tröja och rött pannband kickar en fotboll med knät gång på gång; kontrasten visar egenskapen att vara sportig/aktiv snarare än själva plaggen.",
+      "reviewer": "claude-subagent (opus, fresh context)"
+    }
+  ]
+}

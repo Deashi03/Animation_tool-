@@ -9,6 +9,11 @@
  *   airborne:<actor>[>=fraction|<=fraction]                (both feet off the ground: hips lifted > 1 unit)
  *   end:<prop>.<stateKey>>=value | <=value                 (prop state at the end of the scene)
  *   peaklift:<actor>>=units | <=units                       (highest point the hips reach above standing)
+ *   has:actors>=N | has:actors==N | has:props>=N | has:entities>=N   (structure)
+ *   has:action:<a|b|c>                                     (timeline contains one of these actions)
+ *   has:icon:<a|b>                                         (a shape icon of one of these kinds)
+ *   has:cjk-text                                           (a text shape with Japanese characters)
+ *   has:contrast                                           (a contrast pair is declared)
  */
 import { JOINTS } from '../schema/scene';
 import { fractionEqual, sample, sampleNumber } from '../engine/track';
@@ -18,12 +23,23 @@ import type { Scene } from '../schema/scene';
 import { compileScene } from './compile';
 
 export function evaluateFeature(c: CompiledScene, feature: string): { ok: boolean; detail: string } {
-  const [lhs, rhsRaw] = feature.split(':');
-  if (!lhs || rhsRaw === undefined) return { ok: false, detail: `cannot parse "${feature}"` };
+  const colon = feature.indexOf(':');
+  if (colon <= 0) return { ok: false, detail: `cannot parse "${feature}"` };
+  const lhs = feature.slice(0, colon), rhsRaw = feature.slice(colon + 1);
   const le = rhsRaw.includes('<=');
   const [rhs, fracRaw] = le ? rhsRaw.split('<=') : rhsRaw.split('>=');
   const minFrac = fracRaw ? Number(fracRaw) : 0.6;
   const D = c.durationMs;
+  if (lhs === 'has') {
+    const sc = c.scene;
+    const m2 = /^(actors|props|entities)(>=|==)(\d+)$/.exec(rhsRaw);
+    if (m2) { const n = m2[1] === 'actors' ? sc.actors.length : m2[1] === 'props' ? sc.props.length : sc.actors.length + sc.props.length + sc.shapes.length; const want = Number(m2[3]); const ok = m2[2] === '>=' ? n >= want : n === want; return { ok, detail: `${m2[1]} = ${n}` }; }
+    if (rhsRaw.startsWith('action:')) { const names = rhsRaw.slice(7).split('|'); const have = new Set(sc.timeline.map((a) => a.action)); return { ok: names.some((x) => have.has(x as never)), detail: `actions: ${[...have].join(', ') || 'none'}` }; }
+    if (rhsRaw.startsWith('icon:')) { const names = rhsRaw.slice(5).split('|'); const have = sc.shapes.filter((x) => x.type === 'icon').map((x) => (x as { icon: string }).icon); return { ok: names.some((x) => have.includes(x)), detail: `icons: ${have.join(', ') || 'none'}` }; }
+    if (rhsRaw === 'cjk-text') { const ok = sc.shapes.some((x) => x.type === 'text' && /[\u3000-\u9fff\uf900-\ufaff\uff00-\uffef]/.test((x as { text: string }).text)); return { ok, detail: ok ? 'has Japanese text' : 'no Japanese text shape' }; }
+    if (rhsRaw === 'contrast') return { ok: !!sc.contrast, detail: sc.contrast ? `contrast with ${sc.contrast.with.join(', ')}` : 'no contrast pair' };
+    return { ok: false, detail: `unknown has-feature "${rhsRaw}"` };
+  }
   if (lhs === 'speed') {
     const a = rhs!; let dist = 0, moving = 0;
     for (let t = 0; t < D; t += 80) { const dx = Math.abs((sampleNumber(c.tracks, `${a}.x`, t + 80, 0) - sampleNumber(c.tracks, `${a}.x`, t, 0)) + (sampleNumber(c.tracks, 'env.scrollX', t + 80, 0) - sampleNumber(c.tracks, 'env.scrollX', t, 0))); if (dx > 0.2) { dist += dx; moving += 80; } }

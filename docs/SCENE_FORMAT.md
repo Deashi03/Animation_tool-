@@ -86,3 +86,20 @@ end:<prop>.<tillstånd>>=värde | <=värde
 ## Exempel
 
 Se `scenes/slappa/anim.slappa.1.json` (tillstånd med kontrastpar), `scenes/hälla/anim.hälla.1.json` (orsak–verkan) och `scenes/ui/ui.feedback.correct.json` (gränssnitt).
+
+## Mallar (begreppsfamiljer) och kontrakt
+
+Varje ordscen anger `template`. Kontraktet kontrolleras av validatorn; produktägaren godkänner mallar i `registry/templates.json`.
+
+| Mall | Används för | Kontrakt |
+|---|---|---|
+| `locomotion` | gå, springa, hoppa … | minst en aktör; `walk`/`run`/`jump`; rörelse ≥ 40 % |
+| `manipulate-prop` | öppna, hälla, knäppa … | aktör + föremål; en föremålshandling |
+| `relation-arrow` | bakom, framför, under … | inga människor; ≥ 2 föremål; pil-ikon; japanskt ord |
+| `property-contrast` | sportig, tung, ren … | ≥ 2 entiteter; kontrastpar deklarerat |
+| `emotion` | arg, glad, förvånad … | aktör; `express` |
+| `state` | slappa, sova, vila … | aktör; `relax`/`sleep`/`idle`; kontrastpar |
+| `event` | stormning, flytt, fest … | ≥ 2 aktörer; ≥ 1 föremål |
+| `ui` | paneler, bockar | – |
+
+Extra `has:`-features för kontrakt och kontrastpar: `has:actors>=N`, `has:actors==0`, `has:props>=N`, `has:entities>=N`, `has:action:a|b`, `has:icon:a|b`, `has:cjk-text`, `has:contrast`.

@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "animationId": "anim.bakom.1",
+  "template": "relation-arrow",
   "senseId": "s.bakom.1",
   "titleSv": "bakom",
   "meaningHint": "På baksidan av något, dolt eller delvis dolt av det",

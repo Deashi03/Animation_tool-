@@ -320,13 +320,20 @@ Skriv `STYLE_GUIDE.md` med skärmbilder. Minimum:
 ### 9.1 Principer
 
 - Allt som en människa gör med musen i studion ska gå att göra som kommando. Kommandona är idempotenta, ger maskinläsbara fel (JSON med `--json`) och kräver inget nätverk.
-- **Inget rapporteras klart utan bildremsa.** Rutinen för varje ny scen: `anim:new` → redigera JSON → `anim:validate` → `anim:strip` → **titta på PNG:n** → vid kontrastpar `anim:compare` → justera → `anim:validate` → uppdatera `REVIEW_LOG.md`.
+- **Inget rapporteras klart utan bildremsa.** Rutinen för varje ny scen: `anim:new --template <familj>` → redigera JSON → `anim:validate` → `anim:strip` → **titta på PNG:n** → vid kontrastpar `anim:compare` → justera → `anim:validate` → uppdatera `REVIEW_LOG.md`.
+- **Tre grindar som gör rätt utan produktägaren** (införda 2026-11-05 efter att fyra av åtta första scener var semantiskt fel trots grön validering):
+  1. **Mall med kontrakt.** Varje ordscen anger `template` (en begreppsfamilj i `src/compiler/templates.ts`: locomotion, manipulate-prop, relation-arrow, property-contrast, emotion, state, event, ui). Validatorn kontrollerar mallens kontrakt (t.ex. att relation-arrow saknar människor, har pil och japanskt ord). Produktägaren godkänner mallar, inte ord, i `registry/templates.json`; ogodkänd mall ger varning. Ett ord som inte passar någon mall får **ingen visualisering** tills en mall finns och är godkänd – hitta inte på en egen komposition.
+  2. **Plan före produktion.** `anim:plan --swechan <klon> --module m.x` skriver `registry/plan/<modul>.md`: en rad per ord med typ, mall, kontrastkandidater, japanskt ord och säkerhet. Rader med låg säkerhet beslutas (av Claude med motivering i planen, eller av produktägaren) innan scener skapas.
+  3. **Blindtest.** `anim:blindtest make <ids|--all> --batch <namn>` skriver omärkta remsor + frågor; **en separat granskare** (ny session eller subagent som bara får PNG:n och frågefilen, aldrig scenfilerna eller facit) svarar vad varje remsa betyder och väljer bland ordet, dess förväxlingsord och distraktorer; `anim:blindtest grade <batch> <svar.json>` registrerar resultatet i `registry/blind.json`. En scen utan godkänt blindtest räknas inte som klar; `reviewStatus: validated` kräver det. Blindtestet upprepas efter varje ändring som påverkar betydelsen.
+- **Japanskt ord i posterbilden:** om en scen är `quizEligible` får posterbilden inte visa japansk text (det avslöjar svaret i bildfrågor) – validatorn stoppar det. Välj `posterMs` före panelen eller sätt `quizEligible: false`.
 - Batchar arbetar ämnesvis (en Swechan-modul eller ämnesgrupp åt gången), med en rapport över utkast / tekniskt validerade / mänskligt granskade.
 
 ### 9.2 Kommandon (npm-skript; namn får justeras om de dokumenteras)
 
 ```bash
-npm run anim:plan -- --swechan ../swechan --module m.steka-och-bryna   # föreslår typ (animation/bild/symbol) per ord enligt 2.1 och listar kontrastpar; skriver registry/plan/<module>.json
+npm run anim:plan -- --swechan ../swechan --module m.steka-och-bryna   # typ (animation/bild/symbol/none), mall, kontrastkandidater, japanskt ord, säkerhet per ord → registry/plan/<modul>.json + .md
+npm run anim:blindtest -- make --all --batch b1                         # omärkta remsor + frågor för en oberoende granskare (facit göms i review/blind/)
+npm run anim:blindtest -- grade b1 svar.json                            # rättar och registrerar i registry/blind.json
 npm run anim:new -- s.slappa.1 --template relax --contrast anim.sova.1  # skapar scenes/slappa/anim.slappa.1.json från mall
 npm run anim:validate [-- scenes/slappa/*.json] [--json]                # schema, referenser, tider, utsnitt, kontrastkrav, dubbletter
 npm run anim:strip -- anim.slappa.1 [--frames 8] [--size 180] [--label] # PNG-bildremsa i review/strips/ (Playwright)
@@ -344,7 +351,7 @@ npm run anim:preview -- anim.slappa.1                                      # öp
 
 ### 9.3 Mallar
 
-`templates/` innehåller färdiga scenstommar per handlingsfamilj (`locomotion`, `manipulate-prop`, `pour`, `cook-rhythm`, `relax`, `emotion`, `spatial-relation`, `property-contrast`). En mall är en komplett, validerad scen med platshållare – Claude byter föremål, parametrar och kontrast. Det är så "semantiskt välgrundade kombinationer" skalar.
+`src/compiler/templates.ts` innehåller begreppsfamiljerna med beskrivning, **kontrakt** (maskinkontrollerade krav) och en komplett, validerad startscen: `locomotion`, `manipulate-prop`, `relation-arrow`, `property-contrast`, `emotion`, `state`, `event`, `ui`. Claude byter föremål, parametrar och kontrast – aldrig familjens grundidé. Nya familjer (t.ex. `cook-rhythm` när matlagningsföremålen finns) läggs till med kontrakt, startscen, test och remsa, och godkänns av produktägaren innan de används i produktion. Det är så "semantiskt välgrundade kombinationer" skalar.
 
 ---
 

@@ -1,7 +1,7 @@
 /** New scene from a template: `npm run anim:new -- s.slappa.1 --template relax [--contrast anim.sova.1] [--title slappa]` */
 import fs from 'node:fs';
 import { sceneFilePath, writeScene } from '../../src/tools/scenes';
-import { TEMPLATES } from '../../src/tools/templates';
+import { TEMPLATES } from '../../src/compiler/templates';
 import { validateScene } from '../../src/compiler/validate';
 import { args, opt, fail } from './_shared';
 
@@ -10,7 +10,7 @@ const m = /^s\.([^.]+)\.(\d+)$/.exec(senseId) ?? fail('senseId ska se ut som s.<
 const lemma = m[1]!, n = m[2]!;
 const tpl = opt('template', 'locomotion')!;
 const make = TEMPLATES[tpl] ?? fail(`Okänd mall "${tpl}". Finns: ${Object.keys(TEMPLATES).join(', ')}`);
-const scene = make(senseId, lemma, n);
+const scene = make.make(senseId, lemma, n);
 if (opt('title')) scene.titleSv = opt('title')!;
 if (opt('contrast')) scene.contrast = { with: [opt('contrast')!], distinctiveFeatures: ['motion:p'] };
 const file = sceneFilePath(scene.animationId);

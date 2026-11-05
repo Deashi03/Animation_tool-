@@ -21,3 +21,11 @@
 - **sportig** omgjord: kontrast i samma scen – en vardaglig person med mugg står stilla, en person i träningskläder med pannband gör keepy-uppies med fotboll (`exercise kickups`, prop `football`).
 - Layoutkontrollen tar 13 prover per scen (fångade ett hopp som gick ur bild); `airborne` mäter höfter > 1 enhet; nya tester för icke-glidande fötter, parabel, täcke och boll.
 - Kända rester: armarna i löpcykeln pendlar men ser stela ut i stillbild; ansiktet i profil; möbler är enkla.
+
+## 0.1.2 – 2026-11-05 (effekter, föremål utan människor, stormning)
+- **Effekter fästa vid figuren:** `zzz` utgår från munnen även när figuren ligger (kroppsrotationen räknas in), stiger kort och tonar ut, tre tecken; fartstreck pågår hela löpningen (spåret hålls konstant med stegeasing), fler och längre ju fortare världen rusar förbi; dammpuffar vid frånskjut och landning i hopp.
+- **Scener utan människor:** ny handling `roll` (konstant retardation, rotation = sträcka/radie, rotation kring bollens mitt via `pivot` på föremål). *bakom* är omgjord: en boll rullar in bakom en låg låda och stannar delvis dold – ingen person, inget "lägga ner".
+- **Nya föremål:** `ladder` (läggs ner/reses, `lean`), `castle` (mur med krenelering, torn, fana med färg, port som öppnas), `box` med `w`/`h`, boll med `r` och söm.
+- **Ny handling `climb`:** figuren klättrar längs en rest stege med växelvisa arm- och bensteg och lutar in mot stegen.
+- **anim.stormning.1:** tre anfallare rusar fram, stegen reses, två klättrar över muren (och försvinner bakom den), fanan byter färg, porten öppnas, den tredje rusar in. Kontrastpartner *belägring* saknas ännu.
+- Tester: 40 (rullande boll, stormning, effekternas placering).

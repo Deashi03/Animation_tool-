@@ -53,7 +53,9 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
       continue;
     }
     const x = sampleNumber(tracks, `${p.id}.x`, t, p.at?.x ?? 0), y = sampleNumber(tracks, `${p.id}.y`, t, p.at?.y ?? c.ground);
-    layers.push({ z: sampleNumber(tracks, `${p.id}.z`, t, p.z), order: order++, node: g([node], { x, y, scale, rotate: sampleNumber(tracks, `${p.id}.rotate`, t, p.rotate) }, { id: `entity.${p.id}`, opacity: sampleNumber(tracks, `${p.id}.opacity`, t, 1) }) });
+    const rot = sampleNumber(tracks, `${p.id}.rotate`, t, p.rotate);
+    const pv = PROPS[p.asset]?.pivot?.(state);
+    layers.push({ z: sampleNumber(tracks, `${p.id}.z`, t, p.z), order: order++, node: g([node], { x, y, scale, rotate: rot, ...(pv && rot ? { px: pv[0] * scale, py: pv[1] * scale } : {}) }, { id: `entity.${p.id}`, opacity: sampleNumber(tracks, `${p.id}.opacity`, t, 1) }) });
   }
   for (const a of scene.actors) {
     const pose = {} as Pose;
@@ -92,15 +94,33 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
     // speed lines behind a fast-moving actor (treadmill): short, few, fading
     const sp = sampleNumber(tracks, `fx.${a.id}.speed`, t, 0);
     const aw0 = actorWorld.get(a.id);
-    if (Math.abs(sp) > 60 && aw0) {
-      const back = -Math.sign(sp), hipY = aw0.pos[1] - 34 * aw0.scale, phase = (t % 180) / 180;
-      for (let i = 0; i < 3; i++) { const y = hipY - 16 + i * 10, len = 8 + (i % 2) * 4, x0 = aw0.pos[0] + back * (16 + i * 3 + phase * 6); fx.push(line([[x0, y], [x0 + back * len, y]], { stroke: C.ink, sw: 1.6, opacity: 0.35 * (1 - phase * 0.5) })); }
+    if (Math.abs(sp) > 40 && aw0) {
+      // speed lines: trail behind the body, longer and more of them the faster the world rushes past; they stream with the ground
+      const back = -Math.sign(sp), hipY = aw0.pos[1] - 34 * aw0.scale, strength = Math.min(1, Math.abs(sp) / 120);
+      const n = 3 + Math.round(strength * 2), period = 260;
+      for (let i = 0; i < n; i++) {
+        const ph = ((t + i * 97) % period) / period;
+        const y = hipY - 24 + i * (36 / n) * aw0.scale, len = (8 + strength * 10) * (0.6 + 0.4 * ((i * 7) % 3) / 2);
+        const x0 = aw0.pos[0] + back * (14 + ph * 26 + (i % 2) * 5) * aw0.scale;
+        fx.push(line([[x0, y], [x0 + back * len, y]], { stroke: C.ink, sw: 1.8, opacity: 0.45 * (1 - ph) }));
+      }
+    }
+    const dust = sampleNumber(tracks, `fx.${a.id}.dust`, t, -1);
+    if (dust >= 0 && dust <= 1 && aw0) {
+      const gy = aw0.pos[1] - 1;
+      for (let i = 0; i < 4; i++) { const dir = i < 2 ? -1 : 1, k = i % 2; fx.push(circle(aw0.pos[0] + dir * (6 + k * 6 + dust * 12), gy - 2 - dust * (4 + k * 3), 2.2 + dust * 2.5 - k * 0.6, { fill: C.beige, stroke: C.ink, sw: 1, opacity: 0.7 * (1 - dust) })); }
     }
     const z = sampleNumber(tracks, `fx.${a.id}.zzz`, t, -1);
     const aw = actorWorld.get(a.id);
     if (z >= 0 && aw) {
+      // three z's drift up from just beside the mouth, growing and fading, and stay close to the head
       const head: P = worldPoint(aw, aw.rig.head);
-      for (let i = 0; i < 2; i++) { const u = (z + i * 0.45) % 1; fx.push(text(head[0] + 16 + i * 6 + u * 6, head[1] - 10 - u * 22, 'z', 7 + i * 3, { fill: C.navy, weight: 700, opacity: Math.max(0, 1 - u) })); }
+      const side = aw.rot ? -1 : aw.facing; // a lying figure's face points up – let the z's rise above the pillow side
+      for (let i = 0; i < 3; i++) {
+        const u = (z + i * 0.33) % 1;
+        const x = head[0] + side * (9 + i * 2 + u * 7) * aw.scale, y = head[1] - (6 + u * 16) * aw.scale;
+        fx.push(text(Math.max(8, Math.min(w - 8, x)), Math.max(10, y), 'z', (6 + u * 5) * aw.scale, { fill: C.navy, weight: 800, opacity: Math.max(0, 0.9 - u * 0.9) }));
+      }
     }
   }
   for (const id of [...scene.actors.map((a) => a.id), ...scene.props.map((p) => p.id), ...scene.shapes.map((s) => s.id)]) {
@@ -128,8 +148,11 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
   return { w, h, bg, rx: scene.kind === 'ui' ? 0 : 18, root: g(children, undefined, { id: 'root' }) };
 }
 
-function worldPoint(aw: { pos: P; scale: number; facing: 1 | -1 }, local: P): P {
-  return [aw.pos[0] + local[0] * aw.scale * aw.facing, aw.pos[1] + local[1] * aw.scale];
+/** Local rig point → world, including the whole-body rotation about the hips (lying down). */
+function worldPoint(aw: { pos: P; scale: number; facing: 1 | -1; rot?: number }, local: P): P {
+  let [x, y] = local;
+  if (aw.rot) { const a = (aw.rot * Math.PI) / 180, px = 0, py = -34; const dx = x - px, dy = y - py; x = px + dx * Math.cos(a) - dy * Math.sin(a); y = py + dx * Math.sin(a) + dy * Math.cos(a); }
+  return [aw.pos[0] + x * aw.scale * aw.facing, aw.pos[1] + y * aw.scale];
 }
 /** World position of a prop anchor, following attachment to a hand. */
 function worldAnchor(c: CompiledScene, actors: Map<string, { pos: P; scale: number; facing: 1 | -1; rig: ReturnType<typeof solveRig> }>, propId: string, anchor: 'mouth' | 'grip', t: number): P | null {

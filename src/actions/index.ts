@@ -3,7 +3,7 @@
  * action produces motion, prop state changes and consequences together, so a
  * scene can say `pour` instead of describing rotations.
  */
-import { addKey, sample, sampleNumber, sampleString, tween, type Tracks } from '../engine/track';
+import { addKey, dense, sample, sampleNumber, sampleString, tween, type Tracks } from '../engine/track';
 import { reachAngles, SEG, solveRig, type Pose, REST_POSE, type P } from '../engine/rig';
 import { PROPS, HELD_TILT_DEG } from '../assets/props';
 import type { Action, ActionOf, Joint, Scene, ActorDef, PropDef } from '../schema/scene';
@@ -221,6 +221,42 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     const cur = sample(ctx.tracks, id, a.t);
     tween(ctx.tracks, id, a.t, a.t + a.durationMs, a.to, a.ease as EaseName, 0, a.from ?? (typeof cur === 'number' ? cur : undefined));
   },
+  /** A ball rolls along the ground: constant deceleration (friction) and a rotation that matches the distance travelled. */
+  roll(ctx, a) {
+    const def = ctx.props.get(a.prop)!;
+    const x0 = sampleNumber(ctx.tracks, `${a.prop}.x`, a.t, def.at?.x ?? 0), y0 = sampleNumber(ctx.tracks, `${a.prop}.y`, a.t, def.at?.y ?? ctx.ground);
+    const r = (typeof def.state.r === 'number' ? def.state.r : (PROPS[def.asset]?.defaults.r as number | undefined) ?? 6) * def.scale;
+    const dist = a.to.x - x0;
+    const rot0 = sampleNumber(ctx.tracks, `${a.prop}.rotate`, a.t, def.rotate);
+    dense(ctx.tracks, `${a.prop}.x`, a.t, a.t + a.durationMs, (_t, u) => x0 + dist * (1 - (1 - u) * (1 - u)), 0, 30); // easeOut quadratic = constant braking
+    dense(ctx.tracks, `${a.prop}.rotate`, a.t, a.t + a.durationMs, (_t, u) => rot0 + ((dist * (1 - (1 - u) * (1 - u))) / r) * (180 / Math.PI), 0, 30);
+    tween(ctx.tracks, `${a.prop}.y`, a.t, a.t + a.durationMs, a.to.y, 'linear', 0, y0);
+    if (a.z !== undefined) addKey(ctx.tracks, `${a.prop}.z`, { t: a.t, v: a.z });
+  },
+  /** Climb a raised ladder: the actor moves along it with alternating arm/leg reaches and leans into it. */
+  climb(ctx, a) {
+    const lad = ctx.props.get(a.prop)!, L = (typeof lad.state.length === 'number' ? lad.state.length : 70) * lad.scale;
+    const lean = sampleNumber(ctx.tracks, `${a.prop}.s.lean`, a.t, 1);
+    const ang = ((90 - 72 * lean) * Math.PI) / 180; // 0 = up, positive leans toward +x
+    const bx = sampleNumber(ctx.tracks, `${a.prop}.x`, a.t, lad.at?.x ?? 60), by = sampleNumber(ctx.tracks, `${a.prop}.y`, a.t, lad.at?.y ?? ctx.ground);
+    const topX = bx + Math.sin(ang) * L, topY = by - Math.cos(ang) * L;
+    const f: 1 | -1 = topX >= bx ? 1 : -1;
+    addKey(ctx.tracks, `${a.actor}.facing`, { t: a.t, v: f === 1 ? 'right' : 'left' });
+    const end = a.t + a.durationMs, sc = actorScale(ctx, a.actor, a.t);
+    // feet follow the ladder line (slightly behind it, as the body hangs off the rungs)
+    dense(ctx.tracks, `${a.actor}.x`, a.t, end, (_t, u) => bx + (topX - bx) * u - f * 6 * sc, 0, 40);
+    dense(ctx.tracks, `${a.actor}.y`, a.t, end, (_t, u) => by + (topY - by) * u, 0, 40);
+    tween(ctx.tracks, `${a.actor}.bodyRotate`, a.t, a.t + 200, f * (18 * lean), 'easeOut');
+    const T = 640;
+    dense(ctx.tracks, M.J(a.actor, 'uArmL'), a.t, end, (t) => 140 + 25 * Math.sin((2 * Math.PI * (t - a.t)) / T), 0, 40);
+    dense(ctx.tracks, M.J(a.actor, 'uArmR'), a.t, end, (t) => 140 - 25 * Math.sin((2 * Math.PI * (t - a.t)) / T), 0, 40);
+    dense(ctx.tracks, M.J(a.actor, 'fArmL'), a.t, end, () => 20, 0, 40); dense(ctx.tracks, M.J(a.actor, 'fArmR'), a.t, end, () => 20, 0, 40);
+    dense(ctx.tracks, M.J(a.actor, 'thighL'), a.t, end, (t) => 50 + 35 * Math.sin((2 * Math.PI * (t - a.t)) / T), 0, 40);
+    dense(ctx.tracks, M.J(a.actor, 'thighR'), a.t, end, (t) => 50 - 35 * Math.sin((2 * Math.PI * (t - a.t)) / T), 0, 40);
+    dense(ctx.tracks, M.J(a.actor, 'shinL'), a.t, end, (t) => -60 - 30 * Math.sin((2 * Math.PI * (t - a.t)) / T), 0, 40);
+    dense(ctx.tracks, M.J(a.actor, 'shinR'), a.t, end, (t) => -60 + 30 * Math.sin((2 * Math.PI * (t - a.t)) / T), 0, 40);
+    dense(ctx.tracks, M.J(a.actor, 'torso'), a.t, end, () => 10, 0, 40); dense(ctx.tracks, M.J(a.actor, 'head'), a.t, end, () => -18, 0, 40);
+  },
   emphasis(ctx, a) { fxStart(ctx.tracks, `fx.${a.target}.${a.kind}`, a.t, -1); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t, v: 0 }); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t + a.durationMs, v: 1, e: 'linear' }); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t + a.durationMs + 1, v: -1 }); },
 };
 
@@ -255,8 +291,8 @@ function locomote(ctx: Ctx, a: string, t: number, to: { x: number; y: number }, 
   if (remaining > 0.5) {
     const s0 = sampleNumber(ctx.tracks, 'env.scrollX', t, 0);
     tween(ctx.tracks, 'env.scrollX', t, t + d, s0 + remaining * dir, 'linear', 0, s0);
-    addKey(ctx.tracks, `fx.${a}.speed`, { t, v: (remaining / d) * 1000 * dir }); addKey(ctx.tracks, `fx.${a}.speed`, { t: t + d, v: 0 });
     fxStart(ctx.tracks, `fx.${a}.speed`, t, 0);
+    addKey(ctx.tracks, `fx.${a}.speed`, { t, v: (remaining / d) * 1000 * dir }); addKey(ctx.tracks, `fx.${a}.speed`, { t: t + d, v: 0, e: 'step' }); // constant while running, off afterwards
   }
   // settle into rest at the end
   M.restPose(ctx.tracks, a, t + d, t + d + 260);

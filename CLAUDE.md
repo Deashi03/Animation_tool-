@@ -86,6 +86,8 @@ Allt behöver inte vara perfekt, men inget får bryta mot fysiken på ett sätt 
 - **Löpning är mer än ben:** framåtlutning, motsatt armpendling med böjda armbågar, flygfas, huvud som hålls plant, sparsamma fartstreck.
 - **Föremål respekterar volym.** Ett täcke ligger *ovanpå* kroppen med en puckel som följer den, en hållen kanna sitter upprätt i handen tills den lutas.
 - **Kontrollera i remsan** med tider som inte är multiplar av cykeln, annars ser varje ruta likadan ut.
+- **Inte alla scener behöver människor.** Relationer och många handlingar visas tydligast mellan föremål (`roll`, `tween`, `set`): *bakom* är en boll som rullar in bakom en låda. En person som "lägger" något är en extra handling som kan missförstås.
+- **Effekter är välkomna och ska sitta fast vid det de tillhör:** zzz vid munnen, fartstreck bakom kroppen under hela rörelsen, damm vid fötterna. De förstärker, bär aldrig betydelsen ensamma.
 
 ### 2.5 Motorn är generell (produktägaren 2026-11-05)
 

@@ -15,21 +15,24 @@ npm run e2e            # kräver globalt installerad Playwright (se nedan)
 
 Publicerad studio: `https://deashi03.github.io/Animation_tool-/` när GitHub Pages är aktiverat (Settings → Pages → Build and deployment → Source: **GitHub Actions**). Byggs och publiceras från `main` av `.github/workflows/ci.yml`.
 
-## Arbetsflöde för en ny animation (Claude eller människa)
+## Arbetsflöde för en modul (Claude eller människa)
 
 ```bash
-npm run anim:new -- s.slappa.1 --template relax --contrast anim.sova.1   # scenes/slappa/anim.slappa.1.json från mall
-# redigera JSON: miljö, aktörer, föremål, tidslinje med semantiska handlingar
-npm run anim:validate -- scenes/slappa/anim.slappa.1.json                 # schema, referenser, tider, utsnitt, kontrastkrav
-npm run anim:strip -- anim.slappa.1                                       # review/strips/anim.slappa.1.png – TITTA på den
-npm run anim:compare -- anim.slappa.1 anim.sova.1                         # kontrastparet sida vid sida
-npm run anim:poster -- anim.slappa.1                                      # posterbild i 180/140 px och med etikett
-npm run anim:sheet -- --strips                                            # kontaktark med alla scener
-npm run anim:report                                                       # status per scen
-npm run anim:export                                                       # Swechan-paket i dist/swechan/
+npm run anim:coverage -- --swechan ../swechan                             # hur mycket av ordboken recepten och byggstenarna täcker → registry/coverage.md
+npm run anim:plan -- --swechan ../swechan --module m.skara-och-hacka      # plan per ord: typ, mall, kontrast, japanskt ord → registry/plan/<modul>.md
+npm run anim:batch -- --swechan ../swechan --module m.skara-och-hacka --write --strips   # utkast från recepten + remsor + rapport i registry/batch/
+# per utkast: läs anmärkningen i rapporten, justera JSON, validera, titta på remsan
+npm run anim:validate -- scenes/skära/anim.skära.1.json                   # schema, referenser, tider, utsnitt, kontrastkrav, mallkontrakt
+npm run anim:strip -- anim.skära.1                                        # review/strips/anim.skära.1.png – TITTA på den
+npm run anim:compare -- anim.skära.1 anim.hacka.1                         # kontrastparet sida vid sida
+npm run anim:blindtest -- make anim.skära.1 anim.hacka.1 --batch b9       # omärkta remsor + frågor till en oberoende granskare
+npm run anim:blindtest -- grade b9 review/blind/b9.answers.json           # registrerar resultatet; utan godkänt blindtest är scenen inte klar
+npm run anim:props -- --filter food                                       # katalogblad över byggstenar (tool, container, food, fixture, garment)
+npm run anim:new -- s.ordet.1 --template tool-rhythm                      # en enskild scen från en mall
+npm run anim:poster -- anim.skära.1 · anim:sheet · anim:report · anim:export
 ```
 
-Regel: **ingen scen rapporteras klar utan att bildremsan har granskats.** Mallar finns i `src/tools/templates.ts` (`locomotion`, `manipulate-prop`, `relax`, `emotion`, `ui`).
+Regel: **ingen scen rapporteras klar utan att bildremsan har granskats och blindtestet är godkänt.** Mallar (begreppsfamiljer) finns i `src/compiler/templates.ts`; recepten per ord i `registry/recipes.json`; vilka mallar produktägaren godkänt i `registry/templates.json`.
 
 Bildremsor och kontaktark renderas till PNG med den globalt installerade Playwright-paketet (`/opt/node22/lib/node_modules/playwright` i molnmiljön, `npm install -g playwright@1.63.0 && playwright install chromium` lokalt). Saknas Playwright skrivs bara HTML-filen.
 
@@ -48,4 +51,4 @@ review/         genererat granskningsmaterial (ej i git)     docs/         dokum
 
 ## Status
 
-Fas 1 (2026-11-05): motor, rigg, scenformat v1, studio, CLI, tio ordanimationer (sju mål + tre kontrastpartner) och två gränssnittsanimationer. Allt innehåll är `ai-draft`. Se `docs/CHANGELOG.md` och `docs/REVIEW_LOG.md`.
+0.4.0 (2026-11-05): motor, rigg, scenformat v1, studio, CLI, 101 föremål i fem familjer, 34 handlingar, 14 mallar, 75 ordscener (alla tekniskt giltiga, 59 med godkänt blindtest) och två gränssnittsanimationer. Täckning av Swechans ordbok: 606 betydelser behöver animation, 502 har recept och byggstenar, 21 är blockerade. Allt innehåll är `ai-draft`. Se `docs/CHANGELOG.md`, `docs/REVIEW_LOG.md` och `registry/coverage.md`.

@@ -1,5 +1,5 @@
 import path from 'node:path';
-const FLAGS = new Set(['all', 'label', 'json', 'strips', 'force', 'strict']);
+const FLAGS = new Set(['all', 'label', 'json', 'strips', 'force', 'strict', 'write']);
 /** Positional arguments: everything that is not an option or an option's value. */
 export const args = (): string[] => { const out: string[] = []; const av = process.argv.slice(2); for (let i = 0; i < av.length; i++) { const a = av[i]!; if (a === '--') continue; if (a.startsWith('--')) { if (!FLAGS.has(a.slice(2))) i++; continue; } out.push(a); } return out; };
 export const flag = (name: string): boolean => process.argv.includes(`--${name}`);

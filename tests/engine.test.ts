@@ -1,7 +1,8 @@
 import { createHash } from 'node:crypto';
 import { addKey, sample, tween, dense, fractionEqual, type Tracks } from '../src/engine/track';
 import { ease, EASE_NAMES } from '../src/engine/easing';
-import { solveRig, REST_POSE, LIMITS, clampJoint, reachAngles, SEG } from '../src/engine/rig';
+import { solveRig, REST_POSE, LIMITS, clampJoint, reachAngles, SEG, type Pose } from '../src/engine/rig';
+import { JOINTS } from '../src/schema/scene';
 import { compileScene } from '../src/compiler/compile';
 import { renderFrame } from '../src/engine/render';
 import { frameToSvg } from '../src/engine/svgString';
@@ -122,5 +123,59 @@ describe('semantics', () => {
     const same = { ...a, animationId: 'anim.slappa.2', contrast: { with: ['anim.slappa.1'], distinctiveFeatures: ['environment.time:day'] } } as Scene;
     const v = validateScene(same, scenes);
     expect(v.problems.some((p) => /not visibly different/.test(p.message))).toBe(true);
+  });
+});
+
+describe('physics rules (the golden rule)', () => {
+  const { scenes } = loadScenes();
+  const num = (c: ReturnType<typeof compileScene>, id: string, t: number) => sample(c.tracks, id, t) as number;
+  it('planted feet never slide: during stance the sole moves at exactly the ground speed', () => {
+    for (const id of ['anim.springa.1', 'anim.gå.1']) {
+      const c = compileScene(scenes.get(id)!);
+      const pose = (t: number) => Object.fromEntries(JOINTS.map((j) => [j, num(c, `p.j.${j}`, t)])) as Pose;
+      let checked = 0;
+      for (let t = 200; t < 1600; t += 40) {
+        const a = solveRig(pose(t), 1, num(c, 'p.lift', t)), b = solveRig(pose(t + 40), 1, num(c, 'p.lift', t + 40));
+        // world x of each ankle = screen x + world scroll (the world moves left as scrollX grows)
+        const wx = (r: typeof a, side: 'L' | 'R', tt: number) => num(c, 'p.x', tt) + (side === 'L' ? r.ankleL[0] : r.ankleR[0]) + num(c, 'env.scrollX', tt);
+        for (const side of ['L', 'R'] as const) {
+          const yA = side === 'L' ? a.ankleL[1] : a.ankleR[1], yB = side === 'L' ? b.ankleL[1] : b.ankleR[1];
+          const onGround = yA > -3 && yB > -3; // ankle at ground height in both samples → stance
+          if (!onGround) continue;
+          expect(Math.abs(wx(b, side, t + 40) - wx(a, side, t)), `${id} ${side} foot slides at ${t} ms`).toBeLessThan(0.9);
+          checked++;
+        }
+      }
+      expect(checked).toBeGreaterThan(10);
+    }
+  });
+  it('the body stays attached: torso bottom equals the hip line and the pelvis joins the legs', () => {
+    const c = compileScene(scenes.get('anim.springa.1')!);
+    const f = renderFrame(c, 900);
+    const actor = bboxOfId(f.root, 'entity.p')!;
+    // no vertical gap: the union of body parts is one connected box of plausible height for the scale
+    expect(actor.y2 - actor.y1).toBeGreaterThan(70); expect(actor.y2 - actor.y1).toBeLessThan(100);
+  });
+  it('jumps follow a parabola: the lift is symmetric around the apex and lands at ground level', () => {
+    const c = compileScene(scenes.get('anim.hoppa.1')!);
+    const lifts = Array.from({ length: 131 }, (_, i) => ({ t: 500 + i * 10, v: num(c, 'p.lift', 500 + i * 10) }));
+    const apex = lifts.reduce((m, x) => (x.v > m.v ? x : m));
+    expect(apex.v).toBeGreaterThan(12);
+    const before = lifts.find((x) => x.t === apex.t - 200)!.v, after = lifts.find((x) => x.t === apex.t + 200)!.v;
+    expect(Math.abs(before - after)).toBeLessThan(2.5);
+    expect(Math.abs(num(c, 'p.lift', 1800))).toBeLessThan(0.05); // back on the ground when the jump ends (idle breathing follows)
+  });
+  it('the blanket lies on top of the sleeper and the ball bounces in a parabola off the knee', () => {
+    const s = compileScene(scenes.get('anim.sova.1')!);
+    const f = renderFrame(s, 2400);
+    const body = bboxOfId(f.root, 'entity.p')!, blanket = bboxOfId(f.root, 'entity.blanket')!;
+    expect(blanket.y1).toBeLessThan(body.y1 + 4); // covers the body's top edge
+    expect(blanket.x2).toBeGreaterThan(body.x2 - 2); // covers the feet
+    const k = compileScene(scenes.get('anim.sportig.1')!);
+    const ys = Array.from({ length: 19 }, (_, i) => num(k, 'ball.y', i * 40));
+    const minY = Math.min(...ys), maxY = Math.max(...ys);
+    expect(maxY - minY).toBeGreaterThan(12); // it really flies
+    expect(num(k, 'ball.y', 0)).toBeCloseTo(maxY, 0); // starts at the knee (lowest point) and returns there each period
+    expect(num(k, 'ball.y', 720)).toBeCloseTo(maxY, 0);
   });
 });

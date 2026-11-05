@@ -12,3 +12,12 @@
 - Tester: 33 enhets-/komponenttester (schema, spår, rigg, determinism-snapshot, layout, semantik, spelare, beroenderiktning, verktyg) + e2e-flöde (galleri → scen → spela → skrubba → redigera → fel → exportera → reduce-motion).
 - Mätt: studio-app 76 kB (26 kB gzip) + React 71 kB gzip; spelaren ensam 116 kB minifierad / 33 kB gzip (esbuild, utan React) – under Swechans vendor-del men över målet 15 kB; figur- och föremålsritningen är det mesta.
 - Inte gjort: fysisk iPhone/WebKit, bildfrekvensmätning, mänsklig granskning (allt `ai-draft`).
+
+## 0.1.1 – 2026-11-05 (fysik efter produktägarens granskning)
+- **Fötter glider inte längre.** Ny gångmodell (`motions/gait`): fotplacering + ben-IK; stödfoten rör sig bakåt i exakt markhastighet, svängfoten i en båge. Gång- och löpparametrar (`GAITS`: steglängd, cykeltid, stödandel, flyglyft, lutning, armpendling). När duken inte räcker rullar världen (`env.scrollX`) med parallax (träd långsammare än buskar); fartstreck bakom figuren vid rullning.
+- **Bålen hänger ihop:** bålen ritas som en fyrhörning mellan axellinje och höftlinje; nytt bäcken binder benen; främre armen ritas framför ansiktet.
+- **Parabler:** hopp (anticipation → frånskjut → parabel → landningssquash) och boll (keepy-uppies).
+- **Täcket** ligger ovanpå kroppen med puckel (`length`, `bulge`), armarna under; sovaren ligger lite högre på madrassen.
+- **sportig** omgjord: kontrast i samma scen – en vardaglig person med mugg står stilla, en person i träningskläder med pannband gör keepy-uppies med fotboll (`exercise kickups`, prop `football`).
+- Layoutkontrollen tar 13 prover per scen (fångade ett hopp som gick ur bild); `airborne` mäter höfter > 1 enhet; nya tester för icke-glidande fötter, parabel, täcke och boll.
+- Kända rester: armarna i löpcykeln pendlar men ser stela ut i stillbild; ansiktet i profil; möbler är enkla.

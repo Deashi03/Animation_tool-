@@ -21,7 +21,8 @@
         "x": 40,
         "y": 100
       },
-      "facing": "right"
+      "facing": "right",
+      "scale": 0.88
     }
   ],
   "props": [
@@ -48,9 +49,9 @@
       "t": 500,
       "action": "jump",
       "actor": "p",
-      "height": 24,
+      "height": 16,
       "to": {
-        "x": 84,
+        "x": 82,
         "y": 100
       },
       "durationMs": 1300
@@ -80,7 +81,7 @@
       "anim.springa.1"
     ],
     "distinctiveFeatures": [
-      "peaklift:p>=18"
+      "peaklift:p>=12"
     ]
   },
   "pedagogy": {

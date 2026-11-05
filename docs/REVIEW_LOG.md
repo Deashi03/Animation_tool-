@@ -15,3 +15,7 @@ Varje rad: datum · scen · vad som sågs i bildremsan · åtgärd · status. Cl
 | 2026-11-05 | ui.feedback.correct, ui.module.complete | Panel glider upp med easeOut, bock ritas, text tonar in; flagga + stjärnor med overshoot | – | ai-draft |
 
 Kvarstående svagheter: ansiktet i profil (sova), arm-IK:s armbåge i övergången till hällpositionen, enkla möbelvolymer.
+| 2026-11-05 | anim.springa.1, anim.gå.1 | Produktägaren: "springandet måste vara mer än benen", magen lossnade från höfterna, fötterna gled | Gångmodell med fotplacering + IK, världen rullar, bål fäst i höfterna, lutning, flygfas, fartstreck. Remsa granskad med 9 rutor (ej multiplar av cykeln) | ai-draft |
+| 2026-11-05 | anim.sova.1 | Täcket låg "i" figuren | Täcke med puckel ovanpå kroppen, armar under, höfter 9 över madrassen | ai-draft, remsa granskad |
+| 2026-11-05 | anim.sportig.1 | Produktägaren: ser bara ut som stretchning | Omgjord till kontrast i samma scen (vardaglig vs sportig med keepy-uppies, pannband, träningskläder). Osäkert om adjektivet alls går att visa entydigt – kräver produktägarens dom | ai-draft, remsa granskad |
+| 2026-11-05 | anim.hoppa.1 | Huvudet gick ur bild i apex (13-provskontrollen) | Figur 0.88, höjd 16, armar lägre | ai-draft |

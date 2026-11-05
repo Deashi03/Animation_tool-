@@ -5,8 +5,8 @@
  *   environment.time:<day|evening|night>
  *   prop:<asset>                                           (scene contains a prop of that asset)
  *   motion:<actor>[>=fraction]                             (actor travels or any joint moves)
- *   speed:<actor>>=<units/s> | speed:<actor><=<units/s>    (average horizontal speed while travelling)
- *   airborne:<actor>[>=fraction|<=fraction]                (both feet off the ground: lift > 3)
+ *   speed:<actor>>=<units/s> | speed:<actor><=<units/s>    (ground speed while moving, incl. world scroll)
+ *   airborne:<actor>[>=fraction|<=fraction]                (both feet off the ground: hips lifted > 1 unit)
  *   end:<prop>.<stateKey>>=value | <=value                 (prop state at the end of the scene)
  *   peaklift:<actor>>=units | <=units                       (highest point the hips reach above standing)
  */
@@ -26,13 +26,13 @@ export function evaluateFeature(c: CompiledScene, feature: string): { ok: boolea
   const D = c.durationMs;
   if (lhs === 'speed') {
     const a = rhs!; let dist = 0, moving = 0;
-    for (let t = 0; t < D; t += 80) { const dx = Math.abs(sampleNumber(c.tracks, `${a}.x`, t + 80, 0) - sampleNumber(c.tracks, `${a}.x`, t, 0)); if (dx > 0.2) { dist += dx; moving += 80; } }
+    for (let t = 0; t < D; t += 80) { const dx = Math.abs((sampleNumber(c.tracks, `${a}.x`, t + 80, 0) - sampleNumber(c.tracks, `${a}.x`, t, 0)) + (sampleNumber(c.tracks, 'env.scrollX', t + 80, 0) - sampleNumber(c.tracks, 'env.scrollX', t, 0))); if (dx > 0.2) { dist += dx; moving += 80; } }
     const v = moving ? dist / (moving / 1000) : 0;
     return { ok: le ? v <= minFrac : v >= minFrac, detail: `${a} travels at ${v.toFixed(0)} units/s` };
   }
   if (lhs === 'airborne') {
     const a = rhs!; let n = 0, hit = 0;
-    for (let t = 0; t <= D; t += 40) { n++; if (sampleNumber(c.tracks, `${a}.lift`, t, 0) > 3) hit++; }
+    for (let t = 0; t <= D; t += 40) { n++; if (sampleNumber(c.tracks, `${a}.lift`, t, 0) > 1) hit++; }
     return { ok: le ? hit / n <= minFrac : hit / n >= minFrac, detail: `${a} is airborne ${((hit / n) * 100).toFixed(0)}% of the time` };
   }
   if (lhs === 'peaklift') {

@@ -12,7 +12,7 @@ import * as M from '../motions';
 import type { EaseName } from '../engine/easing';
 
 export type Ctx = { scene: Scene; tracks: Tracks; actors: Map<string, ActorDef>; props: Map<string, PropDef>; ground: number; warnings: string[] };
-const WALK_SPEED = 32, RUN_SPEED = 75; // canvas units per second
+
 /** Effect tracks must be "off" before they start; otherwise sampling before the first key would show them. */
 function fxStart(tracks: Tracks, id: string, t: number, off: number | string): void { if (!tracks.get(id)) addKey(tracks, id, { t: Math.max(0, t - 1), v: off }); }
 
@@ -55,8 +55,8 @@ function reachJoints(ctx: Ctx, a: string, hand: 'left' | 'right', target: P, t: 
 }
 
 const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
-  walk(ctx, a) { locomote(ctx, a.actor, a.t, a.to, a.durationMs, WALK_SPEED, 'walk'); },
-  run(ctx, a) { locomote(ctx, a.actor, a.t, a.to, a.durationMs, RUN_SPEED, 'run'); },
+  walk(ctx, a) { locomote(ctx, a.actor, a.t, a.to, a.durationMs, 'walk'); },
+  run(ctx, a) { locomote(ctx, a.actor, a.t, a.to, a.durationMs, 'run'); },
   jump(ctx, a) {
     M.jump(ctx.tracks, a.actor, a.t, a.durationMs, a.height);
     if (a.to) { const [x0, y0] = actorPos(ctx, a.actor, a.t); faceToward(ctx, a.actor, a.t, a.to.x);
@@ -169,10 +169,10 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     const bx = sampleNumber(ctx.tracks, `${a.on}.x`, a.t, bed?.at?.x ?? 60), by = sampleNumber(ctx.tracks, `${a.on}.y`, a.t, bed?.at?.y ?? ctx.ground);
     addKey(ctx.tracks, `${a.actor}.facing`, { t: a.t, v: 'right' });
     addKey(ctx.tracks, `${a.actor}.x`, { t: a.t, v: bx + seat.x });
-    addKey(ctx.tracks, `${a.actor}.y`, { t: a.t, v: by + seat.y + SEG.hipH - 5 });
+    addKey(ctx.tracks, `${a.actor}.y`, { t: a.t, v: by + seat.y + SEG.hipH - 9 });
     addKey(ctx.tracks, `${a.actor}.z`, { t: a.t, v: (bed?.z ?? 0) + 1 });
     addKey(ctx.tracks, `${a.actor}.bodyRotate`, { t: a.t, v: -90 });
-    M.poseTo(ctx.tracks, a.actor, a.t, a.t + 300, { torso: 0, head: 18, uArmL: 26, fArmL: 60, uArmR: -4, fArmR: 10, thighL: 12, thighR: 6, shinL: -16, shinR: -8 }, 'easeOut');
+    M.poseTo(ctx.tracks, a.actor, a.t, a.t + 300, { torso: 0, head: 16, uArmL: 10, fArmL: 14, uArmR: 6, fArmR: 8, thighL: 10, thighR: 6, shinL: -14, shinR: -8 }, 'easeOut');
     for (const [k, v] of [['eyes', 'closed'], ['mouth', 'calm'], ['brows', 'neutral']] as const) addKey(ctx.tracks, `${a.actor}.${k}`, { t: a.t, v });
     // slow breathing: chest/torso rise
     const end = a.t + a.durationMs;
@@ -181,9 +181,21 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     if (a.zzz) { fxStart(ctx.tracks, `fx.${a.actor}.zzz`, a.t + 400, -1); for (let t = a.t + 400; t < end; t += 1800) { addKey(ctx.tracks, `fx.${a.actor}.zzz`, { t, v: 0 }); addKey(ctx.tracks, `fx.${a.actor}.zzz`, { t: Math.min(end, t + 1700), v: 1, e: 'linear' }); } }
   },
   exercise(ctx, a) {
-    if (a.kind === 'jog') { M.jogInPlace(ctx.tracks, a.actor, a.t, a.t + a.durationMs); addKey(ctx.tracks, `${a.actor}.mouth`, { t: a.t, v: 'open' }); }
-    else M.stretch(ctx.tracks, a.actor, a.t, a.t + a.durationMs);
-    M.blinks(ctx.tracks, a.actor, a.t, a.t + a.durationMs);
+    const end = a.t + a.durationMs;
+    if (a.kind === 'jog') { M.jogInPlace(ctx.tracks, a.actor, a.t, end); addKey(ctx.tracks, `${a.actor}.mouth`, { t: a.t, v: 'open' }); }
+    else if (a.kind === 'kickups') {
+      if (!a.ball) ctx.warnings.push(`exercise kickups at ${a.t} ms needs "ball"`);
+      else {
+        const f = facingAt(ctx, a.actor, a.t), [ax, ay] = actorPos(ctx, a.actor, a.t), sc = actorScale(ctx, a.actor, a.t);
+        // knee position when the thigh is raised to ~86°: hip + thigh·(sin, cos)
+        const knee: P = [ax + f * (-SEG.hipW + SEG.thigh * Math.sin((86 * Math.PI) / 180)) * sc, ay - (SEG.hipH - SEG.thigh * Math.cos((86 * Math.PI) / 180)) * sc];
+        addKey(ctx.tracks, `${a.ball}.attach`, { t: a.t, v: '' });
+        M.kickUps(ctx.tracks, a.actor, a.ball, a.t, end, knee, f);
+        addKey(ctx.tracks, `${a.actor}.gaze`, { t: a.t, v: f }); tween(ctx.tracks, M.J(a.actor, 'head'), a.t, a.t + 200, 14, 'easeOut');
+        addKey(ctx.tracks, `${a.actor}.mouth`, { t: a.t, v: 'smile' });
+      }
+    } else M.stretch(ctx.tracks, a.actor, a.t, end);
+    M.blinks(ctx.tracks, a.actor, a.t, end);
   },
   express(ctx, a) {
     const tr = ctx.tracks, A = a.actor, t = a.t, d = a.durationMs;
@@ -219,15 +231,33 @@ function trackId(ctx: Ctx, target: string, prop: string): string {
   return `${target}.${prop}`;
 }
 
-function locomote(ctx: Ctx, a: string, t: number, to: { x: number; y: number }, durationMs: number | undefined, speed: number, gait: 'walk' | 'run'): void {
+/**
+ * Locomotion with no foot sliding. The gait fixes the ground speed. If the
+ * scene has room, the actor travels; otherwise the actor stays near its spot
+ * and the environment scrolls at the remaining speed (treadmill). Either way
+ * planted feet move at exactly the ground speed.
+ */
+function locomote(ctx: Ctx, a: string, t: number, to: { x: number; y: number }, durationMs: number | undefined, gaitKind: 'walk' | 'run'): void {
   const [x0, y0] = actorPos(ctx, a, t);
-  const dist = Math.hypot(to.x - x0, to.y - y0);
-  const d = durationMs ?? Math.max(400, Math.round((dist / speed) * 1000));
+  const g = M.GAITS[gaitKind];
+  const v = M.gaitSpeed(g); // units per second the feet demand
+  const dist = Math.abs(to.x - x0);
+  const dir = to.x >= x0 ? 1 : -1;
+  const d = durationMs ?? Math.max(g.cycleMs, Math.round((dist / v) * 1000 / g.cycleMs) * g.cycleMs);
   faceToward(ctx, a, t, to.x);
-  tween(ctx.tracks, `${a}.x`, t, t + d, to.x, 'linear', 0, x0);
+  const travel = (v * d) / 1000; // ground the feet cover during the action
+  const bodyDx = Math.min(dist, travel) * dir; // the body moves at most to `to`
+  tween(ctx.tracks, `${a}.x`, t, t + d, x0 + bodyDx, 'linear', 0, x0);
   tween(ctx.tracks, `${a}.y`, t, t + d, to.y, 'linear', 0, y0);
-  if (gait === 'walk') M.walkCycle(ctx.tracks, a, t, t + d); else M.runCycle(ctx.tracks, a, t, t + d);
+  M.gait(ctx.tracks, a, t, t + d, g);
   M.blinks(ctx.tracks, a, t, t + d);
+  const remaining = travel - Math.abs(bodyDx); // ground that must scroll past instead
+  if (remaining > 0.5) {
+    const s0 = sampleNumber(ctx.tracks, 'env.scrollX', t, 0);
+    tween(ctx.tracks, 'env.scrollX', t, t + d, s0 + remaining * dir, 'linear', 0, s0);
+    addKey(ctx.tracks, `fx.${a}.speed`, { t, v: (remaining / d) * 1000 * dir }); addKey(ctx.tracks, `fx.${a}.speed`, { t: t + d, v: 0 });
+    fxStart(ctx.tracks, `fx.${a}.speed`, t, 0);
+  }
   // settle into rest at the end
   M.restPose(ctx.tracks, a, t + d, t + d + 260);
   tween(ctx.tracks, `${a}.lift`, t + d, t + d + 260, 0, 'easeOut');

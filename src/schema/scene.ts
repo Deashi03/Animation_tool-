@@ -20,7 +20,7 @@ const Dur = z.number().int().min(1).max(60_000);
 
 export const CHARACTER_ASSETS = ['character.base'] as const;
 export const CHARACTER_VARIANTS = ['a', 'b', 'c'] as const;
-export const PROP_ASSETS = ['glass', 'jug', 'door', 'box', 'ball', 'sofa', 'bed', 'blanket', 'mug', 'phone', 'table', 'window', 'mat'] as const;
+export const PROP_ASSETS = ['glass', 'jug', 'door', 'box', 'ball', 'football', 'sofa', 'bed', 'blanket', 'mug', 'phone', 'table', 'window', 'mat'] as const;
 export const ENVIRONMENTS = ['neutral', 'room', 'bedroom', 'kitchen', 'outdoors.park', 'street'] as const;
 export const TIMES = ['day', 'evening', 'night'] as const;
 export const EYES = ['open', 'half', 'closed', 'wide'] as const;
@@ -88,7 +88,7 @@ export const Action = z.discriminatedUnion('action', [
   // states
   z.object({ ...Base, action: z.literal('relax'), actor: Id, on: Id, durationMs: Dur, legsUp: z.boolean().default(true) }).strict(),
   z.object({ ...Base, action: z.literal('sleep'), actor: Id, on: Id, durationMs: Dur, zzz: z.boolean().default(true) }).strict(),
-  z.object({ ...Base, action: z.literal('exercise'), actor: Id, kind: z.enum(['jog', 'stretch']).default('jog'), durationMs: Dur }).strict(),
+  z.object({ ...Base, action: z.literal('exercise'), actor: Id, kind: z.enum(['jog', 'stretch', 'kickups']).default('jog'), durationMs: Dur, ball: Id.optional() }).strict(),
   z.object({ ...Base, action: z.literal('express'), actor: Id, emotion: z.enum(['happy', 'surprised', 'angry', 'sad', 'tired', 'content']), durationMs: Dur.default(400) }).strict(),
   z.object({ ...Base, action: z.literal('face'), actor: Id, eyes: z.enum(EYES).optional(), brows: z.enum(BROWS).optional(), mouth: z.enum(MOUTHS).optional(), gaze: z.number().min(-2).max(2).optional() }).strict(),
   // low level
@@ -158,7 +158,7 @@ export const Scene = z.object({
     const path = ['timeline', i];
     if ('actor' in a && !actorIds.has(a.actor)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown actor "${a.actor}"`, path });
     const rec = a as unknown as Record<string, unknown>;
-    for (const k of ['prop', 'from', 'into', 'on'] as const) if (a.action !== 'set' && a.action !== 'tween' && typeof rec[k] === 'string' && !propIds.has(rec[k] as string)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown prop "${rec[k]}"`, path });
+    for (const k of ['prop', 'from', 'into', 'on', 'ball'] as const) if (a.action !== 'set' && a.action !== 'tween' && typeof rec[k] === 'string' && !propIds.has(rec[k] as string)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown prop "${rec[k]}"`, path });
     if ('target' in a && typeof a.target === 'string' && !ids.has(a.target)) ctx.addIssue({ code: 'custom', message: `${a.action}: unknown target "${a.target}"`, path });
     if (a.t > s.durationMs) ctx.addIssue({ code: 'custom', message: `${a.action} starts at ${a.t} ms, after the scene ends (${s.durationMs} ms)`, path });
     const d = 'durationMs' in a ? a.durationMs : 0;

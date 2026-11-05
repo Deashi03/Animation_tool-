@@ -8,7 +8,7 @@ import { sampleNumber } from '../engine/track';
 export function checkLayout(c: CompiledScene): Problem[] {
   const out: Problem[] = [];
   const { w, h } = c.scene.canvas;
-  const samples = [0, 0.25, 0.5, 0.75, 1].map((u) => Math.round(c.durationMs * u));
+  const samples = Array.from({ length: 13 }, (_, i) => Math.round((c.durationMs * i) / 12));
   const focus = c.scene.focus?.targets.length ? c.scene.focus.targets : c.scene.actors.map((a) => a.id);
   for (const t of samples) {
     const frame = renderFrame(c, t);

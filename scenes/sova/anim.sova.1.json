@@ -42,10 +42,14 @@
       "id": "blanket",
       "asset": "blanket",
       "at": {
-        "x": 100,
+        "x": 108,
         "y": 86
       },
-      "z": 3
+      "z": 3,
+      "state": {
+        "length": 70,
+        "bulge": 22
+      }
     }
   ],
   "timeline": [

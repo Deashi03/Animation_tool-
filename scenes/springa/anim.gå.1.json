@@ -5,10 +5,10 @@
   "titleSv": "gå",
   "meaningHint": "Förflytta sig till fots i lugnt tempo",
   "category": "action",
-  "durationMs": 3600,
+  "durationMs": 3300,
   "loop": true,
-  "holdMs": 200,
-  "posterMs": 1800,
+  "holdMs": 0,
+  "posterMs": 1650,
   "environment": {
     "id": "outdoors.park",
     "time": "day"
@@ -18,7 +18,7 @@
       "id": "p",
       "variant": "b",
       "at": {
-        "x": 22,
+        "x": 46,
         "y": 100
       },
       "facing": "right"
@@ -30,7 +30,7 @@
       "action": "walk",
       "actor": "p",
       "to": {
-        "x": 98,
+        "x": 70,
         "y": 100
       },
       "durationMs": 3300
@@ -46,7 +46,8 @@
       "anim.springa.1"
     ],
     "distinctiveFeatures": [
-      "airborne:p<=0.02"
+      "airborne:p<=0.02",
+      "speed:p<=45"
     ]
   },
   "pedagogy": {

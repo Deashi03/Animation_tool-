@@ -70,3 +70,19 @@ export function reachAngles(shoulder: P, target: P, upper: number, lower: number
   const shoulderOff = (Math.acos(Math.max(-1, Math.min(1, cosS))) * 180) / Math.PI;
   return { u: base - shoulderOff, f: elbow };
 }
+
+/**
+ * Leg IK: thigh/shin angles so that the ankle reaches `target` (relative to the
+ * hip, rig space, +x forward, +y down). The knee always bends backward
+ * (shin ≤ 0), which is what keeps legs physically plausible.
+ */
+export function legAngles(target: P, thigh = SEG.thigh, shin = SEG.shin): { thigh: number; shin: number } {
+  const [dx, dy] = target;
+  const d = Math.max(0.01, Math.min(Math.hypot(dx, dy), thigh + shin - 0.05));
+  const base = (Math.atan2(dx, dy) * 180) / Math.PI;
+  const cosK = (thigh * thigh + shin * shin - d * d) / (2 * thigh * shin);
+  const bend = 180 - (Math.acos(Math.max(-1, Math.min(1, cosK))) * 180) / Math.PI;
+  const cosH = (thigh * thigh + d * d - shin * shin) / (2 * thigh * d);
+  const off = (Math.acos(Math.max(-1, Math.min(1, cosH))) * 180) / Math.PI;
+  return { thigh: base + off, shin: -bend };
+}

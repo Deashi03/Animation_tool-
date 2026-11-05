@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.gå.1",
+  "senseId": "s.gå.1",
+  "titleSv": "gå",
+  "meaningHint": "Förflytta sig till fots i lugnt tempo",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 200,
+  "posterMs": 1800,
+  "environment": {
+    "id": "outdoors.park",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "b",
+      "at": {
+        "x": 22,
+        "y": 100
+      },
+      "facing": "right"
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "walk",
+      "actor": "p",
+      "to": {
+        "x": 98,
+        "y": 100
+      },
+      "durationMs": 3300
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ]
+  },
+  "contrast": {
+    "with": [
+      "anim.springa.1"
+    ],
+    "distinctiveFeatures": [
+      "airborne:p<=0.02"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": true,
+    "group": "rörelse",
+    "confusableWith": [
+      "s.springa.1"
+    ],
+    "note": "Kontrastpartner till springa – tempo och steglängd skiljer."
+  }
+}

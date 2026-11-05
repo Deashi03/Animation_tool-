@@ -1,0 +1,255 @@
+/**
+ * Semantic actions → tracks. This is the layer Claude writes against. Each
+ * action produces motion, prop state changes and consequences together, so a
+ * scene can say `pour` instead of describing rotations.
+ */
+import { addKey, sample, sampleNumber, sampleString, tween, type Tracks } from '../engine/track';
+import { reachAngles, SEG, solveRig, type Pose, REST_POSE, type P } from '../engine/rig';
+import { PROPS, HELD_TILT_DEG } from '../assets/props';
+import type { Action, ActionOf, Joint, Scene, ActorDef, PropDef } from '../schema/scene';
+import { JOINTS } from '../schema/scene';
+import * as M from '../motions';
+import type { EaseName } from '../engine/easing';
+
+export type Ctx = { scene: Scene; tracks: Tracks; actors: Map<string, ActorDef>; props: Map<string, PropDef>; ground: number; warnings: string[] };
+const WALK_SPEED = 32, RUN_SPEED = 75; // canvas units per second
+/** Effect tracks must be "off" before they start; otherwise sampling before the first key would show them. */
+function fxStart(tracks: Tracks, id: string, t: number, off: number | string): void { if (!tracks.get(id)) addKey(tracks, id, { t: Math.max(0, t - 1), v: off }); }
+
+/** Current actor pose at t from the tracks. */
+export function poseAt(ctx: Ctx, a: string, t: number): Pose {
+  const p = { ...REST_POSE };
+  for (const j of JOINTS) p[j] = sampleNumber(ctx.tracks, M.J(a, j), t, REST_POSE[j]);
+  return p;
+}
+export const facingAt = (ctx: Ctx, a: string, t: number): 1 | -1 => (sampleString<string>(ctx.tracks, `${a}.facing`, t, 'right') === 'left' ? -1 : 1);
+export const actorPos = (ctx: Ctx, a: string, t: number): P => [sampleNumber(ctx.tracks, `${a}.x`, t, 60), sampleNumber(ctx.tracks, `${a}.y`, t, ctx.ground)];
+export const actorScale = (ctx: Ctx, a: string, t: number): number => sampleNumber(ctx.tracks, `${a}.scale`, t, 1);
+/** World position of a prop's anchor (ignores attachment – used for targets). */
+export function propWorld(ctx: Ctx, p: string, t: number, anchor: 'grip' | 'mouth' | 'base' = 'base'): P {
+  const def = ctx.props.get(p);
+  const spec = def ? PROPS[def.asset] : undefined;
+  const x = sampleNumber(ctx.tracks, `${p}.x`, t, def?.at?.x ?? 60), y = sampleNumber(ctx.tracks, `${p}.y`, t, def?.at?.y ?? ctx.ground);
+  const s = sampleNumber(ctx.tracks, `${p}.scale`, t, def?.scale ?? 1);
+  const a = anchor === 'grip' ? spec?.grip : anchor === 'mouth' ? spec?.mouth ?? spec?.grip : [0, 0];
+  return [x + (a?.[0] ?? 0) * s, y + (a?.[1] ?? 0) * s];
+}
+const targetPoint = (ctx: Ctx, target: string | { x: number; y: number }, t: number): P =>
+  typeof target === 'string' ? (ctx.props.has(target) ? propWorld(ctx, target, t, 'grip') : ctx.actors.has(target) ? [actorPos(ctx, target, t)[0], actorPos(ctx, target, t)[1] - 60] : [60, 60]) : [target.x, target.y];
+
+/** Make the actor face a world x. */
+function faceToward(ctx: Ctx, a: string, t: number, x: number): void {
+  const [ax] = actorPos(ctx, a, t);
+  if (Math.abs(x - ax) > 2) addKey(ctx.tracks, `${a}.facing`, { t, v: x > ax ? 'right' : 'left' });
+}
+/** Joint angles that bring a hand to a world point (two-bone IK, clamped by the rig). */
+function reachJoints(ctx: Ctx, a: string, hand: 'left' | 'right', target: P, t: number): Partial<Record<Joint, number>> {
+  const f = facingAt(ctx, a, t), [ax, ay] = actorPos(ctx, a, t), sc = actorScale(ctx, a, t);
+  const rig = solveRig(poseAt(ctx, a, t), f, sampleNumber(ctx.tracks, `${a}.lift`, t, 0));
+  const sh = hand === 'left' ? rig.shL : rig.shR;
+  // target in rig space (unflipped): x mirrored by facing
+  const lx = ((target[0] - ax) / sc) * f, ly = (target[1] - ay) / sc;
+  const { u, f: fa } = reachAngles([sh[0] * f, sh[1]], [lx, ly], SEG.uArm, SEG.fArm);
+  const torso = rig.angles.torso * f;
+  return hand === 'left' ? { uArmL: u - torso, fArmL: fa } : { uArmR: u - torso, fArmR: fa };
+}
+
+const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
+  walk(ctx, a) { locomote(ctx, a.actor, a.t, a.to, a.durationMs, WALK_SPEED, 'walk'); },
+  run(ctx, a) { locomote(ctx, a.actor, a.t, a.to, a.durationMs, RUN_SPEED, 'run'); },
+  jump(ctx, a) {
+    M.jump(ctx.tracks, a.actor, a.t, a.durationMs, a.height);
+    if (a.to) { const [x0, y0] = actorPos(ctx, a.actor, a.t); faceToward(ctx, a.actor, a.t, a.to.x);
+      tween(ctx.tracks, `${a.actor}.x`, a.t + a.durationMs * 0.3, a.t + a.durationMs * 0.86, a.to.x, 'linear', 0, x0);
+      tween(ctx.tracks, `${a.actor}.y`, a.t + a.durationMs * 0.3, a.t + a.durationMs * 0.86, a.to.y, 'linear', 0, y0); }
+  },
+  turn(ctx, a) { addKey(ctx.tracks, `${a.actor}.facing`, { t: a.t, v: a.facing }); },
+  idle(ctx, a) {
+    if (a.style === 'breathe') M.idleBreathe(ctx.tracks, a.actor, a.t, a.t + a.durationMs);
+    else if (a.style === 'footWiggle') { M.footWiggle(ctx.tracks, a.actor, a.t, a.t + a.durationMs); M.blinks(ctx.tracks, a.actor, a.t, a.t + a.durationMs); }
+  },
+  reach(ctx, a) {
+    const tp = targetPoint(ctx, a.target, a.t); faceToward(ctx, a.actor, a.t, tp[0]);
+    M.poseTo(ctx.tracks, a.actor, a.t, a.t + a.durationMs, reachJoints(ctx, a.actor, a.hand, tp, a.t), 'easeOut');
+    addKey(ctx.tracks, `${a.actor}.gaze`, { t: a.t, v: tp[0] > actorPos(ctx, a.actor, a.t)[0] ? 1 : -1 });
+  },
+  grab(ctx, a) {
+    const tp = propWorld(ctx, a.prop, a.t, 'grip'); faceToward(ctx, a.actor, a.t, tp[0]);
+    const end = a.t + a.durationMs;
+    M.poseTo(ctx.tracks, a.actor, a.t, end - 80, reachJoints(ctx, a.actor, a.hand, tp, a.t), 'easeOut');
+    addKey(ctx.tracks, `${a.prop}.attach`, { t: end - 80, v: `${a.actor}:${a.hand}` });
+    // carry position: elbow bent, hand in front at waist height
+    M.poseTo(ctx.tracks, a.actor, end - 80, end + 300, a.hand === 'left' ? { uArmL: 30, fArmL: 70 } : { uArmR: 30, fArmR: 70 }, 'easeInOut');
+  },
+  release(ctx, a) {
+    const owner = sampleString(ctx.tracks, `${a.prop}.attach`, a.t, '');
+    const hand = owner.endsWith(':left') ? 'left' : 'right';
+    const at: P = a.at ? [a.at.x, a.at.y] : propWorld(ctx, a.prop, a.t, 'base');
+    if (owner) {
+      M.poseTo(ctx.tracks, a.actor, a.t, a.t + a.durationMs * 0.6, reachJoints(ctx, a.actor, hand, [at[0] + (PROPS[ctx.props.get(a.prop)!.asset]?.grip[0] ?? 0), at[1] + (PROPS[ctx.props.get(a.prop)!.asset]?.grip[1] ?? 0)], a.t), 'easeInOut');
+    }
+    const drop = a.t + a.durationMs * 0.6;
+    addKey(ctx.tracks, `${a.prop}.attach`, { t: drop, v: '' });
+    addKey(ctx.tracks, `${a.prop}.x`, { t: drop, v: at[0] }); addKey(ctx.tracks, `${a.prop}.y`, { t: drop, v: at[1] });
+    if (a.z !== undefined) addKey(ctx.tracks, `${a.prop}.z`, { t: drop, v: a.z });
+    M.poseTo(ctx.tracks, a.actor, drop, a.t + a.durationMs + 300, { uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR }, 'easeInOut');
+  },
+  pour(ctx, a) {
+    const end = a.t + a.durationMs, into = propWorld(ctx, a.into, a.t, 'mouth');
+    const owner = sampleString(ctx.tracks, `${a.from}.attach`, a.t, '');
+    if (!owner) ctx.warnings.push(`pour at ${a.t} ms: "${a.from}" is not held – add a grab first`);
+    const hand = owner.endsWith(':left') ? 'left' : 'right';
+    faceToward(ctx, a.actor, a.t, into[0]);
+    // bring the jug above the glass: hand ~ 14 units above and slightly beside the mouth
+    const f = facingAt(ctx, a.actor, a.t);
+    // place the hand so that the tilted spout ends up just above the target's rim
+    const fromDef = ctx.props.get(a.from)!, fromSpec = PROPS[fromDef.asset];
+    const sc = sampleNumber(ctx.tracks, `${a.from}.scale`, a.t, fromDef.scale);
+    const lx = ((fromSpec?.mouth?.[0] ?? 0) - (fromSpec?.grip[0] ?? 0)) * sc, ly = ((fromSpec?.mouth?.[1] ?? 0) - (fromSpec?.grip[1] ?? 0)) * sc;
+    const ang = (HELD_TILT_DEG * Math.PI) / 180, rx = lx * Math.cos(ang) - ly * Math.sin(ang), ry = lx * Math.sin(ang) + ly * Math.cos(ang);
+    const handTarget: P = [into[0] - f * rx, into[1] - 5 - ry];
+    tween(ctx.tracks, M.J(a.actor, 'torso'), a.t, a.t + 400, 12, 'easeInOut');
+    M.poseTo(ctx.tracks, a.actor, a.t, a.t + 400, reachJoints(ctx, a.actor, hand, handTarget, a.t), 'easeInOut');
+    addKey(ctx.tracks, `${a.actor}.gaze`, { t: a.t, v: f }); tween(ctx.tracks, M.J(a.actor, 'head'), a.t, a.t + 400, -14, 'easeInOut');
+    const t1 = a.t + 400, t2 = a.t + 700, t3 = end - 500, t4 = end - 100;
+    tween(ctx.tracks, `${a.from}.s.tilt`, t1, t2, 1, 'easeInOut', 0, 0);
+    addKey(ctx.tracks, `${a.from}.s.stream`, { t: t2 - 60, v: 0 }); addKey(ctx.tracks, `${a.from}.s.stream`, { t: t2, v: 1 }); addKey(ctx.tracks, `${a.from}.s.stream`, { t: t3, v: 1 }); addKey(ctx.tracks, `${a.from}.s.stream`, { t: t3 + 120, v: 0 });
+    fxStart(ctx.tracks, `fx.pour.${a.from}`, t2, ''); addKey(ctx.tracks, `fx.pour.${a.from}`, { t: t2, v: a.into }); addKey(ctx.tracks, `fx.pour.${a.from}`, { t: t3 + 120, v: '' });
+    const fill0 = sampleNumber(ctx.tracks, `${a.into}.s.fill`, a.t, 0), lvl0 = sampleNumber(ctx.tracks, `${a.from}.s.level`, a.t, 1);
+    tween(ctx.tracks, `${a.into}.s.fill`, t2 + 150, t3, Math.min(1, fill0 + a.amount), 'linear', 0, fill0);
+    tween(ctx.tracks, `${a.from}.s.level`, t2, t3, Math.max(0, lvl0 - a.amount), 'linear', 0, lvl0);
+    tween(ctx.tracks, `${a.from}.s.tilt`, t3, t4, 0, 'easeInOut');
+    tween(ctx.tracks, M.J(a.actor, 'head'), t3, end, -4, 'easeInOut');
+    tween(ctx.tracks, M.J(a.actor, 'torso'), t4, end, 0, 'easeInOut');
+    M.poseTo(ctx.tracks, a.actor, t4, end, hand === 'left' ? { uArmL: 30, fArmL: 70 } : { uArmR: 30, fArmR: 70 }, 'easeInOut');
+  },
+  open(ctx, a) { swing(ctx, a.actor, a.prop, a.t, a.durationMs, 1); },
+  close(ctx, a) { swing(ctx, a.actor, a.prop, a.t, a.durationMs, 0); },
+  sip(ctx, a) {
+    const owner = sampleString(ctx.tracks, `${a.prop}.attach`, a.t, '');
+    const hand = owner.endsWith(':left') ? 'left' : 'right';
+    const pose = poseAt(ctx, a.actor, a.t);
+    const mid = a.t + a.durationMs * 0.45;
+    const up = hand === 'left' ? { uArmL: 55, fArmL: 135 } : { uArmR: 55, fArmR: 135 };
+    M.poseTo(ctx.tracks, a.actor, a.t, mid, { ...up, head: 6 }, 'easeInOut');
+    addKey(ctx.tracks, `${a.actor}.eyes`, { t: mid - 100, v: 'closed' }); addKey(ctx.tracks, `${a.actor}.eyes`, { t: mid + 250, v: sampleString(ctx.tracks, `${a.actor}.eyes`, a.t, 'open') });
+    M.poseTo(ctx.tracks, a.actor, mid + 250, a.t + a.durationMs, hand === 'left' ? { uArmL: pose.uArmL, fArmL: pose.fArmL, head: pose.head } : { uArmR: pose.uArmR, fArmR: pose.fArmR, head: pose.head }, 'easeInOut');
+  },
+  lookAt(ctx, a) {
+    const tp = targetPoint(ctx, a.target, a.t), [ax, ay] = actorPos(ctx, a.actor, a.t);
+    const f = facingAt(ctx, a.actor, a.t);
+    addKey(ctx.tracks, `${a.actor}.gaze`, { t: a.t, v: Math.sign(tp[0] - ax) * f || 0 });
+    const vertical = tp[1] - (ay - 60);
+    tween(ctx.tracks, M.J(a.actor, 'head'), a.t, a.t + a.durationMs, Math.max(-20, Math.min(20, vertical * -0.35)) * -1, 'easeInOut');
+  },
+  relax(ctx, a) {
+    const sofa = ctx.props.get(a.on), spec = sofa ? PROPS[sofa.asset] : undefined;
+    const seat = spec?.seat ?? { x: 0, y: -14, reclineDeg: 28 };
+    const sx = sampleNumber(ctx.tracks, `${a.on}.x`, a.t, sofa?.at?.x ?? 60), sy = sampleNumber(ctx.tracks, `${a.on}.y`, a.t, sofa?.at?.y ?? ctx.ground);
+    const f = facingAt(ctx, a.actor, a.t);
+    // sit: hips on the seat, legs forward (up on the sofa), torso reclined
+    const hipY = sy + seat.y;
+    addKey(ctx.tracks, `${a.actor}.x`, { t: a.t, v: sx + seat.x - f * 16 });
+    addKey(ctx.tracks, `${a.actor}.y`, { t: a.t, v: hipY + SEG.hipH });
+    addKey(ctx.tracks, `${a.actor}.z`, { t: a.t, v: (sofa?.z ?? 0) + 1 });
+    const legsUp: Partial<Record<Joint, number>> = a.legsUp ? { thighL: 84, thighR: 78, shinL: -10, shinR: -6, footL: 22, footR: 18 } : { thighL: 82, thighR: 78, shinL: -90, shinR: -86 };
+    const seated: Partial<Record<Joint, number>> = { ...legsUp, torso: -(seat.reclineDeg ?? 18), head: 12, uArmL: 58, fArmL: 96, uArmR: -14, fArmR: 30 };
+    if (a.t === 0) for (const [j, v] of Object.entries(seated) as [Joint, number][]) addKey(ctx.tracks, M.J(a.actor, j), { t: 0, v });
+    else M.poseTo(ctx.tracks, a.actor, a.t, a.t + 500, seated, 'easeOut');
+    for (const [k, v] of [['eyes', 'half'], ['mouth', 'calm'], ['brows', 'neutral']] as const) addKey(ctx.tracks, `${a.actor}.${k}`, { t: a.t + 300, v });
+    addKey(ctx.tracks, `${a.actor}.gaze`, { t: a.t + 300, v: 1 });
+    M.footWiggle(ctx.tracks, a.actor, a.t + 500, a.t + a.durationMs, 'footL');
+    M.blinks(ctx.tracks, a.actor, a.t + 600, a.t + a.durationMs, 2400);
+    // small "scrolling" thumb movement on the phone hand
+    for (let t = a.t + 900; t + 600 < a.t + a.durationMs; t += 1400) tween(ctx.tracks, M.J(a.actor, 'fArmL'), t, t + 300, 98, 'easeInOut'), tween(ctx.tracks, M.J(a.actor, 'fArmL'), t + 300, t + 600, 92, 'easeInOut');
+  },
+  sleep(ctx, a) {
+    const bed = ctx.props.get(a.on), spec = bed ? PROPS[bed.asset] : undefined;
+    const seat = spec?.seat ?? { x: 10, y: -14, reclineDeg: 84 };
+    const bx = sampleNumber(ctx.tracks, `${a.on}.x`, a.t, bed?.at?.x ?? 60), by = sampleNumber(ctx.tracks, `${a.on}.y`, a.t, bed?.at?.y ?? ctx.ground);
+    addKey(ctx.tracks, `${a.actor}.facing`, { t: a.t, v: 'right' });
+    addKey(ctx.tracks, `${a.actor}.x`, { t: a.t, v: bx + seat.x });
+    addKey(ctx.tracks, `${a.actor}.y`, { t: a.t, v: by + seat.y + SEG.hipH - 5 });
+    addKey(ctx.tracks, `${a.actor}.z`, { t: a.t, v: (bed?.z ?? 0) + 1 });
+    addKey(ctx.tracks, `${a.actor}.bodyRotate`, { t: a.t, v: -90 });
+    M.poseTo(ctx.tracks, a.actor, a.t, a.t + 300, { torso: 0, head: 18, uArmL: 26, fArmL: 60, uArmR: -4, fArmR: 10, thighL: 12, thighR: 6, shinL: -16, shinR: -8 }, 'easeOut');
+    for (const [k, v] of [['eyes', 'closed'], ['mouth', 'calm'], ['brows', 'neutral']] as const) addKey(ctx.tracks, `${a.actor}.${k}`, { t: a.t, v });
+    // slow breathing: chest/torso rise
+    const end = a.t + a.durationMs;
+    tween(ctx.tracks, M.J(a.actor, 'torso'), a.t + 300, a.t + 300, 0, 'linear');
+    for (let t = a.t + 300; t + 2400 <= end + 1; t += 2400) { tween(ctx.tracks, M.J(a.actor, 'torso'), t, t + 1200, 3, 'easeInOut'); tween(ctx.tracks, M.J(a.actor, 'torso'), t + 1200, t + 2400, 0, 'easeInOut'); }
+    if (a.zzz) { fxStart(ctx.tracks, `fx.${a.actor}.zzz`, a.t + 400, -1); for (let t = a.t + 400; t < end; t += 1800) { addKey(ctx.tracks, `fx.${a.actor}.zzz`, { t, v: 0 }); addKey(ctx.tracks, `fx.${a.actor}.zzz`, { t: Math.min(end, t + 1700), v: 1, e: 'linear' }); } }
+  },
+  exercise(ctx, a) {
+    if (a.kind === 'jog') { M.jogInPlace(ctx.tracks, a.actor, a.t, a.t + a.durationMs); addKey(ctx.tracks, `${a.actor}.mouth`, { t: a.t, v: 'open' }); }
+    else M.stretch(ctx.tracks, a.actor, a.t, a.t + a.durationMs);
+    M.blinks(ctx.tracks, a.actor, a.t, a.t + a.durationMs);
+  },
+  express(ctx, a) {
+    const tr = ctx.tracks, A = a.actor, t = a.t, d = a.durationMs;
+    const face = (eyes: string, brows: string, mouth: string, blush = false) => { addKey(tr, `${A}.eyes`, { t, v: eyes }); addKey(tr, `${A}.brows`, { t, v: brows }); addKey(tr, `${A}.mouth`, { t, v: mouth }); addKey(tr, `${A}.blush`, { t, v: blush }); };
+    switch (a.emotion) {
+      case 'happy': face('open', 'up', 'smile', true); M.poseTo(tr, A, t, t + d, { uArmL: 40, uArmR: -40, fArmL: 60, fArmR: 60, head: 4 }, 'easeOut'); break;
+      case 'surprised': face('wide', 'up', 'o'); M.poseTo(tr, A, t, t + d * 0.5, { torso: -10, head: -6, uArmL: 60, uArmR: -60, fArmL: 80, fArmR: 80 }, 'easeOut'); tween(tr, `${A}.lift`, t, t + d * 0.3, 3, 'easeOut'); tween(tr, `${A}.lift`, t + d * 0.3, t + d, 0, 'easeInOut'); break;
+      case 'angry': face('open', 'down', 'frown'); M.poseTo(tr, A, t, t + d, { torso: 6, head: -4, uArmL: 36, uArmR: -36, fArmL: 120, fArmR: 120 }, 'easeOut'); break;
+      case 'sad': face('half', 'worried', 'frown'); M.poseTo(tr, A, t, t + d, { torso: 10, head: 16, uArmL: 4, uArmR: -4, fArmL: 4, fArmR: 4 }, 'easeInOut'); break;
+      case 'tired': face('half', 'worried', 'neutral'); M.poseTo(tr, A, t, t + d, { torso: 14, head: 18, uArmL: 2, uArmR: -2, fArmL: 2, fArmR: 2 }, 'easeInOut'); break;
+      case 'content': face('half', 'neutral', 'calm'); break;
+    }
+  },
+  face(ctx, a) { for (const k of ['eyes', 'brows', 'mouth', 'gaze'] as const) if (a[k] !== undefined) addKey(ctx.tracks, `${a.actor}.${k}`, { t: a.t, v: a[k]! }); },
+  pose(ctx, a) {
+    M.poseTo(ctx.tracks, a.actor, a.t, a.t + a.durationMs, a.joints, a.ease as EaseName);
+    if (a.lift !== undefined) tween(ctx.tracks, `${a.actor}.lift`, a.t, a.t + a.durationMs, a.lift);
+    if (a.bodyRotate !== undefined) tween(ctx.tracks, `${a.actor}.bodyRotate`, a.t, a.t + a.durationMs, a.bodyRotate);
+  },
+  set(ctx, a) { addKey(ctx.tracks, trackId(ctx, a.target, a.prop), { t: a.t, v: a.value }); },
+  tween(ctx, a) {
+    const id = trackId(ctx, a.target, a.prop);
+    const cur = sample(ctx.tracks, id, a.t);
+    tween(ctx.tracks, id, a.t, a.t + a.durationMs, a.to, a.ease as EaseName, 0, a.from ?? (typeof cur === 'number' ? cur : undefined));
+  },
+  emphasis(ctx, a) { fxStart(ctx.tracks, `fx.${a.target}.${a.kind}`, a.t, -1); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t, v: 0 }); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t + a.durationMs, v: 1, e: 'linear' }); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t + a.durationMs + 1, v: -1 }); },
+};
+
+/** Map a user-facing property name to a track id: joints → `.j.`, prop state → `.s.`, else direct. */
+function trackId(ctx: Ctx, target: string, prop: string): string {
+  if (ctx.actors.has(target) && (JOINTS as readonly string[]).includes(prop)) return `${target}.j.${prop}`;
+  if (ctx.props.has(target) && !['x', 'y', 'z', 'scale', 'rotate', 'opacity', 'attach'].includes(prop)) return `${target}.s.${prop}`;
+  return `${target}.${prop}`;
+}
+
+function locomote(ctx: Ctx, a: string, t: number, to: { x: number; y: number }, durationMs: number | undefined, speed: number, gait: 'walk' | 'run'): void {
+  const [x0, y0] = actorPos(ctx, a, t);
+  const dist = Math.hypot(to.x - x0, to.y - y0);
+  const d = durationMs ?? Math.max(400, Math.round((dist / speed) * 1000));
+  faceToward(ctx, a, t, to.x);
+  tween(ctx.tracks, `${a}.x`, t, t + d, to.x, 'linear', 0, x0);
+  tween(ctx.tracks, `${a}.y`, t, t + d, to.y, 'linear', 0, y0);
+  if (gait === 'walk') M.walkCycle(ctx.tracks, a, t, t + d); else M.runCycle(ctx.tracks, a, t, t + d);
+  M.blinks(ctx.tracks, a, t, t + d);
+  // settle into rest at the end
+  M.restPose(ctx.tracks, a, t + d, t + d + 260);
+  tween(ctx.tracks, `${a}.lift`, t + d, t + d + 260, 0, 'easeOut');
+}
+
+function swing(ctx: Ctx, actor: string, prop: string, t: number, d: number, target: 0 | 1): void {
+  const grip = propWorld(ctx, prop, t, 'grip');
+  faceToward(ctx, actor, t, grip[0]);
+  const f = facingAt(ctx, actor, t);
+  const reach = reachJoints(ctx, actor, 'right', grip, t);
+  M.poseTo(ctx.tracks, actor, t, t + d * 0.35, reach, 'easeOut');
+  addKey(ctx.tracks, `${actor}.gaze`, { t, v: 1 });
+  const key = ctx.props.get(prop)?.asset === 'box' ? 'lidOpen' : 'angle';
+  const cur = sampleNumber(ctx.tracks, `${prop}.s.${key}`, t, 1 - target);
+  tween(ctx.tracks, `${prop}.s.${key}`, t + d * 0.35, t + d, target, target ? 'easeOut' : 'easeInOut', 0, cur);
+  // the arm follows the handle a little (pull back when opening toward the viewer / push when closing)
+  const u = (reach.uArmR ?? 40), fa = (reach.fArmR ?? 20);
+  M.poseTo(ctx.tracks, actor, t + d * 0.35, t + d, { uArmR: u - (target ? 18 : -10), fArmR: fa + (target ? 28 : -6), torso: target ? -4 : 6 }, 'easeInOut');
+  M.poseTo(ctx.tracks, actor, t + d, t + d + 350, { uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR, torso: 0 }, 'easeInOut');
+  void f;
+}
+
+export function compileAction(ctx: Ctx, a: Action): void {
+  (H[a.action] as (ctx: Ctx, a: Action) => void)(ctx, a);
+}

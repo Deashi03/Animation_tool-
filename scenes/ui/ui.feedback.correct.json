@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "animationId": "ui.feedback.correct",
+  "kind": "ui",
+  "titleSv": "Rätt svar",
+  "meaningHint": "Resultatpanelen för rätt svar glider upp, bocken ritas, texten tonar in",
+  "category": "ui",
+  "durationMs": 1100,
+  "loop": false,
+  "holdMs": 800,
+  "posterMs": 1100,
+  "canvas": { "w": 360, "h": 120 },
+  "shapes": [
+    { "type": "rect", "id": "bar", "x": 0, "y": 124, "w": 360, "h": 76, "rx": 18, "fill": "uiSuccessTint", "stroke": "uiSuccess", "sw": 2, "z": 0 },
+    { "type": "circle", "id": "badge", "cx": 42, "cy": 86, "r": 16, "fill": "uiSuccess", "opacity": 0, "z": 1 },
+    { "type": "icon", "id": "check", "icon": "check", "x": 42, "y": 86, "size": 22, "stroke": "white", "opacity": 0, "z": 2 },
+    { "type": "text", "id": "title", "x": 72, "y": 82, "text": "Rätt!", "size": 17, "weight": 800, "fill": "uiSuccess", "anchor": "start", "opacity": 0, "z": 1 },
+    { "type": "text", "id": "sub", "x": 72, "y": 100, "text": "Fortsätt", "size": 12, "weight": 600, "fill": "uiText", "anchor": "start", "opacity": 0, "z": 1 }
+  ],
+  "timeline": [
+    { "t": 0, "action": "tween", "target": "bar", "prop": "y", "to": 48, "durationMs": 420, "ease": "easeOut" },
+    { "t": 260, "action": "tween", "target": "badge", "prop": "opacity", "to": 1, "durationMs": 160, "ease": "easeOut" },
+    { "t": 260, "action": "tween", "target": "badge", "prop": "scale", "from": 0.4, "to": 1, "durationMs": 320, "ease": "overshoot" },
+    { "t": 380, "action": "set", "target": "check", "prop": "opacity", "value": 1 },
+    { "t": 380, "action": "tween", "target": "check", "prop": "progress", "from": 0, "to": 1, "durationMs": 360, "ease": "easeOut" },
+    { "t": 420, "action": "tween", "target": "title", "prop": "opacity", "to": 1, "durationMs": 260, "ease": "easeOut" },
+    { "t": 420, "action": "tween", "target": "title", "prop": "x", "from": 64, "to": 72, "durationMs": 300, "ease": "easeOut" },
+    { "t": 560, "action": "tween", "target": "sub", "prop": "opacity", "to": 1, "durationMs": 300, "ease": "easeOut" }
+  ],
+  "pedagogy": { "quizEligible": false, "confusableWith": [] },
+  "label": { "show": "never" }
+}

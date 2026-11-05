@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.sova.1",
+  "senseId": "s.sova.1",
+  "titleSv": "sova",
+  "meaningHint": "Vara i sömn, med slutna ögon",
+  "category": "state",
+  "durationMs": 4800,
+  "loop": true,
+  "holdMs": 0,
+  "posterMs": 2400,
+  "environment": {
+    "id": "bedroom",
+    "time": "night"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "sky",
+        "bottom": "sky"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "bed",
+      "asset": "bed",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": -1
+    },
+    {
+      "id": "blanket",
+      "asset": "blanket",
+      "at": {
+        "x": 100,
+        "y": 86
+      },
+      "z": 3
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "sleep",
+      "actor": "p",
+      "on": "bed",
+      "durationMs": 4800,
+      "zzz": true
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "lying in bed, eyes closed, night, slow breathing"
+  },
+  "contrast": {
+    "with": [
+      "anim.slappa.1"
+    ],
+    "distinctiveFeatures": [
+      "actor.p.eyes:closed>=0.9",
+      "environment.time:night",
+      "prop:bed",
+      "actor.p.posture:lying>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": true,
+    "group": "vila",
+    "confusableWith": [
+      "s.slappa.1",
+      "s.vila.1"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renderFrame determinism > snapshot of frame hashes (update deliberately when the look changes) 1`] = `
+{
+  "anim.bakom.1": [
+    "1131be30191d",
+    "b8d57b06bc86",
+    "79fbd949ddae",
+  ],
+  "anim.gå.1": [
+    "e506be7af07f",
+    "b840d78253aa",
+    "630b6d9471ca",
+  ],
+  "anim.hoppa.1": [
+    "b72e5425d6d7",
+    "a38ec4de088c",
+    "0993dba46dde",
+  ],
+  "anim.hälla.1": [
+    "d371cd7c9f47",
+    "c4d80f2189b3",
+    "382c50a199bd",
+  ],
+  "anim.slappa.1": [
+    "77f9175bf6ea",
+    "f7ec21ef16b3",
+    "c00a8cd77189",
+  ],
+  "anim.sova.1": [
+    "346fc7ebfa14",
+    "db9482d20643",
+    "2daec94f4790",
+  ],
+  "anim.sportig.1": [
+    "8c586a728d1f",
+    "934e0bcb11a2",
+    "c23c38c3a43b",
+  ],
+  "anim.springa.1": [
+    "b818c479f5a7",
+    "8efd32dfa60f",
+    "0ed85a061787",
+  ],
+  "anim.stänga.1": [
+    "62bd27a75764",
+    "91c37066370c",
+    "3bf99971a4b3",
+  ],
+  "anim.öppna.1": [
+    "f67c9c69b263",
+    "1384c0c2c43b",
+    "d6b9bde0c09d",
+  ],
+  "ui.feedback.correct": [
+    "62893074743e",
+    "bdae5953b8fa",
+    "767257f26621",
+  ],
+  "ui.module.complete": [
+    "780c22c15850",
+    "fb5f32bc1715",
+    "3deb56a1e9cf",
+  ],
+}
+`;

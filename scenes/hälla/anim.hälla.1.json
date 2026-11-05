@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.hälla.1",
+  "senseId": "s.hälla.1",
+  "titleSv": "hälla",
+  "meaningHint": "Låta vätska rinna ur ett kärl ner i ett annat",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 500,
+  "posterMs": 1900,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "c",
+      "at": {
+        "x": 38,
+        "y": 100
+      },
+      "facing": "right"
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 78,
+        "y": 100
+      },
+      "z": -1,
+      "scale": 0.8
+    },
+    {
+      "id": "glass",
+      "asset": "glass",
+      "at": {
+        "x": 60,
+        "y": 76
+      },
+      "state": {
+        "fill": 0
+      },
+      "scale": 0.85
+    },
+    {
+      "id": "jug",
+      "asset": "jug",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      },
+      "scale": 0.75
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 300
+    },
+    {
+      "t": 300,
+      "action": "pour",
+      "actor": "p",
+      "from": "jug",
+      "into": "glass",
+      "amount": 0.75,
+      "durationMs": 2600
+    },
+    {
+      "t": 2900,
+      "action": "express",
+      "actor": "p",
+      "emotion": "content",
+      "durationMs": 300
+    },
+    {
+      "t": 2900,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 700
+    }
+  ],
+  "focus": {
+    "targets": [
+      "jug",
+      "glass"
+    ],
+    "feature": "tilted jug, visible stream, rising level in the glass"
+  },
+  "contrast": {
+    "with": [
+      "anim.dricka.1"
+    ],
+    "distinctiveFeatures": [
+      "prop:jug",
+      "prop:glass"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "vätska",
+    "confusableWith": [
+      "s.spilla.1",
+      "s.droppa.1"
+    ]
+  }
+}

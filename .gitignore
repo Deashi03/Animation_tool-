@@ -1,0 +1,8 @@
+node_modules
+dist
+review/*.png
+review/*.html
+review/strips
+review/compare
+review/posters
+*.log

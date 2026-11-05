@@ -1,0 +1,17 @@
+# Granskningslogg
+
+Varje rad: datum · scen · vad som sågs i bildremsan · åtgärd · status. Claude fyller i efter `anim:strip`/`anim:compare`; produktägaren sätter *granskad* i studion.
+
+| Datum | Scen | Iakttagelse | Åtgärd | Status |
+|---|---|---|---|---|
+| 2026-11-05 | alla | Första rendering: figuren ritades upp och ned (riggens upp-riktning) | FK rättad | – |
+| 2026-11-05 | anim.hälla.1 | Kannan hölls bakom huvudet och strålen började utanför bilden: hållna föremål roterades med armen, pipen satt bakåt, bordet för högt | Hållna föremål upprätta; kanna med pip framåt; handmål räknas från den lutade pipen; lägre bord; främre armen ritas framför ansiktet | ai-draft, remsa granskad |
+| 2026-11-05 | anim.slappa.1 | Första versionen låg nästan platt och liknade *sova* | Säte högre, lutning 18°, ben upp på soffan, telefon, halvöppna ögon, fot som vickar; kontrastkrav mot anim.sova.1 | ai-draft, remsa + jämförelse granskad |
+| 2026-11-05 | anim.sova.1 | Fötterna stack utanför sängen; "z" syntes innan sömnen börjat | Position räknad från sängens säte; effektspår börjar avstängda | ai-draft, remsa granskad |
+| 2026-11-05 | anim.sportig.1 | Framåtböjningen såg ut som en krypande pose | Stretch = armar upp + sidolutning + utfallssteg | ai-draft, remsa granskad |
+| 2026-11-05 | anim.bakom.1 | Bollen försvann helt bakom lådan | Placering så att bollen sticker upp bakom lådans kant; pil som markering | ai-draft, remsa granskad |
+| 2026-11-05 | anim.springa.1 | Figuren sprang ut ur bilden | Slutposition 92; kontrast mot gå via `airborne`/`speed` | ai-draft, remsa granskad |
+| 2026-11-05 | anim.hoppa.1, anim.öppna.1, anim.stänga.1, anim.gå.1 | Läsbara i remsan; dörrens öppna läge ritas som ljus öppning + smal dörrskiva | – | ai-draft, remsa granskad |
+| 2026-11-05 | ui.feedback.correct, ui.module.complete | Panel glider upp med easeOut, bock ritas, text tonar in; flagga + stjärnor med overshoot | – | ai-draft |
+
+Kvarstående svagheter: ansiktet i profil (sova), arm-IK:s armbåge i övergången till hällpositionen, enkla möbelvolymer.

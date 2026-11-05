@@ -1,0 +1,65 @@
+name: CI and deploy
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run anim:validate
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          path: dist
+
+  e2e:
+    # Chromium with iPhone emulation. Not a deploy gate (same policy as Swechan).
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm install -g playwright@1.63.0
+      - run: playwright install --with-deps chromium
+      - run: npm run build
+      - run: NODE_PATH="$(npm root -g)" npm run e2e
+      - run: NODE_PATH="$(npm root -g)" npm run anim:sheet -- --strips
+      - uses: actions/upload-artifact@v4
+        with:
+          name: review-sheet
+          path: review/sheet/sheet.png
+          if-no-files-found: ignore
+
+  deploy:
+    # Requires once: repository Settings → Pages → Build and deployment → Source = "GitHub Actions".
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

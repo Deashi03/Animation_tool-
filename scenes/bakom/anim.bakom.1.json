@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.bakom.1",
+  "senseId": "s.bakom.1",
+  "titleSv": "bakom",
+  "meaningHint": "På baksidan av något, dolt eller delvis dolt av det",
+  "category": "relation",
+  "durationMs": 4000,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 3600,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "b",
+      "at": {
+        "x": 26,
+        "y": 100
+      },
+      "facing": "right"
+    }
+  ],
+  "props": [
+    {
+      "id": "box",
+      "asset": "box",
+      "at": {
+        "x": 84,
+        "y": 100
+      },
+      "z": 2
+    },
+    {
+      "id": "ball",
+      "asset": "ball",
+      "attachTo": {
+        "actor": "p",
+        "hand": "right"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "walk",
+      "actor": "p",
+      "to": {
+        "x": 56,
+        "y": 100
+      },
+      "durationMs": 1200
+    },
+    {
+      "t": 1300,
+      "action": "release",
+      "actor": "p",
+      "prop": "ball",
+      "at": {
+        "x": 98,
+        "y": 86
+      },
+      "z": 1,
+      "durationMs": 900
+    },
+    {
+      "t": 2300,
+      "action": "lookAt",
+      "actor": "p",
+      "target": "ball",
+      "durationMs": 300
+    },
+    {
+      "t": 2400,
+      "action": "emphasis",
+      "target": "ball",
+      "kind": "arrowDown",
+      "durationMs": 1200
+    },
+    {
+      "t": 2400,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 1600
+    }
+  ],
+  "focus": {
+    "targets": [
+      "ball",
+      "box"
+    ],
+    "feature": "the ball ends up partly hidden behind the box"
+  },
+  "contrast": {
+    "with": [
+      "anim.framför.1"
+    ],
+    "distinctiveFeatures": [
+      "prop:box",
+      "prop:ball"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "läge",
+    "confusableWith": [
+      "s.framför.1",
+      "s.under.1"
+    ]
+  }
+}

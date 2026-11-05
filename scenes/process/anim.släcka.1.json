@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.släcka.1",
+  "template": "process",
+  "senseId": "s.släcka.1",
+  "titleSv": "släcka",
+  "meaningHint": "Få en eld att sluta brinna",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3600,
+  "environment": {
+    "id": "outdoors.park",
+    "time": "evening"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "fire",
+      "asset": "fixture.fire",
+      "at": {
+        "x": 60,
+        "y": 98
+      },
+      "z": 1,
+      "scale": 2.2,
+      "state": {
+        "burn": 1
+      }
+    },
+    {
+      "id": "bucket",
+      "asset": "container.bucket",
+      "at": {
+        "x": 22,
+        "y": 100
+      },
+      "z": 2,
+      "state": {
+        "fill": 0.9
+      }
+    },
+    {
+      "id": "stream",
+      "asset": "fixture.drip",
+      "at": {
+        "x": 47,
+        "y": 66
+      },
+      "z": 3,
+      "state": {
+        "flow": 0,
+        "length": 30
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "fire",
+      "prop": "phase",
+      "from": 0,
+      "to": 6,
+      "durationMs": 4200,
+      "ease": "linear"
+    },
+    {
+      "t": 900,
+      "action": "tween",
+      "target": "bucket",
+      "prop": "rotate",
+      "to": -110,
+      "durationMs": 700,
+      "ease": "easeIn"
+    },
+    {
+      "t": 900,
+      "action": "tween",
+      "target": "bucket",
+      "prop": "x",
+      "to": 44,
+      "durationMs": 700,
+      "ease": "easeIn"
+    },
+    {
+      "t": 900,
+      "action": "tween",
+      "target": "bucket",
+      "prop": "y",
+      "to": 70,
+      "durationMs": 700,
+      "ease": "easeIn"
+    },
+    {
+      "t": 1500,
+      "action": "tween",
+      "target": "bucket",
+      "prop": "fill",
+      "to": 0,
+      "durationMs": 500,
+      "ease": "linear"
+    },
+    {
+      "t": 1500,
+      "action": "tween",
+      "target": "fire",
+      "prop": "burn",
+      "to": 0,
+      "durationMs": 900,
+      "ease": "easeOut"
+    },
+    {
+      "t": 1500,
+      "action": "tween",
+      "target": "fire",
+      "prop": "smoke",
+      "to": 1,
+      "durationMs": 600,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 2600,
+      "action": "tween",
+      "target": "fire",
+      "prop": "smoke",
+      "to": 0.3,
+      "durationMs": 1500,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 1500,
+      "action": "set",
+      "target": "stream",
+      "prop": "flow",
+      "value": 1
+    },
+    {
+      "t": 1500,
+      "action": "tween",
+      "target": "stream",
+      "prop": "phase",
+      "from": 0,
+      "to": 2,
+      "durationMs": 900,
+      "ease": "linear"
+    },
+    {
+      "t": 2300,
+      "action": "set",
+      "target": "stream",
+      "prop": "flow",
+      "value": 0
+    }
+  ],
+  "focus": {
+    "targets": [
+      "bucket"
+    ],
+    "feature": "a bucket tips water over the fire; the flames die and smoke rises"
+  },
+  "contrast": {
+    "with": [
+      "anim.brinna.1"
+    ],
+    "distinctiveFeatures": [
+      "end:fire.burn<=0.1"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.brinna.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

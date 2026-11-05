@@ -1,10 +1,11 @@
 /**
  * Asset catalogue: every prop id the schema accepts. Kept free of drawing code
- * so the schema can import it. Families: `tool.<shape>`, `container.<shape>`, `food.<shape>`.
+ * so the schema can import it. Families: `tool.<shape>`, `container.<shape>`, `food.<shape>`, `fixture.<shape>`.
  */
 import { TOOL_SHAPES } from './props/tools';
 import { CONTAINER_SHAPES } from './props/containers';
 import { FOOD_SHAPES } from './props/food';
+import { FIXTURE_SHAPES } from './props/fixtures';
 
 export const BASE_PROP_ASSETS = ['glass', 'jug', 'door', 'box', 'ball', 'football', 'sofa', 'bed', 'blanket', 'mug', 'phone', 'table', 'window', 'mat', 'ladder', 'castle', 'brawl', 'stove', 'pan', 'spatula'] as const;
 export const PROP_ASSET_IDS: readonly string[] = [
@@ -12,6 +13,7 @@ export const PROP_ASSET_IDS: readonly string[] = [
   ...TOOL_SHAPES.map((s) => `tool.${s}`),
   ...CONTAINER_SHAPES.map((s) => `container.${s}`),
   ...FOOD_SHAPES.map((s) => `food.${s}`),
+  ...FIXTURE_SHAPES.map((s) => `fixture.${s}`),
 ];
 const SET = new Set(PROP_ASSET_IDS);
 export const isPropAsset = (id: string): boolean => SET.has(id);

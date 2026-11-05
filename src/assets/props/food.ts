@@ -42,7 +42,7 @@ const F: Record<FoodShape, PropSpec> = {
   apple: {
     defaults: { pieces: 0, peeled: 0, ripeness: 1, rot: 0, bite: 0, mashed: 0 }, grip: [0, -7], mouth: [0, -14],
     draw: (s) => { const rip = clamp01(n(s, 'ripeness', 1)), rot = clamp01(n(s, 'rot', 0)), peeled = clamp01(n(s, 'peeled', 0)), bite = clamp01(n(s, 'bite', 0)), mashed = clamp01(n(s, 'mashed', 0));
-      const skin = mix(mix('#7bb661', C.red, rip), '#8a6a4a', rot * 0.6), flesh = '#f7edc8';
+      const skin = mix(rip < 0.5 ? mix('#7bb661', '#e9c93a', rip * 2) : mix('#e9c93a', C.red, (rip - 0.5) * 2), '#8a6a4a', rot * 0.6), flesh = '#f7edc8';
       const r = 7 * (1 - rot * 0.12), cy = -r;
       if (mashed > 0.5) return mashedHeap(mix(flesh, skin, 0.3), 16);
       const body = g([

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.smälta.1.v2",
+  "template": "process",
+  "senseId": "s.smälta.1",
+  "titleSv": "smälta",
+  "meaningHint": "Bli varm och gå från fast till flytande form, som is",
+  "category": "action",
+  "durationMs": 4400,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3600,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "sun",
+      "asset": "fixture.sun",
+      "at": {
+        "x": 22,
+        "y": 22
+      },
+      "z": 0
+    },
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 62,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "ice",
+      "asset": "fixture.ice",
+      "at": {
+        "x": 62,
+        "y": 70
+      },
+      "z": 1,
+      "scale": 1.5
+    }
+  ],
+  "timeline": [
+    {
+      "t": 400,
+      "action": "tween",
+      "target": "ice",
+      "prop": "melt",
+      "to": 1,
+      "durationMs": 3600,
+      "ease": "easeInOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "ice"
+    ],
+    "feature": "an ice cube in the sun shrinks into a puddle of water"
+  },
+  "contrast": {
+    "with": [
+      "anim.smälta.1"
+    ],
+    "distinctiveFeatures": [
+      "end:ice.melt>=0.9",
+      "has:actors==0"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.koka.1",
+      "s.tina.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

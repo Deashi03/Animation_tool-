@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.mogna.1",
+  "template": "process",
+  "senseId": "s.mogna.1",
+  "titleSv": "mogna",
+  "meaningHint": "Bli mogen, så att frukten blir söt och färdig att äta",
+  "category": "action",
+  "durationMs": 4400,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3800,
+  "environment": {
+    "id": "outdoors.park",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "sun",
+      "asset": "fixture.sun",
+      "at": {
+        "x": 22,
+        "y": 22
+      },
+      "z": 0
+    },
+    {
+      "id": "tree",
+      "asset": "fixture.tree",
+      "at": {
+        "x": 70,
+        "y": 100
+      },
+      "z": 0,
+      "scale": 2.2
+    },
+    {
+      "id": "apple",
+      "asset": "food.apple",
+      "at": {
+        "x": 62,
+        "y": 56
+      },
+      "z": 1,
+      "scale": 1.6,
+      "state": {
+        "ripeness": 0
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 400,
+      "action": "tween",
+      "target": "apple",
+      "prop": "ripeness",
+      "to": 1,
+      "durationMs": 3600,
+      "ease": "linear"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "apple"
+    ],
+    "feature": "a green apple on the tree slowly turns red"
+  },
+  "contrast": {
+    "with": [
+      "anim.ruttna.1"
+    ],
+    "distinctiveFeatures": [
+      "end:apple.ripeness>=0.9",
+      "end:apple.rot<=0.1"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.ruttna.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

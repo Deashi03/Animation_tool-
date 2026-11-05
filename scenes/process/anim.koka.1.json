@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.koka.1",
+  "template": "process",
+  "senseId": "s.koka.1",
+  "titleSv": "koka",
+  "meaningHint": "Om vatten: bli så varmt att det kommer stora bubblor",
+  "category": "action",
+  "durationMs": 4000,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3200,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "stove",
+      "asset": "stove",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "pot",
+      "asset": "container.pot",
+      "at": {
+        "x": 60,
+        "y": 70
+      },
+      "z": 1,
+      "scale": 1.4,
+      "state": {
+        "fill": 0.7,
+        "boil": 0
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "set",
+      "target": "stove",
+      "prop": "heat",
+      "value": 1
+    },
+    {
+      "t": 300,
+      "action": "tween",
+      "target": "pot",
+      "prop": "boil",
+      "to": 1,
+      "durationMs": 1800,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 300,
+      "action": "tween",
+      "target": "pot",
+      "prop": "steam",
+      "to": 1,
+      "durationMs": 1800,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "pot",
+      "prop": "phase",
+      "from": 0,
+      "to": 5,
+      "durationMs": 4000,
+      "ease": "linear"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "pot"
+    ],
+    "feature": "big bubbles break the surface, thick steam"
+  },
+  "contrast": {
+    "with": [
+      "anim.sjuda.1"
+    ],
+    "distinctiveFeatures": [
+      "end:pot.boil>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.sjuda.1",
+      "s.puttra.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

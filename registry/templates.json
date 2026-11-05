@@ -35,6 +35,9 @@
     },
     "tool-rhythm": {
       "approved": false
+    },
+    "process": {
+      "approved": false
     }
   }
 }

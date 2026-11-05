@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.rinna.1",
+  "template": "process",
+  "senseId": "s.rinna.1",
+  "titleSv": "rinna",
+  "meaningHint": "När vatten rör sig nedåt i en stråle",
+  "category": "action",
+  "durationMs": 4000,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2600,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "tap",
+      "asset": "fixture.tap",
+      "at": {
+        "x": 56,
+        "y": 52
+      },
+      "z": 1,
+      "scale": 1.6
+    },
+    {
+      "id": "puddle",
+      "asset": "fixture.puddle",
+      "at": {
+        "x": 72,
+        "y": 98
+      },
+      "z": 0,
+      "state": {
+        "size": 0
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "set",
+      "target": "tap",
+      "prop": "flow",
+      "value": 1
+    },
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "tap",
+      "prop": "phase",
+      "from": 0,
+      "to": 4,
+      "durationMs": 4000,
+      "ease": "linear"
+    },
+    {
+      "t": 400,
+      "action": "tween",
+      "target": "puddle",
+      "prop": "size",
+      "to": 1,
+      "durationMs": 3600,
+      "ease": "linear"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "puddle"
+    ],
+    "feature": "a steady stream runs from the tap and the puddle grows"
+  },
+  "contrast": {
+    "with": [
+      "anim.droppa.1"
+    ],
+    "distinctiveFeatures": [
+      "end:puddle.size>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.droppa.1",
+      "s.hälla.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

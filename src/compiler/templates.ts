@@ -116,6 +116,18 @@ export const TEMPLATES: Record<string, Template> = {
       focus: { targets: ['castle'] }, pedagogy: { quizEligible: false, confusableWith: [] },
     }),
   },
+  process: {
+    id: 'process', titleSv: 'Föremål som förändras av sig självt',
+    describes: 'Verb för processer utan en handlande person: koka, sjuda, smälta, mogna, ruttna, brinna, slockna, droppa, rinna, läcka, jäsa, växa, vissna, flagna, regna. Ett eller två föremål i närbild, tillståndet tweenas, effekter (bubblor, ånga, droppar, rök) bär förloppet. Kontrastpar skiljer grad och tempo (koka/sjuda, droppa/rinna).',
+    contract: ['has:actors==0', 'has:props>=1', 'has:action:tween|set'],
+    make: (senseId, lemma, n) => ({
+      schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'process', meaningHint: 'TODO', category: 'action',
+      durationMs: 4000, loop: true, holdMs: 800, posterMs: 3000, environment: { id: 'kitchen', time: 'day' },
+      props: [{ id: 'stove', asset: 'stove', at: { x: 60, y: 100 }, z: 0 }, { id: 'pot', asset: 'container.pot', at: { x: 60, y: 70 }, z: 1, scale: 1.4, state: { fill: 0.7, boil: 0 } }],
+      timeline: [{ t: 0, action: 'set', target: 'stove', prop: 'heat', value: 1 }, { t: 300, action: 'tween', target: 'pot', prop: 'boil', to: 1, durationMs: 1800, ease: 'easeInOut' }, { t: 300, action: 'tween', target: 'pot', prop: 'phase', from: 0, to: 4, durationMs: 3700, ease: 'linear' }],
+      focus: { targets: ['pot'] }, contrast: { with: ['anim.todo.1'], distinctiveFeatures: ['end:pot.boil>=0.9'] }, pedagogy: { quizEligible: false, group: 'process', confusableWith: [] },
+    }),
+  },
   'tool-rhythm': {
     id: 'tool-rhythm', titleSv: 'Verktyg mot föremål med synlig förändring',
     describes: 'Verb där en person bearbetar något med ett verktyg eller händerna i en rytm och föremålet förändras: skära, hacka, vispa, röra, knåda, skala, riva, kavla, mosa, salta, borsta, torka av, putsa, stryka, såga, spika. Handlingen `use` med ett rörelsemönster (motion) och en följd (effect) på föremålet. Verben skiljs genom verktyg, mönster, tempo och vad som händer med föremålet.',

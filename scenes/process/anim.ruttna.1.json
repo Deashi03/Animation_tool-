@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.ruttna.1",
+  "template": "process",
+  "senseId": "s.ruttna.1",
+  "titleSv": "ruttna",
+  "meaningHint": "Bli gammal och dålig, så att det luktar illa och inte går att äta",
+  "category": "action",
+  "durationMs": 4400,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3800,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "apple",
+      "asset": "food.apple",
+      "at": {
+        "x": 60,
+        "y": 70
+      },
+      "z": 1,
+      "scale": 1.8,
+      "state": {
+        "ripeness": 1
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 400,
+      "action": "tween",
+      "target": "apple",
+      "prop": "rot",
+      "to": 1,
+      "durationMs": 3600,
+      "ease": "linear"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "apple"
+    ],
+    "feature": "a red apple gets brown spots, sags and grows mould"
+  },
+  "contrast": {
+    "with": [
+      "anim.mogna.1"
+    ],
+    "distinctiveFeatures": [
+      "end:apple.rot>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.mogna.1",
+      "s.mögla.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

@@ -18,7 +18,7 @@ const contentsCol = (s: PropState, d: string) => color(str(s, 'contents', d));
 function bubbles(cx: number, top: number, w: number, boil: number, phase: number): FrameNode[] {
   const out: FrameNode[] = []; if (boil < 0.05) return out;
   const nB = boil < 0.5 ? 3 : 6;
-  for (let i = 0; i < nB; i++) { const u = (phase * (0.6 + boil) + i * 0.37) % 1; const x = cx - w / 2 + 2 + ((i * 7.3) % (w - 4)); const r = (boil < 0.5 ? 0.8 : 1.4) + u * (boil < 0.5 ? 0.6 : 1.6); out.push(circle(x, top + 1 - u * 3, r, { fill: 'none', stroke: C.white, sw: 1, opacity: 0.9 * (1 - u * 0.5) })); }
+  for (let i = 0; i < nB; i++) { const u = (phase * (0.6 + boil) + i * 0.37) % 1; const x = cx - w / 2 + 3 + ((i * 7.3) % (w - 6)); const r = (boil < 0.5 ? 0.9 : 1.8) + u * (boil < 0.5 ? 0.6 : 2.2); out.push(circle(x, top + 1 - u * (boil < 0.5 ? 2 : 4), r, { fill: 'rgba(255,255,255,0.75)', stroke: INK, sw: boil < 0.5 ? 0.7 : 1.1, opacity: 0.95 * (1 - u * 0.6) })); }
   return out;
 }
 function steam(cx: number, top: number, amount: number, phase: number): FrameNode[] {

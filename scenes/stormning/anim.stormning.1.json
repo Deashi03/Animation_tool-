@@ -3,12 +3,12 @@
   "animationId": "anim.stormning.1",
   "senseId": "s.stormning.1",
   "titleSv": "stormning",
-  "meaningHint": "Ett anfall där angriparna rusar fram och klättrar över murarna för att ta en borg med våld",
+  "meaningHint": "Ett anfall där många soldater rusar in i en borg eller stad och tar den med våld",
   "category": "action",
-  "durationMs": 6200,
+  "durationMs": 5600,
   "loop": true,
-  "holdMs": 1200,
-  "posterMs": 4600,
+  "holdMs": 900,
+  "posterMs": 3800,
   "environment": {
     "id": "neutral",
     "time": "day"
@@ -18,7 +18,7 @@
       "id": "a1",
       "variant": "a",
       "at": {
-        "x": 6,
+        "x": 4,
         "y": 100
       },
       "facing": "right",
@@ -33,7 +33,7 @@
       "id": "a2",
       "variant": "b",
       "at": {
-        "x": -6,
+        "x": -8,
         "y": 100
       },
       "facing": "right",
@@ -47,7 +47,7 @@
       "id": "a3",
       "variant": "c",
       "at": {
-        "x": -18,
+        "x": -20,
         "y": 100
       },
       "facing": "right",
@@ -56,6 +56,20 @@
         "top": "navy",
         "bottom": "dark",
         "hairStyle": "short"
+      }
+    },
+    {
+      "id": "a4",
+      "variant": "a",
+      "at": {
+        "x": -32,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.5,
+      "wardrobe": {
+        "top": "navy",
+        "bottom": "dark"
       }
     }
   ],
@@ -67,26 +81,26 @@
         "x": 80,
         "y": 100
       },
-      "z": -1,
+      "z": 1,
       "state": {
         "flag": "red",
         "w": 44,
-        "h": 38
+        "h": 38,
+        "gate": 0
       }
     },
     {
-      "id": "ladder",
-      "asset": "ladder",
+      "id": "fight",
+      "asset": "brawl",
       "at": {
-        "x": 44,
-        "y": 100
+        "x": 74,
+        "y": 60
       },
-      "z": 0,
+      "z": 3,
       "state": {
-        "length": 44,
-        "lean": 0
-      },
-      "scale": 1
+        "intensity": 0,
+        "phase": 0
+      }
     }
   ],
   "timeline": [
@@ -95,158 +109,181 @@
       "action": "run",
       "actor": "a1",
       "to": {
-        "x": 40,
+        "x": 72,
         "y": 100
       },
-      "durationMs": 1100
+      "durationMs": 1300
     },
     {
       "t": 150,
       "action": "run",
       "actor": "a2",
       "to": {
-        "x": 26,
+        "x": 60,
         "y": 100
       },
-      "durationMs": 1150
+      "durationMs": 1300
     },
     {
       "t": 300,
       "action": "run",
       "actor": "a3",
       "to": {
-        "x": 12,
+        "x": 48,
         "y": 100
       },
-      "durationMs": 1200
+      "durationMs": 1300
     },
     {
-      "t": 1200,
-      "action": "tween",
-      "target": "ladder",
-      "prop": "lean",
-      "to": 1,
-      "durationMs": 700,
-      "ease": "easeOut"
-    },
-    {
-      "t": 1200,
-      "action": "pose",
-      "actor": "a1",
-      "joints": {
-        "uArmL": 150,
-        "uArmR": 140,
-        "fArmL": 10,
-        "fArmR": 10,
-        "torso": -6
-      },
-      "durationMs": 500
-    },
-    {
-      "t": 1900,
-      "action": "climb",
-      "actor": "a1",
-      "prop": "ladder",
-      "durationMs": 2400
-    },
-    {
-      "t": 4300,
-      "action": "set",
-      "target": "a1",
-      "prop": "z",
-      "value": -2
-    },
-    {
-      "t": 2100,
-      "action": "express",
-      "actor": "a2",
-      "emotion": "angry",
-      "durationMs": 300
-    },
-    {
-      "t": 2100,
-      "action": "express",
-      "actor": "a3",
-      "emotion": "angry",
-      "durationMs": 300
-    },
-    {
-      "t": 2400,
-      "action": "walk",
-      "actor": "a2",
+      "t": 450,
+      "action": "run",
+      "actor": "a4",
       "to": {
         "x": 36,
         "y": 100
       },
-      "durationMs": 1200
+      "durationMs": 1300
     },
     {
-      "t": 3600,
+      "t": 1300,
       "action": "pose",
-      "actor": "a2",
+      "actor": "a1",
       "joints": {
-        "uArmL": 150,
-        "uArmR": 140,
+        "uArmL": 95,
+        "uArmR": 90,
         "fArmL": 10,
-        "fArmR": 10
+        "fArmR": 10,
+        "torso": 20
       },
-      "durationMs": 400
+      "durationMs": 300
     },
     {
-      "t": 3700,
-      "action": "climb",
-      "actor": "a2",
-      "prop": "ladder",
-      "durationMs": 2400
-    },
-    {
-      "t": 4300,
-      "action": "set",
-      "target": "castle",
-      "prop": "flag",
-      "value": "navy"
-    },
-    {
-      "t": 4600,
+      "t": 1500,
       "action": "tween",
       "target": "castle",
       "prop": "gate",
       "to": 1,
-      "durationMs": 900,
-      "ease": "easeInOut"
+      "durationMs": 500,
+      "ease": "easeOut"
     },
     {
-      "t": 4800,
+      "t": 2000,
+      "action": "set",
+      "target": "a1",
+      "prop": "z",
+      "value": 0
+    },
+    {
+      "t": 2000,
+      "action": "run",
+      "actor": "a1",
+      "to": {
+        "x": 84,
+        "y": 100
+      },
+      "durationMs": 500
+    },
+    {
+      "t": 2100,
+      "action": "set",
+      "target": "a2",
+      "prop": "z",
+      "value": 0
+    },
+    {
+      "t": 2100,
+      "action": "run",
+      "actor": "a2",
+      "to": {
+        "x": 84,
+        "y": 100
+      },
+      "durationMs": 700
+    },
+    {
+      "t": 2300,
+      "action": "set",
+      "target": "a3",
+      "prop": "z",
+      "value": 0
+    },
+    {
+      "t": 2300,
       "action": "run",
       "actor": "a3",
       "to": {
         "x": 84,
         "y": 100
       },
-      "durationMs": 1300
+      "durationMs": 900
     },
     {
-      "t": 6100,
+      "t": 2500,
       "action": "set",
-      "target": "a2",
+      "target": "a4",
       "prop": "z",
-      "value": -2
+      "value": 0
+    },
+    {
+      "t": 2500,
+      "action": "run",
+      "actor": "a4",
+      "to": {
+        "x": 84,
+        "y": 100
+      },
+      "durationMs": 1100
+    },
+    {
+      "t": 2400,
+      "action": "tween",
+      "target": "fight",
+      "prop": "intensity",
+      "to": 1,
+      "durationMs": 500,
+      "ease": "overshoot"
+    },
+    {
+      "t": 2400,
+      "action": "tween",
+      "target": "fight",
+      "prop": "phase",
+      "from": 0,
+      "to": 6,
+      "durationMs": 2600,
+      "ease": "linear"
+    },
+    {
+      "t": 4800,
+      "action": "set",
+      "target": "castle",
+      "prop": "flag",
+      "value": "navy"
+    },
+    {
+      "t": 5000,
+      "action": "tween",
+      "target": "fight",
+      "prop": "intensity",
+      "to": 0,
+      "durationMs": 500,
+      "ease": "easeIn"
     }
   ],
   "focus": {
     "targets": [
       "castle",
-      "ladder"
+      "fight"
     ],
-    "feature": "attackers rush the wall, raise a ladder, climb over; the banner changes and the gate opens"
+    "feature": "soldiers rush in through the gate, a fight cloud rises above the walls, the banner changes"
   },
   "contrast": {
     "with": [
       "anim.belägring.1"
     ],
     "distinctiveFeatures": [
-      "motion:a1>=0.5",
-      "prop:ladder",
+      "motion:a1>=0.3",
+      "prop:brawl",
       "end:castle.gate>=0.9"
     ]
   },
@@ -258,6 +295,6 @@
       "s.anfalla.1",
       "s.erövra.1"
     ],
-    "note": "Substantiv som betecknar en händelse → animation enligt policyn. Kontrast mot belägring (väntan utanför muren) saknas ännu."
+    "note": "Substantiv som betecknar en händelse → animation. Slagsmålet visas som ett tecknat moln (anime/Asterix), inte som våld i detalj. Kontrast mot belägring (väntan utanför) saknas ännu."
   }
 }

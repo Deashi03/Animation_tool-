@@ -23,3 +23,5 @@ Kvarstående svagheter: ansiktet i profil (sova), arm-IK:s armbåge i övergång
 | 2026-11-05 | anim.sova.1 | zzz långt från huvudet och ur bild | Huvudets världsposition tar hänsyn till kroppsrotation; zzz nära munnen, kort stigning | ai-draft, remsa granskad |
 | 2026-11-05 | anim.springa.1 | Fartstreck bara första sekunden och små | Spåret stegas i stället för att tona; fler, längre, strömmande streck | ai-draft, remsa granskad |
 | 2026-11-05 | anim.stormning.1 | Ny på produktägarens begäran | Borg, stege, tre anfallare, fana byter färg, port öppnas; gul "glow" på borgen togs bort (såg ut som en fläck) | ai-draft, remsa granskad |
+| 2026-11-05 | anim.bakom.1 | Produktägaren: den rullande bollen i början är ett verb; visa med pil och 後ろ | Statisk relation + bågpil + 後ろ + nedåtpil; pilhuvudet var för grovt (sw 2 i stället för 3) och kanjit krockade med pilen (flyttat höger) | ai-draft, remsa granskad |
+| 2026-11-05 | anim.stormning.1 | Produktägaren: att bestiga murar ≠ storma; soldater in, slagsmålsmoln som i anime/Asterix | Omgjord enligt förslaget; molnet jittrar med `phase`, nävar och stjärnor | ai-draft, remsa granskad |

@@ -29,3 +29,8 @@
 - **Ny handling `climb`:** figuren klättrar längs en rest stege med växelvisa arm- och bensteg och lutar in mot stegen.
 - **anim.stormning.1:** tre anfallare rusar fram, stegen reses, två klättrar över muren (och försvinner bakom den), fanan byter färg, porten öppnas, den tredje rusar in. Kontrastpartner *belägring* saknas ännu.
 - Tester: 40 (rullande boll, stormning, effekternas placering).
+
+## 0.1.3 – 2026-11-05 (bakom med pil och 後ろ, stormning som inträngning + slagsmålsmoln)
+- **bakom** är nu stillastående: en bågpil ritas över lådan till den delvis dolda bollen, det japanska ordet 後ろ tonar in, en nedåtpil markerar bollen. Produktägarens förslag: relationer behöver ingen rörelse som kan misstas för ett verb. Nya ikoner `arc-arrow`, `arrow-down`, `exclaim`.
+- **stormning** omgjord: fyra soldater rusar fram, porten öppnas, de springer in och försvinner bakom muren, ett tecknat slagsmålsmoln (`brawl`: puffar, stjärnor, nävar, skakning via `phase`) stiger över murarna, fanan byter färg. Stegen och `climb` finns kvar som byggstenar.
+- Tester 41.

@@ -117,7 +117,7 @@ describe('semantics', () => {
     expect(sample(c.tracks, 'ball.z', c.durationMs) as number).toBeLessThan(sample(c.tracks, 'box.z', c.durationMs) as number);
     const f = renderFrame(c, c.durationMs);
     const ball = bboxOfId(f.root, 'entity.ball')!, box = bboxOfId(f.root, 'entity.box')!;
-    expect(ball.x2).toBeGreaterThan(box.x1); expect(ball.y1).toBeLessThan(box.y1); // partly visible behind the box
+    expect(ball.x1).toBeLessThan(box.x2); expect(ball.x2).toBeGreaterThan(box.x2); // partly visible beside the box's far edge
   });
   it('contrast checks reject a pair that does not differ', () => {
     const a = scenes.get('anim.slappa.1')!;
@@ -184,25 +184,37 @@ describe('physics rules (the golden rule)', () => {
 describe('objects without people', () => {
   const { scenes } = loadScenes();
   it('a rolling ball decelerates uniformly, rotates with the distance and stays on the ground', () => {
-    const c = compileScene(scenes.get('anim.bakom.1')!);
+    const scene = Scene.parse({ schemaVersion: 1, animationId: 'anim.rulla.1', senseId: 's.rulla.1', titleSv: 'rulla', durationMs: 3000, environment: { id: 'room' },
+      props: [{ id: 'box', asset: 'box', at: { x: 70, y: 100 }, z: 2, state: { w: 34, h: 15 } }, { id: 'ball', asset: 'ball', at: { x: 12, y: 100 }, z: 1, state: { r: 7 } }],
+      timeline: [{ t: 200, action: 'roll', prop: 'ball', to: { x: 91, y: 100 }, durationMs: 2200 }] });
+    const c = compileScene(scene);
     const x = (t: number) => sample(c.tracks, 'ball.x', t) as number, y = (t: number) => sample(c.tracks, 'ball.y', t) as number, rot = (t: number) => sample(c.tracks, 'ball.rotate', t) as number;
     const v1 = x(700) - x(600), v2 = x(1500) - x(1400), v3 = x(2300) - x(2200);
     expect(v1).toBeGreaterThan(v2); expect(v2).toBeGreaterThan(v3); expect(v3).toBeGreaterThanOrEqual(0);
-    for (const t of [0, 800, 1600, 2400, 3600]) expect(y(t)).toBeCloseTo(100, 5);
+    for (const t of [0, 800, 1600, 2400, 3000]) expect(y(t)).toBeCloseTo(100, 5);
     const r = 7, dist = x(2400) - x(200);
     expect(rot(2400) - rot(200)).toBeCloseTo((dist / r) * (180 / Math.PI), 0);
-    const f = renderFrame(c, 3600);
+    const f = renderFrame(c, 3000);
     const ball = bboxOfId(f.root, 'entity.ball')!, box = bboxOfId(f.root, 'entity.box')!;
     expect(ball.y2).toBeLessThanOrEqual(103); // never below the floor (bbox of a rotated circle over-approximates by a few units)
     expect(ball.x1).toBeLessThan(box.x2); expect(ball.x2).toBeGreaterThan(box.x2); // partly behind the box
-    expect(c.scene.actors).toHaveLength(0);
   });
-  it('storming: attackers reach the wall, climb the raised ladder, the banner changes and the gate opens', () => {
+  it('bakom: no people, the arc arrow draws over the box to the hidden ball and 後ろ appears', () => {
+    const c = compileScene(scenes.get('anim.bakom.1')!);
+    expect(c.scene.actors).toHaveLength(0);
+    expect(sample(c.tracks, 'arc.progress', 200)).toBe(0); expect(sample(c.tracks, 'arc.progress', 1100)).toBe(1);
+    expect(sample(c.tracks, 'ja.opacity', 900)).toBe(0); expect(sample(c.tracks, 'ja.opacity', 1400)).toBe(1);
+    const f = renderFrame(c, 1800);
+    const ball = bboxOfId(f.root, 'entity.ball')!, box = bboxOfId(f.root, 'entity.box')!;
+    expect(ball.x1).toBeLessThan(box.x2); expect(ball.x2).toBeGreaterThan(box.x2);
+    expect(frameToSvg(f)).toContain('後ろ');
+  });
+  it('storming: soldiers rush in through the opened gate, a fight cloud rises and the banner changes', () => {
     const c = compileScene(scenes.get('anim.stormning.1')!);
-    expect(sample(c.tracks, 'ladder.s.lean', 0)).toBe(0); expect(sample(c.tracks, 'ladder.s.lean', 2000)).toBeCloseTo(1, 2);
-    expect(sample(c.tracks, 'a1.y', 1900) as number).toBeCloseTo(100, 0); expect(sample(c.tracks, 'a1.y', 4300) as number).toBeLessThan(70);
-    expect(sample(c.tracks, 'castle.s.flag', 4000)).toBe('red'); expect(sample(c.tracks, 'castle.s.flag', 4400)).toBe('navy');
-    expect(sample(c.tracks, 'castle.s.gate', c.durationMs)).toBeCloseTo(1, 2);
+    expect(sample(c.tracks, 'castle.s.gate', 1400) as number).toBeLessThan(0.1); expect(sample(c.tracks, 'castle.s.gate', 2100) as number).toBeCloseTo(1, 2);
+    for (const a of ['a1', 'a2', 'a3', 'a4']) { expect(sample(c.tracks, `${a}.x`, c.durationMs) as number).toBeGreaterThan(80); expect(sample(c.tracks, `${a}.z`, c.durationMs) as number).toBeLessThan(sample(c.tracks, 'castle.z', 0) as number); }
+    expect(sample(c.tracks, 'fight.s.intensity', 2000)).toBe(0); expect(sample(c.tracks, 'fight.s.intensity', 3500) as number).toBeGreaterThan(0.9); expect(sample(c.tracks, 'fight.s.intensity', c.durationMs) as number).toBeLessThan(0.05);
+    expect(sample(c.tracks, 'castle.s.flag', 4000)).toBe('red'); expect(sample(c.tracks, 'castle.s.flag', 5000)).toBe('navy');
   });
   it('effects stay attached: zzz near the sleeper\'s head, speed lines for the whole run', () => {
     const s = compileScene(scenes.get('anim.sova.1')!);

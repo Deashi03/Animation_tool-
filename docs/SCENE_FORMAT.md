@@ -16,7 +16,7 @@ En scen är en JSON-fil, `scenes/<lemma>/<animationId>.json`, validerad av `src/
 | `environment` | `{id, time, ground?}` | `neutral · room · bedroom · kitchen · outdoors.park · street`; `time`: day · evening · night |
 | `actors[]` | | `id`, `asset: character.base`, `variant: a|b|c`, `at {x,y}` (fötternas punkt), `facing`, `scale`, `wardrobe {top,bottom,shoes,hair,skin,hairStyle,headband}`, `face` |
 | `props[]` | | `id`, `asset`, `at` **eller** `attachTo {actor, hand}`, `scale`, `rotate`, `z`, `state`, `color` |
-| `shapes[]` | | Fria former för UI: `rect`, `circle`, `text`, `icon` (check, cross, star, arrow-right, arrow-up, flag, heart) |
+| `shapes[]` | | Fria former för UI: `rect`, `circle`, `text`, `icon` (check, cross, star, arrow-right, arrow-up, arrow-down, arc-arrow, flag, heart, exclaim) – `progress` ritar på |
 | `timeline[]` | | Handlingar med `t` (ms). Kompileras i tidsordning |
 | `focus` | `{targets[], feature}` | Vad som måste synas (layoutkontrollen) |
 | `contrast` | `{with[], distinctiveFeatures[]}` | Kontrastpar och maskinläsbara skillnader (nedan) |
@@ -39,6 +39,7 @@ Koordinater i dukenheter, origo uppe till vänster, markplan y ≈ 100. Färger:
 | `football` | – | boll för `kickups` |
 | `ladder` | `length`, `lean` 0..1 | står på marken; 0 = ligger, 1 = rest mot vägg (72°) |
 | `castle` | `flag` (färg), `gate` 0..1, `w`, `h` | mur med torn och fana; porten öppnas |
+| `brawl` | `intensity` 0..1, `phase` (tweena 0→N för skakning) | tecknat slagsmålsmoln med stjärnor och nävar |
 | `box` | `w`, `h`, `lidOpen` | |
 | `table`, `window`, `mat` | (`window.time` följer miljön) | |
 

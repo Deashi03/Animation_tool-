@@ -148,6 +148,23 @@ export const PROPS: Record<string, PropSpec> = {
       const rungs: FrameNode[] = []; for (let y = 8; y < L - 4; y += 8) rungs.push(line([[-4, -y], [4, -y]], { stroke: c, sw: 2.6 }));
       return g([line([[-4, 0], [-4, -L]], { stroke: c, sw: 3 }), line([[4, 0], [4, -L]], { stroke: c, sw: 3 }), ...rungs, line([[-4, 0], [-4, -L]], { stroke: INK, sw: 0.8, opacity: 0.6 }), line([[4, 0], [4, -L]], { stroke: INK, sw: 0.8, opacity: 0.6 })], { rotate: ang }); },
   },
+  brawl: {
+    defaults: { intensity: 1, phase: 0 }, grip: [0, -10],
+    /** Anime/Asterix-style fight cloud: jittering puffs, stars and a fist or two poking out. `phase` 0..1 drives the jitter, `intensity` the size. */
+    draw: (s) => { const k = Math.max(0, Math.min(1, n(s, 'intensity', 1))), ph = n(s, 'phase', 0) * Math.PI * 2;
+      if (k <= 0.01) return g([]);
+      const puffs: [number, number, number][] = [[-12, -10, 9], [0, -16, 11], [12, -9, 9], [-5, -4, 8], [7, -3, 8], [-16, -2, 6], [16, -3, 6]];
+      const nodes: FrameNode[] = puffs.map(([x, y, r], i) => circle(x + Math.sin(ph * 2 + i) * 1.6, y + Math.cos(ph * 3 + i * 1.3) * 1.4, r, { fill: '#f3f0ea', stroke: INK, sw: 2 }));
+      nodes.push(...puffs.map(([x, y, r], i) => circle(x + Math.sin(ph * 2 + i) * 1.6, y + Math.cos(ph * 3 + i * 1.3) * 1.4, r - 1.2, { fill: '#f3f0ea' })));
+      // fists / feet poking out, alternating
+      const pokes: [number, number, number][] = [[-20, -12, ph], [21, -16, ph + 2], [4, -28, ph + 4], [-9, 4, ph + 1]];
+      for (const [x, y, p] of pokes) { const out = Math.max(0, Math.sin(p)); if (out > 0.3) nodes.push(circle(x * (0.9 + out * 0.25), y * (0.9 + out * 0.25), 3.2, { fill: C.skin, stroke: INK, sw: 1.6 })); }
+      // stars and impact ticks
+      const starAt = (cx: number, cy: number, r: number) => { const pts: string[] = []; for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + (i * Math.PI) / 5 + ph * 0.5, rr = i % 2 ? r * 0.45 : r; pts.push(`${r1(cx + rr * Math.cos(a))} ${r1(cy + rr * Math.sin(a))}`); } return path(`M${pts.join(' L')} Z`, { fill: C.yellow, stroke: INK, sw: 1.2 }); };
+      nodes.push(starAt(-22 + Math.sin(ph) * 2, -24, 4), starAt(22, -26 + Math.cos(ph) * 2, 3.4), starAt(0, -34 + Math.sin(ph * 1.7) * 2, 3));
+      nodes.push(line([[-28, -20], [-32, -24]], { stroke: INK, sw: 1.8 }), line([[28, -22], [32, -27]], { stroke: INK, sw: 1.8 }), line([[-26, -4], [-31, -3]], { stroke: INK, sw: 1.8 }), line([[27, -6], [32, -5]], { stroke: INK, sw: 1.8 }));
+      return g(nodes, { scale: 0.4 + 0.6 * k }); },
+  },
   castle: {
     defaults: { flag: 'red', gate: 0, w: 56, h: 52 }, grip: [0, -20],
     /** Wall with battlements and a tower; `flag` colour is the holder's banner, `gate` 0..1 opens the gate. */

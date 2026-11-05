@@ -23,7 +23,8 @@
     "anim:plan": "vite-node scripts/cli/anim-plan.ts",
     "anim:props": "vite-node scripts/cli/anim-props.ts",
     "anim:coverage": "vite-node scripts/cli/anim-coverage.ts",
-    "anim:batch": "vite-node scripts/cli/anim-batch.ts"
+    "anim:batch": "vite-node scripts/cli/anim-batch.ts",
+    "anim:perf": "node scripts/perf.mjs"
   },
   "dependencies": {
     "react": "19.1.0",

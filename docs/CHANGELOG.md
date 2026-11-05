@@ -58,3 +58,12 @@
 - Tester: 53.
 - **0.3.1:** experimentell mall `attribute-gloss` (egenskap buren av utseende + japanskt ord, utan verb) med `anim.sportig.1.v2`; garderob: `shorts`, `number`. Bollen i `kickups` längre fram. Normativ regel skrivs efter produktägarens dom.
 
+## 0.4.0 – 2026-11-05 (generellt bibliotek: verktyg, processer, samtal, kläder)
+- **Föremålsfamiljer** i egna filer med katalogblad (`anim:props`): `tool.*` (30), `container.*` (15), `food.*` (14), `fixture.*` (36), `garment.*` (6). Schemat tar vilket katalog-id som helst och föreslår närmaste vid stavfel. Klippning (`clip`) i båda renderarna för skivade råvaror.
+- **Handlingar:** `use` (verktygsarbete med 19 rörelsemönster och tweenade följder; verktyget fästs automatiskt i närmaste hand), `say` (pratbubbla med ikon/text som följer huvudet, mun och bryn), `sound`, `give`, `put`, `take`, `dress`, `fasten`. Garderoben är animerbar (`<aktör>.w.<nyckel>`): hatt, glasögon, halsduk, knappar, dragkedja, ärmar, snören, förkläde, shorts, tröjnummer.
+- **Mallar:** `tool-rhythm`, `process`, `communicate`, `social`, `dress-self` (alla ännu ej godkända i `registry/templates.json`).
+- **Ikoner:** 67 kulturneutrala ikoner (fråga, mynt, klocka, lupp, våg, hus, nyckel, glödlampa, …) för bubblor, UI och gloss-scener.
+- **Scener:** 53 nya (matberedning 10, processer 15, samtal/ljud 12, kläder 16) – 75 totalt. Blindtest b5 10/10, b6 15/15; b7/b8 pågår.
+- **Fel rättade på vägen:** hållna föremåls ankare speglades fel åt vänster; prop-tillstånd som bara fanns som spår (t.ex. `tilt`) lästes aldrig; `rgb()`-färger kunde inte blandas; garderobsbyten syntes från t = 0 (startnyckel krävs).
+- Tester: 61.
+

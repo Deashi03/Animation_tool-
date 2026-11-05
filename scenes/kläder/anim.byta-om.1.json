@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.byta-om.1",
+  "template": "dress-self",
+  "senseId": "s.byta-om.1",
+  "titleSv": "byta om",
+  "meaningHint": "Ta av sig vissa kläder och ta på sig andra",
+  "category": "action",
+  "durationMs": 5200,
+  "loop": true,
+  "holdMs": 900,
+  "posterMs": 4600,
+  "environment": {
+    "id": "bedroom",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "red"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "shirt",
+      "asset": "garment.shirt",
+      "at": {
+        "x": 100,
+        "y": 100
+      },
+      "z": 0,
+      "scale": 0.8,
+      "state": {
+        "folded": 1
+      },
+      "color": "green"
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 200
+    },
+    {
+      "t": 200,
+      "action": "dress",
+      "actor": "p",
+      "garment": "top",
+      "on": false,
+      "durationMs": 1500
+    },
+    {
+      "t": 1900,
+      "action": "dress",
+      "actor": "p",
+      "garment": "top",
+      "on": true,
+      "value": "green",
+      "durationMs": 1500
+    },
+    {
+      "t": 3600,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 1600
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "the red shirt comes off and a green one goes on"
+  },
+  "contrast": {
+    "with": [
+      "anim.ta-på-sig.1"
+    ],
+    "distinctiveFeatures": [
+      "wear-start:p.top==red",
+      "wear:p.top==green",
+      "prop:garment.shirt"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "kläder",
+    "confusableWith": [
+      "s.ta-på-sig.1",
+      "s.klä-om-sig.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

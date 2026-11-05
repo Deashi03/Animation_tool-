@@ -12,7 +12,7 @@ import { ENVS } from '../assets/environments';
 import { palette as C, color } from '../assets/palette';
 import { solveRig, type P, type Pose } from './rig';
 import { JOINTS, type ShapeDef } from '../schema/scene';
-import { drawIcon } from '../assets/icons';
+import { drawIcon, type IconName } from '../assets/icons';
 
 export type RenderOptions = { showLabel?: boolean };
 
@@ -33,7 +33,8 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
   for (const p of scene.props) {
     const attach = sampleString<string>(tracks, `${p.id}.attach`, t, '');
     const state: PropState = {};
-    for (const key of Object.keys({ ...(PROPS[p.asset]?.defaults ?? {}), ...p.state })) {
+    const keys = new Set(Object.keys({ ...(PROPS[p.asset]?.defaults ?? {}), ...p.state })); const pre = `${p.id}.s.`; for (const id of tracks.keys()) if (id.startsWith(pre)) keys.add(id.slice(pre.length));
+    for (const key of keys) {
       const v = tracks.get(`${p.id}.s.${key}`) ? (sampleNumber(tracks, `${p.id}.s.${key}`, t, NaN)) : NaN;
       state[key] = Number.isNaN(v) ? (sampleString(tracks, `${p.id}.s.${key}`, t, String(p.state[key] ?? '')) as string) : v;
       if (typeof tracks.get(`${p.id}.s.${key}`)?.keys[0]?.v === 'boolean') state[key] = sampleBool(tracks, `${p.id}.s.${key}`, t, true);
@@ -65,7 +66,17 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
     const pos: P = [sampleNumber(tracks, `${a.id}.x`, t, a.at.x), sampleNumber(tracks, `${a.id}.y`, t, a.at.y)];
     const scale = sampleNumber(tracks, `${a.id}.scale`, t, a.scale);
     const base = VARIANTS[a.variant];
-    const wardrobe = { ...base, ...(a.wardrobe ? Object.fromEntries(Object.entries(a.wardrobe).filter(([, v]) => v !== undefined).map(([k, v]) => [k, typeof v === 'string' && k !== 'hairStyle' ? color(v) : v])) : {}) } as CharacterState['wardrobe'];
+    const wardrobe = { ...base, ...(a.wardrobe ? Object.fromEntries(Object.entries(a.wardrobe).filter(([, v]) => v !== undefined).map(([k, v]) => [k, typeof v === 'string' && k !== 'hairStyle' && k !== 'sleeves' ? color(v) : v])) : {}) } as CharacterState['wardrobe'];
+    // animated wardrobe: `<actor>.w.<key>` tracks override the static values (dress/fasten actions)
+    const wpre = `${a.id}.w.`;
+    for (const id of tracks.keys()) {
+      if (!id.startsWith(wpre)) continue;
+      const key = id.slice(wpre.length) as keyof CharacterState['wardrobe']; const first = tracks.get(id)!.keys[0]?.v;
+      const w0 = wardrobe as unknown as Record<string, unknown>;
+      if (typeof first === 'number') w0[key] = sampleNumber(tracks, id, t, 0);
+      else if (typeof first === 'boolean') w0[key] = sampleBool(tracks, id, t, false);
+      else { const v = sampleString<string>(tracks, id, t, ''); w0[key] = key === 'sleeves' || key === 'hairStyle' ? v : v === 'none' ? (key === 'hat' ? 'none' : undefined) : color(v); }
+    }
     const st: CharacterState = {
       pose, facing, lift, bodyRotate: rot, wardrobe,
       face: { eyes: sampleString(tracks, `${a.id}.eyes`, t, 'open'), brows: sampleString(tracks, `${a.id}.brows`, t, 'neutral'), mouth: sampleString(tracks, `${a.id}.mouth`, t, 'smile'), gaze: sampleNumber(tracks, `${a.id}.gaze`, t, 0), blush: sampleBool(tracks, `${a.id}.blush`, t, false), blink: sampleBool(tracks, `${a.id}.blink`, t, false) },
@@ -123,6 +134,54 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
       }
     }
   }
+  // speech bubbles: icon or short text on white, with a tail to the mouth; drawn last so they stay on top
+  for (const a of scene.actors) {
+    const say = sampleString<string>(tracks, `fx.${a.id}.say`, t, '');
+    const aw = actorWorld.get(a.id);
+    if (!say || !aw) continue;
+    const [content, mood] = say.split('|') as [string, string];
+    const head = worldPoint(aw, aw.rig.head);
+    const mouth: P = [head[0] + aw.facing * 5 * aw.scale, head[1] + 4 * aw.scale];
+    const isIcon = content.startsWith('icon:');
+    const body = isIcon ? content.slice(5) : content.slice(5);
+    const bw = isIcon ? 22 : Math.min(60, textWidth(body, 8) + 10), bh = isIcon ? 20 : 15;
+    // the bubble sits above and in front of the head, clamped inside the canvas
+    let bx = head[0] + aw.facing * (9 + bw / 2) * Math.min(1, aw.scale), by = head[1] - 20 * aw.scale - bh / 2;
+    bx = Math.max(bw / 2 + 2, Math.min(w - bw / 2 - 2, bx)); by = Math.max(bh / 2 + 2, by);
+    const pop = Math.min(1, (t - (tracks.get(`fx.${a.id}.say`)?.keys.filter((k) => k.t <= t && k.v === say).pop()?.t ?? t)) / 180);
+    const tailBase = 5, dx = mouth[0] - bx, dy = mouth[1] - by, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len;
+    const ex = bx + (dx / len) * Math.min(bw / 2, bh / 2) * 0.9, ey = by + (dy / len) * Math.min(bw / 2, bh / 2) * 0.9;
+    const bubble = g([
+      path(`M${r1(ex + nx * tailBase)} ${r1(ey + ny * tailBase)} L${r1(mouth[0])} ${r1(mouth[1])} L${r1(ex - nx * tailBase)} ${r1(ey - ny * tailBase)} Z`, { fill: C.white, stroke: C.ink, sw: 1.4 }),
+      rect(bx - bw / 2, by - bh / 2, bw, bh, { rx: mood === 'angry' ? 2 : bh / 2, fill: C.white, stroke: C.ink, sw: mood === 'angry' ? 2 : 1.4 }),
+      path(`M${r1(ex + nx * tailBase * 0.8)} ${r1(ey + ny * tailBase * 0.8)} L${r1(mouth[0])} ${r1(mouth[1])} L${r1(ex - nx * tailBase * 0.8)} ${r1(ey - ny * tailBase * 0.8)}`, { fill: C.white, stroke: 'none' }),
+      isIcon ? g([drawIcon(body as IconName, 14, pop, undefined, C.ink)], { x: bx, y: by }) : text(bx, by + 3, body, 8, { fill: C.ink, weight: 800, anchor: 'middle' }),
+    ], { scale: 0.6 + 0.4 * pop, px: mouth[0], py: mouth[1] });
+    fx.push(bubble);
+  }
+  // sound marks beside a source: arcs for continuous sounds, spikes for impacts
+  for (const id of [...scene.actors.map((a) => a.id), ...scene.props.map((p) => p.id)]) {
+    const kind = sampleString<string>(tracks, `fx.${id}.sound`, t, '');
+    if (!kind) continue;
+    const node = layers.find((l) => (l.node as { id?: string }).id === `entity.${id}`)?.node; const b = node ? bboxOf(node) : null; if (!b) continue;
+    const cx = b.x2 + 3, cy = (b.y1 + b.y2) / 2, u = (t % 600) / 600;
+    if (kind === 'thump' || kind === 'crunch') { for (let i = 0; i < 5; i++) { const ang = -1.1 + i * 0.55 + (kind === 'crunch' ? Math.sin(t) * 0.1 : 0); const r0 = 4 + ((u + i * 0.2) % 1) * 6; fx.push(line([[cx + Math.cos(ang) * r0, cy + Math.sin(ang) * r0], [cx + Math.cos(ang) * (r0 + 4), cy + Math.sin(ang) * (r0 + 4)]], { stroke: C.ink, sw: kind === 'crunch' ? 1.4 : 2.2, opacity: 0.8 })); } }
+    else for (let i = 0; i < 3; i++) { const ph = (u + i * 0.33) % 1; const rr = 5 + ph * 10; fx.push(path(`M${r1(cx + rr * 0.5)} ${r1(cy - rr * 0.85)} q${r1(rr * 0.9)} ${r1(rr * 0.85)} 0 ${r1(rr * 1.7)}`, { fill: 'none', stroke: kind === 'bark' ? C.red : C.ink, sw: 1.8, linecap: 'round', opacity: 0.85 * (1 - ph) })); }
+  }
+  // sprinkle: small grains falling from a held tool's mouth onto the target
+  for (const key of [...scene.props.map((p) => p.id), ...scene.actors.map((a) => a.id)]) {
+    const target = sampleString<string>(tracks, `fx.sprinkle.${key}`, t, '');
+    if (!target) continue;
+    const from = worldAnchor(c, actorWorld, key, 'mouth', t) ?? (actorWorld.get(key) ? worldPoint(actorWorld.get(key)!, actorWorld.get(key)!.rig.handR) : null);
+    const to = worldAnchor(c, actorWorld, target, 'mouth', t);
+    if (!from || !to) continue;
+    for (let i = 0; i < 5; i++) { const u = ((t / 420) + i * 0.2) % 1; const x = from[0] + (to[0] - from[0]) * u + Math.sin(i * 2.1) * 2.5, y = from[1] + (to[1] - from[1]) * u * u; fx.push(circle(x, y, 0.95, { fill: C.white, stroke: C.ink, sw: 0.6, opacity: 0.9 * (1 - u * 0.5) })); }
+  }
+  // shake: a struck prop jitters for a moment (chop/tap)
+  for (const p of scene.props) {
+    const sh = sampleNumber(tracks, `fx.${p.id}.shake`, t, 0);
+    if (sh > 0.5) { const l = layers.find((l) => (l.node as { id?: string }).id === `entity.${p.id}`); if (l) l.node = g([l.node], { x: Math.sin(t * 0.9) * 0.8, y: -0.6 }); }
+  }
   for (const id of [...scene.actors.map((a) => a.id), ...scene.props.map((p) => p.id), ...scene.shapes.map((s) => s.id)]) {
     for (const kind of ['ring', 'glow', 'arrowDown'] as const) {
       const u = sampleNumber(tracks, `fx.${id}.${kind}`, t, -1);
@@ -169,8 +228,8 @@ function worldAnchor(c: CompiledScene, actors: Map<string, { pos: P; scale: numb
     const grip = spec?.grip ?? [0, 0];
     const lx = (a[0] - grip[0]) * scale, ly = (a[1] - grip[1]) * scale;
     const rx = lx * Math.cos(ang) - ly * Math.sin(ang), ry = lx * Math.sin(ang) + ly * Math.cos(ang);
-    // the character (and everything in its hands) is mirrored for facing left
-    return [aw.pos[0] + (handP[0] + rx) * aw.scale * aw.facing, aw.pos[1] + (handP[1] + ry) * aw.scale];
+    // the rig is already solved in screen orientation; only the held prop's local offset is mirrored for facing left
+    return [aw.pos[0] + (handP[0] + rx * aw.facing) * aw.scale, aw.pos[1] + (handP[1] + ry) * aw.scale];
   }
   const x = sampleNumber(c.tracks, `${propId}.x`, t, def.at?.x ?? 0), y = sampleNumber(c.tracks, `${propId}.y`, t, def.at?.y ?? 0);
   return [x + a[0] * scale, y + a[1] * scale];

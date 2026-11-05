@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.läcka.1",
+  "template": "process",
+  "senseId": "s.läcka.1",
+  "titleSv": "läcka",
+  "meaningHint": "När vatten kommer ut genom ett hål där det inte ska",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3200,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "bucket",
+      "asset": "container.bucket",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": 1,
+      "scale": 1.4,
+      "state": {
+        "fill": 0.9
+      }
+    },
+    {
+      "id": "puddle",
+      "asset": "fixture.puddle",
+      "at": {
+        "x": 72,
+        "y": 100
+      },
+      "z": 0,
+      "state": {
+        "size": 0
+      }
+    },
+    {
+      "id": "drip",
+      "asset": "fixture.drip",
+      "at": {
+        "x": 73,
+        "y": 92
+      },
+      "z": 2,
+      "state": {
+        "flow": 0.5,
+        "length": 8
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "drip",
+      "prop": "phase",
+      "from": 0,
+      "to": 6,
+      "durationMs": 4200,
+      "ease": "linear"
+    },
+    {
+      "t": 200,
+      "action": "tween",
+      "target": "bucket",
+      "prop": "fill",
+      "to": 0.2,
+      "durationMs": 3800,
+      "ease": "linear",
+      "from": 0.9
+    },
+    {
+      "t": 200,
+      "action": "tween",
+      "target": "puddle",
+      "prop": "size",
+      "to": 0.9,
+      "durationMs": 3800,
+      "ease": "linear"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "bucket",
+      "puddle"
+    ],
+    "feature": "water drips from a hole in the bucket; the bucket empties and a puddle forms"
+  },
+  "contrast": {
+    "with": [
+      "anim.droppa.1"
+    ],
+    "distinctiveFeatures": [
+      "end:bucket.fill<=0.4",
+      "prop:fixture.drip"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.droppa.1",
+      "s.rinna.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

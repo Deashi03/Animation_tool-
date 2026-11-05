@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.klä-på-sig.1",
+  "template": "dress-self",
+  "senseId": "s.klä-på-sig.1",
+  "titleSv": "klä på sig",
+  "meaningHint": "Ta på sig alla sina kläder",
+  "category": "action",
+  "durationMs": 5600,
+  "loop": true,
+  "holdMs": 900,
+  "posterMs": 5000,
+  "environment": {
+    "id": "bedroom",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "#f7f3ea",
+        "sleeves": "short",
+        "bottom": "#efe7d6",
+        "shorts": true,
+        "shoes": "skin"
+      }
+    }
+  ],
+  "props": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 200
+    },
+    {
+      "t": 200,
+      "action": "dress",
+      "actor": "p",
+      "garment": "top",
+      "on": true,
+      "value": "denim",
+      "durationMs": 1500
+    },
+    {
+      "t": 1800,
+      "action": "dress",
+      "actor": "p",
+      "garment": "bottom",
+      "on": true,
+      "value": "navy",
+      "durationMs": 1500
+    },
+    {
+      "t": 3400,
+      "action": "dress",
+      "actor": "p",
+      "garment": "shoes",
+      "on": true,
+      "value": "brown",
+      "durationMs": 1400
+    },
+    {
+      "t": 4800,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 800
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "shirt, trousers and shoes go on one after the other"
+  },
+  "contrast": {
+    "with": [
+      "anim.klä-av-sig.1"
+    ],
+    "distinctiveFeatures": [
+      "wear:p.shorts<=0.1",
+      "wear-start:p.shoes==skin",
+      "has:action:dress"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "kläder",
+    "confusableWith": [
+      "s.klä-av-sig.1",
+      "s.ta-på-sig.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

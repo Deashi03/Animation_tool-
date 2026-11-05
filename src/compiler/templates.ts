@@ -34,7 +34,7 @@ export const TEMPLATES: Record<string, Template> = {
   'manipulate-prop': {
     id: 'manipulate-prop', titleSv: 'Hantera föremål med synlig följd',
     describes: 'Verb där en person gör något med ett föremål och föremålet förändras: öppna, stänga, hälla, knäppa, tända. Följden måste synas på föremålet.',
-    contract: ['has:actors>=1', 'has:props>=1', 'has:action:open|close|pour|grab|release|sip|tween|set'],
+    contract: ['has:actors>=1', 'has:props>=1', 'has:action:open|close|pour|grab|release|sip|tween|set|exercise'],
     make: (senseId, lemma, n) => ({
       schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'manipulate-prop', meaningHint: 'TODO', category: 'action',
       durationMs: 3200, loop: true, posterMs: 2000, environment: { id: 'room', time: 'day' },
@@ -116,6 +116,68 @@ export const TEMPLATES: Record<string, Template> = {
       focus: { targets: ['castle'] }, pedagogy: { quizEligible: false, confusableWith: [] },
     }),
   },
+  'dress-self': {
+    id: 'dress-self', titleSv: 'Klä sig: plagg på och av',
+    describes: 'Klädverb på den egna kroppen: ta på sig, ta av sig, klä på/av sig, byta om, knäppa, knäppa upp, dra upp/ner, knyta, kavla upp, sätta på sig (mössa, glasögon). Handlingarna `dress` och `fasten` gör koreografin; garderoben ändras mitt i. Före/efter-skillnaden på kroppen bär betydelsen.',
+    contract: ['has:actors>=1', 'has:action:dress|fasten'],
+    make: (senseId, lemma, n) => ({
+      schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'dress-self', meaningHint: 'TODO', category: 'action',
+      durationMs: 3200, loop: true, holdMs: 800, posterMs: 2600, environment: { id: 'bedroom', time: 'day' },
+      actors: [{ id: 'p', at: { x: 60, y: 100 }, facing: 'right', wardrobe: { top: '#f7f3ea', sleeves: 'short' } }],
+      timeline: [{ t: 0, action: 'idle', actor: 'p', durationMs: 400 }, { t: 400, action: 'dress', actor: 'p', garment: 'top', on: true, value: 'green', durationMs: 1800 }, { t: 2200, action: 'idle', actor: 'p', durationMs: 1000 }],
+      focus: { targets: ['p'] }, pedagogy: { quizEligible: false, group: 'kläder', confusableWith: [] },
+    }),
+  },
+  communicate: {
+    id: 'communicate', titleSv: 'Säga något till någon',
+    describes: 'Kommunikationsverb: beställa, klaga, förklara, varna, skämta, ursäkta, rekommendera, fråga, svara. En talare med pratbubbla (ikon eller kort text, alltid på vitt) och oftast en lyssnare som reagerar. Stämningen (mood) och ikonen bär skillnaden; lyssnarens reaktion förstärker.',
+    contract: ['has:actors>=1', 'has:action:say'],
+    make: (senseId, lemma, n) => ({
+      schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'communicate', meaningHint: 'TODO', category: 'action',
+      durationMs: 3600, loop: true, holdMs: 600, posterMs: 1800, environment: { id: 'room', time: 'day' },
+      actors: [{ id: 'p', variant: 'a', at: { x: 38, y: 100 }, facing: 'right', scale: 0.85 }, { id: 'q', variant: 'b', at: { x: 84, y: 100 }, facing: 'left', scale: 0.85 }],
+      timeline: [{ t: 0, action: 'idle', actor: 'q', durationMs: 3600 }, { t: 400, action: 'say', actor: 'p', icon: 'question', mood: 'question', to: 'q', durationMs: 1800 }, { t: 2400, action: 'say', actor: 'q', icon: 'check', mood: 'happy', to: 'p', durationMs: 1000 }],
+      focus: { targets: ['p'] }, pedagogy: { quizEligible: false, group: 'samtal', confusableWith: [] },
+    }),
+  },
+  social: {
+    id: 'social', titleSv: 'Två personer och ett föremål',
+    describes: 'Verb mellan människor med ett föremål: ge, servera, lämna över, skicka, bjuda på, dela, låna. En ger, en tar emot; föremålet byter hand mitt i rörelsen.',
+    contract: ['has:actors>=2', 'has:props>=1', 'has:action:give|put|take'],
+    make: (senseId, lemma, n) => ({
+      schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'social', meaningHint: 'TODO', category: 'action',
+      durationMs: 3200, loop: true, holdMs: 700, posterMs: 1700, environment: { id: 'room', time: 'day' },
+      actors: [{ id: 'p', variant: 'a', at: { x: 40, y: 100 }, facing: 'right' }, { id: 'q', variant: 'c', at: { x: 80, y: 100 }, facing: 'left' }],
+      props: [{ id: 'thing', asset: 'container.bag', attachTo: { actor: 'p', hand: 'left' }, scale: 0.8 }],
+      timeline: [{ t: 0, action: 'idle', actor: 'q', durationMs: 400 }, { t: 400, action: 'give', from: 'p', to: 'q', prop: 'thing', durationMs: 1600 }, { t: 2000, action: 'idle', actor: 'p', durationMs: 1200 }],
+      focus: { targets: ['thing'] }, pedagogy: { quizEligible: false, group: 'mellan människor', confusableWith: [] },
+    }),
+  },
+  process: {
+    id: 'process', titleSv: 'Föremål som förändras av sig självt',
+    describes: 'Verb för processer utan en handlande person: koka, sjuda, smälta, mogna, ruttna, brinna, slockna, droppa, rinna, läcka, jäsa, växa, vissna, flagna, regna. Ett eller två föremål i närbild, tillståndet tweenas, effekter (bubblor, ånga, droppar, rök) bär förloppet. Kontrastpar skiljer grad och tempo (koka/sjuda, droppa/rinna).',
+    contract: ['has:actors==0', 'has:props>=1', 'has:action:tween|set|sound'],
+    make: (senseId, lemma, n) => ({
+      schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'process', meaningHint: 'TODO', category: 'action',
+      durationMs: 4000, loop: true, holdMs: 800, posterMs: 3000, environment: { id: 'kitchen', time: 'day' },
+      props: [{ id: 'stove', asset: 'stove', at: { x: 60, y: 100 }, z: 0 }, { id: 'pot', asset: 'container.pot', at: { x: 60, y: 70 }, z: 1, scale: 1.4, state: { fill: 0.7, boil: 0 } }],
+      timeline: [{ t: 0, action: 'set', target: 'stove', prop: 'heat', value: 1 }, { t: 300, action: 'tween', target: 'pot', prop: 'boil', to: 1, durationMs: 1800, ease: 'easeInOut' }, { t: 300, action: 'tween', target: 'pot', prop: 'phase', from: 0, to: 4, durationMs: 3700, ease: 'linear' }],
+      focus: { targets: ['pot'] }, contrast: { with: ['anim.todo.1'], distinctiveFeatures: ['end:pot.boil>=0.9'] }, pedagogy: { quizEligible: false, group: 'process', confusableWith: [] },
+    }),
+  },
+  'tool-rhythm': {
+    id: 'tool-rhythm', titleSv: 'Verktyg mot föremål med synlig förändring',
+    describes: 'Verb där en person bearbetar något med ett verktyg eller händerna i en rytm och föremålet förändras: skära, hacka, vispa, röra, knåda, skala, riva, kavla, mosa, salta, borsta, torka av, putsa, stryka, såga, spika. Handlingen `use` med ett rörelsemönster (motion) och en följd (effect) på föremålet. Verben skiljs genom verktyg, mönster, tempo och vad som händer med föremålet.',
+    contract: ['has:actors>=1', 'has:props>=2', 'has:action:use'],
+    make: (senseId, lemma, n) => ({
+      schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'tool-rhythm', meaningHint: 'TODO', category: 'action',
+      durationMs: 4200, loop: true, holdMs: 600, posterMs: 3200, environment: { id: 'kitchen', time: 'day' },
+      actors: [{ id: 'p', at: { x: 48, y: 100 }, facing: 'right' }],
+      props: [{ id: 'table', asset: 'table', at: { x: 76, y: 100 }, z: -1 }, { id: 'board', asset: 'container.board', at: { x: 76, y: 70 }, z: 0 }, { id: 'food', asset: 'food.carrot', at: { x: 76, y: 66 }, z: 1 }, { id: 'knife', asset: 'tool.knife', attachTo: { actor: 'p', hand: 'right' } }],
+      timeline: [{ t: 0, action: 'use', actor: 'p', on: 'food', tool: 'knife', motion: 'chop', durationMs: 3800, effect: [{ key: 'pieces', to: 1 }] }],
+      focus: { targets: ['food'] }, contrast: { with: ['anim.todo.1'], distinctiveFeatures: ['end:food.pieces>=0.9'] }, pedagogy: { quizEligible: false, group: 'matlagning', confusableWith: [] },
+    }),
+  },
   'cook-rhythm': {
     id: 'cook-rhythm', titleSv: 'Matlagning i panna med synlig förändring',
     describes: 'Matlagningsverb där råvaran förändras i en panna på en spis: steka, bryna, fräsa, smälta, vända, bränna, skvätta. En figur vid spisen, handen på handtaget, plattan glöder, maten fräser och byter färg. Vad som skiljer verben är hur långt färgen går, tempot och följden (vänd, bränd, stänk).',
@@ -130,8 +192,8 @@ export const TEMPLATES: Record<string, Template> = {
     }),
   },
   'attribute-gloss': {
-    id: 'attribute-gloss', titleSv: 'Egenskap buren av utseende + japanskt ord (experiment)',
-    describes: 'Adjektiv och abstraktioner där egenskapen syns på kläder, föremål eller utseende utan att någon utför en aktivitet: sportig, elegant, randig. En figur eller ett föremål bär egenskapen, lugn andning, och det japanska ordet glider in på vitt. Ingen handling som kan läsas som ett verb. Prövas 2026-11-05 på produktägarens förslag; normativ regel skrivs när utfallet är klart.',
+    id: 'attribute-gloss', titleSv: 'Egenskap buren av utseende + japanskt ord',
+    describes: 'Adjektiv och abstraktioner där egenskapen syns på kläder, föremål eller utseende utan att någon utför en aktivitet: sportig, elegant, randig. En figur eller ett föremål bär egenskapen, lugn andning, och det japanska ordet glider in på vitt. Ingen handling som kan läsas som ett verb. Normativ sedan 2026-11-05 (produktägaren valde den framför sportutövande för *sportig*): egenskaper bärs av utseende, föremål eller läge – inte av en aktivitet som själv är ett verb.',
     contract: ['has:entities>=1', 'has:cjk-text'],
     make: (senseId, lemma, n) => ({
       schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'attribute-gloss', meaningHint: 'TODO', category: 'property',

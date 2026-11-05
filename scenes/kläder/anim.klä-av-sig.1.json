@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.klä-av-sig.1",
+  "template": "dress-self",
+  "senseId": "s.klä-av-sig.1",
+  "titleSv": "klä av sig",
+  "meaningHint": "Ta av sig sina kläder",
+  "category": "action",
+  "durationMs": 5600,
+  "loop": true,
+  "holdMs": 900,
+  "posterMs": 5000,
+  "environment": {
+    "id": "bedroom",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "denim",
+        "bottom": "navy",
+        "shoes": "brown"
+      }
+    }
+  ],
+  "props": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 200
+    },
+    {
+      "t": 200,
+      "action": "dress",
+      "actor": "p",
+      "garment": "shoes",
+      "on": false,
+      "durationMs": 1400
+    },
+    {
+      "t": 1700,
+      "action": "dress",
+      "actor": "p",
+      "garment": "top",
+      "on": false,
+      "durationMs": 1500
+    },
+    {
+      "t": 3300,
+      "action": "dress",
+      "actor": "p",
+      "garment": "bottom",
+      "on": false,
+      "durationMs": 1500
+    },
+    {
+      "t": 4800,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 800
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "shoes, shirt and trousers come off one after the other, down to underwear"
+  },
+  "contrast": {
+    "with": [
+      "anim.klä-på-sig.1"
+    ],
+    "distinctiveFeatures": [
+      "wear:p.shorts>=1",
+      "wear-start:p.shoes==brown",
+      "has:action:dress"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "kläder",
+    "confusableWith": [
+      "s.klä-på-sig.1",
+      "s.ta-av-sig.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

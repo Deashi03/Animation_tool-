@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.flagna.1",
+  "template": "process",
+  "senseId": "s.flagna.1",
+  "titleSv": "flagna",
+  "meaningHint": "När färg lossnar från en yta i små bitar",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3600,
+  "environment": {
+    "id": "neutral",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "wall",
+      "asset": "fixture.wall",
+      "at": {
+        "x": 60,
+        "y": 98
+      },
+      "z": 1,
+      "scale": 1.4,
+      "state": {
+        "paint": 1,
+        "col": "#8cc7e8"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 400,
+      "action": "tween",
+      "target": "wall",
+      "prop": "flake",
+      "to": 1,
+      "durationMs": 3600,
+      "ease": "linear"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "wall"
+    ],
+    "feature": "flakes of blue paint lift and fall off a wall"
+  },
+  "contrast": {
+    "with": [
+      "anim.måla.1"
+    ],
+    "distinctiveFeatures": [
+      "end:wall.flake>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.måla.1",
+      "s.rosta.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

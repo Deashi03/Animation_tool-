@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.sjuda.1",
+  "template": "process",
+  "senseId": "s.sjuda.1",
+  "titleSv": "sjuda",
+  "meaningHint": "Koka mycket lugnt, så att det bara kommer små bubblor",
+  "category": "action",
+  "durationMs": 4000,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3200,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "stove",
+      "asset": "stove",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "pot",
+      "asset": "container.pot",
+      "at": {
+        "x": 60,
+        "y": 70
+      },
+      "z": 1,
+      "scale": 1.4,
+      "state": {
+        "fill": 0.7,
+        "boil": 0
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "set",
+      "target": "stove",
+      "prop": "heat",
+      "value": 0.6
+    },
+    {
+      "t": 300,
+      "action": "tween",
+      "target": "pot",
+      "prop": "boil",
+      "to": 0.3,
+      "durationMs": 1800,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 300,
+      "action": "tween",
+      "target": "pot",
+      "prop": "steam",
+      "to": 0.15,
+      "durationMs": 1800,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "pot",
+      "prop": "phase",
+      "from": 0,
+      "to": 2.5,
+      "durationMs": 4000,
+      "ease": "linear"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "pot"
+    ],
+    "feature": "a few small bubbles, thin steam, calm surface"
+  },
+  "contrast": {
+    "with": [
+      "anim.koka.1"
+    ],
+    "distinctiveFeatures": [
+      "end:pot.boil<=0.35",
+      "end:pot.steam<=0.2"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.koka.1",
+      "s.puttra.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

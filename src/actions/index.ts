@@ -6,6 +6,7 @@
 import { addKey, dense, sample, sampleNumber, sampleString, tween, type Tracks } from '../engine/track';
 import { reachAngles, SEG, solveRig, type Pose, REST_POSE, type P } from '../engine/rig';
 import { PROPS, HELD_TILT_DEG } from '../assets/props';
+import { VARIANTS } from '../assets/character';
 import type { Action, ActionOf, Joint, Scene, ActorDef, PropDef } from '../schema/scene';
 import { JOINTS } from '../schema/scene';
 import * as M from '../motions';
@@ -84,7 +85,7 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
   release(ctx, a) {
     const owner = sampleString(ctx.tracks, `${a.prop}.attach`, a.t, '');
     const hand = owner.endsWith(':left') ? 'left' : 'right';
-    const at: P = a.at ? [a.at.x, a.at.y] : propWorld(ctx, a.prop, a.t, 'base');
+    const at: P = a.at ? [a.at.x, a.at.y] : a.on ? propWorld(ctx, a.on, a.t, 'mouth') : propWorld(ctx, a.prop, a.t, 'base');
     if (owner) {
       M.poseTo(ctx.tracks, a.actor, a.t, a.t + a.durationMs * 0.6, reachJoints(ctx, a.actor, hand, [at[0] + (PROPS[ctx.props.get(a.prop)!.asset]?.grip[0] ?? 0), at[1] + (PROPS[ctx.props.get(a.prop)!.asset]?.grip[1] ?? 0)], a.t), 'easeInOut');
     }
@@ -272,11 +273,11 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
       tween(ctx.tracks, M.J(a.actor, 'torso'), t0, t1, 24, 'easeInOut');
       const under: P = [mouth[0] - f * 2, mouth[1] - 4];
       M.poseTo(ctx.tracks, a.actor, t0, t1, reachJoints(ctx, a.actor, toolHand, under, t0), 'easeInOut');
-      tween(ctx.tracks, `${a.tool}.s.tilt`, t0, t1, 1, 'easeInOut');
+      tween(ctx.tracks, `${a.tool}.s.tilt`, t0, t1, -1, 'easeInOut');
       M.poseTo(ctx.tracks, a.actor, t1, t1 + (t2 - t1) * 0.45, reachJoints(ctx, a.actor, toolHand, [under[0] - f * 2, under[1] - 18], t0), 'easeOut');
       M.poseTo(ctx.tracks, a.actor, t1 + (t2 - t1) * 0.45, t2, reachJoints(ctx, a.actor, toolHand, under, t0), 'easeIn');
       M.poseTo(ctx.tracks, a.actor, t2, end, toolHand === 'left' ? { uArmL: 30, fArmL: 60 } : { uArmR: 30, fArmR: 60 }, 'easeInOut');
-      tween(ctx.tracks, `${a.tool}.s.tilt`, t2, end, 0.4, 'easeInOut');
+      tween(ctx.tracks, `${a.tool}.s.tilt`, t2, end, -0.4, 'easeInOut');
     } else {
       // the pan itself dips and jerks up: the food flies and turns over
       const y0 = sampleNumber(ctx.tracks, `${a.pan}.y`, t0, ctx.props.get(a.pan)?.at?.y ?? ctx.ground);
@@ -303,6 +304,235 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
       tween(ctx.tracks, `${A}.lift`, t0, t0 + 120, 2, 'easeOut'); tween(ctx.tracks, `${A}.lift`, t0 + 120, t0 + 400, 0, 'easeInOut');
       M.poseTo(ctx.tracks, A, a.t + d, a.t + d + 500, { torso: 4, head: -10, ...(held ? {} : { uArmL: 30, fArmL: 60 }) }, 'easeInOut');
       addKey(ctx.tracks, `${A}.mouth`, { t: a.t + d + 400, v: 'neutral' }); addKey(ctx.tracks, `${A}.brows`, { t: a.t + d + 400, v: 'worried' });
+    }
+  },
+  /**
+   * Generic tool work. The hand (with the held tool, auto-attached if needed)
+   * goes to the target's work point and performs a named cycle; the target's
+   * state tweens as the visible consequence. Covers most "do X to Y" verbs.
+   */
+  use(ctx, a) {
+    const tr = ctx.tracks, end = a.t + a.durationMs, A = a.actor;
+    const target = ctx.props.get(a.on);
+    const base = target ? propWorld(ctx, a.on, a.t, 'mouth') : targetPoint(ctx, a.on, a.t);
+    const work: P = [base[0] + (a.offset?.x ?? 0), base[1] + (a.offset?.y ?? 0)];
+    faceToward(ctx, A, a.t, work[0]);
+    const f = facingAt(ctx, A, a.t);
+    // the working hand: the one already holding the tool, else the requested one (near hand by default)
+    const owner0 = a.tool ? sampleString<string>(tr, `${a.tool}.attach`, a.t, '') : '';
+    const hand: 'left' | 'right' = owner0.startsWith(`${A}:`) ? (owner0.endsWith(':left') ? 'left' : 'right') : a.hand;
+    const other = hand === 'left' ? 'right' : 'left';
+    // tool in hand: attach now if the scene did not grab it explicitly
+    let toolSpec = a.tool ? PROPS[ctx.props.get(a.tool)!.asset] : undefined;
+    if (a.tool) {
+      const owner = owner0;
+      if (!owner) addKey(tr, `${a.tool}.attach`, { t: a.t, v: `${A}:${hand}` });
+      else if (!owner.startsWith(`${A}:`)) ctx.warnings.push(`use at ${a.t} ms: "${a.tool}" is held by someone else`);
+      // tools hang tip-down from the grip; a NEGATIVE tilt swings the tip forward (clockwise rotation would swing it backward)
+      const tiltTarget = -(toolSpec?.heldTilt ?? 60) / HELD_TILT_DEG;
+      tween(tr, `${a.tool}.s.tilt`, a.t, a.t + 350, tiltTarget, 'easeInOut', 0, sampleNumber(tr, `${a.tool}.s.tilt`, a.t, 0));
+    } else toolSpec = undefined;
+    // the hand holds the tool at its grip; the working end is below the grip → aim the hand above the work point
+    // distance from the hand down to the tool's working tip (shorter when the tool is tilted forward); bare hands work right at the surface
+    const tiltRad = toolSpec ? ((toolSpec.heldTilt ?? 60) * Math.PI) / 180 : 0;
+    const reachLen = toolSpec ? Math.max(3, (-(toolSpec.grip[1]) + 3) * Math.abs(Math.cos(tiltRad)) + 2) : a.motion === 'knead' || a.motion === 'press' ? -1 : 1;
+    const handAt = (dx: number, dy: number): P => [work[0] + dx, work[1] - reachLen + dy];
+    // lean in and look at the work
+    const lean = Math.abs(work[0] - actorPos(ctx, A, a.t)[0]) > 18 ? 24 : 12;
+    tween(tr, M.J(A, 'torso'), a.t, a.t + 350, lean, 'easeInOut'); tween(tr, M.J(A, 'head'), a.t, a.t + 350, -16, 'easeInOut');
+    addKey(tr, `${A}.gaze`, { t: a.t, v: f }); addKey(tr, `${A}.eyes`, { t: a.t, v: 'open' });
+    const T = a.periodMs ?? { chop: 420, tap: 600, press: 1200, knead: 760, saw: 520, wipe: 900, scrub: 260, sweep: 1100, spread: 900, brush: 420, stir: 950, whisk: 240, pull: 800, peel: 760, grate: 480, sprinkle: 180, squeeze: 900, hold: 1000, roll: 900 }[a.motion];
+    const t0 = a.t + 350; // after the reach
+    const cyc = (t: number) => ((t - t0) % T) / T;
+    const path2 = (t: number): P => {
+      const u = cyc(t), s2 = Math.sin(2 * Math.PI * u), c2 = Math.cos(2 * Math.PI * u);
+      switch (a.motion) {
+        case 'chop': { const up = u < 0.6 ? 1 - Math.pow(u / 0.6, 0.6) : Math.pow((u - 0.6) / 0.4, 2.2); return handAt(0, -Math.min(9, 9 * (T / 420)) * up); } // slow lift, fast strike; short fast chops lift less
+        case 'tap': return handAt(0, u < 0.3 ? -6 * (1 - u / 0.3) : u > 0.85 ? -6 * ((u - 0.85) / 0.15) : 0);
+        case 'press': return handAt(0, u < 0.7 ? 2 : -3);
+        case 'knead': return handAt(-2 * f + 3 * f * s2, u < 0.5 ? 1 + 2.5 * Math.sin(2 * Math.PI * u) : -1.5); // push down into the dough, lift, repeat
+        case 'saw': return handAt(5 * s2 * f, 0);
+        case 'wipe': return handAt(11 * s2, -1.2 * Math.abs(c2));
+        case 'scrub': return handAt(3.5 * s2, 0.6 * c2);
+        case 'sweep': return handAt(14 * s2, 0);
+        case 'spread': return handAt(7 * s2, -0.8 * Math.abs(c2));
+        case 'brush': return handAt(4 * s2, 1.5 * c2);
+        case 'stir': return handAt(5 * c2, 2 * s2);
+        case 'whisk': return handAt(3 * c2, 1.6 * s2);
+        case 'pull': { const o = u < 0.4 ? u / 0.4 : 1 - (u - 0.4) / 0.6; return handAt(f * 9 * o, -4 * o); }
+        case 'peel': { const o = u < 0.5 ? u / 0.5 : 1 - (u - 0.5) / 0.5; return handAt(-f * 2 + f * 8 * o, -3 - 2 * o); }
+        case 'grate': { const o = u < 0.5 ? u / 0.5 : 1 - (u - 0.5) / 0.5; return handAt(0, -10 + 9 * o); }
+        case 'sprinkle': return handAt(2 * s2, -2 + 0.8 * c2);
+        case 'squeeze': return handAt(0, u < 0.5 ? -1 : 1);
+        case 'roll': return handAt(10 * s2 * f, 0);
+        default: return handAt(0, -2);
+      }
+    };
+    const j1 = hand === 'left' ? (['uArmL', 'fArmL'] as const) : (['uArmR', 'fArmR'] as const);
+    M.poseTo(tr, A, a.t, t0, reachJoints(ctx, A, hand, path2(t0), a.t + 350), 'easeInOut');
+    for (const j of j1) dense(tr, M.J(A, j), t0, end, (t) => reachJoints(ctx, A, hand, path2(t), a.t + 350)[j] ?? 0, 0, 30);
+    if (a.bothHands) {
+      const j2 = other === 'left' ? (['uArmL', 'fArmL'] as const) : (['uArmR', 'fArmR'] as const);
+      const path3 = (t: number): P => { const p2 = path2(t + T / 2); return [p2[0] - f * 7, p2[1]]; };
+      M.poseTo(tr, A, a.t, t0, reachJoints(ctx, A, other, path3(t0), a.t + 350), 'easeInOut');
+      for (const j of j2) dense(tr, M.J(A, j), t0, end, (t) => reachJoints(ctx, A, other, path3(t), a.t + 350)[j] ?? 0, 0, 30);
+    } else if (target && !a.tool && a.motion !== 'hold') {
+      // the free hand steadies the target
+      M.poseTo(tr, A, a.t, t0, reachJoints(ctx, A, other, [work[0] - f * 9, work[1] - 1], a.t + 350), 'easeInOut');
+    }
+    // squeeze: the target pulses; sprinkle: particles fall from the tool to the target
+    if (a.motion === 'squeeze' && target) dense(tr, `${a.on}.scale`, t0, end, (t) => (ctx.props.get(a.on)?.scale ?? 1) * (cyc(t) < 0.5 ? 1 : 0.86), 0, 30);
+    if (a.motion === 'sprinkle') { fxStart(tr, `fx.sprinkle.${a.tool ?? A}`, t0, ''); addKey(tr, `fx.sprinkle.${a.tool ?? A}`, { t: t0, v: a.on }); addKey(tr, `fx.sprinkle.${a.tool ?? A}`, { t: end, v: '' }); }
+    if (a.motion === 'chop' || a.motion === 'tap' || a.motion === 'knead') { fxStart(tr, `fx.${a.on}.shake`, t0, 0); dense(tr, `fx.${a.on}.shake`, t0, end, (t) => (a.motion === 'knead' ? 0 : cyc(t) > 0.92 ? 1 : 0), 0, 30); addKey(tr, `fx.${a.on}.shake`, { t: end + 1, v: 0 }); }
+    // visible consequence
+    for (const e of a.effect) {
+      const prop = e.prop ?? a.on; const id = trackId(ctx, prop, e.key);
+      if (typeof e.to === 'number') { const from = e.from ?? sampleNumber(tr, id, a.t, 0); const tEnd = a.t + a.durationMs * (e.at ?? 1); tween(tr, id, t0, tEnd, e.to, 'linear', 0, from); }
+      else addKey(tr, id, { t: a.t + a.durationMs * (e.at ?? 0.5), v: e.to, e: 'step' });
+    }
+    // kneading/pressing squashes the target in rhythm (dough, potato)
+    if ((a.motion === 'knead' || a.motion === 'press') && target) { fxStart(tr, `${a.on}.s.squash`, t0, 0); dense(tr, `${a.on}.s.squash`, t0, end, (t) => { const u = cyc(t); return a.motion === 'knead' ? Math.max(0, Math.sin(2 * Math.PI * u)) : u < 0.7 ? 1 : 0; }, 0, 30); addKey(tr, `${a.on}.s.squash`, { t: end + 1, v: 0 }); }
+    // phase for props that animate with it (dough wobble, bowl swirl)
+    if (target) { const ph0 = sampleNumber(tr, `${a.on}.s.phase`, a.t, 0); dense(tr, `${a.on}.s.phase`, t0, end, (t) => ph0 + (t - t0) / T, 0, 60); }
+    M.blinks(tr, A, a.t, end);
+    // settle: upright, tool stays in hand
+    tween(tr, M.J(A, 'torso'), end, end + 400, 4, 'easeInOut'); tween(tr, M.J(A, 'head'), end, end + 400, -6, 'easeInOut');
+  },
+  say(ctx, a) {
+    const tr = ctx.tracks, A = a.actor, end = a.t + a.durationMs;
+    if (a.to) { const tp = targetPoint(ctx, a.to, a.t); faceToward(ctx, A, a.t, tp[0]); if (ctx.actors.has(a.to)) { faceToward(ctx, a.to, a.t, actorPos(ctx, A, a.t)[0]); addKey(tr, `${a.to}.gaze`, { t: a.t, v: facingAt(ctx, a.to, a.t) }); } }
+    const payload = `${a.icon ? `icon:${a.icon}` : `text:${a.text ?? ''}`}|${a.mood}`;
+    fxStart(tr, `fx.${A}.say`, a.t, ''); addKey(tr, `fx.${A}.say`, { t: a.t, v: payload }); addKey(tr, `fx.${A}.say`, { t: end, v: '' });
+    // the mouth moves while speaking
+    const restMouth = sampleString<string>(tr, `${A}.mouth`, a.t, 'smile');
+    for (let t = a.t; t < end - 150; t += 300) { addKey(tr, `${A}.mouth`, { t, v: 'open' }); addKey(tr, `${A}.mouth`, { t: t + 150, v: a.mood === 'happy' ? 'smile' : 'neutral' }); }
+    addKey(tr, `${A}.mouth`, { t: end, v: restMouth });
+    const brows: Record<string, string> = { neutral: 'neutral', happy: 'up', angry: 'down', sad: 'worried', question: 'asym', surprised: 'up' };
+    const eyes: Record<string, string> = { neutral: 'open', happy: 'open', angry: 'open', sad: 'half', question: 'open', surprised: 'wide' };
+    addKey(tr, `${A}.brows`, { t: a.t, v: brows[a.mood] ?? 'neutral' }); addKey(tr, `${A}.eyes`, { t: a.t, v: eyes[a.mood] ?? 'open' });
+    addKey(tr, `${A}.brows`, { t: end + 200, v: 'neutral' });
+    if (a.gesture) {
+      // a small open-hand gesture with the near hand, lowered again at the end
+      const g0 = poseAt(ctx, A, a.t);
+      M.poseTo(tr, A, a.t, a.t + 350, { uArmL: a.mood === 'angry' ? 50 : 34, fArmL: a.mood === 'angry' ? 110 : 80 }, 'easeOut');
+      if (a.mood === 'angry') for (let t = a.t + 400; t + 400 < end; t += 500) { tween(tr, M.J(A, 'fArmL'), t, t + 200, 90, 'easeInOut'); tween(tr, M.J(A, 'fArmL'), t + 200, t + 400, 115, 'easeInOut'); }
+      if (a.mood === 'sad') M.poseTo(tr, A, a.t, a.t + 500, { torso: 8, head: 12 }, 'easeInOut');
+      if (a.mood === 'surprised') M.poseTo(tr, A, a.t, a.t + 250, { torso: -6, head: -6, uArmL: 70, fArmL: 90 }, 'easeOut');
+      M.poseTo(tr, A, end, end + 400, { uArmL: g0.uArmL, fArmL: g0.fArmL, torso: g0.torso, head: g0.head }, 'easeInOut');
+    }
+  },
+  sound(ctx, a) {
+    fxStart(ctx.tracks, `fx.${a.target}.sound`, a.t, ''); addKey(ctx.tracks, `fx.${a.target}.sound`, { t: a.t, v: a.kind }); addKey(ctx.tracks, `fx.${a.target}.sound`, { t: a.t + a.durationMs, v: '' });
+  },
+  give(ctx, a) {
+    const tr = ctx.tracks, d = a.durationMs, mid = a.t + d * 0.55;
+    const [fx] = actorPos(ctx, a.from, a.t), [tx] = actorPos(ctx, a.to, a.t);
+    faceToward(ctx, a.from, a.t, tx); faceToward(ctx, a.to, a.t, fx);
+    const owner = sampleString<string>(tr, `${a.prop}.attach`, a.t, '');
+    const fromHand: 'left' | 'right' = owner.endsWith(':right') ? 'right' : 'left';
+    if (!owner) addKey(tr, `${a.prop}.attach`, { t: a.t, v: `${a.from}:${fromHand}` });
+    const meet: P = [(fx + tx) / 2, Math.min(actorPos(ctx, a.from, a.t)[1], actorPos(ctx, a.to, a.t)[1]) - 44];
+    M.poseTo(tr, a.from, a.t, mid, reachJoints(ctx, a.from, fromHand, meet, a.t), 'easeInOut');
+    M.poseTo(tr, a.to, a.t + d * 0.15, mid, reachJoints(ctx, a.to, 'left', meet, a.t), 'easeInOut');
+    addKey(tr, `${a.to}.gaze`, { t: a.t, v: facingAt(ctx, a.to, a.t) }); addKey(tr, `${a.from}.gaze`, { t: a.t, v: facingAt(ctx, a.from, a.t) });
+    addKey(tr, `${a.prop}.attach`, { t: mid, v: `${a.to}:left` });
+    M.poseTo(tr, a.from, mid + 100, a.t + d, { uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR }, 'easeInOut');
+    M.poseTo(tr, a.to, mid + 100, a.t + d, { uArmL: 30, fArmL: 70 }, 'easeInOut');
+    addKey(tr, `${a.to}.mouth`, { t: mid, v: 'smile' });
+  },
+  put(ctx, a) { (H.release as (c: Ctx, x: ActionOf<'release'>) => void)(ctx, { action: 'release', t: a.t, actor: a.actor, prop: a.prop, at: a.at, on: a.on, z: a.z, durationMs: a.durationMs }); },
+  take(ctx, a) { (H.grab as (c: Ctx, x: ActionOf<'grab'>) => void)(ctx, { action: 'grab', t: a.t, actor: a.actor, prop: a.prop, hand: a.hand, durationMs: a.durationMs }); },
+  /** Clothes on/off: the arms do the garment's choreography; the wardrobe switches at the midpoint. */
+  dress(ctx, a) {
+    const tr = ctx.tracks, A = a.actor, d = a.durationMs, t0 = a.t, mid = t0 + d * 0.5, end = t0 + d;
+    const def = ctx.actors.get(A)?.wardrobe as Record<string, unknown> | undefined;
+    const W = (key: string, v: string | number | boolean, t = mid) => { ensureWardrobeStart(ctx, A, key, v); addKey(tr, `${A}.w.${key}`, { t, v, e: 'step' }); };
+    const cur = (key: string, fallback: string) => (sampleString<string>(tr, `${A}.w.${key}`, t0, (def?.[key] as string | undefined) ?? fallback));
+    M.blinks(tr, A, t0, end);
+    switch (a.garment) {
+      case 'top': {
+        // arms up over the head, the shirt passes the head, arms down
+        M.poseTo(tr, A, t0, t0 + d * 0.35, { uArmL: 172, fArmL: 4, uArmR: 172, fArmR: 4, head: a.on ? 6 : -4 }, 'easeInOut');
+        tween(tr, `${A}.lift`, t0 + d * 0.3, t0 + d * 0.5, 1.5, 'easeInOut'); tween(tr, `${A}.lift`, t0 + d * 0.5, t0 + d * 0.7, 0, 'easeInOut');
+        W('top', a.on ? (a.value ?? cur('top', 'green')) : '#f7f3ea'); if (!a.on) W('sleeves', 'short');
+        if (a.on) W('sleeves', 'long');
+        M.poseTo(tr, A, t0 + d * 0.65, end, { uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR, head: 0 }, 'easeInOut');
+        break; }
+      case 'bottom': {
+        // bend down, hands at the knees, pull up (or push down), straighten
+        M.poseTo(tr, A, t0, t0 + d * 0.3, { torso: 48, head: -10, uArmL: -22, fArmL: 10, uArmR: -22, fArmR: 10, thighL: 30, shinL: -30, thighR: 26, shinR: -26 }, 'easeInOut');
+        W('bottom', a.on ? (a.value ?? cur('bottom', 'navy')) : '#efe7d6'); W('shorts', !a.on);
+        M.poseTo(tr, A, t0 + d * 0.55, end, { torso: 0, head: 0, uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR, thighL: 0, shinL: 0, thighR: 0, shinR: 0 }, 'easeInOut');
+        break; }
+      case 'shoes': {
+        // one foot lifted, hands reach the foot
+        M.poseTo(tr, A, t0, t0 + d * 0.3, { torso: 40, head: -8, thighL: 70, shinL: -80, uArmL: 22, fArmL: 30, uArmR: 10, fArmR: 30 }, 'easeInOut');
+        W('shoes', a.on ? (a.value ?? cur('shoes', 'brown')) : 'skin');
+        M.poseTo(tr, A, t0 + d * 0.6, end, { torso: 0, head: 0, thighL: 0, shinL: 0, uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR }, 'easeInOut');
+        break; }
+      case 'hat': {
+        M.poseTo(tr, A, t0, t0 + d * 0.35, { uArmL: 150, fArmL: 60, head: a.on ? 4 : -3 }, 'easeInOut');
+        W('hat', a.on ? (a.value ?? 'red') : 'none');
+        M.poseTo(tr, A, t0 + d * 0.6, end, { uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, head: 0 }, 'easeInOut');
+        break; }
+      case 'glasses': {
+        M.poseTo(tr, A, t0, t0 + d * 0.35, { uArmL: 60, fArmL: 125 }, 'easeInOut');
+        W('glasses', a.on);
+        M.poseTo(tr, A, t0 + d * 0.6, end, { uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL }, 'easeInOut');
+        break; }
+      case 'scarf': {
+        M.poseTo(tr, A, t0, t0 + d * 0.3, { uArmL: 50, fArmL: 115, uArmR: -50, fArmR: 115 }, 'easeInOut');
+        M.poseTo(tr, A, t0 + d * 0.3, t0 + d * 0.55, { uArmL: 70, fArmL: 100, uArmR: -30, fArmR: 125 }, 'easeInOut');
+        W('scarf', a.on ? (a.value ?? 'red') : 'none');
+        M.poseTo(tr, A, t0 + d * 0.65, end, { uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR }, 'easeInOut');
+        break; }
+      case 'apron': {
+        M.poseTo(tr, A, t0, t0 + d * 0.35, { uArmL: 40, fArmL: 100, uArmR: -40, fArmR: 100 }, 'easeInOut');
+        W('apron', a.on ? (a.value ?? 'white') : 'none');
+        M.poseTo(tr, A, t0 + d * 0.6, end, { uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR }, 'easeInOut');
+        break; }
+    }
+  },
+  fasten(ctx, a) {
+    const tr = ctx.tracks, A = a.actor, d = a.durationMs, t0 = a.t, end = t0 + d;
+    const def = ctx.actors.get(A)?.wardrobe as Record<string, unknown> | undefined;
+    M.blinks(tr, A, t0, end); tween(tr, M.J(A, 'head'), t0, t0 + 300, -14, 'easeInOut'); tween(tr, M.J(A, 'head'), end - 300, end, 0, 'easeInOut');
+    const [ax, ay] = actorPos(ctx, A, t0), f = facingAt(ctx, A, t0), sc = actorScale(ctx, A, t0);
+    const hands = (k: number) => { const pt: P = [ax + f * 5 * sc, ay - (38 + 18 * k) * sc]; return { ...reachJoints(ctx, A, 'left', [pt[0] + f * 1.5, pt[1]], t0), ...reachJoints(ctx, A, 'right', [pt[0] - f * 1.5, pt[1] + 2], t0) }; }; // k 0 = hip, 1 = chest
+    switch (a.what) {
+      case 'buttons': {
+        const from = sampleNumber(tr, `${A}.w.buttons`, t0, (def?.buttons as number | undefined) ?? (a.on ? 0 : 1)), to = a.on ? 1 : 0;
+        ensureWardrobeStart(ctx, A, 'buttons', from); addKey(tr, `${A}.w.buttons`, { t: t0, v: from });
+        // three buttons, one at a time, hands moving up (on) or down (off)
+        for (let i = 0; i < 3; i++) { const ta = t0 + 200 + (d - 400) * (i / 3), tb = t0 + 200 + (d - 400) * ((i + 1) / 3); const k = a.on ? i / 2 : 1 - i / 2; M.poseTo(tr, A, ta, ta + 150, hands(k), 'easeInOut'); addKey(tr, `${A}.w.buttons`, { t: tb - 60, v: a.on ? (i + 1) / 3 : 1 - (i + 1) / 3, e: 'linear' }); }
+        addKey(tr, `${A}.w.buttons`, { t: end, v: to });
+        break; }
+      case 'zipper': {
+        { const z0 = sampleNumber(tr, `${A}.w.zipper`, t0, (def?.zipper as number | undefined) ?? (a.on ? 0 : 1)); ensureWardrobeStart(ctx, A, 'zipper', z0); addKey(tr, `${A}.w.zipper`, { t: t0, v: z0 }); }
+        M.poseTo(tr, A, t0, t0 + 300, hands(a.on ? 0 : 1), 'easeInOut');
+        M.poseTo(tr, A, t0 + 350, end - 250, hands(a.on ? 1 : 0), 'easeInOut');
+        tween(tr, `${A}.w.zipper`, t0 + 350, end - 250, a.on ? 1 : 0, 'easeInOut');
+        break; }
+      case 'laces': {
+        // crouch on one knee: the knot is tied at the front foot, hands down there
+        M.poseTo(tr, A, t0, t0 + d * 0.3, { torso: 40, head: -4, thighL: 70, shinL: -110, thighR: 20, shinR: -100, footL: -10 }, 'easeInOut');
+        tween(tr, `${A}.lift`, t0, t0 + d * 0.3, -14, 'easeInOut');
+        { const [ax, ay] = actorPos(ctx, A, t0), f = facingAt(ctx, A, t0), sc = actorScale(ctx, A, t0); const foot: P = [ax + f * 12 * sc, ay - 4 * sc];
+          M.poseTo(tr, A, t0 + d * 0.1, t0 + d * 0.35, { ...reachJoints(ctx, A, 'left', [foot[0] + f * 2, foot[1] - 2], t0 + d * 0.3), ...reachJoints(ctx, A, 'right', [foot[0] - f * 2, foot[1] - 1], t0 + d * 0.3) }, 'easeInOut');
+          for (let t = t0 + d * 0.35; t + 300 < end - d * 0.25; t += 300) { tween(tr, M.J(A, 'fArmL'), t, t + 150, (sampleNumber(tr, M.J(A, 'fArmL'), t0 + d * 0.35, 40)) + 14, 'easeInOut'); tween(tr, M.J(A, 'fArmL'), t + 150, t + 300, sampleNumber(tr, M.J(A, 'fArmL'), t0 + d * 0.35, 40), 'easeInOut'); } }
+        tween(tr, `${A}.lift`, end - d * 0.25, end, 0, 'easeInOut');
+        ensureWardrobeStart(ctx, A, 'laces', a.on ? 1 : 0); addKey(tr, `${A}.w.laces`, { t: t0 + d * 0.6, v: a.on ? 1 : 0, e: 'step' });
+        M.poseTo(tr, A, end - d * 0.25, end, { torso: 0, head: 0, thighL: 0, shinL: 0, thighR: 0, shinR: 0, footL: 0, uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR }, 'easeInOut');
+        break; }
+      case 'sleeves': {
+        // the right hand pushes the left sleeve up (or pulls it down), then the other way
+        M.poseTo(tr, A, t0, t0 + d * 0.25, { uArmL: 40, fArmL: 60, uArmR: 30, fArmR: 100 }, 'easeInOut');
+        M.poseTo(tr, A, t0 + d * 0.25, t0 + d * 0.45, { uArmR: 55, fArmR: 70 }, 'easeInOut');
+        ensureWardrobeStart(ctx, A, 'sleeves', a.on ? 'rolled' : 'long'); addKey(tr, `${A}.w.sleeves`, { t: t0 + d * 0.45, v: a.on ? 'rolled' : 'long', e: 'step' });
+        M.poseTo(tr, A, t0 + d * 0.5, t0 + d * 0.7, { uArmR: -40, fArmR: 60, uArmL: 30 + 60, fArmL: 100 }, 'easeInOut');
+        M.poseTo(tr, A, t0 + d * 0.7, t0 + d * 0.85, { uArmL: 55 + 60, fArmL: 70 }, 'easeInOut');
+        M.poseTo(tr, A, t0 + d * 0.85, end, { uArmL: 20, fArmL: 80, uArmR: 20, fArmR: 80 }, 'easeInOut'); // forearms out: the rolled sleeves show
+        break; }
     }
   },
   emphasis(ctx, a) { fxStart(ctx.tracks, `fx.${a.target}.${a.kind}`, a.t, -1); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t, v: 0 }); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t + a.durationMs, v: 1, e: 'linear' }); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t + a.durationMs + 1, v: -1 }); },
@@ -388,7 +618,7 @@ function cookIn(ctx: Ctx, actor: string, pan: string, kind: 'fry' | 'brown' | 's
   // the other hand: a held tool presses/pokes now and then, otherwise it rests at the hip
   if (toolHeld) {
     const mouth = propWorld(ctx, pan, t, 'mouth');
-    tween(tr, `${tool}.s.tilt`, t, t + 400, 1, 'easeInOut');
+    tween(tr, `${tool}.s.tilt`, t, t + 400, -1, 'easeInOut');
     M.poseTo(tr, actor, t, t + 400, reachJoints(ctx, actor, other, [mouth[0] - f * 11, mouth[1] - 3], t + 400), 'easeInOut'); // ready at the near rim
     for (let k = t + 400; k + 1200 <= end; k += 1800) {
       M.poseTo(tr, actor, k, k + 350, reachJoints(ctx, actor, other, [mouth[0] - f * 3, mouth[1] - 6], t + 400), 'easeInOut');
@@ -413,6 +643,23 @@ function cookIn(ctx: Ctx, actor: string, pan: string, kind: 'fry' | 'brown' | 's
     if (kind !== 'fry') tween(tr, `${pan}.s.top`, t + 300, end - 200, Math.max(sampleNumber(tr, `${pan}.s.top`, t, 0), target * 0.9), 'linear', 0, sampleNumber(tr, `${pan}.s.top`, t, 0)); // tossed/thin food colours on the visible side too
   }
   M.blinks(tr, actor, t, end);
+}
+
+/** A wardrobe track must start with the actor's current value, or the change would show from t = 0. */
+function ensureWardrobeStart(ctx: Ctx, actor: string, key: string, newValue: string | number | boolean): void {
+  const id = `${actor}.w.${key}`; if (ctx.tracks.get(id)) return;
+  const def = ctx.actors.get(actor)?.wardrobe as Record<string, unknown> | undefined;
+  const cur = def?.[key];
+  const start: string | number | boolean = cur !== undefined ? (cur as string | number | boolean)
+    : typeof newValue === 'number' ? (key === 'buttons' || key === 'zipper' || key === 'laces' ? (newValue >= 0.5 ? 0 : 1) : 0)
+    : typeof newValue === 'boolean' ? !newValue
+    : key === 'hat' || key === 'scarf' || key === 'apron' ? 'none' : key === 'sleeves' ? 'long' : key === 'shoes' ? VARIANT_DEFAULT(actor, ctx, 'shoes') : VARIANT_DEFAULT(actor, ctx, key);
+  addKey(ctx.tracks, id, { t: 0, v: start, e: 'step' });
+}
+function VARIANT_DEFAULT(actor: string, ctx: Ctx, key: string): string {
+  const v = ctx.actors.get(actor)?.variant ?? 'a';
+  const base = VARIANTS[v] as unknown as Record<string, string | undefined>;
+  return base[key] ?? '#cccccc';
 }
 
 function swing(ctx: Ctx, actor: string, prop: string, t: number, d: number, target: 0 | 1): void {

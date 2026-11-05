@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.droppa.1",
+  "template": "process",
+  "senseId": "s.droppa.1",
+  "titleSv": "droppa",
+  "meaningHint": "När små droppar faller, en i taget",
+  "category": "action",
+  "durationMs": 4000,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2600,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "tap",
+      "asset": "fixture.tap",
+      "at": {
+        "x": 56,
+        "y": 52
+      },
+      "z": 1,
+      "scale": 1.6
+    },
+    {
+      "id": "puddle",
+      "asset": "fixture.puddle",
+      "at": {
+        "x": 72,
+        "y": 98
+      },
+      "z": 0,
+      "state": {
+        "size": 0
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "set",
+      "target": "tap",
+      "prop": "flow",
+      "value": 0.25
+    },
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "tap",
+      "prop": "phase",
+      "from": 0,
+      "to": 4,
+      "durationMs": 4000,
+      "ease": "linear"
+    },
+    {
+      "t": 400,
+      "action": "tween",
+      "target": "puddle",
+      "prop": "size",
+      "to": 0.35,
+      "durationMs": 3600,
+      "ease": "linear"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "puddle"
+    ],
+    "feature": "single drops fall from the tap, one at a time"
+  },
+  "contrast": {
+    "with": [
+      "anim.rinna.1"
+    ],
+    "distinctiveFeatures": [
+      "end:puddle.size<=0.4"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.rinna.1",
+      "s.läcka.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

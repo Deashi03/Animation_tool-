@@ -8,7 +8,8 @@ import { renderFrame } from '../src/engine/render';
 import { frameToSvg } from '../src/engine/svgString';
 import { bboxOfId } from '../src/engine/frame';
 import { loadScenes } from '../src/tools/scenes';
-import { Scene } from '../src/schema/scene';
+import { Scene, PROP_ASSETS } from '../src/schema/scene';
+import { drawProp } from '../src/assets/props';
 import { validateScene } from '../src/compiler/validate';
 
 describe('tracks and easing', () => {
@@ -172,7 +173,7 @@ describe('physics rules (the golden rule)', () => {
     const body = bboxOfId(f.root, 'entity.p')!, blanket = bboxOfId(f.root, 'entity.blanket')!;
     expect(blanket.y1).toBeLessThan(body.y1 + 4); // covers the body's top edge
     expect(blanket.x2).toBeGreaterThan(body.x2 - 2); // covers the feet
-    const k = compileScene(scenes.get('anim.sportig.1')!);
+    const k = compileScene(scenes.get('anim.kicka.1')!);
     const ys = Array.from({ length: 19 }, (_, i) => num(k, 'ball.y', i * 40));
     const minY = Math.min(...ys), maxY = Math.max(...ys);
     expect(maxY - minY).toBeGreaterThan(12); // it really flies
@@ -286,5 +287,72 @@ describe('cooking library', () => {
       const s = scenes.get(id)!; expect(['cook-rhythm', 'property-contrast']).toContain(s.template);
       const r = validateScene(s as unknown, scenes); expect(r.problems.filter((p) => p.level === 'error'), id).toEqual([]);
     }
+  });
+});
+
+describe('generic tool work (use) and the prop families', () => {
+  const { scenes } = loadScenes();
+  it('use: the tool is auto-attached, the hand cycles at the target and the effect reaches its value', () => {
+    const c = compileScene(scenes.get('anim.skära.1')!);
+    expect(sample(c.tracks, 'knife.attach', 100)).toBe('p:left');
+    const ys = [400, 500, 600, 700, 800, 900].map((t) => sample(c.tracks, 'p.j.uArmL', t) as number);
+    expect(Math.max(...ys) - Math.min(...ys)).toBeGreaterThan(5); // the arm really moves
+    expect(sample(c.tracks, 'food.s.pieces', 0) as number).toBe(0); expect(sample(c.tracks, 'food.s.pieces', c.durationMs) as number).toBeGreaterThan(0.95);
+  });
+  it('hacka is faster than skära and leaves a pile; vispa foams, röra does not', () => {
+    const h = compileScene(scenes.get('anim.hacka.1')!), s = compileScene(scenes.get('anim.skära.1')!);
+    const changes = (c: typeof h, id: string) => { let n = 0, prev = Math.sign((sample(c.tracks, id, 500) as number) - (sample(c.tracks, id, 470) as number)); for (let t = 530; t < 2500; t += 30) { const d = Math.sign((sample(c.tracks, id, t) as number) - (sample(c.tracks, id, t - 30) as number)); if (d && d !== prev) { n++; prev = d; } } return n; };
+    expect(changes(h, 'p.j.uArmL')).toBeGreaterThan(changes(s, 'p.j.uArmL') * 1.5);
+    expect(sample(h.tracks, 'pile.s.amount', h.durationMs) as number).toBeGreaterThan(0.9);
+    const v = compileScene(scenes.get('anim.vispa.1')!), r = compileScene(scenes.get('anim.röra.1')!);
+    expect(sample(v.tracks, 'bowl.s.foam', v.durationMs) as number).toBeGreaterThan(0.9); expect(sample(r.tracks, 'bowl.s.foam', r.durationMs) as number).toBe(0);
+  });
+  it('sliced food renders with clip paths in both renderers and the held-prop anchor follows a left-facing hand', () => {
+    const c = compileScene(scenes.get('anim.skära.1')!);
+    const svg = frameToSvg(renderFrame(c, c.durationMs));
+    expect(svg).toContain('<clipPath id="c1">'); expect((svg.match(/clip-path="url\(#/g) ?? []).length).toBeGreaterThan(2);
+    const salt = compileScene(scenes.get('anim.salta.1')!);
+    const f = renderFrame(salt, 2000);
+    const shaker = bboxOfId(f.root, 'entity.shaker')!, pot = bboxOfId(f.root, 'entity.pot')!;
+    expect(shaker.x1).toBeLessThan(pot.x2 + 4); // the shaker is over the pot, not behind the cook
+    const grains = [...frameToSvg(f).matchAll(/<circle cx="([\d.-]+)" cy="([\d.-]+)" r="0.95"/g)].map((m) => Number(m[1]));
+    expect(grains.length).toBeGreaterThan(2); for (const x of grains) { expect(x).toBeGreaterThan(pot.x1 - 6); expect(x).toBeLessThan(pot.x2 + 6); }
+  });
+  it('every catalogued prop draws with its defaults and the schema rejects unknown assets with a suggestion', () => {
+    for (const id of PROP_ASSETS) expect(() => drawProp(id, {})).not.toThrow();
+    const bad = Scene.safeParse({ ...scenes.get('anim.skära.1')!, props: [{ id: 'x', asset: 'tool.knive', at: { x: 10, y: 100 } }] });
+    expect(bad.success).toBe(false); if (!bad.success) expect(JSON.stringify(bad.error.issues)).toContain('tool.knife');
+  });
+});
+
+describe('communication, handing over and clothes', () => {
+  const { scenes } = loadScenes();
+  it('say: a speech bubble with the icon follows the speaker and disappears afterwards; the mouth moves', () => {
+    const c = compileScene(scenes.get('anim.beställa.1')!);
+    expect(sample(c.tracks, 'fx.p.say', 1000)).toBe('icon:fork-knife|neutral'); expect(sample(c.tracks, 'fx.p.say', 2300)).toBe('');
+    const mouths = new Set([600, 750, 900, 1050].map((t) => sample(c.tracks, 'p.mouth', t)));
+    expect(mouths.has('open')).toBe(true);
+    const svg = frameToSvg(renderFrame(c, 1000)); expect(svg.length).toBeGreaterThan(frameToSvg(renderFrame(c, 100)).length);
+  });
+  it('give: the prop changes hands midway and ends with the receiver', () => {
+    const c = compileScene(scenes.get('anim.lämna-över.1')!);
+    expect(sample(c.tracks, 'bag.attach', 300)).toBe('p:left'); expect(sample(c.tracks, 'bag.attach', c.durationMs)).toBe('q:left');
+  });
+  it('dress: the wardrobe changes at the midpoint, not from the start; fasten closes the buttons one by one', () => {
+    const on = compileScene(scenes.get('anim.ta-på-sig.1')!);
+    expect(sample(on.tracks, 'p.w.top', 0)).toBe('#f7f3ea'); expect(sample(on.tracks, 'p.w.top', on.durationMs)).toBe('green');
+    const hat = compileScene(scenes.get('anim.sätta-på-sig.1')!);
+    expect(sample(hat.tracks, 'p.w.hat', 0)).toBe('none'); expect(sample(hat.tracks, 'p.w.hat', hat.durationMs)).toBe('red');
+    const b = compileScene(scenes.get('anim.knäppa.1')!);
+    const vals = [0, 1200, 2000, b.durationMs].map((t) => sample(b.tracks, 'p.w.buttons', t) as number);
+    expect(vals[0]).toBe(0); expect(vals[1]!).toBeGreaterThan(0); expect(vals[2]!).toBeGreaterThan(vals[1]!); expect(vals[3]).toBe(1);
+    // the rendered figure shows the V opening when open and the three buttons when closed
+    const open = frameToSvg(renderFrame(b, 50)), closed = frameToSvg(renderFrame(b, b.durationMs));
+    expect(open).toContain('#fbf8f1'); expect(closed).not.toContain('#fbf8f1');
+  });
+  it('garments fold, shrink and fade; the wear features see wardrobe changes', () => {
+    const fold = compileScene(scenes.get('anim.vika.1')!); expect(sample(fold.tracks, 'shirt.s.folded', fold.durationMs) as number).toBeGreaterThan(0.9);
+    for (const id of ['garment.shirt', 'garment.trousers', 'garment.towel', 'garment.dress', 'garment.jacket', 'garment.sock']) { expect(() => drawProp(id, { folded: 1 })).not.toThrow(); expect(() => drawProp(id, { wet: 1, stain: 1, shrink: 0.5, faded: 1 })).not.toThrow(); }
+    const r = validateScene(scenes.get('anim.knäppa-upp.1') as unknown, scenes); expect(r.problems.filter((p) => p.level === 'error')).toEqual([]);
   });
 });

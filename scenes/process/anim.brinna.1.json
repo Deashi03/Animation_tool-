@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.brinna.1",
+  "template": "process",
+  "senseId": "s.brinna.1",
+  "titleSv": "brinna",
+  "meaningHint": "När det är eld i något",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2000,
+  "environment": {
+    "id": "outdoors.park",
+    "time": "evening"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "fire",
+      "asset": "fixture.fire",
+      "at": {
+        "x": 60,
+        "y": 98
+      },
+      "z": 1,
+      "scale": 2.2,
+      "state": {
+        "burn": 1
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "fire",
+      "prop": "phase",
+      "from": 0,
+      "to": 6,
+      "durationMs": 3600,
+      "ease": "linear"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "fire"
+    ],
+    "feature": "logs with flames dancing"
+  },
+  "contrast": {
+    "with": [
+      "anim.släcka.1"
+    ],
+    "distinctiveFeatures": [
+      "end:fire.burn>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.släcka.1",
+      "s.tända.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

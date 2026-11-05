@@ -7,6 +7,26 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "381810f458fc",
     "6969d04e5ca7",
   ],
+  "anim.beställa.1": [
+    "28a8f63a4c72",
+    "bfc49d442591",
+    "f0f0e60ea5f9",
+  ],
+  "anim.blekna.1": [
+    "78aadecf42ba",
+    "ec40e1e55275",
+    "a8a763dd6e3a",
+  ],
+  "anim.brinna.1": [
+    "97eb27632724",
+    "97eb27632724",
+    "97eb27632724",
+  ],
+  "anim.brumma.1": [
+    "beff576f9abc",
+    "beff576f9abc",
+    "a670315c6c47",
+  ],
   "anim.bryna.1": [
     "3e33cbc714bb",
     "572e6b0467c9",
@@ -17,10 +37,45 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "61b6d5b79927",
     "d02190d9373f",
   ],
+  "anim.byta-om.1": [
+    "d3bccffa07aa",
+    "a471cfa7b09c",
+    "6314ce01ae2f",
+  ],
+  "anim.dra-ner.1": [
+    "2d16e6c389ec",
+    "a8b6462aa24d",
+    "d83356ef8b22",
+  ],
+  "anim.dra-upp.1": [
+    "deaf87837f84",
+    "5db0fa4c9dd8",
+    "af929b774534",
+  ],
+  "anim.droppa.1": [
+    "7c4f17d7689d",
+    "1d030d101c06",
+    "86b84fa92d37",
+  ],
+  "anim.dunka.1": [
+    "cd1bec797e2b",
+    "a6494c7bba4f",
+    "2d0d570e51fa",
+  ],
+  "anim.flagna.1": [
+    "43e49377049c",
+    "be7324230f76",
+    "f9b7bcfb8e1f",
+  ],
   "anim.fräsa.1": [
     "996889aa0ff2",
     "6b1a5238db13",
     "cea6e8725bf4",
+  ],
+  "anim.förklara.1": [
+    "5d88655da532",
+    "2918c59c4f21",
+    "eee2e00d670e",
   ],
   "anim.gyllenbrun.1": [
     "1ed535699573",
@@ -32,6 +87,11 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "1d3d672eb277",
     "cfd6ab20a09e",
   ],
+  "anim.hacka.1": [
+    "14207ec65eeb",
+    "a4af10627b25",
+    "a928993f53c2",
+  ],
   "anim.hoppa.1": [
     "2b38a9bfd6aa",
     "7ab3af571314",
@@ -42,20 +102,180 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "783c4263b7dd",
     "ec69e3f476dc",
   ],
+  "anim.jäsa.1": [
+    "d7a626707081",
+    "cbc9f938fb60",
+    "0b2a676d3a6c",
+  ],
+  "anim.kavla-upp.1": [
+    "47b69eeb121d",
+    "bd3f16864339",
+    "cfb430f378fe",
+  ],
+  "anim.kavla.1": [
+    "78dbd6797f9c",
+    "671ca68654ff",
+    "1407c2053768",
+  ],
+  "anim.kicka.1": [
+    "0c739025a2c4",
+    "b5b28bd17e1c",
+    "50ff92941259",
+  ],
+  "anim.klaga.1": [
+    "2b3b669f88a1",
+    "b77ff4597344",
+    "8dd6c5e4b890",
+  ],
+  "anim.klä-av-sig.1": [
+    "64d8adb63517",
+    "582953bb5ece",
+    "45986eca7fb0",
+  ],
+  "anim.klä-på-sig.1": [
+    "fdd45d42be26",
+    "ecfe78ff1108",
+    "a8ec0e95e6bf",
+  ],
+  "anim.knyta.1": [
+    "18301450d494",
+    "b1de0ecd91e4",
+    "8d2f3de85725",
+  ],
+  "anim.knäppa-upp.1": [
+    "272eaada31e2",
+    "7e5965789488",
+    "e51a6473bb92",
+  ],
+  "anim.knäppa.1": [
+    "9ca5f1f2b875",
+    "44cf2c2ed8c8",
+    "c9cbf16fd93f",
+  ],
+  "anim.knåda.1": [
+    "e72ba0fd7cac",
+    "b40c7245a608",
+    "4e33b2d1794e",
+  ],
+  "anim.koka.1": [
+    "7e8563f8e014",
+    "13564e789615",
+    "ababd4301cba",
+  ],
+  "anim.krympa.1": [
+    "143cd7a06484",
+    "dfd6a653dbe3",
+    "2c8aa1bbf99e",
+  ],
+  "anim.köa.1": [
+    "bc790b6f577a",
+    "b884ebdc3c8a",
+    "00ee2b7e8fc4",
+  ],
+  "anim.läcka.1": [
+    "bf3a29b9e497",
+    "875edc25bde0",
+    "6cf062df8ab1",
+  ],
+  "anim.lämna-över.1": [
+    "88b9720164d0",
+    "35bf062c7fc9",
+    "d2432fa54d82",
+  ],
+  "anim.mogna.1": [
+    "3b9ae28fdcc4",
+    "8b8b85db9414",
+    "96fa1fc1f867",
+  ],
+  "anim.mosa.1": [
+    "0bb7de17f773",
+    "1e350a50c543",
+    "eb57acee3524",
+  ],
+  "anim.regna.1": [
+    "e2860a4d790b",
+    "7bdecf0e682a",
+    "c43c1a1d2574",
+  ],
+  "anim.rekommendera.1": [
+    "56b245f9f559",
+    "f13c8ab57325",
+    "069e28d51463",
+  ],
+  "anim.rinna.1": [
+    "ff87503eabc5",
+    "782647d4da8a",
+    "a580c1b8c995",
+  ],
+  "anim.riva.1": [
+    "65d5d289d0cf",
+    "cb31b43a768c",
+    "d8578858c542",
+  ],
+  "anim.ruttna.1": [
+    "0e166ae87dad",
+    "594204d183c0",
+    "bc661a678e1a",
+  ],
+  "anim.röra.1": [
+    "dcfa6cb8f321",
+    "bf6fc77a43e2",
+    "99dd2cdcbf81",
+  ],
+  "anim.salta.1": [
+    "4c52f1e0a6e5",
+    "e1bc42d08190",
+    "91e28b82dc09",
+  ],
+  "anim.servera.1": [
+    "7282027fdfdf",
+    "c8a18c9165db",
+    "38b691c89055",
+  ],
+  "anim.sjuda.1": [
+    "c7b625010087",
+    "6da91f1aebb0",
+    "5e154a797f9a",
+  ],
+  "anim.skala.1": [
+    "78fadd293637",
+    "084deb9710f8",
+    "0bb8bcb8143f",
+  ],
   "anim.skvätta.1": [
     "41542ab4d2c0",
     "5d34769a13cb",
     "be70c2338e1b",
+  ],
+  "anim.skämta.1": [
+    "4ada1236022a",
+    "3505f1ab7d3a",
+    "9931d712ce50",
+  ],
+  "anim.skära.1": [
+    "d3b60dd891db",
+    "fa5c5450948d",
+    "c9fa76bd9cd6",
   ],
   "anim.slappa.1": [
     "e9fc150f2afd",
     "62644e644f82",
     "ad0ac6a980c4",
   ],
+  "anim.släcka.1": [
+    "37de3cbc5b18",
+    "36672ae5f85f",
+    "1d05de037bac",
+  ],
   "anim.smälta.1": [
     "a391f184f00e",
     "4ee72edc1b73",
     "a67719542f3b",
+  ],
+  "anim.smälta.1.v2": [
+    "e3d82d49758f",
+    "e25c25d5389a",
+    "c1ea1b05455b",
   ],
   "anim.sova.1": [
     "26e2641035e6",
@@ -63,11 +283,6 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "b3c5a0b85db3",
   ],
   "anim.sportig.1": [
-    "d7ed4b615eb1",
-    "1b309e5c5037",
-    "a7450afbdcda",
-  ],
-  "anim.sportig.1.v2": [
     "6a93599cd256",
     "54b80f6c7c56",
     "f2e9a6c5838b",
@@ -87,15 +302,65 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "27548a62881c",
     "24af621637df",
   ],
+  "anim.stryka.1": [
+    "731dbb215835",
+    "9fdbb7eafbe5",
+    "20a0bab2805d",
+  ],
   "anim.stänga.1": [
     "2b51e1879e32",
     "57962ac63940",
     "2b291b3880b1",
   ],
+  "anim.sätta-på-sig.1": [
+    "297d07568c97",
+    "bff344655b09",
+    "6f5f4c5e31f1",
+  ],
+  "anim.ta-av-sig.1": [
+    "297d07568c97",
+    "ffe25f147bfc",
+    "3634c008750c",
+  ],
+  "anim.ta-på-sig.1": [
+    "7657ee392499",
+    "c37c9631cffe",
+    "cccf24136111",
+  ],
+  "anim.ursäkta.1": [
+    "1deac1d69cf4",
+    "798d875c118c",
+    "d1f733fb696a",
+  ],
+  "anim.varna.1": [
+    "9921fe345d7d",
+    "447ba3ee8d76",
+    "ac79cb9f2ef0",
+  ],
+  "anim.vika.1": [
+    "2d2c4543f37b",
+    "42b1599430a7",
+    "f393d7ddd6c8",
+  ],
+  "anim.vispa.1": [
+    "7cc3eb66a80e",
+    "854ed394cb20",
+    "d341ab288368",
+  ],
+  "anim.vissna.1": [
+    "e85f6ece880e",
+    "18fe4770543c",
+    "e10bdebd5f9e",
+  ],
   "anim.vända.1": [
-    "03a901c8024a",
-    "1db85ce0a314",
-    "307f4da227b9",
+    "25ec59226d54",
+    "bc27e548773c",
+    "02c1042af4c3",
+  ],
+  "anim.växa.1": [
+    "78a07790a6f7",
+    "8a42d1acce24",
+    "35cf3d18d3b5",
   ],
   "anim.öppna.1": [
     "ff9db568212a",

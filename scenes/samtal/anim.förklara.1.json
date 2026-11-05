@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.förklara.1",
+  "template": "communicate",
+  "senseId": "s.förklara.1",
+  "titleSv": "förklara",
+  "meaningHint": "Berätta så att någon förstår",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 2600,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "b",
+      "at": {
+        "x": 38,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.85
+    },
+    {
+      "id": "q",
+      "variant": "a",
+      "at": {
+        "x": 84,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.85
+    }
+  ],
+  "props": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 4200
+    },
+    {
+      "t": 300,
+      "action": "say",
+      "actor": "p",
+      "icon": "ellipsis",
+      "mood": "neutral",
+      "to": "q",
+      "durationMs": 2200
+    },
+    {
+      "t": 2500,
+      "action": "say",
+      "actor": "q",
+      "icon": "bulb",
+      "mood": "happy",
+      "to": "p",
+      "durationMs": 1200,
+      "gesture": false
+    },
+    {
+      "t": 2500,
+      "action": "express",
+      "actor": "q",
+      "emotion": "happy",
+      "durationMs": 400
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "one explains at length (dots), the other gets it: a light bulb and a smile"
+  },
+  "contrast": {
+    "with": [
+      "anim.beskriva.1"
+    ],
+    "distinctiveFeatures": [
+      "has:action:say"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "samtal",
+    "confusableWith": [
+      "s.beskriva.1",
+      "s.översätta.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

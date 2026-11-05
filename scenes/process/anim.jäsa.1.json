@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.jäsa.1",
+  "template": "process",
+  "senseId": "s.jäsa.1",
+  "titleSv": "jäsa",
+  "meaningHint": "När en deg blir större för att det finns jäst i den",
+  "category": "action",
+  "durationMs": 4400,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3800,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "bowl",
+      "asset": "container.bowl",
+      "at": {
+        "x": 60,
+        "y": 70
+      },
+      "z": 0,
+      "scale": 1.5,
+      "state": {
+        "fill": 0
+      }
+    },
+    {
+      "id": "dough",
+      "asset": "food.dough",
+      "at": {
+        "x": 60,
+        "y": 62
+      },
+      "z": 1,
+      "scale": 1.4,
+      "state": {
+        "rise": 0
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 400,
+      "action": "tween",
+      "target": "dough",
+      "prop": "rise",
+      "to": 1,
+      "durationMs": 3600,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "dough",
+      "prop": "phase",
+      "from": 0,
+      "to": 2,
+      "durationMs": 4400,
+      "ease": "linear"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "dough"
+    ],
+    "feature": "a lump of dough in a bowl slowly swells to twice its size"
+  },
+  "contrast": {
+    "with": [
+      "anim.knåda.1"
+    ],
+    "distinctiveFeatures": [
+      "end:dough.rise>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.knåda.1",
+      "s.svälla.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

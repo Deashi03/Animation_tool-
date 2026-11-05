@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.växa.1",
+  "template": "process",
+  "senseId": "s.växa.1",
+  "titleSv": "växa",
+  "meaningHint": "Bli större, om växter: komma upp och bli högre",
+  "category": "action",
+  "durationMs": 4400,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3800,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "sun",
+      "asset": "fixture.sun",
+      "at": {
+        "x": 22,
+        "y": 22
+      },
+      "z": 0
+    },
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "plant",
+      "asset": "fixture.plant",
+      "at": {
+        "x": 60,
+        "y": 70
+      },
+      "z": 1,
+      "scale": 1.6,
+      "state": {
+        "grow": 0.1
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 300,
+      "action": "tween",
+      "target": "plant",
+      "prop": "grow",
+      "to": 1,
+      "durationMs": 3800,
+      "ease": "easeOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "plant"
+    ],
+    "feature": "a small shoot in a pot grows tall and leafy"
+  },
+  "contrast": {
+    "with": [
+      "anim.vissna.1"
+    ],
+    "distinctiveFeatures": [
+      "end:plant.grow>=0.9",
+      "end:plant.wilt<=0.1"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.vissna.1",
+      "s.odla.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

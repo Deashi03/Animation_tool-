@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.kavla.1",
+  "template": "tool-rhythm",
+  "senseId": "s.kavla.1",
+  "titleSv": "kavla",
+  "meaningHint": "Göra en deg tunn och platt med en kavel",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 3600,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 48,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "navy"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 76,
+        "y": 100
+      },
+      "z": -1
+    },
+    {
+      "id": "dough",
+      "asset": "food.dough",
+      "at": {
+        "x": 76,
+        "y": 70
+      },
+      "z": 1,
+      "state": {
+        "rise": 0.4
+      }
+    },
+    {
+      "id": "pin",
+      "asset": "tool.rollingpin",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "dough",
+      "tool": "pin",
+      "motion": "roll",
+      "bothHands": true,
+      "durationMs": 3800,
+      "effect": [
+        {
+          "key": "flat",
+          "to": 1
+        }
+      ]
+    }
+  ],
+  "focus": {
+    "targets": [
+      "dough"
+    ],
+    "feature": "the rolling pin goes back and forth, the dough becomes a thin wide disc"
+  },
+  "contrast": {
+    "with": [
+      "anim.knåda.1"
+    ],
+    "distinctiveFeatures": [
+      "end:dough.flat>=0.9",
+      "has:action:use"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.knåda.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

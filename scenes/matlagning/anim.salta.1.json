@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.salta.1",
+  "template": "tool-rhythm",
+  "senseId": "s.salta.1",
+  "titleSv": "salta",
+  "meaningHint": "Lägga salt i maten eller i vattnet",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 2600,
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 66,
+        "y": 100
+      },
+      "facing": "left",
+      "wardrobe": {
+        "top": "navy"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "stove",
+      "asset": "stove",
+      "at": {
+        "x": 42,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "pot",
+      "asset": "container.pot",
+      "at": {
+        "x": 42,
+        "y": 70
+      },
+      "z": 1,
+      "state": {
+        "fill": 0.6,
+        "boil": 0.3,
+        "steam": 0.4
+      }
+    },
+    {
+      "id": "shaker",
+      "asset": "tool.shaker",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "cook",
+      "actor": "p",
+      "pan": "pot",
+      "kind": "fry",
+      "durationMs": 200
+    },
+    {
+      "t": 200,
+      "action": "use",
+      "actor": "p",
+      "on": "pot",
+      "tool": "shaker",
+      "hand": "left",
+      "motion": "sprinkle",
+      "durationMs": 3000
+    }
+  ],
+  "focus": {
+    "targets": [
+      "pot"
+    ],
+    "feature": "a salt shaker shakes over the pot and white grains fall in"
+  },
+  "contrast": {
+    "with": [
+      "anim.peppra.1"
+    ],
+    "distinctiveFeatures": [
+      "has:action:use",
+      "prop:tool.shaker"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matlagning",
+    "confusableWith": [
+      "s.peppra.1",
+      "s.krydda.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

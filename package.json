@@ -20,7 +20,9 @@
     "anim:report": "vite-node scripts/cli/anim-report.ts",
     "anim:export": "vite-node scripts/cli/anim-export.ts",
     "anim:blindtest": "vite-node scripts/cli/anim-blindtest.ts",
-    "anim:plan": "vite-node scripts/cli/anim-plan.ts"
+    "anim:plan": "vite-node scripts/cli/anim-plan.ts",
+    "anim:props": "vite-node scripts/cli/anim-props.ts",
+    "anim:coverage": "vite-node scripts/cli/anim-coverage.ts"
   },
   "dependencies": {
     "react": "19.1.0",

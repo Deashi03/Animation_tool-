@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.klaga.1",
+  "template": "communicate",
+  "senseId": "s.klaga.1",
+  "titleSv": "klaga",
+  "meaningHint": "Säga att man inte är nöjd med något",
+  "category": "action",
+  "durationMs": 3800,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 1500,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "b",
+      "at": {
+        "x": 38,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.85
+    },
+    {
+      "id": "q",
+      "variant": "a",
+      "at": {
+        "x": 84,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.85
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": -1,
+      "scale": 0.7
+    },
+    {
+      "id": "plate",
+      "asset": "container.plate",
+      "at": {
+        "x": 60,
+        "y": 79
+      },
+      "z": 0,
+      "scale": 0.8,
+      "state": {
+        "food": 1,
+        "contents": "#5a5a5a"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 3800
+    },
+    {
+      "t": 300,
+      "action": "say",
+      "actor": "p",
+      "icon": "cross",
+      "mood": "angry",
+      "to": "q",
+      "durationMs": 2200
+    },
+    {
+      "t": 900,
+      "action": "express",
+      "actor": "q",
+      "emotion": "sad",
+      "durationMs": 400
+    },
+    {
+      "t": 2700,
+      "action": "say",
+      "actor": "q",
+      "icon": "ellipsis",
+      "mood": "sad",
+      "to": "p",
+      "durationMs": 900
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "an angry guest points at the plate and complains with a cross in the bubble; the other droops"
+  },
+  "contrast": {
+    "with": [
+      "anim.beställa.1"
+    ],
+    "distinctiveFeatures": [
+      "has:say-mood:angry",
+      "has:say-icon:cross"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "samtal",
+    "confusableWith": [
+      "s.reklamera.1",
+      "s.skälla.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

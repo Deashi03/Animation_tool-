@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.ursäkta.1",
+  "template": "communicate",
+  "senseId": "s.ursäkta.1",
+  "titleSv": "ursäkta",
+  "meaningHint": "Säga förlåt när man har gjort något fel",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 1400,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 38,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.85
+    },
+    {
+      "id": "q",
+      "variant": "c",
+      "at": {
+        "x": 84,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.85
+    }
+  ],
+  "props": [
+    {
+      "id": "cup",
+      "asset": "container.cup",
+      "at": {
+        "x": 58,
+        "y": 100
+      },
+      "z": 1,
+      "rotate": 90,
+      "state": {
+        "fill": 0
+      }
+    },
+    {
+      "id": "puddle",
+      "asset": "fixture.puddle",
+      "at": {
+        "x": 62,
+        "y": 100
+      },
+      "z": 0,
+      "state": {
+        "size": 0.4,
+        "col": "#8a5a3a"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 3600
+    },
+    {
+      "t": 200,
+      "action": "pose",
+      "actor": "p",
+      "joints": {
+        "torso": 22,
+        "head": 10
+      },
+      "durationMs": 500,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 300,
+      "action": "say",
+      "actor": "p",
+      "icon": "hand",
+      "mood": "sad",
+      "to": "q",
+      "durationMs": 1800
+    },
+    {
+      "t": 2300,
+      "action": "pose",
+      "actor": "p",
+      "joints": {
+        "torso": 0,
+        "head": 0
+      },
+      "durationMs": 500,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 1600,
+      "action": "express",
+      "actor": "q",
+      "emotion": "content",
+      "durationMs": 400
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "a spilled cup on the floor; the one who did it bows and apologises with an open hand; the other softens"
+  },
+  "contrast": {
+    "with": [
+      "anim.tacka.1"
+    ],
+    "distinctiveFeatures": [
+      "has:say-mood:sad",
+      "has:say-icon:hand"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "samtal",
+    "confusableWith": [
+      "s.be-om-ursäkt.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

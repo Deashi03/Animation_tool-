@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.krympa.1",
+  "template": "process",
+  "senseId": "s.krympa.1",
+  "titleSv": "krympa",
+  "meaningHint": "Bli mindre, till exempel när man tvättar kläder i för varmt vatten",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 900,
+  "posterMs": 3600,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "wm",
+      "asset": "fixture.washingmachine",
+      "at": {
+        "x": 36,
+        "y": 100
+      },
+      "z": 0,
+      "state": {
+        "spin": 1
+      }
+    },
+    {
+      "id": "shirt",
+      "asset": "garment.shirt",
+      "at": {
+        "x": 88,
+        "y": 98
+      },
+      "z": 1,
+      "color": "red"
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "wm",
+      "prop": "phase",
+      "from": 0,
+      "to": 3,
+      "durationMs": 4200,
+      "ease": "linear"
+    },
+    {
+      "t": 600,
+      "action": "tween",
+      "target": "shirt",
+      "prop": "shrink",
+      "to": 1,
+      "durationMs": 3000,
+      "ease": "easeInOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "wm"
+    ],
+    "feature": "next to a spinning washing machine a red shirt shrinks to child size"
+  },
+  "contrast": {
+    "with": [
+      "anim.blekna.1"
+    ],
+    "distinctiveFeatures": [
+      "end:shirt.shrink>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "kläder",
+    "confusableWith": [
+      "s.blekna.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

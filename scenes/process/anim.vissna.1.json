@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.vissna.1",
+  "template": "process",
+  "senseId": "s.vissna.1",
+  "titleSv": "vissna",
+  "meaningHint": "Om växter: bli slak och torr, hänga ner",
+  "category": "action",
+  "durationMs": 4400,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3800,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "flower",
+      "asset": "fixture.flower",
+      "at": {
+        "x": 60,
+        "y": 70
+      },
+      "z": 1,
+      "scale": 1.6
+    }
+  ],
+  "timeline": [
+    {
+      "t": 500,
+      "action": "tween",
+      "target": "flower",
+      "prop": "wilt",
+      "to": 1,
+      "durationMs": 3600,
+      "ease": "easeInOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "flower"
+    ],
+    "feature": "a fresh flower droops, the petals turn dull and hang"
+  },
+  "contrast": {
+    "with": [
+      "anim.växa.1"
+    ],
+    "distinctiveFeatures": [
+      "end:flower.wilt>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.växa.1",
+      "s.torka.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

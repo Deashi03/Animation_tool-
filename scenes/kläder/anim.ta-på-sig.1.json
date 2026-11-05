@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.ta-på-sig.1",
+  "template": "dress-self",
+  "senseId": "s.ta-på-sig.1",
+  "titleSv": "ta på sig",
+  "meaningHint": "Klä sig i ett plagg",
+  "category": "action",
+  "durationMs": 3400,
+  "loop": true,
+  "holdMs": 900,
+  "posterMs": 2800,
+  "environment": {
+    "id": "bedroom",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "#f7f3ea",
+        "sleeves": "short"
+      }
+    }
+  ],
+  "props": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 400
+    },
+    {
+      "t": 400,
+      "action": "dress",
+      "actor": "p",
+      "garment": "top",
+      "on": true,
+      "value": "green",
+      "durationMs": 1800
+    },
+    {
+      "t": 2200,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 1200
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "arms go up, a green shirt comes down over the head and torso"
+  },
+  "contrast": {
+    "with": [
+      "anim.ta-av-sig.1"
+    ],
+    "distinctiveFeatures": [
+      "wear:p.top==green",
+      "wear-start:p.top==#f7f3ea",
+      "has:action:dress"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "kläder",
+    "confusableWith": [
+      "s.ta-av-sig.1",
+      "s.klä-på-sig.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

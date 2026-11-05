@@ -29,6 +29,23 @@
       "approved": false
     },
     "attribute-gloss": {
+      "approved": true,
+      "approvedBy": "produktägaren (chatt 2026-11-05: 'den där det drog sportig på japanska är bättre')",
+      "date": "2026-11-05"
+    },
+    "tool-rhythm": {
+      "approved": false
+    },
+    "process": {
+      "approved": false
+    },
+    "communicate": {
+      "approved": false
+    },
+    "social": {
+      "approved": false
+    },
+    "dress-self": {
       "approved": false
     }
   }

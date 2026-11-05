@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.lämna-över.1",
+  "template": "social",
+  "senseId": "s.lämna-över.1",
+  "titleSv": "lämna över",
+  "meaningHint": "Ge något till någon annan så att den tar hand om det",
+  "category": "action",
+  "durationMs": 3200,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 1500,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 38,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.85
+    },
+    {
+      "id": "q",
+      "variant": "b",
+      "at": {
+        "x": 84,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.85
+    }
+  ],
+  "props": [
+    {
+      "id": "bag",
+      "asset": "container.bag",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      },
+      "scale": 0.75
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 3200
+    },
+    {
+      "t": 300,
+      "action": "give",
+      "from": "p",
+      "to": "q",
+      "prop": "bag",
+      "durationMs": 1600
+    },
+    {
+      "t": 2000,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 1200
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "one hands a bag to the other; it changes hands in the middle"
+  },
+  "contrast": {
+    "with": [
+      "anim.servera.1"
+    ],
+    "distinctiveFeatures": [
+      "has:action:give"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "samtal",
+    "confusableWith": [
+      "s.ge.1",
+      "s.skicka.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

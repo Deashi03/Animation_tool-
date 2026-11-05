@@ -11,7 +11,7 @@ import type { EYES, BROWS, MOUTHS } from '../schema/scene';
 export type Eyes = (typeof EYES)[number];
 export type Brows = (typeof BROWS)[number];
 export type Mouth = (typeof MOUTHS)[number];
-export type Wardrobe = { top: string; bottom: string; shoes: string; hair: string; skin: string; hairStyle: 'short' | 'long' | 'bun' | 'curly'; headband?: string; shorts?: boolean; number?: string };
+export type Wardrobe = { top: string; bottom: string; shoes: string; hair: string; skin: string; hairStyle: 'short' | 'long' | 'bun' | 'curly'; headband?: string; shorts?: boolean; number?: string; hat?: string; glasses?: boolean; scarf?: string; buttons?: number; zipper?: number; sleeves?: 'long' | 'short' | 'rolled'; apron?: string; laces?: number };
 export type Face = { eyes: Eyes; brows: Brows; mouth: Mouth; gaze: number; blush: boolean; blink: boolean };
 export type CharacterState = { pose: Pose; facing: 1 | -1; lift: number; bodyRotate: number; face: Face; wardrobe: Wardrobe; holding: { left?: FrameNode; right?: FrameNode } };
 
@@ -27,6 +27,10 @@ const outlinedLimb = (pts: P[], col: string, sw: number): FrameNode[] => [
   line(pts, { stroke: INK, sw: sw + 2.4 }),
   line(pts, { stroke: col, sw }),
 ];
+/** An arm: sleeve all the way, or short/rolled sleeve (forearm in skin, a cuff at the elbow when rolled). */
+const arm = (pts: P[], w: Wardrobe, sw: number): FrameNode[] => w.sleeves && w.sleeves !== 'long'
+  ? [...outlinedLimb([pts[0]!, pts[1]!], w.top, sw), ...outlinedLimb([pts[1]!, pts[2]!], w.skin, sw - 1.2), ...(w.sleeves === 'rolled' ? [circle(pts[1]![0], pts[1]![1], sw / 2 + 1.4, { fill: w.top, stroke: INK, sw: 1.8 })] : [])]
+  : outlinedLimb(pts, w.top, sw);
 /** A leg: trousers all the way, or shorts (thigh in cloth, shin in skin, a little thinner). */
 const leg = (pts: P[], w: Wardrobe, sw: number): FrameNode[] => w.shorts
   ? [...outlinedLimb([pts[0]!, pts[1]!], w.bottom, sw), ...outlinedLimb([pts[1]!, pts[2]!], w.skin, sw - 1.2), circle(pts[1]![0], pts[1]![1], sw / 2, { fill: w.bottom, stroke: INK, sw: 2 })]
@@ -34,11 +38,11 @@ const leg = (pts: P[], w: Wardrobe, sw: number): FrameNode[] => w.shorts
 const hand = (p: P, skin: string, gripping: boolean): FrameNode => gripping
   ? circle(p[0], p[1], 3.2, { fill: skin, stroke: INK, sw: 1.6 })
   : ellipse(p[0], p[1] + 0.6, 3.1, 3.6, { fill: skin, stroke: INK, sw: 1.6 });
-const shoe = (ankle: P, toe: P, col: string): FrameNode => {
+const shoe = (ankle: P, toe: P, col: string, laces = 0): FrameNode => {
   // a rounded shoe from ankle toward toe
   const dx = toe[0] - ankle[0], dy = toe[1] - ankle[1];
   const ang = (Math.atan2(dy, dx) * 180) / Math.PI;
-  return g([rect(-3.5, -2.2, 10.5, 4.8, { rx: 2.4, fill: col, stroke: INK, sw: 1.6 })], { x: ankle[0], y: ankle[1] + 0.6, rotate: ang });
+  return g([rect(-3.5, -2.2, 10.5, 4.8, { rx: 2.4, fill: col, stroke: INK, sw: 1.6 }), ...(laces >= 0.5 ? [path('M1 -2.4 l-2 -2 l2 1 l2 -1 Z', { fill: C.white, stroke: INK, sw: 0.8 })] : [])], { x: ankle[0], y: ankle[1] + 0.6, rotate: ang });
 };
 
 function hairNode(head: P, w: Wardrobe): FrameNode[] {
@@ -50,6 +54,7 @@ function hairNode(head: P, w: Wardrobe): FrameNode[] {
   else out.push(path(`M${r1(hx - r)} ${r1(hy - 1)} c0 -14 ${2 * r} -14 ${2 * r} 0 c-3 -5 -${2 * r - 3} -5 -${2 * r} 0 Z`, paint));
   if (w.hairStyle === 'bun') out.push(circle(hx, hy - r - 3, 4.5, paint));
   if (w.headband) out.push(path(`M${r1(hx - r - 0.5)} ${r1(hy - 2)} q${r} -5 ${2 * r + 1} 0 l0 3.5 q-${r} -5 -${2 * r + 1} 0 Z`, { fill: color(w.headband), stroke: INK, sw: 1.4 }));
+  if (w.hat && w.hat !== 'none') out.push(path(`M${r1(hx - r - 1.5)} ${r1(hy - 3)} q0 -12 ${r + 1.5} -12 q${r + 1.5} 0 ${r + 1.5} 12 Z`, { fill: color(w.hat), stroke: INK, sw: 2 }), path(`M${r1(hx - r - 2)} ${r1(hy - 3)} h${2 * r + 4} q0 3 -2 3 h${-(2 * r)} q-2 0 -2 -3 Z`, { fill: color(w.hat), stroke: INK, sw: 1.6 }));
   return out;
 }
 
@@ -100,9 +105,9 @@ export function drawCharacter(s: CharacterState): FrameNode {
   // back limbs (the side away from the viewer is the "R" side when facing right)
   const backArm: P[] = [rig.shR, rig.elbowR, rig.handR], frontArm: P[] = [rig.shL, rig.elbowL, rig.handL];
   const backLeg: P[] = [rig.hipR, rig.kneeR, rig.ankleR], frontLeg: P[] = [rig.hipL, rig.kneeL, rig.ankleL];
-  nodes.push(...outlinedLimb(backArm, w.top, armSw), hand(rig.handR, w.skin, gripR));
+  nodes.push(...arm(backArm, w, armSw), hand(rig.handR, w.skin, gripR));
   if (s.holding.right) nodes.push(g([s.holding.right], { x: rig.handR[0], y: rig.handR[1] }));
-  nodes.push(...leg(backLeg, w, legSw), shoe(rig.ankleR, rig.toeR, w.shoes));
+  nodes.push(...leg(backLeg, w, legSw), shoe(rig.ankleR, rig.toeR, w.shoes, w.laces ?? 0));
   // pelvis: trousers block that joins the legs to the torso so the body never "detaches"
   const hw = SEG.hipW + 2.6;
   nodes.push(path(`M${r1(rig.hip[0] - hw)} ${r1(rig.hip[1] - 6)} L${r1(rig.hip[0] + hw)} ${r1(rig.hip[1] - 6)} L${r1(rig.hip[0] + hw)} ${r1(rig.hip[1] + 4)} Q${r1(rig.hip[0])} ${r1(rig.hip[1] + 7)} ${r1(rig.hip[0] - hw)} ${r1(rig.hip[1] + 4)} Z`, { fill: w.bottom, stroke: INK, sw: 2.2 }));
@@ -115,7 +120,16 @@ export function drawCharacter(s: CharacterState): FrameNode {
   nodes.push(path(`M${P4(sx - px * sw - ux * 1.5, sy - py * sw - uy * 1.5)} Q${P4(sx - ux * 5, sy - uy * 5)} ${P4(sx + px * sw - ux * 1.5, sy + py * sw - uy * 1.5)} L${P4(hx0 + px * hwT, hy0 + py * hwT)} Q${P4(hx0 + ux * -2, hy0 + uy * -2)} ${P4(hx0 - px * hwT, hy0 - py * hwT)} Z`, { fill: w.top, stroke: INK, sw: 2.2 }));
   nodes.push(path(`M${P4(hx0 - px * 5 - ux * 5, hy0 - py * 5 - uy * 5)} Q${P4(hx0 - ux * 3, hy0 - uy * 3)} ${P4(hx0 + px * 5 - ux * 5, hy0 + py * 5 - uy * 5)}`, { stroke: 'rgba(0,0,0,0.12)', sw: 1.6, fill: 'none' }));
   if (w.number) { const cx = (sx + hx0) / 2 - ux * 2 + 3.5, cy = (sy + hy0) / 2 - uy * 2; nodes.push(text(cx, cy + 3, w.number, 8, { fill: '#ffffff', weight: 800, anchor: 'middle' })); }
-  nodes.push(...leg(frontLeg, w, legSw), shoe(rig.ankleL, rig.toeL, w.shoes));
+  // front opening: buttons (fraction closed) or a zipper; open part shows a lighter undershirt in a V
+  const front = (k: number): [number, number] => [sx + ux * -(SEG.torso * k) + px * 1.5, sy + uy * -(SEG.torso * k) + py * 1.5]; // k = 0 at the shoulder line, 1 at the hip
+  if (typeof w.buttons === 'number') {
+    const closed = Math.max(0, Math.min(1, w.buttons));
+    if (closed < 0.98) { const [ox, oy] = front(0.0), [bx, by] = front(0.1 + 0.75 * (1 - closed)); nodes.push(path(`M${r1(ox - px * 5.5)} ${r1(oy - py * 5.5)} L${r1(bx)} ${r1(by)} L${r1(ox + px * 5.5)} ${r1(oy + py * 5.5)} Z`, { fill: '#fbf8f1', stroke: INK, sw: 1.4 })); }
+    for (let i = 0; i < 3; i++) { const k = 0.2 + i * 0.3; if (k <= 0.1 + 0.75 * (1 - closed) && closed < 0.98) continue; const [bx, by] = front(k); nodes.push(circle(bx, by, 1.2, { fill: INK })); }
+  }
+  if (typeof w.zipper === 'number') { const z = Math.max(0, Math.min(1, w.zipper)); const [ax, ay] = front(0.9), [bx, by] = front(0.9 - 0.85 * z); nodes.push(line([[ax, ay], [bx, by]], { stroke: C.silver, sw: 1.6 }), line([[ax, ay], [bx, by]], { stroke: INK, sw: 0.6 }), circle(bx, by, 1.3, { fill: C.silver, stroke: INK, sw: 0.8 })); if (z < 0.98) { const [tx, ty] = front(0.0); nodes.push(path(`M${r1(tx - px * 5.5)} ${r1(ty - py * 5.5)} L${r1(bx)} ${r1(by)} L${r1(tx + px * 5.5)} ${r1(ty + py * 5.5)} Z`, { fill: '#fbf8f1', stroke: INK, sw: 1.2 })); } }
+  if (w.apron) { const [ax, ay] = front(0.25), [bx, by] = front(1.0); nodes.push(path(`M${r1(ax - px * 6)} ${r1(ay - py * 6)} L${r1(ax + px * 6)} ${r1(ay + py * 6)} L${r1(bx + px * 7)} ${r1(by + py * 7 + 6)} L${r1(bx - px * 7)} ${r1(by - py * 7 + 6)} Z`, { fill: color(w.apron), stroke: INK, sw: 1.6 })); }
+  nodes.push(...leg(frontLeg, w, legSw), shoe(rig.ankleL, rig.toeL, w.shoes, w.laces ?? 0));
   // neck + head
   nodes.push(line([rig.shoulder, [rig.head[0], rig.head[1] + 6]], { stroke: w.skin, sw: 4.6 }));
   const headA = -(rig.angles.torso + rig.angles.head);
@@ -124,8 +138,10 @@ export function drawCharacter(s: CharacterState): FrameNode {
     ...hairNode([0, 0], w),
     ...faceNodes([0, 0], s.face, s.facing, w.skin),
   ], { x: rig.head[0], y: rig.head[1], rotate: headA }));
+  if (w.scarf) { const [nx, ny] = rig.neck; nodes.push(path(`M${r1(nx - 8)} ${r1(ny)} q8 -3 16 0 q0 4 -3 5 q-5 -2 -10 0 q-3 -1 -3 -5 Z`, { fill: color(w.scarf), stroke: INK, sw: 1.6 }), path(`M${r1(nx + 2)} ${r1(ny + 3)} q2 6 0 12 q-3 -1 -3 -4 q1 -4 3 -8 Z`, { fill: color(w.scarf), stroke: INK, sw: 1.4 })); }
+  if (w.glasses) { const hr = SEG.headR; nodes.push(g([circle(-3.2, -0.5, 3.4, { fill: 'rgba(255,255,255,0.4)', stroke: INK, sw: 1.4 }), circle(4.6, -0.5, 3.4, { fill: 'rgba(255,255,255,0.4)', stroke: INK, sw: 1.4 }), line([[0.2, -0.5], [1.2, -0.5]], { stroke: INK, sw: 1.2 }), line([[-6.6, -0.5], [-hr + 1, -2]], { stroke: INK, sw: 1.2 })], { x: rig.head[0], y: rig.head[1], rotate: headA })); }
   // the near arm is drawn last so that a raised hand (and what it holds) passes in front of the face
-  nodes.push(...outlinedLimb(frontArm, w.top, armSw), hand(rig.handL, w.skin, gripL));
+  nodes.push(...arm(frontArm, w, armSw), hand(rig.handL, w.skin, gripL));
   if (s.holding.left) nodes.push(g([s.holding.left], { x: rig.handL[0], y: rig.handL[1] }));
   // whole-body rotation (lying down) happens around the feet/hip pivot
   return g(nodes, s.bodyRotate ? { rotate: s.bodyRotate, px: 0, py: -SEG.hipH } : undefined);

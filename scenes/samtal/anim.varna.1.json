@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.varna.1",
+  "template": "communicate",
+  "senseId": "s.varna.1",
+  "titleSv": "varna",
+  "meaningHint": "Säga till någon att något kan vara farligt",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 1500,
+  "environment": {
+    "id": "outdoors.park",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "c",
+      "at": {
+        "x": 30,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.85
+    },
+    {
+      "id": "q",
+      "variant": "a",
+      "at": {
+        "x": 66,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.85
+    }
+  ],
+  "props": [
+    {
+      "id": "fire",
+      "asset": "fixture.fire",
+      "at": {
+        "x": 104,
+        "y": 98
+      },
+      "z": 1,
+      "scale": 1.3
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 3600
+    },
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "fire",
+      "prop": "phase",
+      "from": 0,
+      "to": 6,
+      "durationMs": 3600,
+      "ease": "linear"
+    },
+    {
+      "t": 300,
+      "action": "say",
+      "actor": "p",
+      "icon": "exclaim",
+      "mood": "surprised",
+      "to": "q",
+      "durationMs": 1800
+    },
+    {
+      "t": 800,
+      "action": "turn",
+      "actor": "q",
+      "facing": "right"
+    },
+    {
+      "t": 1000,
+      "action": "express",
+      "actor": "q",
+      "emotion": "surprised",
+      "durationMs": 400
+    },
+    {
+      "t": 1400,
+      "action": "lookAt",
+      "actor": "q",
+      "target": "fire"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "one person calls out with an exclamation mark; the other turns and sees the fire"
+  },
+  "contrast": {
+    "with": [
+      "anim.klaga.1"
+    ],
+    "distinctiveFeatures": [
+      "has:action:say",
+      "prop:fixture.fire"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "samtal",
+    "confusableWith": [
+      "s.hota.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

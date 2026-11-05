@@ -1,5 +1,5 @@
 /** FrameTree → React SVG elements. No innerHTML: scene data never becomes markup. */
-import { memo, type ReactElement } from 'react';
+import { memo, useId, type ReactElement } from 'react';
 import { transformAttr, type Frame, type FrameNode } from '../engine/frame';
 
 function paintProps(n: { fill?: string; stroke?: string; sw?: number; opacity?: number; dash?: string; linecap?: string }, defaultFill = 'none') {
@@ -14,7 +14,12 @@ function Node({ n, k }: { n: FrameNode; k: string }): ReactElement {
   switch (n.type) {
     case 'g': {
       const tr = transformAttr(n.t);
-      return <g transform={tr || undefined} opacity={n.opacity !== undefined && n.opacity !== 1 ? n.opacity : undefined} data-id={n.id}>{n.children.map((c, i) => <Node n={c} k={`${k}.${i}`} key={i} />)}</g>;
+      const kids = n.children.map((c, i) => <Node n={c} k={`${k}.${i}`} key={i} />);
+      if (n.clip) {
+        const id = `clip-${k}`;
+        return <g transform={tr || undefined} opacity={n.opacity !== undefined && n.opacity !== 1 ? n.opacity : undefined} data-id={n.id}><clipPath id={id}><rect x={n.clip.x} y={n.clip.y} width={n.clip.w} height={n.clip.h} rx={n.clip.rx} /></clipPath><g clipPath={`url(#${id})`}>{kids}</g></g>;
+      }
+      return <g transform={tr || undefined} opacity={n.opacity !== undefined && n.opacity !== 1 ? n.opacity : undefined} data-id={n.id}>{kids}</g>;
     }
     case 'path': return <path d={n.d} {...paintProps(n)} />;
     case 'circle': return <circle cx={n.cx} cy={n.cy} r={n.r} {...paintProps(n)} />;
@@ -27,10 +32,11 @@ function Node({ n, k }: { n: FrameNode; k: string }): ReactElement {
 
 export const FrameView = memo(function FrameView({ frame, size, label, className, style }: { frame: Frame; size?: number; label?: string; className?: string; style?: React.CSSProperties }) {
   const w = size ?? frame.w, h = size ? Math.round((size * frame.h) / frame.w) : frame.h;
+  const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   return (
     <svg viewBox={`0 0 ${frame.w} ${frame.h}`} width={w} height={h} role="img" aria-label={label} aria-hidden={label ? undefined : true} className={className} style={{ display: 'block', ...style }}>
       {frame.bg !== 'transparent' && <rect width={frame.w} height={frame.h} rx={frame.rx} fill={frame.bg} />}
-      <Node n={frame.root} k="r" />
+      <Node n={frame.root} k={`r${uid}`} />
     </svg>
   );
 });

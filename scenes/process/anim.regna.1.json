@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.regna.1",
+  "template": "process",
+  "senseId": "s.regna.1",
+  "titleSv": "regna",
+  "meaningHint": "När vatten faller från molnen i droppar",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2400,
+  "environment": {
+    "id": "outdoors.park",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "cloud",
+      "asset": "fixture.cloud",
+      "at": {
+        "x": 60,
+        "y": 34
+      },
+      "z": 1,
+      "scale": 2,
+      "state": {
+        "dark": 0,
+        "rain": 0
+      }
+    },
+    {
+      "id": "puddle",
+      "asset": "fixture.puddle",
+      "at": {
+        "x": 60,
+        "y": 98
+      },
+      "z": 0,
+      "state": {
+        "size": 0
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 200,
+      "action": "tween",
+      "target": "cloud",
+      "prop": "dark",
+      "to": 1,
+      "durationMs": 700,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 700,
+      "action": "tween",
+      "target": "cloud",
+      "prop": "rain",
+      "to": 1,
+      "durationMs": 600,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "cloud",
+      "prop": "phase",
+      "from": 0,
+      "to": 4,
+      "durationMs": 3600,
+      "ease": "linear"
+    },
+    {
+      "t": 1000,
+      "action": "tween",
+      "target": "puddle",
+      "prop": "size",
+      "to": 1,
+      "durationMs": 2400,
+      "ease": "linear"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "puddle"
+    ],
+    "feature": "a cloud darkens, rain falls and a puddle forms on the ground"
+  },
+  "contrast": {
+    "with": [
+      "anim.snöa.1"
+    ],
+    "distinctiveFeatures": [
+      "end:cloud.rain>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "process",
+    "confusableWith": [
+      "s.snöa.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

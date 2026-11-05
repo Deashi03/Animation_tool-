@@ -127,17 +127,6 @@
       "reviewer": "claude-subagent (opus, fresh context)"
     }
   ],
-  "anim.sportig.1": [
-    {
-      "date": "2026-11-05",
-      "batch": "b1",
-      "passed": true,
-      "choice": "sportig",
-      "expected": "sportig",
-      "description": "Två figurer står bredvid varandra: en i vanliga kläder står stilla, medan den andra i orange tröja och rött pannband kickar en fotboll med knät gång på gång; kontrasten visar egenskapen att vara sportig/aktiv snarare än själva plaggen.",
-      "reviewer": "claude-subagent (opus, fresh context)"
-    }
-  ],
   "anim.fräsa.1": [
     {
       "date": "2026-11-05",
@@ -277,6 +266,568 @@
       "choice": "bränna",
       "expected": "bränna",
       "description": "En rosa skiva i pannan blir orange, brun och till slut svart med mörkgrå rök, och personen får en orolig/förskräckt min – maten bränns vid. Tydligt bränna.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.kicka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b1",
+      "passed": true,
+      "choice": "sportig",
+      "expected": "sportig",
+      "description": "Två figurer står bredvid varandra: en i vanliga kläder står stilla, medan den andra i orange tröja och rött pannband kickar en fotboll med knät gång på gång; kontrasten visar egenskapen att vara sportig/aktiv snarare än själva plaggen.",
+      "reviewer": "claude-subagent (opus, fresh context)",
+      "note": "resultat från scenen när den hette anim.sportig.1"
+    }
+  ],
+  "anim.mosa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "mosa",
+      "expected": "mosa",
+      "description": "En person står vid ett bord och trycker ett grått verktyg med brett huvud upp och ner i en skål med en ljus, mjuk massa som plattas till – det ser ut som potatismos som mosas (verktyget kan dock även läsas som en kniv).",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.skala.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "skala",
+      "expected": "skala",
+      "description": "Personen håller ett litet mörkt verktyg mot en brun oval (potatis) som gradvis blir gulare – skalet tas bort; själva skalet syns inte, bara färgbytet.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.vispa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "vispa",
+      "expected": "vispa",
+      "description": "Personen rör med en ballongvisp i en skål där klumpar/äggulor successivt blir en jämn ljus smet – vispning.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.knåda.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "knåda",
+      "expected": "knåda",
+      "description": "Personen trycker och drar med båda händerna i en ljus degklump på bordet som växlar form (bredare/smalare) utan verktyg – knådning (gissning, rörelsen är liten).",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.kavla.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "kavla",
+      "expected": "kavla",
+      "description": "Personen rullar en kavel fram och tillbaka över en deg som blir allt plattare och bredare på bordet – kavla.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.riva.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "riva",
+      "expected": "riva",
+      "description": "Personen håller ett upprätt rivjärn och drar en gul ostbit mot det så att en hög gula strimlor växer på bordet – riva.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.röra.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "röra",
+      "expected": "röra",
+      "description": "Personen rör runt med en sked/slev i en skål där innehållet går från klumpigt till jämnt – röra om (mycket likt C, skillnaden är bara verktyget).",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.hacka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "hacka",
+      "expected": "hacka",
+      "description": "Personen hugger med en kniv rakt ner i en brun lök och en hög av små bitar/ringar växer bredvid; ögonen sluts en gång (lök i ögonen?) – hackning, men bitarna ser ut som ringar så det kan också vara skära.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.skära.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "skära",
+      "expected": "skära",
+      "description": "Personen för en kniv längs en orange morot som bit för bit blir till orangea skivor i rad på bordet – skära i skivor.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.salta.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b5",
+      "passed": true,
+      "choice": "salta",
+      "expected": "salta",
+      "description": "Personen står vid en spis med en ångande kastrull och skakar en vit strödosa över den så att små korn faller ner – saltar; kunde lika gärna vara peppra eftersom dosan är vit utan tydlig markering.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.läcka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "läcka",
+      "expected": "läcka",
+      "description": "En hink står på ett bord inomhus (dagsljus i fönstret); vattendroppar faller från hinkens botten genom bordet och en pöl på golvet växer medan vattennivån i hinken sjunker – hinken läcker.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.ruttna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "ruttna",
+      "expected": "ruttna",
+      "description": "Ett rött äpple på ett bord får gradvis bruna fläckar, blir brunt och grågrönt mögligt – det ruttnar.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.växa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "växa",
+      "expected": "växa",
+      "description": "Ett litet grönt skott i en kruka på ett bord blir högre och får fler blad medan solen skiner i fönstret – plantan växer.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.brinna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "brinna",
+      "expected": "brinna",
+      "description": "En lägereld med vedträn utomhus; lågorna fladdrar och byter form ruta för ruta men elden varken tänds eller släcks – den brinner.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.koka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "koka",
+      "expected": "koka",
+      "description": "En kastrull med vatten på en spisplatta med röd glöd; ånga stiger och stora bubblor väller upp vid ytan – vattnet kokar kraftigt.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.flagna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "flagna",
+      "expected": "flagna",
+      "description": "Från en blå målad vägg lossnar små ljusa flagor en efter en, faller ner och samlas i en hög på marken medan ljusa fläckar blir kvar på väggen – färgen flagnar.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.jäsa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "jäsa",
+      "expected": "jäsa",
+      "description": "En skål med en ljus degklump på ett bord; klumpen sväller långsamt uppåt tills den puffar upp över skålens kant – degen jäser.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.vissna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "vissna",
+      "expected": "vissna",
+      "description": "En rosa blomma på ett bord tappar färg, blir brun och böjer sig ner med hängande huvud och blad – den vissnar.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.rinna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "rinna",
+      "expected": "rinna",
+      "description": "En kran med en jämn, tjock vattenstråle som rinner ner mot golvet där en pöl växer – vattnet rinner.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.regna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "regna",
+      "expected": "regna",
+      "description": "Ett vitt moln utomhus mörknar till ett grått regnmoln, blå streck faller snett ner och en pöl bildas och växer på gräset – det regnar.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.sjuda.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "sjuda",
+      "expected": "sjuda",
+      "description": "En kastrull med vatten på spisen; svag ånga och några små bubblor vid ytan, tydligt lugnare än den kraftigt kokande kastrullen i E – vattnet sjuder.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.släcka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "släcka",
+      "expected": "släcka",
+      "description": "En hink med vatten lyfts upp och tippas över en lägereld; vatten hälls ner, lågorna krymper och försvinner och grå rökpuffar stiger från de våta vedträna – elden släcks.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.smälta.1.v2": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "smälta",
+      "expected": "smälta",
+      "description": "En ljusblå iskub på ett bord i solsken blir mindre och mindre medan en vattenpöl breder ut sig på bordsskivan tills bara vatten är kvar – isen smälter.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.mogna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "mogna",
+      "expected": "mogna",
+      "description": "Ett grönt äpple som hänger i ett träd skiftar långsamt färg via gult och orange till rött – äpplet mognar.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.droppa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b6",
+      "passed": true,
+      "choice": "droppa",
+      "expected": "droppa",
+      "description": "En kran som är avstängd släpper en enstaka droppe i taget som faller och sakta bygger upp en liten pöl på golvet – det droppar.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.köa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b8",
+      "passed": true,
+      "choice": "köa",
+      "expected": "köa",
+      "description": "Tre personer står tätt intill varandra framför en stängd dörr och väntar; den främsta visar ett timglas i en pratbubbla. Jag tolkar det som att stå i kö och vänta på att komma in – men figurerna står mer i klunga sida vid sida än i en led mot dörren, så det kunde lika gärna vara 'vänta'. Väljer köa främst för att det är tre personer.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.brumma.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b8",
+      "passed": true,
+      "choice": "brumma",
+      "expected": "brumma",
+      "description": "Ett kylskåp står stilla och avger jämna ljudvågor hela tiden – ett lågt, konstant brummande ljud från en maskin.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.beställa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b8",
+      "passed": true,
+      "choice": "beställa",
+      "expected": "beställa",
+      "description": "En gäst står vid ett bord med tom tallrik och visar bestick i en pratbubbla för en person i svart (servitör), som svarar med en bock – gästen beställer mat.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.klaga.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b8",
+      "passed": true,
+      "choice": "klaga",
+      "expected": "klaga",
+      "description": "Två personer vid ett bord med en tallrik mat; den ena pekar på maten och visar ett kryss i en bubbla, den andra ser besvärad ut och svarar med '…' – personen klagar på maten.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.varna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b8",
+      "passed": true,
+      "choice": "varna",
+      "expected": "varna",
+      "description": "Utomhus vid en eld lyfter en kvinna armen och visar ett utropstecken i en bubbla; mannen bredvid reagerar förskräckt med handen mot bröstet – hon varnar honom för elden.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.förklara.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b8",
+      "passed": true,
+      "choice": "förklara",
+      "expected": "förklara",
+      "description": "En person pratar länge ('…' i bubbla, gestikulerar) och den andra får till slut en glödlampa över huvudet – personen förklarar något tills den andra förstår.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.dunka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b8",
+      "passed": true,
+      "choice": "dunka",
+      "expected": "dunka",
+      "description": "En tvättmaskin med snurrande trumma skakar och avger korta slag-/vibrationsstreck på sidan – maskinen dunkar/skakar under centrifugering. Osäker gissning: skulle också kunna vara 'brumma', men strecken ser ut som stötar snarare än ljudvågor.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.servera.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b8",
+      "passed": true,
+      "choice": "servera",
+      "expected": "servera",
+      "description": "En person i svart bär en tallrik med mat genom rummet, ställer den på bordet framför gästen, som ler nöjt – servitören serverar maten.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.rekommendera.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b8",
+      "passed": true,
+      "choice": "rekommendera",
+      "expected": "rekommendera",
+      "description": "Två vid ett bord med mat; den ena pekar på maträtten och visar en stjärna i en bubbla, den andra nickar/svarar med en bock – personen rekommenderar rätten.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.lämna-över.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b8",
+      "passed": true,
+      "choice": "lämna över",
+      "expected": "lämna över",
+      "description": "Den ena personen håller en papperspåse, räcker fram den och den andra tar emot och håller den – påsen lämnas över.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.ursäkta.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b8",
+      "passed": true,
+      "choice": "ursäkta",
+      "expected": "ursäkta",
+      "description": "En omkullvält hink/vas med spill ligger på golvet; mannen bugar lätt och visar en hand i en bubbla mot kvinnan, som ser lätt irriterad ut – han ber om ursäkt för att ha vält den. Handikonen i bubblan är otydlig (ser mer ut som ett pekfinger än en ursäkt), så tolkningen bygger mest på det vältade föremålet och bugningen.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.skämta.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b8",
+      "passed": true,
+      "choice": "skämta",
+      "expected": "skämta",
+      "description": "Mannen säger något med en glad smiley i en bubbla, och kvinnan svarar med 'ha ha' och skrattar – han skämtar.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.kavla-upp.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": false,
+      "choice": "inget",
+      "expected": "kavla upp",
+      "description": "En person i mörkblå overall lyfter armarna, för ena handen upp mot ansiktet/tinningen och sänker den igen – ingenting på kroppen eller kläderna förändras, så jag kan inte avgöra vad som menas (gesten liknar mest att ta av eller sätta på något vid huvudet som aldrig syns).",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.knäppa-upp.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": true,
+      "choice": "knäppa upp",
+      "expected": "knäppa upp",
+      "description": "En person i ljusblå knäppt skjorta drar handen uppifrån kragen och nedåt längs bröstet, och efteråt syns ett vitt V av undertröjan där skjortan tidigare var stängd – skjortan knäpps upp.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.klä-på-sig.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": true,
+      "choice": "klä på sig",
+      "expected": "klä på sig",
+      "description": "En person som börjar i vit undertröja och kalsonger drar en blå tröja över huvudet, böjer sig och får byxor, lyfter sedan ena benet i taget och får skor – personen klär på sig från grunden.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.vika.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": true,
+      "choice": "vika",
+      "expected": "vika",
+      "description": "En person står vid ett bord och viker en ljusblå t-shirt i flera steg tills den ligger som ett platt, hopvikt paket.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.dra-upp.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": true,
+      "choice": "dra upp",
+      "expected": "dra upp",
+      "description": "En person i orange jacka med öppet vitt V vid halsen drar handen från midjan upp till halsen, och jackan sluts med en dragkedjelinje – blixtlåset dras upp.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.stryka.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": true,
+      "choice": "stryka",
+      "expected": "stryka",
+      "description": "En person står vid en strykbräda och för ett strykjärn fram och tillbaka över en ljusblå t-shirt.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.ta-på-sig.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": true,
+      "choice": "ta på sig",
+      "expected": "ta på sig",
+      "description": "En person i vit t-shirt lyfter armarna över huvudet och har därefter en grön tröja på sig – personen tar på sig tröjan.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.krympa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": true,
+      "choice": "krympa",
+      "expected": "krympa",
+      "description": "Bredvid en tvättmaskin med snurrande tvätt står en röd t-shirt som ruta för ruta blir mindre och mindre – plagget krymper.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.blekna.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": true,
+      "choice": "blekna",
+      "expected": "blekna",
+      "description": "En röd t-shirt hänger på en tvättlina i starkt solsken och övergår gradvis till blekrosa – färgen bleknar i solen.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.knäppa.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": true,
+      "choice": "knäppa",
+      "expected": "knäppa",
+      "description": "En person i ljusblå skjorta med öppet vitt V drar handen nedifrån och upp mot kragen, varefter skjortan är stängd med synliga knappar – skjortan knäpps.",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.sätta-på-sig.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": true,
+      "choice": "sätta på sig",
+      "expected": "sätta på sig",
+      "description": "En person i grön tröja för handen upp mot huvudet, får en röd mössa/keps på sig och strax därefter också glasögon när handen passerar ansiktet – personen sätter på sig huvudbonad (och glasögon).",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.knyta.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": false,
+      "choice": "inget",
+      "expected": "knyta",
+      "description": "En person i vita gympaskor sträcker armarna framåt, lyfter ena foten och går ner i en djup knäböj med händerna i huvudhöjd innan hen reser sig igen – det ser ut som en knäböjsövning; händerna når aldrig skorna, så inget alternativ passar (knyta vore den enda avlägsna gissningen).",
+      "reviewer": "claude-blind-subagent"
+    }
+  ],
+  "anim.ta-av-sig.1": [
+    {
+      "date": "2026-11-05",
+      "batch": "b7",
+      "passed": true,
+      "choice": "ta av sig",
+      "expected": "ta av sig",
+      "description": "En person i grön tröja lyfter armarna över huvudet och står därefter i vit t-shirt – personen tar av sig tröjan.",
       "reviewer": "claude-blind-subagent"
     }
   ]

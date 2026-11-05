@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.beställa.1",
+  "template": "communicate",
+  "senseId": "s.beställa.1",
+  "titleSv": "beställa",
+  "meaningHint": "Säga vad man vill ha, till exempel på en restaurang",
+  "category": "action",
+  "durationMs": 4000,
+  "loop": true,
+  "holdMs": 700,
+  "posterMs": 1600,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 38,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.85
+    },
+    {
+      "id": "q",
+      "variant": "c",
+      "at": {
+        "x": 84,
+        "y": 100
+      },
+      "facing": "left",
+      "wardrobe": {
+        "top": "dark"
+      },
+      "scale": 0.85
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 22,
+        "y": 100
+      },
+      "z": -1,
+      "scale": 0.7
+    },
+    {
+      "id": "plate",
+      "asset": "container.plate",
+      "at": {
+        "x": 22,
+        "y": 79
+      },
+      "z": 0,
+      "scale": 0.8
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 4000
+    },
+    {
+      "t": 400,
+      "action": "say",
+      "actor": "p",
+      "icon": "fork-knife",
+      "mood": "neutral",
+      "to": "q",
+      "durationMs": 1800
+    },
+    {
+      "t": 2400,
+      "action": "say",
+      "actor": "q",
+      "icon": "check",
+      "mood": "happy",
+      "to": "p",
+      "durationMs": 1000,
+      "gesture": false
+    },
+    {
+      "t": 2400,
+      "action": "lookAt",
+      "actor": "q",
+      "target": "plate"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "a guest tells a waiter what they want: a plate icon in the bubble; the waiter nods with a check"
+  },
+  "contrast": {
+    "with": [
+      "anim.servera.1"
+    ],
+    "distinctiveFeatures": [
+      "has:say-icon:fork-knife",
+      "has:actors>=2"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "samtal",
+    "confusableWith": [
+      "s.servera.1",
+      "s.boka.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.stryka.1",
+  "template": "tool-rhythm",
+  "senseId": "s.stryka.1",
+  "titleSv": "stryka",
+  "meaningHint": "Göra kläder släta med ett varmt strykjärn",
+  "category": "action",
+  "durationMs": 4000,
+  "loop": true,
+  "holdMs": 900,
+  "posterMs": 3400,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "c",
+      "at": {
+        "x": 46,
+        "y": 100
+      },
+      "facing": "right"
+    }
+  ],
+  "props": [
+    {
+      "id": "board",
+      "asset": "fixture.ironingboard",
+      "at": {
+        "x": 80,
+        "y": 100
+      },
+      "z": -1
+    },
+    {
+      "id": "shirt",
+      "asset": "garment.shirt",
+      "at": {
+        "x": 80,
+        "y": 72
+      },
+      "z": 0,
+      "scale": 0.8,
+      "state": {
+        "wrinkled": 1
+      },
+      "color": "sky"
+    },
+    {
+      "id": "iron",
+      "asset": "tool.iron",
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "shirt",
+      "tool": "iron",
+      "motion": "wipe",
+      "periodMs": 1000,
+      "durationMs": 3600,
+      "effect": [
+        {
+          "key": "wrinkled",
+          "to": 0
+        }
+      ]
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "an iron slides back and forth over a wrinkled shirt until it is smooth"
+  },
+  "contrast": {
+    "with": [
+      "anim.vika.1"
+    ],
+    "distinctiveFeatures": [
+      "end:shirt.wrinkled<=0.1",
+      "prop:tool.iron"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "kläder",
+    "confusableWith": [
+      "s.vika.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

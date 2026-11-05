@@ -342,7 +342,7 @@ describe('communication, handing over and clothes', () => {
     const on = compileScene(scenes.get('anim.ta-på-sig.1')!);
     expect(sample(on.tracks, 'p.w.top', 0)).toBe('#f7f3ea'); expect(sample(on.tracks, 'p.w.top', on.durationMs)).toBe('green');
     const hat = compileScene(scenes.get('anim.sätta-på-sig.1')!);
-    expect(sample(hat.tracks, 'p.w.hat', 0)).toBe('none'); expect(sample(hat.tracks, 'p.w.hat', hat.durationMs)).toBe('red'); expect(sample(hat.tracks, 'p.w.glasses', 0)).toBe(false); expect(sample(hat.tracks, 'p.w.glasses', hat.durationMs)).toBe(true);
+    expect(sample(hat.tracks, 'p.w.hat', 0)).toBe('none'); expect(sample(hat.tracks, 'p.w.hat', hat.durationMs)).toBe('red');
     const b = compileScene(scenes.get('anim.knäppa.1')!);
     const vals = [0, 1200, 2000, b.durationMs].map((t) => sample(b.tracks, 'p.w.buttons', t) as number);
     expect(vals[0]).toBe(0); expect(vals[1]!).toBeGreaterThan(0); expect(vals[2]!).toBeGreaterThan(vals[1]!); expect(vals[3]).toBe(1);

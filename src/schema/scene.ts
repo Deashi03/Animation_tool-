@@ -61,7 +61,9 @@ export const Prop = z.object({
 export const Shape = z.discriminatedUnion('type', [
   z.object({ type: z.literal('rect'), id: Id, x: z.number(), y: z.number(), w: z.number().min(0), h: z.number().min(0), rx: z.number().min(0).optional(), fill: z.string().optional(), stroke: z.string().optional(), sw: z.number().min(0).optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0) }).strict(),
   z.object({ type: z.literal('circle'), id: Id, cx: z.number(), cy: z.number(), r: z.number().min(0), fill: z.string().optional(), stroke: z.string().optional(), sw: z.number().min(0).optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0) }).strict(),
-  z.object({ type: z.literal('text'), id: Id, x: z.number(), y: z.number(), text: z.string().max(40), size: z.number().min(4).max(60), weight: z.number().min(100).max(900).optional(), fill: z.string().optional(), anchor: z.enum(['start', 'middle', 'end']).optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0) }).strict(),
+  z.object({ type: z.literal('text'), id: Id, x: z.number(), y: z.number(), text: z.string().max(40), size: z.number().min(4).max(60), weight: z.number().min(100).max(900).optional(), fill: z.string().optional(), anchor: z.enum(['start', 'middle', 'end']).optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0),
+    /** Text in a word scene always sits on white: a pill, a speech bubble (with `tail` pointing at something) or a panel that can slide in from an edge. `none` is allowed only in ui scenes. */
+    bg: z.enum(['pill', 'bubble', 'panel', 'none']).default('pill'), tail: z.object({ x: z.number(), y: z.number() }).strict().optional(), pad: z.number().min(0).max(30).optional() }).strict(),
   z.object({ type: z.literal('icon'), id: Id, icon: z.enum(['check', 'cross', 'star', 'arrow-right', 'arrow-up', 'arrow-down', 'arc-arrow', 'flag', 'heart', 'exclaim']), x: z.number(), y: z.number(), size: z.number().min(4).max(120), fill: z.string().optional(), stroke: z.string().optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0) }).strict(),
 ]);
 
@@ -169,6 +171,7 @@ export const Scene = z.object({
   });
   if (s.posterMs !== undefined && s.posterMs > s.durationMs) ctx.addIssue({ code: 'custom', message: 'posterMs must be ≤ durationMs', path: ['posterMs'] });
   if (s.kind === 'word' && !s.senseId) ctx.addIssue({ code: 'custom', message: 'word scenes need a senseId', path: ['senseId'] });
+  s.shapes.forEach((sh, i) => { if (s.kind === 'word' && sh.type === 'text' && sh.bg === 'none') ctx.addIssue({ code: 'custom', message: `text "${sh.id}" must have a white background (bg: pill | bubble | panel) – text never sits directly on the scene`, path: ['shapes', i] }); });
   if (s.kind === 'word' && s.actors.length === 0 && s.props.length === 0) ctx.addIssue({ code: 'custom', message: 'a word scene needs at least one actor or prop', path: ['actors'] });
 });
 export type Scene = z.infer<typeof Scene>;

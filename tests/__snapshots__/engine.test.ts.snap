@@ -3,9 +3,9 @@
 exports[`renderFrame determinism > snapshot of frame hashes (update deliberately when the look changes) 1`] = `
 {
   "anim.bakom.1": [
-    "46138b6a4af7",
-    "9b559d671bef",
-    "71999858cbe4",
+    "fa196061c6f8",
+    "381810f458fc",
+    "6969d04e5ca7",
   ],
   "anim.gå.1": [
     "109e9b1377b8",

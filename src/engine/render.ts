@@ -143,7 +143,7 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
   if (showLabel) {
     const txt = scene.label.sv ?? scene.titleSv;
     const tw = txt.length * 5.6 + 12;
-    children.push(g([rect(-tw / 2, -8, tw, 15, { rx: 7.5, fill: 'rgba(255,255,255,0.85)', stroke: C.ink, sw: 1 }), text(0, 3.4, txt, 9, { fill: C.ink, weight: 700, anchor: 'middle' })], { x: w / 2, y: h - 10 }));
+    children.push(g([rect(-tw / 2, -8, tw, 15, { rx: 7.5, fill: C.white, stroke: C.ink, sw: 1 }), text(0, 3.4, txt, 9, { fill: C.ink, weight: 700, anchor: 'middle' })], { x: w / 2, y: h - 10 }));
   }
   return { w, h, bg, rx: scene.kind === 'ui' ? 0 : 18, root: g(children, undefined, { id: 'root' }) };
 }
@@ -177,6 +177,32 @@ function worldAnchor(c: CompiledScene, actors: Map<string, { pos: P; scale: numb
 }
 import { bbox as bboxOf } from './frame';
 
+/** Approximate rendered text width: CJK glyphs are square, Latin ≈ 0.58 em. */
+export function textWidth(txt: string, size: number): number {
+  let w = 0; for (const ch of txt) w += /[\u3000-\u9fff\uf900-\ufaff\uff00-\uffef]/.test(ch) ? size * 1.0 : size * 0.58; return w;
+}
+/**
+ * White backing for text (product-owner rule: text never sits directly on the scene).
+ * pill = rounded capsule; bubble = pill with a tail toward `tail` (relative to the text origin);
+ * panel = flat card with square-ish corners – slide it in from an edge by tweening the shape's x/y.
+ */
+function textBacking(txt: string, size: number, anchor: 'start' | 'middle' | 'end', bg: 'pill' | 'bubble' | 'panel', pad: number, tail?: { x: number; y: number }): FrameNode[] {
+  const w = textWidth(txt, size) + pad * 2, h = size * 1.3 + pad * 1.2;
+  const x0 = anchor === 'start' ? -pad : anchor === 'end' ? -w + pad : -w / 2, y0 = -size * 0.95 - pad * 0.6;
+  const rx = bg === 'panel' ? Math.min(6, h / 4) : h / 2;
+  const out: FrameNode[] = [];
+  if (bg === 'bubble' && tail) {
+    const cx = x0 + w / 2, cy = y0 + h / 2;
+    const dx = tail.x - cx, dy = tail.y - cy, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len, base = Math.min(8, w / 4);
+    // tail base sits on the bubble edge toward the target
+    const ex = cx + (dx / len) * Math.min(w / 2, h / 2) * 0.9, ey = cy + (dy / len) * Math.min(w / 2, h / 2) * 0.9;
+    out.push(path(`M${r1(ex + nx * base)} ${r1(ey + ny * base)} L${r1(tail.x)} ${r1(tail.y)} L${r1(ex - nx * base)} ${r1(ey - ny * base)} Z`, { fill: C.white, stroke: C.ink, sw: 1.4 }));
+  }
+  out.push(rect(x0, y0, w, h, { rx, fill: C.white, stroke: C.ink, sw: bg === 'panel' ? 1.6 : 1.2 }));
+  if (bg === 'bubble' && tail) { const cx = x0 + w / 2, cy = y0 + h / 2; const dx = tail.x - cx, dy = tail.y - cy, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len, base = Math.min(8, w / 4); const ex = cx + (dx / len) * Math.min(w / 2, h / 2) * 0.9, ey = cy + (dy / len) * Math.min(w / 2, h / 2) * 0.9; out.push(path(`M${r1(ex + nx * base * 0.8)} ${r1(ey + ny * base * 0.8)} L${r1(tail.x)} ${r1(tail.y)} L${r1(ex - nx * base * 0.8)} ${r1(ey - ny * base * 0.8)}`, { fill: C.white, stroke: 'none' })); }
+  return out;
+}
+
 function drawShape(c: CompiledScene, s: ShapeDef, t: number): FrameNode {
   const tr = c.tracks;
   const x = sampleNumber(tr, `${s.id}.x`, t, 0), y = sampleNumber(tr, `${s.id}.y`, t, 0);
@@ -185,7 +211,11 @@ function drawShape(c: CompiledScene, s: ShapeDef, t: number): FrameNode {
   let inner: FrameNode;
   if (s.type === 'rect') { const w = sampleNumber(tr, `${s.id}.w`, t, s.w), h = sampleNumber(tr, `${s.id}.h`, t, s.h); inner = g([rect(-w / 2, -h / 2, w, h, { rx: s.rx, fill: s.fill ? color(s.fill) : 'none', stroke: s.stroke ? color(s.stroke) : undefined, sw: s.sw })], { x: w / 2, y: h / 2 }); }
   else if (s.type === 'circle') inner = circle(0, 0, sampleNumber(tr, `${s.id}.r`, t, s.r), { fill: s.fill ? color(s.fill) : 'none', stroke: s.stroke ? color(s.stroke) : undefined, sw: s.sw });
-  else if (s.type === 'text') inner = text(0, 0, sampleString(tr, `${s.id}.text`, t, s.text), s.size, { fill: color(s.fill ?? C.uiText), weight: s.weight ?? 700, anchor: s.anchor ?? 'middle' });
+  else if (s.type === 'text') {
+    const txt = sampleString(tr, `${s.id}.text`, t, s.text);
+    const label = text(0, 0, txt, s.size, { fill: color(s.fill ?? C.uiText), weight: s.weight ?? 700, anchor: s.anchor ?? 'middle' });
+    inner = s.bg === 'none' ? label : g([...textBacking(txt, s.size, s.anchor ?? 'middle', s.bg, s.pad ?? Math.round(s.size * 0.45), s.tail), label]);
+  }
   else inner = drawIcon(s.icon, s.size, progress, s.fill ? color(s.fill) : undefined, s.stroke ? color(s.stroke) : undefined);
   const pivot = s.type === 'rect' ? { px: sampleNumber(tr, `${s.id}.w`, t, s.w) / 2, py: sampleNumber(tr, `${s.id}.h`, t, s.h) / 2 } : {};
   return g([g([inner], { scale, rotate, ...pivot })], { x, y }, { id: `entity.${s.id}`, opacity });

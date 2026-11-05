@@ -48,3 +48,15 @@ describe('scene schema', () => {
     for (const id of ['anim.springa.1', 'anim.hoppa.1', 'anim.öppna.1', 'anim.hälla.1', 'anim.bakom.1', 'anim.slappa.1', 'anim.sportig.1', 'anim.sova.1', 'anim.gå.1', 'anim.stänga.1']) expect(scenes.has(id), id).toBe(true);
   });
 });
+
+describe('text always on white (product-owner rule)', () => {
+  const base = { schemaVersion: 1, animationId: 'anim.test.1', senseId: 's.test.1', titleSv: 'test', durationMs: 1000, props: [{ id: 'b', asset: 'box', at: { x: 60, y: 100 } }] };
+  it('rejects bare text in a word scene and accepts pill, bubble and panel', () => {
+    expect(Scene.safeParse({ ...base, shapes: [{ type: 'text', id: 't', x: 60, y: 40, text: 'hej', size: 10, bg: 'none' }] }).success).toBe(false);
+    for (const bg of ['pill', 'bubble', 'panel']) expect(Scene.safeParse({ ...base, shapes: [{ type: 'text', id: 't', x: 60, y: 40, text: 'hej', size: 10, bg }] }).success).toBe(true);
+    expect(Scene.parse({ ...base, shapes: [{ type: 'text', id: 't', x: 60, y: 40, text: 'hej', size: 10 }] }).shapes[0]).toMatchObject({ bg: 'pill' });
+  });
+  it('ui scenes may opt out (they bring their own panel)', () => {
+    expect(Scene.safeParse({ schemaVersion: 1, animationId: 'ui.t.1', kind: 'ui', titleSv: 't', durationMs: 100, shapes: [{ type: 'text', id: 't', x: 0, y: 0, text: 'x', size: 10, bg: 'none' }] }).success).toBe(true);
+  });
+});

@@ -8,6 +8,7 @@
  *   speed:<actor>>=<units/s> | speed:<actor><=<units/s>    (ground speed while moving, incl. world scroll)
  *   airborne:<actor>[>=fraction|<=fraction]                (both feet off the ground: hips lifted > 1 unit)
  *   end:<prop>.<stateKey>>=value | <=value                 (prop state at the end of the scene)
+ *   wear:<actor>.<key>>=v | <=v | ==str  (wardrobe at the end; wear-start: at the start)
  *   peaklift:<actor>>=units | <=units                       (highest point the hips reach above standing)
  *   has:actors>=N | has:actors==N | has:props>=N | has:entities>=N   (structure)
  *   has:action:<a|b|c>                                     (timeline contains one of these actions)
@@ -17,7 +18,8 @@
  *   has:say-icon:<a|b> | has:say-mood:<a|b> | has:sound:<a|b> | has:prop:<asset|asset>
  */
 import { JOINTS } from '../schema/scene';
-import { fractionEqual, sample, sampleNumber } from '../engine/track';
+import { fractionEqual, sample, sampleNumber, sampleBool, sampleString } from '../engine/track';
+import { color } from '../assets/palette';
 import type { CompiledScene } from './compile';
 import type { Problem } from './validate';
 import type { Scene } from '../schema/scene';
@@ -28,8 +30,10 @@ export function evaluateFeature(c: CompiledScene, feature: string): { ok: boolea
   if (colon <= 0) return { ok: false, detail: `cannot parse "${feature}"` };
   const lhs = feature.slice(0, colon), rhsRaw = feature.slice(colon + 1);
   const le = rhsRaw.includes('<=');
-  const [rhs, fracRaw] = le ? rhsRaw.split('<=') : rhsRaw.split('>=');
-  const minFrac = fracRaw ? Number(fracRaw) : 0.6;
+  const eq = rhsRaw.includes('==') && !rhsRaw.startsWith('actors') && !rhsRaw.startsWith('props') && !rhsRaw.startsWith('entities');
+  const [rhs, fracRaw] = eq ? rhsRaw.split('==') : le ? rhsRaw.split('<=') : rhsRaw.split('>=');
+  const eqStr = eq ? fracRaw : undefined;
+  const minFrac = fracRaw && !eq ? Number(fracRaw) : 0.6;
   const D = c.durationMs;
   if (lhs === 'has') {
     const sc = c.scene;
@@ -63,6 +67,19 @@ export function evaluateFeature(c: CompiledScene, feature: string): { ok: boolea
   if (lhs === 'end') {
     const [prop, key] = rhs!.split('.'); const v = sampleNumber(c.tracks, `${prop}.s.${key}`, D, NaN);
     return { ok: Number.isNaN(v) ? false : le ? v <= minFrac : v >= minFrac, detail: `${prop}.${key} ends at ${Number.isNaN(v) ? 'undefined' : v.toFixed(2)}` };
+  }
+  if (lhs === 'wear' || lhs === 'wear-start') {
+    // wardrobe value at the end (or start) of the scene: numeric >=/<= or string ==
+    const [actor, key] = rhs!.split('.') as [string, string];
+    const def = c.scene.actors.find((x) => x.id === actor)?.wardrobe as Record<string, unknown> | undefined;
+    const tAt = lhs === 'wear' ? D : 0; const id = `${actor}.w.${key}`;
+    const tr = c.tracks.get(id); const first = tr?.keys[0]?.v;
+    // at the start, a track whose first key lies later has not changed anything yet → the static wardrobe applies
+    const useTrack = !!tr && (lhs === 'wear' || (tr.keys[0]?.t ?? 1) <= 0);
+    const v: unknown = useTrack ? (typeof first === 'number' ? sampleNumber(c.tracks, id, tAt, 0) : typeof first === 'boolean' ? sampleBool(c.tracks, id, tAt, false) : sampleString(c.tracks, id, tAt, '')) : def?.[key];
+    if (eqStr !== undefined) { const norm = (x: unknown) => color(String(x)).toLowerCase(); return { ok: norm(v) === norm(eqStr), detail: `${actor}.${key} is ${String(v)}` }; }
+    const num = typeof v === 'number' ? v : typeof v === 'boolean' ? (v ? 1 : 0) : NaN;
+    return { ok: Number.isNaN(num) ? false : le ? num <= minFrac : num >= minFrac, detail: `${actor}.${key} is ${String(v)}` };
   }
   if (lhs === 'environment.time') return { ok: c.scene.environment.time === rhs, detail: `environment.time is ${c.scene.environment.time}` };
   if (lhs === 'prop') return { ok: c.scene.props.some((p) => p.asset === rhs), detail: `props: ${c.scene.props.map((p) => p.asset).join(', ') || 'none'}` };

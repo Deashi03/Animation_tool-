@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.dra-upp.1",
+  "template": "dress-self",
+  "senseId": "s.dra-upp.1",
+  "titleSv": "dra upp",
+  "meaningHint": "Dra något uppåt, till exempel en dragkedja",
+  "category": "action",
+  "durationMs": 3200,
+  "loop": true,
+  "holdMs": 900,
+  "posterMs": 2600,
+  "environment": {
+    "id": "bedroom",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "orange",
+        "zipper": 0
+      }
+    }
+  ],
+  "props": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 300
+    },
+    {
+      "t": 300,
+      "action": "fasten",
+      "actor": "p",
+      "what": "zipper",
+      "on": true,
+      "durationMs": 2000
+    },
+    {
+      "t": 2300,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 900
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "a hand pulls the zipper from the waist up to the neck"
+  },
+  "contrast": {
+    "with": [
+      "anim.dra-ner.1"
+    ],
+    "distinctiveFeatures": [
+      "wear:p.zipper>=0.9",
+      "wear-start:p.zipper<=0.1"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "kläder",
+    "confusableWith": [
+      "s.dra-ner.1",
+      "s.knäppa.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

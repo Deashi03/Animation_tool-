@@ -116,6 +116,18 @@ export const TEMPLATES: Record<string, Template> = {
       focus: { targets: ['castle'] }, pedagogy: { quizEligible: false, confusableWith: [] },
     }),
   },
+  'dress-self': {
+    id: 'dress-self', titleSv: 'Klä sig: plagg på och av',
+    describes: 'Klädverb på den egna kroppen: ta på sig, ta av sig, klä på/av sig, byta om, knäppa, knäppa upp, dra upp/ner, knyta, kavla upp, sätta på sig (mössa, glasögon). Handlingarna `dress` och `fasten` gör koreografin; garderoben ändras mitt i. Före/efter-skillnaden på kroppen bär betydelsen.',
+    contract: ['has:actors>=1', 'has:action:dress|fasten'],
+    make: (senseId, lemma, n) => ({
+      schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'dress-self', meaningHint: 'TODO', category: 'action',
+      durationMs: 3200, loop: true, holdMs: 800, posterMs: 2600, environment: { id: 'bedroom', time: 'day' },
+      actors: [{ id: 'p', at: { x: 60, y: 100 }, facing: 'right', wardrobe: { top: '#f7f3ea', sleeves: 'short' } }],
+      timeline: [{ t: 0, action: 'idle', actor: 'p', durationMs: 400 }, { t: 400, action: 'dress', actor: 'p', garment: 'top', on: true, value: 'green', durationMs: 1800 }, { t: 2200, action: 'idle', actor: 'p', durationMs: 1000 }],
+      focus: { targets: ['p'] }, pedagogy: { quizEligible: false, group: 'kläder', confusableWith: [] },
+    }),
+  },
   communicate: {
     id: 'communicate', titleSv: 'Säga något till någon',
     describes: 'Kommunikationsverb: beställa, klaga, förklara, varna, skämta, ursäkta, rekommendera, fråga, svara. En talare med pratbubbla (ikon eller kort text, alltid på vitt) och oftast en lyssnare som reagerar. Stämningen (mood) och ikonen bär skillnaden; lyssnarens reaktion förstärker.',

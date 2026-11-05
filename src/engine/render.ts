@@ -66,7 +66,17 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
     const pos: P = [sampleNumber(tracks, `${a.id}.x`, t, a.at.x), sampleNumber(tracks, `${a.id}.y`, t, a.at.y)];
     const scale = sampleNumber(tracks, `${a.id}.scale`, t, a.scale);
     const base = VARIANTS[a.variant];
-    const wardrobe = { ...base, ...(a.wardrobe ? Object.fromEntries(Object.entries(a.wardrobe).filter(([, v]) => v !== undefined).map(([k, v]) => [k, typeof v === 'string' && k !== 'hairStyle' ? color(v) : v])) : {}) } as CharacterState['wardrobe'];
+    const wardrobe = { ...base, ...(a.wardrobe ? Object.fromEntries(Object.entries(a.wardrobe).filter(([, v]) => v !== undefined).map(([k, v]) => [k, typeof v === 'string' && k !== 'hairStyle' && k !== 'sleeves' ? color(v) : v])) : {}) } as CharacterState['wardrobe'];
+    // animated wardrobe: `<actor>.w.<key>` tracks override the static values (dress/fasten actions)
+    const wpre = `${a.id}.w.`;
+    for (const id of tracks.keys()) {
+      if (!id.startsWith(wpre)) continue;
+      const key = id.slice(wpre.length) as keyof CharacterState['wardrobe']; const first = tracks.get(id)!.keys[0]?.v;
+      const w0 = wardrobe as unknown as Record<string, unknown>;
+      if (typeof first === 'number') w0[key] = sampleNumber(tracks, id, t, 0);
+      else if (typeof first === 'boolean') w0[key] = sampleBool(tracks, id, t, false);
+      else { const v = sampleString<string>(tracks, id, t, ''); w0[key] = key === 'sleeves' || key === 'hairStyle' ? v : v === 'none' ? (key === 'hat' ? 'none' : undefined) : color(v); }
+    }
     const st: CharacterState = {
       pose, facing, lift, bodyRotate: rot, wardrobe,
       face: { eyes: sampleString(tracks, `${a.id}.eyes`, t, 'open'), brows: sampleString(tracks, `${a.id}.brows`, t, 'neutral'), mouth: sampleString(tracks, `${a.id}.mouth`, t, 'smile'), gaze: sampleNumber(tracks, `${a.id}.gaze`, t, 0), blush: sampleBool(tracks, `${a.id}.blush`, t, false), blink: sampleBool(tracks, `${a.id}.blink`, t, false) },

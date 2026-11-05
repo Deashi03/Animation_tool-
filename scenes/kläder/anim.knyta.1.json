@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.knyta.1",
+  "template": "dress-self",
+  "senseId": "s.knyta.1",
+  "titleSv": "knyta",
+  "meaningHint": "Göra så att två delar av ett band sitter ihop, till exempel skosnören",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 900,
+  "posterMs": 2200,
+  "environment": {
+    "id": "bedroom",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "shoes": "white"
+      }
+    }
+  ],
+  "props": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 300
+    },
+    {
+      "t": 300,
+      "action": "fasten",
+      "actor": "p",
+      "what": "laces",
+      "on": true,
+      "durationMs": 2400
+    },
+    {
+      "t": 2700,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 900
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "one foot up, hands at the shoe making small loops"
+  },
+  "contrast": {
+    "with": [
+      "anim.knäppa.1"
+    ],
+    "distinctiveFeatures": [
+      "wear:p.laces>=0.9",
+      "actor.p.posture:standing>=0.2"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "kläder",
+    "confusableWith": [
+      "s.knäppa.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

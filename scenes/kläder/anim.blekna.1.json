@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.blekna.1",
+  "template": "process",
+  "senseId": "s.blekna.1",
+  "titleSv": "blekna",
+  "meaningHint": "Få svagare färg, till exempel av sol",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 900,
+  "posterMs": 3600,
+  "environment": {
+    "id": "outdoors.park",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "sun",
+      "asset": "fixture.sun",
+      "at": {
+        "x": 22,
+        "y": 22
+      },
+      "z": 0
+    },
+    {
+      "id": "line",
+      "asset": "fixture.clothesline",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "z": 0
+    },
+    {
+      "id": "shirt",
+      "asset": "garment.shirt",
+      "at": {
+        "x": 60,
+        "y": 72
+      },
+      "z": 1,
+      "scale": 0.8,
+      "color": "red"
+    }
+  ],
+  "timeline": [
+    {
+      "t": 400,
+      "action": "tween",
+      "target": "shirt",
+      "prop": "faded",
+      "to": 1,
+      "durationMs": 3400,
+      "ease": "linear"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "sun"
+    ],
+    "feature": "a red shirt on the line goes pale in the sun"
+  },
+  "contrast": {
+    "with": [
+      "anim.krympa.1"
+    ],
+    "distinctiveFeatures": [
+      "end:shirt.faded>=0.9",
+      "end:shirt.shrink<=0.1"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "kläder",
+    "confusableWith": [
+      "s.krympa.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

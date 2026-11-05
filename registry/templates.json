@@ -44,6 +44,9 @@
     },
     "social": {
       "approved": false
+    },
+    "dress-self": {
+      "approved": false
     }
   }
 }

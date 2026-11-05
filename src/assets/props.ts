@@ -11,6 +11,7 @@ import { TOOLS } from './props/tools';
 import { CONTAINERS } from './props/containers';
 import { FOODS } from './props/food';
 import { FIXTURES } from './props/fixtures';
+import { GARMENTS } from './props/garments';
 export type { PropSpec, PropState } from './propSpec';
 /** How far (degrees) a held prop rotates forward around its grip when `tilt` = 1. */
 export const HELD_TILT_DEG = 55;
@@ -255,7 +256,7 @@ const BASE: Record<string, PropSpec> = {
   },
 };
 
-export const PROPS: Record<string, PropSpec> = { ...BASE, ...TOOLS, ...CONTAINERS, ...FOODS, ...FIXTURES };
+export const PROPS: Record<string, PropSpec> = { ...BASE, ...TOOLS, ...CONTAINERS, ...FOODS, ...FIXTURES, ...GARMENTS };
 
 export function drawProp(asset: string, state: PropState, col?: string): FrameNode {
   const spec = PROPS[asset];

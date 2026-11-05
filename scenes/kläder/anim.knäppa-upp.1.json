@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.knäppa-upp.1",
+  "template": "dress-self",
+  "senseId": "s.knäppa-upp.1",
+  "titleSv": "knäppa upp",
+  "meaningHint": "Öppna knapparna på ett plagg",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 900,
+  "posterMs": 3000,
+  "environment": {
+    "id": "bedroom",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "sky",
+        "buttons": 1
+      }
+    }
+  ],
+  "props": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 300
+    },
+    {
+      "t": 300,
+      "action": "fasten",
+      "actor": "p",
+      "what": "buttons",
+      "on": false,
+      "durationMs": 2400
+    },
+    {
+      "t": 2700,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 900
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "hands move down the shirt front; the buttons open one by one and the shirt falls open"
+  },
+  "contrast": {
+    "with": [
+      "anim.knäppa.1"
+    ],
+    "distinctiveFeatures": [
+      "wear:p.buttons<=0.1",
+      "wear-start:p.buttons>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "kläder",
+    "confusableWith": [
+      "s.knäppa.1",
+      "s.dra-ner.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

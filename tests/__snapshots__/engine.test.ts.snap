@@ -12,6 +12,11 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "bfc49d442591",
     "f0f0e60ea5f9",
   ],
+  "anim.blekna.1": [
+    "78aadecf42ba",
+    "ec40e1e55275",
+    "a8a763dd6e3a",
+  ],
   "anim.brinna.1": [
     "97eb27632724",
     "97eb27632724",
@@ -31,6 +36,21 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "3e33cbc714bb",
     "61b6d5b79927",
     "d02190d9373f",
+  ],
+  "anim.byta-om.1": [
+    "d3bccffa07aa",
+    "a471cfa7b09c",
+    "6314ce01ae2f",
+  ],
+  "anim.dra-ner.1": [
+    "2d16e6c389ec",
+    "a8b6462aa24d",
+    "d83356ef8b22",
+  ],
+  "anim.dra-upp.1": [
+    "deaf87837f84",
+    "5db0fa4c9dd8",
+    "af929b774534",
   ],
   "anim.droppa.1": [
     "7c4f17d7689d",
@@ -87,6 +107,11 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "cbc9f938fb60",
     "0b2a676d3a6c",
   ],
+  "anim.kavla-upp.1": [
+    "9dc29a8d8d68",
+    "e7effeb84870",
+    "efdae9fca283",
+  ],
   "anim.kavla.1": [
     "78dbd6797f9c",
     "671ca68654ff",
@@ -102,6 +127,31 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "b77ff4597344",
     "8dd6c5e4b890",
   ],
+  "anim.klä-av-sig.1": [
+    "64d8adb63517",
+    "582953bb5ece",
+    "45986eca7fb0",
+  ],
+  "anim.klä-på-sig.1": [
+    "fdd45d42be26",
+    "ecfe78ff1108",
+    "a8ec0e95e6bf",
+  ],
+  "anim.knyta.1": [
+    "18301450d494",
+    "d0241b48db2d",
+    "8d2f3de85725",
+  ],
+  "anim.knäppa-upp.1": [
+    "272eaada31e2",
+    "7e5965789488",
+    "e51a6473bb92",
+  ],
+  "anim.knäppa.1": [
+    "9ca5f1f2b875",
+    "44cf2c2ed8c8",
+    "c9cbf16fd93f",
+  ],
   "anim.knåda.1": [
     "e72ba0fd7cac",
     "b40c7245a608",
@@ -111,6 +161,11 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "7e8563f8e014",
     "13564e789615",
     "ababd4301cba",
+  ],
+  "anim.krympa.1": [
+    "143cd7a06484",
+    "dfd6a653dbe3",
+    "2c8aa1bbf99e",
   ],
   "anim.köa.1": [
     "bc790b6f577a",
@@ -247,10 +302,30 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "27548a62881c",
     "24af621637df",
   ],
+  "anim.stryka.1": [
+    "731dbb215835",
+    "9fdbb7eafbe5",
+    "20a0bab2805d",
+  ],
   "anim.stänga.1": [
     "2b51e1879e32",
     "57962ac63940",
     "2b291b3880b1",
+  ],
+  "anim.sätta-på-sig.1": [
+    "297d07568c97",
+    "be8a60023f3f",
+    "052eaaecc0a9",
+  ],
+  "anim.ta-av-sig.1": [
+    "297d07568c97",
+    "ffe25f147bfc",
+    "3634c008750c",
+  ],
+  "anim.ta-på-sig.1": [
+    "7657ee392499",
+    "c37c9631cffe",
+    "cccf24136111",
   ],
   "anim.ursäkta.1": [
     "1deac1d69cf4",
@@ -261,6 +336,11 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "9921fe345d7d",
     "447ba3ee8d76",
     "ac79cb9f2ef0",
+  ],
+  "anim.vika.1": [
+    "2d2c4543f37b",
+    "42b1599430a7",
+    "f393d7ddd6c8",
   ],
   "anim.vispa.1": [
     "7cc3eb66a80e",

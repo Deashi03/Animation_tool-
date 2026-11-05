@@ -6,6 +6,7 @@ import { TOOL_SHAPES } from './props/tools';
 import { CONTAINER_SHAPES } from './props/containers';
 import { FOOD_SHAPES } from './props/food';
 import { FIXTURE_SHAPES } from './props/fixtures';
+import { GARMENT_SHAPES } from './props/garments';
 
 export const BASE_PROP_ASSETS = ['glass', 'jug', 'door', 'box', 'ball', 'football', 'sofa', 'bed', 'blanket', 'mug', 'phone', 'table', 'window', 'mat', 'ladder', 'castle', 'brawl', 'stove', 'pan', 'spatula'] as const;
 export const PROP_ASSET_IDS: readonly string[] = [
@@ -14,6 +15,7 @@ export const PROP_ASSET_IDS: readonly string[] = [
   ...CONTAINER_SHAPES.map((s) => `container.${s}`),
   ...FOOD_SHAPES.map((s) => `food.${s}`),
   ...FIXTURE_SHAPES.map((s) => `fixture.${s}`),
+  ...GARMENT_SHAPES.map((s) => `garment.${s}`),
 ];
 const SET = new Set(PROP_ASSET_IDS);
 export const isPropAsset = (id: string): boolean => SET.has(id);

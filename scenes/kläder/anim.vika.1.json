@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.vika.1",
+  "template": "tool-rhythm",
+  "senseId": "s.vika.1",
+  "titleSv": "vika",
+  "meaningHint": "Lägga ihop kläder så att de blir mindre",
+  "category": "action",
+  "durationMs": 4000,
+  "loop": true,
+  "holdMs": 900,
+  "posterMs": 3400,
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "b",
+      "at": {
+        "x": 46,
+        "y": 100
+      },
+      "facing": "right"
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 78,
+        "y": 100
+      },
+      "z": -1
+    },
+    {
+      "id": "shirt",
+      "asset": "garment.shirt",
+      "at": {
+        "x": 78,
+        "y": 70
+      },
+      "z": 1,
+      "color": "sky"
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "shirt",
+      "motion": "spread",
+      "bothHands": true,
+      "periodMs": 1200,
+      "durationMs": 3600,
+      "effect": [
+        {
+          "key": "folded",
+          "to": 1
+        }
+      ]
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "both hands fold a flat shirt into a small neat stack"
+  },
+  "contrast": {
+    "with": [
+      "anim.hänga-upp.1"
+    ],
+    "distinctiveFeatures": [
+      "end:shirt.folded>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "kläder",
+    "confusableWith": [
+      "s.hänga-upp.1",
+      "s.stryka.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

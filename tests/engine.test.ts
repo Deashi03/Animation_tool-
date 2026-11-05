@@ -324,3 +324,35 @@ describe('generic tool work (use) and the prop families', () => {
     expect(bad.success).toBe(false); if (!bad.success) expect(JSON.stringify(bad.error.issues)).toContain('tool.knife');
   });
 });
+
+describe('communication, handing over and clothes', () => {
+  const { scenes } = loadScenes();
+  it('say: a speech bubble with the icon follows the speaker and disappears afterwards; the mouth moves', () => {
+    const c = compileScene(scenes.get('anim.beställa.1')!);
+    expect(sample(c.tracks, 'fx.p.say', 1000)).toBe('icon:fork-knife|neutral'); expect(sample(c.tracks, 'fx.p.say', 2300)).toBe('');
+    const mouths = new Set([600, 750, 900, 1050].map((t) => sample(c.tracks, 'p.mouth', t)));
+    expect(mouths.has('open')).toBe(true);
+    const svg = frameToSvg(renderFrame(c, 1000)); expect(svg.length).toBeGreaterThan(frameToSvg(renderFrame(c, 100)).length);
+  });
+  it('give: the prop changes hands midway and ends with the receiver', () => {
+    const c = compileScene(scenes.get('anim.lämna-över.1')!);
+    expect(sample(c.tracks, 'bag.attach', 300)).toBe('p:left'); expect(sample(c.tracks, 'bag.attach', c.durationMs)).toBe('q:left');
+  });
+  it('dress: the wardrobe changes at the midpoint, not from the start; fasten closes the buttons one by one', () => {
+    const on = compileScene(scenes.get('anim.ta-på-sig.1')!);
+    expect(sample(on.tracks, 'p.w.top', 0)).toBe('#f7f3ea'); expect(sample(on.tracks, 'p.w.top', on.durationMs)).toBe('green');
+    const hat = compileScene(scenes.get('anim.sätta-på-sig.1')!);
+    expect(sample(hat.tracks, 'p.w.hat', 0)).toBe('none'); expect(sample(hat.tracks, 'p.w.hat', hat.durationMs)).toBe('red'); expect(sample(hat.tracks, 'p.w.glasses', 0)).toBe(false); expect(sample(hat.tracks, 'p.w.glasses', hat.durationMs)).toBe(true);
+    const b = compileScene(scenes.get('anim.knäppa.1')!);
+    const vals = [0, 1200, 2000, b.durationMs].map((t) => sample(b.tracks, 'p.w.buttons', t) as number);
+    expect(vals[0]).toBe(0); expect(vals[1]!).toBeGreaterThan(0); expect(vals[2]!).toBeGreaterThan(vals[1]!); expect(vals[3]).toBe(1);
+    // the rendered figure shows the V opening when open and the three buttons when closed
+    const open = frameToSvg(renderFrame(b, 50)), closed = frameToSvg(renderFrame(b, b.durationMs));
+    expect(open).toContain('#fbf8f1'); expect(closed).not.toContain('#fbf8f1');
+  });
+  it('garments fold, shrink and fade; the wear features see wardrobe changes', () => {
+    const fold = compileScene(scenes.get('anim.vika.1')!); expect(sample(fold.tracks, 'shirt.s.folded', fold.durationMs) as number).toBeGreaterThan(0.9);
+    for (const id of ['garment.shirt', 'garment.trousers', 'garment.towel', 'garment.dress', 'garment.jacket', 'garment.sock']) { expect(() => drawProp(id, { folded: 1 })).not.toThrow(); expect(() => drawProp(id, { wet: 1, stain: 1, shrink: 0.5, faded: 1 })).not.toThrow(); }
+    const r = validateScene(scenes.get('anim.knäppa-upp.1') as unknown, scenes); expect(r.problems.filter((p) => p.level === 'error')).toEqual([]);
+  });
+});

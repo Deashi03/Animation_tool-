@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "animationId": "anim.kavla-upp.1",
+  "template": "dress-self",
+  "senseId": "s.kavla-upp.1",
+  "titleSv": "kavla upp",
+  "meaningHint": "Rulla upp ärmarna",
+  "category": "action",
+  "durationMs": 3400,
+  "loop": true,
+  "holdMs": 900,
+  "posterMs": 2800,
+  "environment": {
+    "id": "bedroom",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "variant": "a",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "facing": "right",
+      "wardrobe": {
+        "top": "navy",
+        "sleeves": "long"
+      }
+    }
+  ],
+  "props": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 300
+    },
+    {
+      "t": 300,
+      "action": "fasten",
+      "actor": "p",
+      "what": "sleeves",
+      "on": true,
+      "durationMs": 2200
+    },
+    {
+      "t": 2500,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 900
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "each hand pushes the other sleeve up to the elbow; the forearms show"
+  },
+  "contrast": {
+    "with": [
+      "anim.ta-av-sig.1"
+    ],
+    "distinctiveFeatures": [
+      "has:action:fasten"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "kläder",
+    "confusableWith": [
+      "s.vika.1"
+    ],
+    "reviewStatus": "ai-draft"
+  }
+}

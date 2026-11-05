@@ -38,6 +38,8 @@ const Wardrobe = z.object({
   hairStyle: z.enum(['short', 'long', 'bun', 'curly']).optional(), headband: z.string().optional(),
   /** shorts: the shins show skin; number: a jersey number on the chest (1–2 characters) */
   shorts: z.boolean().optional(), number: z.string().max(2).optional(),
+  /** extra garments: hat colour ('none' = no hat), glasses, scarf colour, buttons/zipper 0..1 closed (undefined = none drawn), sleeves, apron colour */
+  hat: z.string().optional(), glasses: z.boolean().optional(), scarf: z.string().optional(), buttons: z.number().min(0).max(1).optional(), zipper: z.number().min(0).max(1).optional(), sleeves: z.enum(['long', 'short', 'rolled']).optional(), apron: z.string().optional(), laces: z.number().min(0).max(1).optional(),
 }).strict();
 
 export const Actor = z.object({
@@ -127,6 +129,10 @@ export const Action = z.discriminatedUnion('action', [
   /** Put a held prop down on a prop (its top/mouth) or at a point; `take` picks it up (alias of grab). */
   z.object({ ...Base, action: z.literal('put'), actor: Id, prop: Id, on: Id.optional(), at: Pt.optional(), z: z.number().int().optional(), durationMs: Dur.default(700) }).strict(),
   z.object({ ...Base, action: z.literal('take'), actor: Id, prop: Id, hand: z.enum(['left', 'right']).default('left'), durationMs: Dur.default(600) }).strict(),
+  /** Put a garment on or take it off: the arms do the right choreography and the wardrobe changes halfway. `value` = colour (top/bottom/shoes/hat/scarf) when putting on. */
+  z.object({ ...Base, action: z.literal('dress'), actor: Id, garment: z.enum(['top', 'bottom', 'shoes', 'hat', 'glasses', 'scarf', 'apron']), on: z.boolean().default(true), value: z.string().optional(), durationMs: Dur.default(1600) }).strict(),
+  /** Fasten or unfasten: buttons, a zipper, shoelaces, or roll sleeves up/down; hands work at the right place and the wardrobe state follows. */
+  z.object({ ...Base, action: z.literal('fasten'), actor: Id, what: z.enum(['buttons', 'zipper', 'laces', 'sleeves']), on: z.boolean().default(true), durationMs: Dur.default(1600) }).strict(),
   /** Hot fat spatters out of the pan; the actor (if given) flinches. */
   z.object({ ...Base, action: z.literal('splash'), pan: Id, actor: Id.optional(), durationMs: Dur.default(900) }).strict(),
 ]);

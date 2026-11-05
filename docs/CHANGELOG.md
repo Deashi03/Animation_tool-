@@ -67,3 +67,11 @@
 - **Fel rättade på vägen:** hållna föremåls ankare speglades fel åt vänster; prop-tillstånd som bara fanns som spår (t.ex. `tilt`) lästes aldrig; `rgb()`-färger kunde inte blandas; garderobsbyten syntes från t = 0 (startnyckel krävs).
 - Tester: 61.
 
+## 0.5.0 – 2026-11-05 (skalning: recept, täckning, batch, prestanda, Swechan-kontrakt)
+- **`registry/recipes.json`** (293 recept: mall + handlingar + byggstenar per verb/fras) och **`anim:coverage`** mot Swechans ordbok (`registry/coverage.md`): 606 betydelser behöver animation, 502 redo, 59 klara, 21 blockerade av svaga recept, 2 utan recept.
+- **`anim:batch`**: utkast för en hel modul från recepten med slot-fyllning (verktyg, råvara, yta, kokgrad, ikon, plagg, japansk gloss), validering, remsor och rapport i `registry/batch/`. Utkast är startpunkter, inte färdiga scener.
+- **`anim:perf`**: uppspelning i Chromium med iPhone 13-emulering och 4× CPU-strypning – 60 fps, inga långa uppgifter; stormning har 182 SVG-noder (över riktvärdet 150). `docs/perf.md`.
+- **`anim:package`**: spelarpaket för Swechan (`dist/player-package/anim/`, 30 filer, `WordVisual.tsx`, manifest). Spelare + motor utan React: 206 kB / 61 kB gzip – över målet 15 kB; åtgärd beskriven i `docs/SWECHAN_INTEGRATION.md`.
+- **`docs/SWECHAN_INTEGRATION.md`**: fil-lista, åtta steg, register `wordVisuals.json`, laddning, tester. Swechan är inte rört.
+- Scener: 75 (59 med godkänt blindtest; b7 11/13 → två rättade; b8 12/12). Tester: 61.
+

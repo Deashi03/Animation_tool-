@@ -16,7 +16,7 @@ En scen är en JSON-fil, `scenes/<lemma>/<animationId>.json`, validerad av `src/
 | `environment` | `{id, time, ground?}` | `neutral · room · bedroom · kitchen · outdoors.park · street`; `time`: day · evening · night |
 | `actors[]` | | `id`, `asset: character.base`, `variant: a|b|c`, `at {x,y}` (fötternas punkt), `facing`, `scale`, `wardrobe {top,bottom,shoes,hair,skin,hairStyle,headband}`, `face` |
 | `props[]` | | `id`, `asset`, `at` **eller** `attachTo {actor, hand}`, `scale`, `rotate`, `z`, `state`, `color` |
-| `shapes[]` | | Fria former för UI: `rect`, `circle`, `text`, `icon` (check, cross, star, arrow-right, arrow-up, arrow-down, arc-arrow, flag, heart, exclaim) – `progress` ritar på |
+| `shapes[]` | | Fria former: `rect`, `circle`, `text` (alltid på vitt i ordscener: `bg: pill | bubble | panel`, `tail {x,y}` för bubblans svans, `pad`), `icon` (check, cross, star, arrow-right, arrow-up, arrow-down, arc-arrow, flag, heart, exclaim) – `progress` ritar på |
 | `timeline[]` | | Handlingar med `t` (ms). Kompileras i tidsordning |
 | `focus` | `{targets[], feature}` | Vad som måste synas (layoutkontrollen) |
 | `contrast` | `{with[], distinctiveFeatures[]}` | Kontrastpar och maskinläsbara skillnader (nedan) |

@@ -25,7 +25,7 @@ Inget får synbart strida mot fysiken: planterade fötter glider inte (gångmode
 ## Läsbarhet och pedagogik
 - Det som bär betydelsen ska vara ≥ 6 enheter stort och synligt i posterbilden i 140 px.
 - Designa mot grannordet: deklarera `contrast.with` och `distinctiveFeatures`. Testa utan etikett (`--label` av i bildremsan).
-- Text i scener är tillåten när den läses utan ansträngning (etiketten, "Rätt!" i UI). Aldrig text som enda bärare av ett ords betydelse.
+- Text i scener är tillåten när den läses utan ansträngning (etiketten, 後ろ, "Rätt!" i UI). Aldrig text som enda bärare av ett ords betydelse. **All text ligger på vitt:** pill, pratbubbla med svans, eller en vit panel som glider in från en kant (tweena `x`/`y` från utanför duken) och aldrig täcker hela bilden. Validatorn avvisar `bg: none` i ordscener.
 - Kulturellt överförbart Sverige ↔ Japan: inga västerländska djurmetaforer, inga gester som bara en kultur läser rätt.
 
 ## Granskning

@@ -34,3 +34,8 @@
 - **bakom** är nu stillastående: en bågpil ritas över lådan till den delvis dolda bollen, det japanska ordet 後ろ tonar in, en nedåtpil markerar bollen. Produktägarens förslag: relationer behöver ingen rörelse som kan misstas för ett verb. Nya ikoner `arc-arrow`, `arrow-down`, `exclaim`.
 - **stormning** omgjord: fyra soldater rusar fram, porten öppnas, de springer in och försvinner bakom muren, ett tecknat slagsmålsmoln (`brawl`: puffar, stjärnor, nävar, skakning via `phase`) stiger över murarna, fanan byter färg. Stegen och `climb` finns kvar som byggstenar.
 - Tester 41.
+
+## 0.1.4 – 2026-11-05 (text på vitt)
+- Produktägarens regel: all text i ordscener ligger på vit bakgrund – `bg: pill` (standard), `bubble` (pratbubbla med `tail`), `panel` (vit panel som glider in från en kant; tweena `x`/`y` från utanför duken). Validatorn avvisar `bg: none` i ordscener; UI-scener får välja bort eftersom de har egna paneler. Etiketten är helvit. Breddberäkning tar hänsyn till CJK-tecken.
+- *bakom*: 後ろ glider in på en vit panel från höger kant.
+- Tester 44.

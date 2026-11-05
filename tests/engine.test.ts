@@ -229,3 +229,18 @@ describe('objects without people', () => {
     for (const t of [100, 1500, 3000]) expect(Math.abs(sample(r.tracks, 'fx.p.speed', t) as number)).toBeGreaterThan(40);
   });
 });
+
+describe('text backing', () => {
+  it('renders a white rect behind text, wider for CJK, and the bakom panel slides in from the right edge', () => {
+    const mk = (txt: string, bg: 'pill' | 'bubble' | 'panel') => compileScene(Scene.parse({ schemaVersion: 1, animationId: 'anim.t.1', senseId: 's.t.1', titleSv: 't', durationMs: 100, props: [{ id: 'b', asset: 'box', at: { x: 60, y: 100 } }], shapes: [{ type: 'text', id: 'tx', x: 60, y: 40, text: txt, size: 10, bg, tail: { x: 60, y: 80 } }] }));
+    const rectOf = (c: ReturnType<typeof compileScene>) => { const f = renderFrame(c, 0); const node = bboxOfId(f.root, 'entity.tx')!; const svg = frameToSvg(f); return { node, white: (svg.match(/fill="#fbfbf8"/g) ?? []).length, svg }; };
+    const a = rectOf(mk('hej', 'pill')), b = rectOf(mk('後ろ', 'pill')), bub = rectOf(mk('hej', 'bubble'));
+    expect(a.white).toBeGreaterThanOrEqual(1); expect(b.node.x2 - b.node.x1).toBeGreaterThan(a.node.x2 - a.node.x1); expect(bub.white).toBeGreaterThanOrEqual(2);
+    const { scenes } = loadScenes();
+    const c = compileScene(scenes.get('anim.bakom.1')!);
+    expect(sample(c.tracks, 'ja.x', 900) as number).toBeGreaterThan(130); // starts fully outside the canvas
+    expect(sample(c.tracks, 'ja.x', 1500) as number).toBeLessThan(110); // slides in, never covering the whole scene
+    const f = renderFrame(c, 1800); const panel = bboxOfId(f.root, 'entity.ja')!;
+    expect(panel.x2 - panel.x1).toBeLessThan(60); expect(panel.y2 - panel.y1).toBeLessThan(30);
+  });
+});

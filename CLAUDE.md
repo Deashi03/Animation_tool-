@@ -87,6 +87,7 @@ Allt behöver inte vara perfekt, men inget får bryta mot fysiken på ett sätt 
 - **Föremål respekterar volym.** Ett täcke ligger *ovanpå* kroppen med en puckel som följer den, en hållen kanna sitter upprätt i handen tills den lutas.
 - **Kontrollera i remsan** med tider som inte är multiplar av cykeln, annars ser varje ruta likadan ut.
 - **Inte alla scener behöver människor.** Relationer och många handlingar visas tydligast mellan föremål (`roll`, `tween`, `set`): *bakom* är en boll som rullar in bakom en låda. En person som "lägger" något är en extra handling som kan missförstås.
+- **Text ligger alltid på vitt** (produktägaren 2026-11-05): en pill, en pratbubbla (`bg: bubble` med `tail` mot det den gäller) eller en vit panel (`bg: panel`) som glider in från en kant och aldrig täcker hela bilden. Motorn ritar bakgrunden automatiskt och validatorn avvisar text utan bakgrund i ordscener. Etiketten längst ner är också en vit pill.
 - **Relationer och abstraktioner får visas med pil och japanskt ord** (produktägaren 2026-11-05): *bakom* = bågpil över lådan till den dolda bollen + 後ろ. Rörelse som kan misstas för ett verb undviks i rumsord. Anime/serie-konventioner (slagsmålsmoln, stjärnor, fartstreck) är tillåtna och begripliga för målgruppen.
 - **Effekter är välkomna och ska sitta fast vid det de tillhör:** zzz vid munnen, fartstreck bakom kroppen under hela rörelsen, damm vid fötterna. De förstärker, bär aldrig betydelsen ensamma.
 

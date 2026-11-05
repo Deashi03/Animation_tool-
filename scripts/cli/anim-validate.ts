@@ -1,4 +1,4 @@
-/** Validate every scene (or the given files): `npm run anim:validate [-- scenes/x/*.json] [--json]` */
+/** Validate every scene (or the given files): `npm run anim:validate [-- scenes/x/*.json] [--json] [--strict]`. --strict also fails on missing/failed blind tests (the production gate). */
 import path from 'node:path';
 import { loadScenes, readRaw, sceneFiles } from '../../src/tools/scenes';
 import { validateScene } from '../../src/compiler/validate';
@@ -12,8 +12,9 @@ const results = files.map((file) => {
   const v = validateScene(readRaw(file), scenes, { approvedTemplates: approved });
   if (v.scene && v.scene.kind === 'word') {
     const b = blindStatus(v.scene.animationId);
-    if (!b) v.problems.push({ level: 'warning', message: 'inget blindtest registrerat – kör anim:blindtest innan scenen räknas som klar' });
-    else if (!b.passed) v.problems.push({ level: 'error', message: `blindtestet ${b.date} (${b.batch}) misslyckades: granskaren svarade "${b.choice}"` });
+    const strict = flag('strict');
+    if (!b) v.problems.push({ level: strict ? 'error' : 'warning', message: 'inget blindtest registrerat – kör anim:blindtest innan scenen räknas som klar' });
+    else if (!b.passed) v.problems.push({ level: strict ? 'error' : 'warning', message: `blindtestet ${b.date} (${b.batch}) misslyckades: granskaren svarade "${b.choice}" – scenen är inte klar` });
     if (v.scene.pedagogy.reviewStatus !== 'ai-draft' && !(b && b.passed)) v.problems.push({ level: 'error', message: 'status validated/reviewed kräver ett godkänt blindtest' });
   }
   return { file: path.relative(process.cwd(), file), ...v, ok: v.ok && !v.problems.some((p) => p.level === 'error') };

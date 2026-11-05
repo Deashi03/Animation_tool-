@@ -10,7 +10,7 @@ import path from 'node:path';
 import type { Scene } from '../schema/scene';
 import { stripHtml, writeReview } from './render';
 import { blindResults, writeBlindResults, type BlindResult } from './registry';
-import { REVIEW_DIR } from './scenes';
+import { reviewDir } from './scenes';
 
 export type BlindKey = { batch: string; createdAt: string; items: { letter: string; animationId: string; expected: string; options: string[] }[] };
 export type BlindAnswers = Record<string, { choice: string; description?: string }>;
@@ -39,7 +39,7 @@ export async function makeBlindBatch(scenes: Map<string, Scene>, ids: string[], 
   // strips without titles, labels or ids
   const html = items.map((it) => stripHtml(scenes.get(it.animationId)!, { frames: 8, size: 140, label: false, title: `Remsa ${it.letter}` })).join('');
   const sheet = await writeReview('strips', `blind-${batch}`, html.replace(/<small>.*?<\/small>/g, '<small></small>'), 1240);
-  const dir = path.join(REVIEW_DIR, 'blind'); fs.mkdirSync(dir, { recursive: true });
+  const dir = path.join(reviewDir(), 'blind'); fs.mkdirSync(dir, { recursive: true });
   const key: BlindKey = { batch, createdAt: new Date().toISOString().slice(0, 10), items };
   const keyFile = path.join(dir, `${batch}.key.json`); fs.writeFileSync(keyFile, JSON.stringify(key, null, 2) + '\n');
   const q = [`# Blindtest ${batch}`, '', 'Du ser bildremsor av korta animationer för svenska ord, utan etiketter. För varje remsa:', '1. Beskriv med en mening vad som händer och vad animationen betyder.', '2. Välj det alternativ som passar bäst. Om inget passar, skriv "inget".', '', 'Svara som JSON: `{ "A": { "description": "...", "choice": "ordet" }, ... }`', '',

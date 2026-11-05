@@ -2,24 +2,6 @@
   "anim.sova.1": [
     {
       "date": "2026-11-05",
-      "batch": "test",
-      "passed": true,
-      "choice": "sova",
-      "expected": "sova",
-      "description": "x",
-      "reviewer": "test"
-    },
-    {
-      "date": "2026-11-05",
-      "batch": "test",
-      "passed": true,
-      "choice": "sova",
-      "expected": "sova",
-      "description": "x",
-      "reviewer": "test"
-    },
-    {
-      "date": "2026-11-05",
       "batch": "b1",
       "passed": true,
       "choice": "sova",
@@ -29,24 +11,6 @@
     }
   ],
   "anim.slappa.1": [
-    {
-      "date": "2026-11-05",
-      "batch": "test",
-      "passed": false,
-      "choice": "vila",
-      "expected": "slappa",
-      "description": "x",
-      "reviewer": "test"
-    },
-    {
-      "date": "2026-11-05",
-      "batch": "test",
-      "passed": false,
-      "choice": "vila",
-      "expected": "slappa",
-      "description": "x",
-      "reviewer": "test"
-    },
     {
       "date": "2026-11-05",
       "batch": "b1",

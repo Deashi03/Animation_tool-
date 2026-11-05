@@ -6,7 +6,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadScenes, REVIEW_DIR } from '../../src/tools/scenes';
+import { loadScenes, reviewDir } from '../../src/tools/scenes';
 import { makeBlindBatch, gradeBlind, type BlindKey, type BlindAnswers } from '../../src/tools/blind';
 import { args, flag, opt, rel, fail } from './_shared';
 
@@ -22,7 +22,7 @@ if (cmd === 'make') {
 } else if (cmd === 'grade') {
   const [batch, answersFile] = rest;
   if (!batch || !answersFile) fail('Ange batch och svarsfil');
-  const key = JSON.parse(fs.readFileSync(path.join(REVIEW_DIR, 'blind', `${batch}.key.json`), 'utf8')) as BlindKey;
+  const key = JSON.parse(fs.readFileSync(path.join(reviewDir(), 'blind', `${batch}.key.json`), 'utf8')) as BlindKey;
   const answers = JSON.parse(fs.readFileSync(answersFile, 'utf8')) as BlindAnswers;
   const g = gradeBlind(key, answers, opt('reviewer', 'claude-blind'));
   for (const r of g.results) console.log(`${r.passed ? 'RÄTT' : 'FEL '} ${r.letter} ${r.animationId}: svar "${r.choice}" (facit "${r.expected}")${r.description ? ` – ${r.description}` : ''}`);

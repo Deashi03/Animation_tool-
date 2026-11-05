@@ -3,9 +3,9 @@
 exports[`renderFrame determinism > snapshot of frame hashes (update deliberately when the look changes) 1`] = `
 {
   "anim.bakom.1": [
-    "1e323ca804eb",
-    "7b7e983a088d",
-    "3238b729bdd9",
+    "46138b6a4af7",
+    "9b559d671bef",
+    "71999858cbe4",
   ],
   "anim.gå.1": [
     "109e9b1377b8",
@@ -43,9 +43,9 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "26ab91aee118",
   ],
   "anim.stormning.1": [
-    "889beef0443a",
-    "ab6c845f69b2",
-    "303e9a6513cc",
+    "ab2117a9da92",
+    "a196428602e6",
+    "8c9eec1c7d58",
   ],
   "anim.stänga.1": [
     "2b51e1879e32",

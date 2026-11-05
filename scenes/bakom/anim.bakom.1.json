@@ -5,10 +5,10 @@
   "titleSv": "bakom",
   "meaningHint": "På baksidan av något, dolt eller delvis dolt av det",
   "category": "relation",
-  "durationMs": 3600,
+  "durationMs": 3000,
   "loop": true,
-  "holdMs": 900,
-  "posterMs": 3200,
+  "holdMs": 600,
+  "posterMs": 1800,
   "environment": {
     "id": "room",
     "time": "day"
@@ -18,45 +18,97 @@
       "id": "box",
       "asset": "box",
       "at": {
-        "x": 70,
+        "x": 62,
         "y": 100
       },
       "z": 2,
       "state": {
-        "w": 34,
-        "h": 15
+        "w": 36,
+        "h": 24
       }
     },
     {
       "id": "ball",
       "asset": "ball",
       "at": {
-        "x": 12,
+        "x": 85,
         "y": 100
       },
       "z": 1,
       "state": {
-        "r": 7
+        "r": 9
       }
+    }
+  ],
+  "shapes": [
+    {
+      "type": "icon",
+      "id": "arc",
+      "icon": "arc-arrow",
+      "x": 62,
+      "y": 62,
+      "size": 44,
+      "stroke": "accent",
+      "opacity": 0,
+      "z": 5
+    },
+    {
+      "type": "text",
+      "id": "ja",
+      "x": 104,
+      "y": 64,
+      "text": "後ろ",
+      "size": 13,
+      "weight": 800,
+      "fill": "ink",
+      "anchor": "middle",
+      "opacity": 0,
+      "z": 5
     }
   ],
   "timeline": [
     {
       "t": 200,
-      "action": "roll",
-      "prop": "ball",
-      "to": {
-        "x": 91,
-        "y": 100
-      },
-      "durationMs": 2200
+      "action": "set",
+      "target": "arc",
+      "prop": "opacity",
+      "value": 1
     },
     {
-      "t": 2500,
+      "t": 200,
+      "action": "tween",
+      "target": "arc",
+      "prop": "progress",
+      "from": 0,
+      "to": 1,
+      "durationMs": 900,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 1000,
+      "action": "tween",
+      "target": "ja",
+      "prop": "opacity",
+      "to": 1,
+      "durationMs": 300,
+      "ease": "easeOut"
+    },
+    {
+      "t": 1000,
+      "action": "tween",
+      "target": "ja",
+      "prop": "y",
+      "from": 68,
+      "to": 64,
+      "durationMs": 300,
+      "ease": "easeOut"
+    },
+    {
+      "t": 1300,
       "action": "emphasis",
       "target": "ball",
       "kind": "arrowDown",
-      "durationMs": 1000
+      "durationMs": 1400
     }
   ],
   "focus": {
@@ -64,7 +116,7 @@
       "ball",
       "box"
     ],
-    "feature": "the ball rolls in and stops partly hidden behind the box"
+    "feature": "the ball is partly hidden behind the box; an arrow goes over the box to it, with 後ろ"
   },
   "contrast": {
     "with": [
@@ -75,6 +127,9 @@
       "prop:ball"
     ]
   },
+  "label": {
+    "show": "optional"
+  },
   "pedagogy": {
     "quizEligible": false,
     "group": "läge",
@@ -82,6 +137,6 @@
       "s.framför.1",
       "s.under.1"
     ],
-    "note": "Inga människor: relationen visas mellan två föremål. Bollen bromsar in med konstant retardation och roterar i takt med sträckan."
+    "note": "Relation visad statiskt med pil och det japanska ordet (produktägarens förslag); ingen rörelse som kan misstas för ett verb."
   }
 }

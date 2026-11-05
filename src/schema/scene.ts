@@ -20,7 +20,7 @@ const Dur = z.number().int().min(1).max(60_000);
 
 export const CHARACTER_ASSETS = ['character.base'] as const;
 export const CHARACTER_VARIANTS = ['a', 'b', 'c'] as const;
-export const PROP_ASSETS = ['glass', 'jug', 'door', 'box', 'ball', 'football', 'sofa', 'bed', 'blanket', 'mug', 'phone', 'table', 'window', 'mat', 'ladder', 'castle'] as const;
+export const PROP_ASSETS = ['glass', 'jug', 'door', 'box', 'ball', 'football', 'sofa', 'bed', 'blanket', 'mug', 'phone', 'table', 'window', 'mat', 'ladder', 'castle', 'brawl'] as const;
 export const ENVIRONMENTS = ['neutral', 'room', 'bedroom', 'kitchen', 'outdoors.park', 'street'] as const;
 export const TIMES = ['day', 'evening', 'night'] as const;
 export const EYES = ['open', 'half', 'closed', 'wide'] as const;
@@ -62,7 +62,7 @@ export const Shape = z.discriminatedUnion('type', [
   z.object({ type: z.literal('rect'), id: Id, x: z.number(), y: z.number(), w: z.number().min(0), h: z.number().min(0), rx: z.number().min(0).optional(), fill: z.string().optional(), stroke: z.string().optional(), sw: z.number().min(0).optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0) }).strict(),
   z.object({ type: z.literal('circle'), id: Id, cx: z.number(), cy: z.number(), r: z.number().min(0), fill: z.string().optional(), stroke: z.string().optional(), sw: z.number().min(0).optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0) }).strict(),
   z.object({ type: z.literal('text'), id: Id, x: z.number(), y: z.number(), text: z.string().max(40), size: z.number().min(4).max(60), weight: z.number().min(100).max(900).optional(), fill: z.string().optional(), anchor: z.enum(['start', 'middle', 'end']).optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0) }).strict(),
-  z.object({ type: z.literal('icon'), id: Id, icon: z.enum(['check', 'cross', 'star', 'arrow-right', 'arrow-up', 'flag', 'heart']), x: z.number(), y: z.number(), size: z.number().min(4).max(120), fill: z.string().optional(), stroke: z.string().optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0) }).strict(),
+  z.object({ type: z.literal('icon'), id: Id, icon: z.enum(['check', 'cross', 'star', 'arrow-right', 'arrow-up', 'arrow-down', 'arc-arrow', 'flag', 'heart', 'exclaim']), x: z.number(), y: z.number(), size: z.number().min(4).max(120), fill: z.string().optional(), stroke: z.string().optional(), opacity: z.number().min(0).max(1).optional(), z: z.number().int().default(0) }).strict(),
 ]);
 
 const Target = z.string().min(1); // actor / prop / shape id

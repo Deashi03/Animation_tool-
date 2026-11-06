@@ -88,17 +88,23 @@ function buildAttribute(row: PlanRow, r: Recipe, s: J): J | null {
       s.environment = { id: (b.env as string) ?? 'room', time: (b.time as string) ?? 'day' };
       const tallFloor = /^fixture\.(lamp|plant|clothesline|shelf|mirror|fridge|shower)$/.test(asset);
       const at = placeThing(s, 'bearer', asset, tallFloor ? 40 : /^fixture\.(sun|cloud)$/.test(asset) ? 60 : onFloor(asset) ? 60 : 50, { scale, ...(st.state ? { state: st.state } : {}), ...(st.rotate !== undefined ? { rotate: st.rotate } : {}), ...(b.color ? { color: b.color } : st.color ? { color: st.color } : {}) }, b.surface === undefined ? 'table' : (b.surface as string | null));
+      // a room's atmosphere is borne by a small arrangement rather than one object: extra things at their own x (floor or the bearer's table)
+      const extras = (b.extra as J[] | undefined) ?? [];
+      extras.forEach((ex, i) => { const est = stateOf(ex.state); const o = { scale: (ex.scale as number) ?? (onFloor(ex.asset as string) ? 1 : 1.2), ...(est.state ? { state: est.state } : {}), ...(ex.color ? { color: ex.color } : {}), ...(ex.z !== undefined ? { z: ex.z } : {}) }; if (typeof ex.y === 'number') (s.props as J[]).push(propAt(`extra${i + 1}`, ex.asset as string, { x: ex.x as number, y: ex.y }, o)); /* an explicit y: a throw on a seat, a cushion on a sofa */ else placeThing(s, `extra${i + 1}`, ex.asset as string, ex.x as number, o, ex.surface === undefined ? 'table' : (ex.surface as string | null)); });
+      // things that live (flames, steam) keep their phase running – a still scene, not a frozen one
+      for (const p of s.props as J[]) if (PROPS[p.asset as string]?.defaults.phase !== undefined && (p.id === 'bearer' || String(p.id).startsWith('extra'))) tl.push({ t: 0, action: 'tween', target: p.id, prop: 'phase', from: 0, to: 4, durationMs: s.durationMs as number, ease: 'linear' });
       const change = b.change as J | undefined;
       if (change) tl.push({ t: 400, action: 'tween', target: 'bearer', prop: change.key, ...(change.from !== undefined ? { from: change.from } : {}), to: change.to, durationMs: 2000, ease: 'easeInOut' });
       if (b.glint) tl.push({ t: 300, action: 'emphasis', target: 'bearer', kind: 'glint', durationMs: 900 }, { t: 1700, action: 'emphasis', target: 'bearer', kind: 'glint', durationMs: 900 });
       if (asset === 'fixture.sun') tl.push({ t: 200, action: 'emphasis', target: 'bearer', kind: 'glow', durationMs: 1400 }, { t: 1800, action: 'emphasis', target: 'bearer', kind: 'glow', durationMs: 1400 });
       const top = at.y - (onFloor(asset) ? 40 : 12) * scale;
-      if (/^fixture\.(sun|cloud)$/.test(asset)) addGloss(s, ja, change ? 2400 : 1200, 60, 66, 'panel'); // sky bearers: the text goes below, never over the sun
+      if (extras.length) addGloss(s, ja, change ? 2400 : 1200, 60, 16, 'panel'); // an arrangement: the word names the whole picture, so a panel at the top, not a tail to one thing
+      else if (/^fixture\.(sun|cloud)$/.test(asset)) addGloss(s, ja, change ? 2400 : 1200, 60, 66, 'panel'); // sky bearers: the text goes below, never over the sun
       else if (tallFloor) addGloss(s, ja, change ? 2400 : 1200, 84, 34, 'bubble', { x: -26, y: 14 }); // beside the thing, tail towards it
       else if (!onFloor(asset)) addGloss(s, ja, change ? 2400 : 1200, 88, Math.max(14, top - 10), 'bubble', { x: -24, y: 18 }); // beside the thing on the table, tail towards it: the text never covers the bearer
       else addGloss(s, ja, change ? 2400 : 1200, 60, Math.max(16, top - 14), 'bubble', { x: 0, y: 30 });
-      (s.focus as J).targets = ['bearer']; (s.focus as J).feature = `${asset} bears the property; gloss in a bubble`;
-      (s.contrast as J | undefined) && ((s.contrast as J).distinctiveFeatures = bearerFeatures('bearer', asset, st.state as J | undefined, [...(change ? [`end:bearer.${change.key}${(change.to as number) >= 0.5 ? '>=0.5' : '<=0.5'}`] : []), ...(b.glint ? ['has:emphasis:glint'] : [])]));
+      (s.focus as J).targets = ['bearer', ...extras.map((_, i) => `extra${i + 1}`)]; (s.focus as J).feature = extras.length ? `${asset} with ${extras.map((e) => e.asset).join(', ')} bear the property together (${(b.time as string) ?? 'day'}); gloss on a panel` : `${asset} bears the property; gloss in a bubble`;
+      (s.contrast as J | undefined) && ((s.contrast as J).distinctiveFeatures = bearerFeatures('bearer', asset, st.state as J | undefined, [...(change ? [`end:bearer.${change.key}${(change.to as number) >= 0.5 ? '>=0.5' : '<=0.5'}`] : []), ...(b.glint ? ['has:emphasis:glint'] : []), ...(b.time ? [`environment.time:${b.time}`] : []), ...extras.map((e) => `has:prop:${e.asset}`)]));
       return s; }
     case 'wardrobe': {
       s.environment = { id: (b.env as string) ?? 'room', time: 'day' };
@@ -199,9 +205,10 @@ function buildTool(_row: PlanRow, r: Recipe, s: J): J {
   if (tool) props.push({ id: 'tool', asset: tool, attachTo: { actor: 'p', hand: 'left' }, ...(tool === 'tool.grater' ? { scale: 0.75 } : {}) });
   const effects = ((r.effects as J[] | undefined) ?? []).map((e) => ({ ...(e.role && e.role !== 'target' ? { prop: e.role === 'surface' ? 'surface' : e.role === 'extra' ? 'extra' : (e.role as string) } : {}), key: e.key, to: e.to, ...(e.from !== undefined ? { from: e.from } : {}), ...(e.at !== undefined ? { at: e.at } : {}) }));
   tl.push({ t: 0, action: 'use', actor: 'p', on: targetId, ...(tool ? { tool: 'tool' } : {}), motion: (r.motion as string) ?? 'chop', ...(r.period ? { periodMs: r.period } : {}), ...(r.bothHands ? { bothHands: true } : {}), ...(r.offset ? { offset: r.offset } : {}), durationMs: 4000, effect: effects });
+  if (r.sound) tl.push({ t: 350, action: 'sound', target: tool ? 'tool' : targetId, kind: r.sound, durationMs: 3650 }); // a machine at work is heard: arcs beside it the whole time
   (s.focus as J).targets = [targetId]; (s.focus as J).feature = `${tool ?? 'hands'} ${r.motion ?? ''} on ${target ?? surface}; effects: ${effects.map((e) => `${(e as J).prop ?? targetId}.${e.key}→${e.to}`).join(', ') || 'none'}`;
   const claims = ((r.claim as string[] | undefined) ?? []).map((c) => c.replace(/\btarget\b/g, targetId));
-  if (s.contrast) (s.contrast as J).distinctiveFeatures = claims.length ? claims : ['has:action:use'];
+  if (s.contrast) (s.contrast as J).distinctiveFeatures = [...(claims.length ? claims : ['has:action:use']), ...(tool ? [`has:prop:${tool}`] : []), ...(r.sound ? [`has:sound:${r.sound}`] : [])];
   return s;
 }
 function buildProcess(_row: PlanRow, r: Recipe, s: J): J {
@@ -253,6 +260,21 @@ function buildSocial(_row: PlanRow, r: Recipe, s: J): J | null {
   const give = r.give as J | undefined, put = r.put as J | undefined, take = r.take as J | undefined;
   if (!give && !put && !take) return null;
   s.template = give ? 'social' : 'arrange';
+  if (give && give.split) {
+    // dela: one thing, broken in two in front of the body, then one half changes hands – the whole thing never leaves the giver (that would be ge/lämna över)
+    (s.actors as J[]).push({ id: 'q', variant: 'c', at: { x: 82, y: 100 }, facing: 'left', scale: 0.9 }); (s.actors as J[])[0]!.at = { x: 38, y: 100 };
+    const sc = (give.scale as number) ?? 1.3; // big enough that a half reads as a half at 140 px (blind h1: 1.15 read as two small boxes; 1.5 covered the torso like a sign, blind h3)
+    props.push({ id: 'thing', asset: give.prop, attachTo: { actor: 'p', hand: 'left' }, scale: sc, ...(give.state ? { state: give.state } : {}) }, { id: 'piece', asset: give.prop, attachTo: { actor: 'p', hand: 'right' }, scale: sc, ...(give.state ? { state: give.state } : {}) });
+    s.durationMs = 5200; s.posterMs = 4700; // the end tableau; on a 12-frame strip this lands on a sampled frame so the poster is marked (blind h4 noted it was not)
+    tl.push({ t: 0, action: 'idle', actor: 'q', durationMs: 400 }, { t: 400, action: 'split', actor: 'p', prop: 'thing', into: 'piece', durationMs: 1800 }, // the break is held: both halves up, close together, before anything moves away
+      { t: 2300, action: 'give', from: 'p', to: 'q', prop: 'piece', durationMs: 1500 },
+      { t: 3125, action: 'set', target: 'piece', prop: 'half', value: 1 }, // the receiver faces the giver (mirrored), so its half flips: the cut faces end up towards each other
+      { t: 3900, action: 'pose', actor: 'q', joints: { uArmL: 34, fArmL: 78 }, durationMs: 500, ease: 'easeInOut' }, { t: 3900, action: 'pose', actor: 'p', joints: { uArmL: 34, fArmL: 78 }, durationMs: 500, ease: 'easeInOut' }, // end tableau: each holds a half at chest height (below the face – blind h3), one thing in two
+      { t: 4400, action: 'idle', actor: 'p', durationMs: 800, style: 'none' });
+    (s.focus as J).targets = ['thing', 'piece']; (s.focus as J).feature = `breaks ${give.prop} in two, gives one half to q, keeps the other`;
+    if (s.contrast) (s.contrast as J).distinctiveFeatures = ['has:action:split', 'has:action:give'];
+    return s;
+  }
   if (give) { (s.actors as J[]).push({ id: 'q', variant: 'c', at: { x: 80, y: 100 }, facing: 'left', scale: 0.9 }); props.push({ id: 'thing', asset: give.prop, attachTo: { actor: 'p', hand: 'left' }, scale: 0.8, ...(give.state ? { state: give.state } : {}) }); tl.push({ t: 0, action: 'idle', actor: 'q', durationMs: 400 }, { t: 400, action: 'give', from: 'p', to: 'q', prop: 'thing', durationMs: 1600 }, { t: 2000, action: 'idle', actor: 'p', durationMs: 1200 }); (s.focus as J).targets = ['thing']; }
   else if (put) {
     const on = put.on as string | undefined; const wide = on === 'fixture.clothesline'; const placeX = wide ? 92 : 92; // clothesline poles stand at ±40: centre 92 puts the near pole at 52, clear of the figure

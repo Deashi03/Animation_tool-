@@ -1,23 +1,23 @@
 # Batch: Att beskriva en bostad (m.att-beskriva-en-bostad)
 
-Skapade 4 utkast, 0 fanns, 1 ej animation, 0 bild, 0 blockerade (svagt recept, ingen scen), 10 manuella (verktyget säger ifrån – se anmärkningen), 0 ogiltiga, 0 utan recept.
+Skapade 11 utkast, 2 fanns, 1 ej animation, 0 bild, 1 blockerade (svagt recept, ingen scen), 0 manuella (verktyget säger ifrån – se anmärkningen), 0 ogiltiga, 0 utan recept.
 
 **Regel:** ett utkast är klart först när remsan är granskad och blindtestet godkänt (`anim:blindtest`). Rader märkta ⚠ har ett recept med känd svaghet – läs anmärkningen och förbättra scenen eller receptet innan blindtest. Rader med status *manual* kan verktyget inte göra själv: följ anmärkningen och `docs/MANUAL_SCENES.md`, och lägg det du lär dig i `src/tools/lexicon.ts` så att nästa liknande ord går automatiskt.
 
 | Ord | Status | Scen | Mall | Anmärkning |
 |---|---|---|---|---|
-| rymlig | manual | – | – | MANUELLT – rymlig: föremålet fixture.candle hittades men inget tillstånd visar egenskapen • välj ett tillstånd på fixture.candle som visar rymlig (eller en kontrast a/b) och lägg till i PROPERTIES • en figur som bara säger ordet är inte en bärare • liknande lösta ord: vass, grov, jämn (registry/recipes.json) • läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut |
-| trång | manual | – | – | MANUELLT – egenskapen trång har ingen bärare: definitionen "Med lite plats." nämner inget föremål i katalogen och ingen känd symbol • hitta ett typexempel: föremål med tillstånd, klädseldetalj, kontrastpar eller kulturneutral ikon – annars "ingen visualisering" • liknande lösta ord: vass, grov, jämn (registry/recipes.json) • läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut |
-| mysig | manual | – | – | MANUELLT – egenskapen mysig har ingen bärare: definitionen "Skön, varm och trevlig att vara i." nämner inget föremål i katalogen och ingen känd symbol • hitta ett typexempel: föremål med tillstånd, klädseldetalj, kontrastpar eller kulturneutral ikon – annars "ingen visualisering" • liknande lösta ord: vass, grov, jämn (registry/recipes.json) • läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut |
-| modern | created | anim.modern.1 | attribute-gloss |  [genererat high: egenskap i tabellen] |
-| renovera | manual | – | – | MANUELLT – verbet renovera passar ingen känd familj utifrån definitionen "Göra ett gammalt rum eller hus fint och nytt igen." • hittade föremål: inga • avgör familj (verktygsarbete, process, ordna, kommunikation, förflyttning …) och skriv ett recept enligt docs/WORD_FUNCTIONS.md – eller "ingen visualisering" • läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut |
-| nybyggd | manual | – | – | MANUELLT – bara familjen är säker (abstrakt: ikon house ur definitionen) – förslag: {"template":"attribute-gloss","bearer":{"kind":"icon","icon":"house","env":"neutral"}} • bekräfta eller ändra förslaget och skriv det som regel i lexicon.ts eller recept i recipes.json • läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut |
-| sliten | created | anim.sliten.1 | attribute-gloss |  [genererat high: egenskap i tabellen] |
-| charmig | manual | – | – | MANUELLT – bara familjen är säker (abstrakt: ikon house ur definitionen) – förslag: {"template":"attribute-gloss","bearer":{"kind":"icon","icon":"house","env":"neutral"}} • bekräfta eller ändra förslaget och skriv det som regel i lexicon.ts eller recept i recipes.json • läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut |
-| praktisk | manual | – | – | MANUELLT – egenskapen praktisk har ingen bärare: definitionen "Lätt och bra att använda." nämner inget föremål i katalogen och ingen känd symbol • hitta ett typexempel: föremål med tillstånd, klädseldetalj, kontrastpar eller kulturneutral ikon – annars "ingen visualisering" • liknande lösta ord: vass, grov, jämn (registry/recipes.json) • läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut |
-| central | manual | – | – | MANUELLT – egenskapen central har ingen bärare: definitionen "Nära centrum." nämner inget föremål i katalogen och ingen känd symbol • hitta ett typexempel: föremål med tillstånd, klädseldetalj, kontrastpar eller kulturneutral ikon – annars "ingen visualisering" • liknande lösta ord: vass, grov, jämn (registry/recipes.json) • läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut |
+| rymlig | created | anim.rymlig.1 | property-contrast |  |
+| trång | created | anim.trång.1 | property-contrast |  |
+| mysig | exists | anim.mysig.1 | – | scen finns |
+| modern | exists | anim.modern.1 | – | scen finns |
+| renovera | created | anim.renovera.1 | attribute-gloss | symbolisk minischen: ikon + bärare + gloss |
+| nybyggd | created | anim.nybyggd.1 | attribute-gloss |  |
+| sliten | blocked | – | attribute-gloss | receptet är märkt som svagt – ingen scen skapas: TODO: noppor/hål-tillstånd |
+| charmig | created | anim.charmig.1 | attribute-gloss |  |
+| praktisk | created | anim.praktisk.1 | attribute-gloss |  |
+| central | created | anim.central.1 | attribute-gloss |  |
 | läge | skipped | – | – | image – ingen animation |
-| bullrig | manual | – | – | MANUELLT – egenskapen bullrig har ingen bärare: definitionen "Med mycket ljud, till exempel från trafik." nämner inget föremål i katalogen och ingen känd symbol • hitta ett typexempel: föremål med tillstånd, klädseldetalj, kontrastpar eller kulturneutral ikon – annars "ingen visualisering" • liknande lösta ord: vass, grov, jämn (registry/recipes.json) • läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut |
-| solig | created | anim.solig.1 | attribute-gloss |  [genererat medium: föremålet fixture.sun ur definitionen bär egenskapen] |
-| dragig | created | anim.dragig.1 | attribute-gloss |  [genererat medium: ikon wind ur definitionen + föremål window] |
-| högt i tak | manual | – | – | MANUELLT – verbet högt i tak passar ingen känd familj utifrån definitionen "När det är långt mellan golvet och taket." • hittade föremål: inga • avgör familj (verktygsarbete, process, ordna, kommunikation, förflyttning …) och skriv ett recept enligt docs/WORD_FUNCTIONS.md – eller "ingen visualisering" • läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut |
+| bullrig | created | anim.bullrig.1 | attribute-gloss | med sound thump |
+| solig | created | anim.solig.1 | attribute-gloss |  |
+| dragig | created | anim.dragig.1 | attribute-gloss |  |
+| högt i tak | created | anim.högt-i-tak.1 | attribute-gloss |  |

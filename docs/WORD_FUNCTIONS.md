@@ -21,12 +21,14 @@ Validatorn upprätthåller detta med **bärar-regeln**: en ordscen utan bärare 
 | **Artighet och ritual** | ursäkta, be om ursäkt, tacka, hälsa, buga | `communicate` med `say.bow` | **kroppen bär**: en bugning (`bow`, djup för förlåt, lätt för tack), händerna ihop, 🙏-ikonen (`palms`) i bubblan, en synlig orsak (spilld kopp) och motpartens mjuknande | ikon | en gest i bubblan som enda bärare – gester läses olika i olika kulturer och en ikon med ett utstickande finger blev ett långfinger |
 | **Sätt att röra sig** | försiktig, varsam, hastig | `attribute-gloss` (`bearer.kind: manner`) | gången själv ändras (`walk.manner: careful` = korta långsamma steg, nästan ingen armpendling, blicken ner) och något som står på spel (ett fullt glas i handen) | japanskt ord | en vanlig gång med ett föremål – då läses det som *bära* |
 | **Mellan människor med föremål** | ge, lämna över, bjuda på, skicka | `social` | två figurer; föremålet byter hand mitt i rörelsen | ingen | – |
+| **Dela något med någon** | dela, dela med sig | `social` (`give.split`) | **en** sak bryts i två i givarens händer (`split`: halvorna syns nära varandra), sedan byter **ena halvan** hand; slutbild: var sin halva med snittytorna mot varandra. Designas mot ge/lämna över (hela saken byter hand) och halvera (delas men ges inte bort) | ingen | ett föremål som bara byter hand (= ge); för liten råvara – halvorna läses som två lådor (blindtest h1) |
 | **Ställa/ta/ordna föremål** | duka, packa, stapla, hänga upp, slänga, sortera | `arrange` | figuren går fram; föremålet lämnar handen och hamnar synligt på platsen (eller tas därifrån); slutläget hålls | ingen | föremål som bara försvinner |
 | **Klä sig** | ta på/av sig, knäppa (upp), dra upp, kavla upp, knyta | `dress-self` | garderobsspår ändras synligt (`hat 0→1`, `buttons 1→0`), händerna är där förändringen sker | ingen | byte som syns från t = 0 |
 | **Tillstånd / vila** | slappa, sova, vila, vänta | `state` | hållning + ögon + ljus + föremål (telefon, täcke) – designas **mot** grannordet | ingen | – |
 | **Känsla** | arg, glad, rädd, stolt, äcklad | `emotion` | `express`: ögon, bryn, mun, axlar **och en synlig utlösare** | ingen | kulturspecifika gester som enda bärare |
 | **Händelse med flera** | stormning, fest, flytt, möte | `event` | ≥ 2 figurer och ett föremål som förändras (fana, bord, lådor) | ingen | – |
 | **Egenskap buren av ett föremål** | vass, slö, grov, fin, tung, mogen, trasig, blank | `attribute-gloss` (`bearer.kind: prop`) | ett föremål som **har** egenskapen, gärna med en liten betoning som visar den (kniv + glint = vass; tandad egg = slö; stora bitar = grov) | japanskt ord i bubbla med svans mot föremålet | en person som säger ordet |
+| **Egenskap hos ett rum eller en plats** | mysig, stökig, trång, rymlig, bullrig | `attribute-gloss` (`bearer.kind: prop` + `extra`) | inget enskilt föremål *är* egenskapen – bäraren är en **liten uppställning** som tillsammans är stämningen/tillståndet, och tiden på dygnet får bära: *mysig* = tänt ljus + ångande kopp + soffa med pläd i kvällsljus (`time: evening`). Levande detaljer (låga, ånga) får sin `phase` | japanskt ord på panel (ordet gäller hela bilden, ingen svans) | ett enda föremål som inte i sig är egenskapen (en soffa läses som *soffa*); en person som utför något (läses som verbet) |
 | **Egenskap buren av kläder/utseende** | randig, sportig, elegant, skrynklig, beige | `attribute-gloss` (`bearer.kind: wardrobe`) | figur vars klädsel **har** egenskapen (mönster, färg, plagg); lugn andning | japanskt ord, svans mot bålen | aktivitet som är ett eget verb (kicka ≠ sportig) |
 | **Egenskap som bara syns i rörelse** | vinglig, seg, elastisk | `attribute-gloss` (`bearer.kind: motion`) | liten loopad rörelse hos ett föremål som inte är ett eget verb (vinglar, töjs) | japanskt ord | – (markera `TODO` i receptet om rörelsen inte räcker; **ett recept märkt TODO ger inget utkast**) |
 | **Egenskap som smak/känsla i kroppen** | salt, söt, sur, bitter, mätt, hungrig | `attribute-gloss` (`bearer.kind: taste`/`emotion`) | figur som smakar/känner + ansikte + föremålet som orsakar | japanskt ord | – |
@@ -47,12 +49,12 @@ Nyckel: lemma (`"vass"`) eller betydelse (`"s.slö.1"` – vinner över lemmat; 
 
 | Mall | Fält |
 |---|---|
-| `attribute-gloss` | `bearer: { kind: prop\|wardrobe\|icon\|contrast\|emotion\|taste\|motion\|manner, asset?, state?, scale?, color?, surface?, env?, wardrobe?, icon?, tail?, emphasis?, motion?, manner?, prop? }` |
-| `tool-rhythm` | `tool`, `target`, `surface?`, `motion`, `effects: [{ role: target\|surface\|extra, key, to, at? }]`, `claim?: []`, `period?`, `bothHands?`, `extra?` |
+| `attribute-gloss` | `bearer: { kind: prop\|wardrobe\|icon\|contrast\|emotion\|taste\|motion\|manner, asset?, state?, scale?, color?, surface?, env?, time?, extra?: [{ asset, x, y?, state?, scale?, surface?, color?, z? }], wardrobe?, icon?, tail?, emphasis?, motion?, manner?, prop? }` – `extra` ställer fler föremål vid egna x (golv med `surface: null`, annars bärarens bord; `y` för t.ex. en pläd på en sits); med `extra` hamnar glossen på en panel |
+| `tool-rhythm` | `tool`, `target`, `surface?` (**`null` = på golvet** – utan fältet hamnar målet på en skärbräda på ett bord), `motion`, `effects: [{ role: target\|surface\|extra\|tool, key, to, at? }]`, `claim?: []`, `period?`, `bothHands?`, `extra?`, `sound?` (maskin som brummar: `hum`) |
 | `process` | `asset`, `change: [{ key, from?, to, at? }]`, `state?`, `extra?: [{ asset, change? }]`, `sound?`, `claim?` |
 | `cook-rhythm` | `kind: fry\|brown\|sear\|burn\|melt`, `contents`, `flip?`, `splash?` |
 | `communicate` | `say: { icon, mood?, bow?: light\|deep }` – med `bow` bär kroppen (bugning) och ikonen förstärker |
-| `social` | `give: { prop }` |
+| `social` | `give: { prop, state?, scale?, split? }` – `split: true` bryter saken i två och ger ena halvan (dela) |
 | `arrange` | `put: { prop, on? }` eller `take: { prop }` |
 | `manipulate-prop` | `eat: { prop, sound? }` eller `pour: { from, into }` |
 | `dress-self`, `locomotion`, `emotion`, `state`, `event`, `relation-arrow` | mallens startscen med lemma-specifika tabeller i `src/tools/batch.ts` |

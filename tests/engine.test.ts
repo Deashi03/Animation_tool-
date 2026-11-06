@@ -356,3 +356,60 @@ describe('communication, handing over and clothes', () => {
     const r = validateScene(scenes.get('anim.knäppa-upp.1') as unknown, scenes); expect(r.problems.filter((p) => p.level === 'error')).toEqual([]);
   });
 });
+
+describe('hand-off words 2026-11-06: split (dela), vacuum (dammsuga), room atmosphere (mysig)', () => {
+  const { scenes } = loadScenes();
+  it('split: the thing is whole until the break, then a left half in one hand and a hidden right half appears in the other; give hands the half over', () => {
+    const c = compileScene(scenes.get('anim.dela.1')!);
+    expect(sample(c.tracks, 'thing.s.half', 100) as number).toBe(0); expect(sample(c.tracks, 'piece.s.half', 100) as number).toBe(0);
+    expect(sample(c.tracks, 'piece.opacity', 100) as number).toBe(0);
+    const mid = 400 + 900; // split at 400 ms for 1800 ms
+    expect(sample(c.tracks, 'thing.s.half', mid + 50) as number).toBe(1); expect(sample(c.tracks, 'piece.s.half', mid + 50) as number).toBe(2);
+    expect(sample(c.tracks, 'piece.opacity', mid + 50) as number).toBe(1);
+    expect(sample(c.tracks, 'piece.attach', mid + 50)).toBe('p:right'); expect(sample(c.tracks, 'thing.attach', c.durationMs)).toBe('p:left');
+    expect(sample(c.tracks, 'piece.attach', c.durationMs)).toBe('q:left'); // one half changed hands, the other stayed
+    // a held prop honours its opacity track (the hidden half must not show before the break) and the half really is half as wide
+    const before = bboxOfId(renderFrame(c, 300).root, 'entity.piece'), whole = bboxOfId(renderFrame(c, 300).root, 'entity.thing')!, half = bboxOfId(renderFrame(c, c.durationMs).root, 'entity.thing')!;
+    expect(frameToSvg(renderFrame(c, 300))).toMatch(/opacity="0" data-id="entity.piece"/); void before;
+    void whole; void half; // bbox ignores clips, so the halving is checked on the SVG: no clip before the break, one clip per half after it
+    expect((frameToSvg(renderFrame(c, 300)).match(/clip-path=/g) ?? []).length).toBe(0); expect((frameToSvg(renderFrame(c, c.durationMs)).match(/clip-path=/g) ?? []).length).toBe(2);
+    expect(() => drawProp('food.cake', { half: 1 })).not.toThrow(); expect(() => drawProp('food.bread', { half: 2 })).not.toThrow();
+  });
+  it('dammsuga: a vacuum (machine) that hums over a pile that disappears; sopa is the same work with a silent broom', () => {
+    const v = compileScene(scenes.get('anim.dammsuga.1')!), b = compileScene(scenes.get('anim.sopa.1')!);
+    expect(scenes.get('anim.dammsuga.1')!.props.some((p) => p.asset === 'tool.vacuum')).toBe(true);
+    expect(sample(v.tracks, 'target.s.amount', 0) as number).toBe(1); expect(sample(v.tracks, 'target.s.amount', v.durationMs) as number).toBeLessThan(0.1);
+    expect(sample(v.tracks, 'tool.s.on', v.durationMs) as number).toBe(1);
+    expect(sample(v.tracks, 'fx.tool.sound', 2000)).toBe('hum'); expect(b.tracks.get('fx.tool.sound')).toBeUndefined();
+    // the sound marks are drawn beside the held machine (a nested entity), not dropped
+    const svg = frameToSvg(renderFrame(v, 2000)); expect((svg.match(/linecap="round"[^>]*opacity="0\.[0-9]+"/g) ?? []).length).toBeGreaterThan(0);
+    const pileWorld = bboxOfId(renderFrame(b, 0).root, 'entity.target')!; expect(pileWorld.y2).toBeGreaterThan(95); // the pile lies on the floor, not on a table
+    for (const r of [validateScene(scenes.get('anim.dammsuga.1') as unknown, scenes), validateScene(scenes.get('anim.sopa.1') as unknown, scenes)]) expect(r.problems.filter((p) => p.level === 'error')).toEqual([]);
+  });
+  it('mysig: a room atmosphere is borne by an arrangement (lit candle, steaming cup, sofa with a throw) in evening light, with the gloss on a panel', () => {
+    const s = scenes.get('anim.mysig.1')!; const c = compileScene(s);
+    expect(s.environment.time).toBe('evening');
+    expect(s.props.map((p) => p.asset)).toEqual(expect.arrayContaining(['fixture.candle', 'container.cup', 'sofa', 'blanket']));
+    expect(sample(c.tracks, 'bearer.s.phase', 2000) as number).toBeGreaterThan(0); // the flame flickers: a still scene, not a frozen one
+    const throwBox = bboxOfId(renderFrame(c, 0).root, 'entity.extra2')!, sofaBox = bboxOfId(renderFrame(c, 0).root, 'entity.extra1')!;
+    expect(throwBox.y2).toBeLessThan(sofaBox.y2 - 6); // the throw lies on the seat, not on the floor in front of the sofa
+    expect(validateScene(s as unknown, scenes).problems.filter((p) => p.level === 'error')).toEqual([]);
+  });
+  it('the generator now solves the three hand-off words from the lexicon (no manual verdict)', async () => {
+    const { inferRecipe } = await import('../src/tools/recipe');
+    const { draftScene } = await import('../src/tools/batch');
+    const words = [
+      { senseId: 's.mysig.1', lemma: 'mysig', pos: 'adjective', defSv: 'Skön, varm och trevlig att vara i.', examples: ['Vi har ett mysigt vardagsrum.'], jaGloss: '居心地のよい' },
+      { senseId: 's.dammsuga.1', lemma: 'dammsuga', pos: 'verb', defSv: 'Ta bort damm och smuts från golvet med en maskin.', examples: [], jaGloss: '掃除機をかける' },
+      { senseId: 's.dela.1', lemma: 'dela', pos: 'verb', defSv: 'Ta delar av något och ge till flera.', examples: ['Vi delar på efterrätten.'], jaGloss: '分ける' },
+    ];
+    for (const w of words) {
+      const inf = inferRecipe(w as never);
+      expect(inf.ok, w.lemma).toBe(true); if (!inf.ok) continue;
+      expect(inf.confidence).toBe('high');
+      const d = draftScene({ ...w, kind: 'animation', confidence: 'high', contrast: [], note: '' } as never, inf.recipe, 'test', new Map());
+      expect(d, w.lemma).toBeTruthy();
+      expect(validateScene(d as unknown).problems.filter((p) => p.level === 'error'), w.lemma).toEqual([]);
+    }
+  });
+});

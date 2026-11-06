@@ -6,6 +6,7 @@
  *   ripeness 0..1 unripe colour → ripe colour (mogna)
  *   rot 0..1      brown spots, sagging (ruttna, mögla)
  *   mashed 0..1   collapses into a soft heap (mosa)
+ *   half 0|1|2    whole / left half only / right half only – a portion of the thing (dela: `split` sets it)
  * Asset ids: `food.<shape>`.
  */
 import { circle, ellipse, g, line, path, rect, type FrameNode, r1 } from '../../engine/frame';
@@ -16,8 +17,16 @@ const INK = C.ink;
 export const FOOD_SHAPES = ['apple', 'banana', 'carrot', 'tomato', 'onion', 'potato', 'bread', 'dough', 'egg', 'cheese', 'pile', 'fish', 'pancake', 'cake'] as const;
 export type FoodShape = (typeof FOOD_SHAPES)[number];
 
-/** Draw `body` whole or as `k` vertical slices that spread apart as `pieces` grows (cuts come one by one from the right). */
-function sliced(body: FrameNode, w: number, h: number, pieces: number, k = 4): FrameNode {
+/**
+ * Draw `body` whole or as `k` vertical slices that spread apart as `pieces` grows (cuts come one by one from the right).
+ * `half` 1 = only the left half, 2 = only the right half (a portion after `split`: the cut face is drawn as a line).
+ */
+function sliced(body: FrameNode, w: number, h: number, pieces: number, k = 4, half = 0): FrameNode {
+  if (half >= 1) {
+    const left = Math.round(half) === 1;
+    const zig: string[] = [`M0 ${r1(-h + 1)}`]; for (let y = -h + 1; y < -1; y += 2.2) zig.push(`L${r1(((Math.round(y) % 2) ? 1.3 : -1.3) * (left ? 1 : -1))} ${r1(Math.min(-1, y + 1.1))}`); zig.push('L0 -1');
+    return g([g([body], {}, { clip: { x: left ? -w / 2 - 2 : 0, y: -h - 2, w: w / 2 + 2, h: h + 4 } }), path(zig.join(' '), { fill: 'none', stroke: INK, sw: 1.3, opacity: 0.85 })]);
+  }
   k = Math.max(2, Math.min(8, Math.round(k)));
   const p = clamp01(pieces); if (p < 0.02) return body;
   const out: FrameNode[] = []; const sw = w / k;
@@ -62,7 +71,7 @@ const F: Record<FoodShape, PropSpec> = {
         line([[0, cy - r + 1], [1, cy - r - 4]], { stroke: C.brown, sw: 1.6 }), path(`M1 ${r1(cy - r - 2)} q4 -4 7 -1 q-4 3 -7 1 Z`, { fill: C.green, stroke: INK, sw: 1 }),
         peeled > 0.3 ? path(`M${r1(r * 0.8)} ${r1(cy + r * 0.3)} q6 2 4 7 q-3 2 -2 5`, { fill: 'none', stroke: skin, sw: 1.8, opacity: peeled }) : g([]),
       ]);
-      return sliced(body, 2 * r, 2 * r + 5, n(s, 'pieces', 0), n(s, 'parts', 4)); },
+      return sliced(body, 2 * r, 2 * r + 5, n(s, 'pieces', 0), n(s, 'parts', 4), n(s, 'half', 0)); },
   },
   banana: {
     defaults: { ripeness: 0.6, rot: 0, peeled: 0, pieces: 0 }, grip: [0, -5], mouth: [0, -8],
@@ -73,25 +82,25 @@ const F: Record<FoodShape, PropSpec> = {
         path('M-12 -3 l-2 -1.5 l1.5 -1', { fill: 'none', stroke: INK, sw: 1.4 }),
         ...(rot > 0.1 ? [circle(-4, -6, 1.3 * rot, { fill: '#4a2f1f', opacity: 0.9 }), circle(3, -7, 1.1 * rot, { fill: '#4a2f1f', opacity: 0.9 }), circle(8, -5, 0.9 * rot, { fill: '#4a2f1f', opacity: 0.9 })] : []),
       ]);
-      return sliced(body, 26, 10, n(s, 'pieces', 0), n(s, 'parts', 5)); },
+      return sliced(body, 26, 10, n(s, 'pieces', 0), n(s, 'parts', 5), n(s, 'half', 0)); },
   },
   carrot: {
     defaults: { pieces: 0, peeled: 0 }, grip: [0, -3], mouth: [0, -6],
     draw: (s) => { const peeled = clamp01(n(s, 'peeled', 0));
       const body = g([path('M-14 -2 q0 -5 5 -5 h20 q4 1 4 3.5 q0 2.5 -4 3.5 h-20 q-5 0 -5 -2 Z', { fill: mix(C.orange, '#f6b26b', peeled), stroke: INK, sw: 1.8 }), ...(peeled < 0.5 ? [line([[-6, -4], [-4, -4]], { stroke: INK, sw: 0.8, opacity: 0.5 }), line([[2, -2], [4, -2]], { stroke: INK, sw: 0.8, opacity: 0.5 })] : []), path('M15 -3.5 l5 -4 M15 -3.5 l6 -1', { fill: 'none', stroke: C.green, sw: 1.8 })]);
-      return sliced(body, 30, 8, n(s, 'pieces', 0), n(s, 'parts', 5)); },
+      return sliced(body, 30, 8, n(s, 'pieces', 0), n(s, 'parts', 5), n(s, 'half', 0)); },
   },
   tomato: {
     defaults: { pieces: 0, ripeness: 1, rot: 0 }, grip: [0, -6], mouth: [0, -12],
     draw: (s) => { const rip = clamp01(n(s, 'ripeness', 1)), rot = clamp01(n(s, 'rot', 0)); const r = 6.5;
       const body = g([circle(0, -r, r, { fill: mix(mix('#8fbf5a', C.red, rip), '#6b4a2b', rot * 0.5), stroke: INK, sw: 1.8 }), ...rotSpots(0, -r, r, rot), path(`M-3 ${r1(-2 * r + 1)} l3 -3 l3 3 M0 ${r1(-2 * r - 2)} v3`, { fill: 'none', stroke: C.green, sw: 1.4 })]);
-      return sliced(body, 2 * r, 2 * r + 3, n(s, 'pieces', 0), n(s, 'parts', 4)); },
+      return sliced(body, 2 * r, 2 * r + 3, n(s, 'pieces', 0), n(s, 'parts', 4), n(s, 'half', 0)); },
   },
   onion: {
     defaults: { pieces: 0, peeled: 0 }, grip: [0, -6], mouth: [0, -12],
     draw: (s) => { const peeled = clamp01(n(s, 'peeled', 0)); const r = 6.5;
       const body = g([circle(0, -r, r, { fill: mix('#d9b06a', '#f6efd8', peeled), stroke: INK, sw: 1.8 }), path(`M-3.5 ${r1(-r)} q0 -4 3.5 -4 q3.5 0 3.5 4`, { fill: 'none', stroke: INK, sw: 0.8, opacity: 0.4 }), path(`M-5.5 ${r1(-r)} q0 -6 5.5 -6 q5.5 0 5.5 6`, { fill: 'none', stroke: INK, sw: 0.8, opacity: 0.4 }), line([[0, -2 * r + 1], [1, -2 * r - 3]], { stroke: C.brown, sw: 1.4 })]);
-      return sliced(body, 2 * r, 2 * r + 3, n(s, 'pieces', 0), n(s, 'parts', 5)); },
+      return sliced(body, 2 * r, 2 * r + 3, n(s, 'pieces', 0), n(s, 'parts', 5), n(s, 'half', 0)); },
   },
   potato: {
     defaults: { pieces: 0, peeled: 0, mashed: 0 }, grip: [0, -5], mouth: [0, -10],
@@ -99,7 +108,7 @@ const F: Record<FoodShape, PropSpec> = {
       if (mashed > 0.5) return mashedHeap('#f3e3a8', 16);
       const sq = clamp01(n(s, 'squash', 0));
       const body = g([ellipse(0, -5 + sq * 1.2, 9 + sq * 1.5, 5.5 - sq * 1.2, { fill: mix('#b58a5a', '#f3e3a8', peeled), stroke: INK, sw: 1.8 }), ...(peeled < 0.5 ? [circle(-3, -6, 0.7, { fill: INK, opacity: 0.4 }), circle(2, -4, 0.7, { fill: INK, opacity: 0.4 }), circle(4, -7, 0.6, { fill: INK, opacity: 0.4 })] : []), ...(peeled > 0.08 ? [path(`M9 -3 q${r1(3 + 5 * peeled)} 1 ${r1(2 + 4 * peeled)} ${r1(4 + 3 * peeled)} q-2 2 ${r1(-3 * peeled)} 2`, { fill: 'none', stroke: '#b58a5a', sw: 2, opacity: Math.min(1, peeled * 3) }), path(`M-9 -4 q${r1(-4 * peeled)} 3 -2 ${r1(5 + 3 * peeled)}`, { fill: 'none', stroke: '#b58a5a', sw: 2, opacity: Math.max(0, peeled - 0.4) * 1.6 })] : [])]);
-      return sliced(body, 18, 11, n(s, 'pieces', 0), n(s, 'parts', 4)); },
+      return sliced(body, 18, 11, n(s, 'pieces', 0), n(s, 'parts', 4), n(s, 'half', 0)); },
   },
   bread: {
     defaults: { pieces: 0, toast: 0, butter: 0, slice: 0 }, grip: [0, -6], mouth: [0, -12],
@@ -107,7 +116,7 @@ const F: Record<FoodShape, PropSpec> = {
     draw: (s) => { const toast = clamp01(n(s, 'toast', 0)), butter = clamp01(n(s, 'butter', 0)), slice = clamp01(n(s, 'slice', 0));
       if (slice > 0.5) return g([path('M-12 0 v-4 q0 -3 3 -3 h18 q3 0 3 3 v4 Z', { fill: mix('#f3e3b4', '#8d4a1c', toast), stroke: INK, sw: 1.6 }), butter > 0.03 ? path(`M-10 -6 h${r1(20 * butter)} q1 0 1 1 v2 h${r1(-20 * butter - 1)} Z`, { fill: C.yellow, stroke: INK, sw: 0.8 }) : g([])]);
       const body = g([path('M-14 0 v-7 q0 -6 7 -6 h14 q7 0 7 6 v7 Z', { fill: mix('#e9c791', '#8d4a1c', toast), stroke: INK, sw: 1.8 }), path('M-8 -11 q3 -3 6 0 q3 -3 6 0', { fill: 'none', stroke: INK, sw: 0.8, opacity: 0.4 })]);
-      return sliced(body, 28, 13, n(s, 'pieces', 0), n(s, 'parts', 5)); },
+      return sliced(body, 28, 13, n(s, 'pieces', 0), n(s, 'parts', 5), n(s, 'half', 0)); },
   },
   dough: {
     defaults: { rise: 0, flat: 0, phase: 0 }, grip: [0, -5], mouth: [0, -8],
@@ -139,17 +148,17 @@ const F: Record<FoodShape, PropSpec> = {
   fish: {
     defaults: { pieces: 0 }, grip: [0, -4], mouth: [0, -8],
     draw: (s) => { const body = g([path('M-12 -4 q8 -8 20 -4 q4 2 4 4 l6 -4 v8 l-6 -4 q0 2 -4 4 q-12 4 -20 -4 Z', { fill: C.sky, stroke: INK, sw: 1.8 }), circle(-7, -5, 1, { fill: INK }), path('M-2 -8 q2 -2 4 0', { fill: 'none', stroke: INK, sw: 0.8, opacity: 0.5 })]);
-      return sliced(body, 36, 10, n(s, 'pieces', 0), n(s, 'parts', 5)); },
+      return sliced(body, 36, 10, n(s, 'pieces', 0), n(s, 'parts', 5), n(s, 'half', 0)); },
   },
   pancake: {
     defaults: { browning: 0.6, pieces: 0 }, grip: [0, -2], mouth: [0, -4],
-    draw: (s) => { const br = clamp01(n(s, 'browning', 0.6)); const body = ellipse(0, -1.5, 11, 2.2, { fill: mix('#f7e6b8', '#8d4a1c', br * 0.8), stroke: INK, sw: 1.5 }); return sliced(body, 22, 4, n(s, 'pieces', 0), n(s, 'parts', 4)); },
+    draw: (s) => { const br = clamp01(n(s, 'browning', 0.6)); const body = ellipse(0, -1.5, 11, 2.2, { fill: mix('#f7e6b8', '#8d4a1c', br * 0.8), stroke: INK, sw: 1.5 }); return sliced(body, 22, 4, n(s, 'pieces', 0), n(s, 'parts', 4), n(s, 'half', 0)); },
   },
   cake: {
     defaults: { pieces: 0, decorated: 0 }, grip: [0, -6], mouth: [0, -14],
     draw: (s) => { const dec = clamp01(n(s, 'decorated', 0));
       const body = g([path('M-12 0 v-9 h24 v9 Z', { fill: '#f3d9a4', stroke: INK, sw: 1.8 }), path('M-12 -9 q6 -3 12 0 q6 -3 12 0 v-2 h-24 Z', { fill: C.rose, stroke: INK, sw: 1.4 }), ...(dec > 0.3 ? [circle(-6, -11, 1.6 * dec, { fill: C.red, stroke: INK, sw: 0.8 }), circle(0, -12, 1.6 * dec, { fill: C.red, stroke: INK, sw: 0.8 }), circle(6, -11, 1.6 * dec, { fill: C.red, stroke: INK, sw: 0.8 })] : [])]);
-      return sliced(body, 24, 14, n(s, 'pieces', 0), n(s, 'parts', 4)); },
+      return sliced(body, 24, 14, n(s, 'pieces', 0), n(s, 'parts', 4), n(s, 'half', 0)); },
   },
 };
 void color;

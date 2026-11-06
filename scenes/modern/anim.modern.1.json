@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.modern.1",
+  "kind": "word",
+  "template": "attribute-gloss",
+  "senseId": "s.modern.1",
+  "titleSv": "modern",
+  "meaningHint": "Ny och gjord på ett sätt som är vanligt i dag.",
+  "category": "property",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "bearer",
+      "asset": "fixture.lamp",
+      "at": {
+        "x": 40,
+        "y": 100
+      },
+      "scale": 0.75,
+      "rotate": 0,
+      "z": 1,
+      "state": {
+        "on": 1
+      }
+    }
+  ],
+  "shapes": [
+    {
+      "type": "text",
+      "id": "ja",
+      "x": 84,
+      "y": -20,
+      "text": "現代的な",
+      "size": 11,
+      "weight": 800,
+      "fill": "ink",
+      "anchor": "middle",
+      "opacity": 0,
+      "z": 5,
+      "bg": "bubble",
+      "tail": {
+        "x": -26,
+        "y": 14
+      },
+      "pad": 6
+    }
+  ],
+  "timeline": [
+    {
+      "t": 1200,
+      "action": "tween",
+      "target": "ja",
+      "prop": "opacity",
+      "to": 1,
+      "from": 0,
+      "durationMs": 350,
+      "ease": "easeOut"
+    },
+    {
+      "t": 1200,
+      "action": "tween",
+      "target": "ja",
+      "prop": "y",
+      "to": 34,
+      "from": 28,
+      "durationMs": 450,
+      "ease": "easeOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "bearer"
+    ],
+    "feature": "fixture.lamp bears the property; gloss in a bubble"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "att beskriva en bostad",
+    "confusableWith": [
+      "s.rymlig.1",
+      "s.trång.1",
+      "s.mysig.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (attribute-gloss)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

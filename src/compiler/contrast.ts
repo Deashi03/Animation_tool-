@@ -132,7 +132,7 @@ export function checkContrast(c: CompiledScene, others: Map<string, Scene>): Pro
 
 /** The entity that bears the word: a prop, a wardrobe detail, an icon, or a bodily action. Null when the scene is only a person (and text). */
 export const WARDROBE_DETAILS = ['hat', 'glasses', 'scarf', 'buttons', 'zipper', 'sleeves', 'apron', 'laces', 'pattern', 'headband', 'number', 'shorts', 'topLength', 'top', 'bottom', 'shoes'];
-export const BODY_ACTIONS = ['walk', 'run', 'jump', 'exercise', 'express', 'dress', 'fasten', 'climb', 'roll', 'relax', 'sleep', 'eat', 'give', 'use', 'cook', 'flip', 'pour', 'open', 'close', 'bow'];
+export const BODY_ACTIONS = ['walk', 'run', 'jump', 'exercise', 'express', 'dress', 'fasten', 'climb', 'roll', 'relax', 'sleep', 'eat', 'give', 'use', 'cook', 'flip', 'pour', 'open', 'close', 'bow', 'split'];
 /** icons that depict a gesture: never the sole bearer (CLAUDE.md §8) – a bodily action must accompany them */
 export const GESTURE_ICONS = ['hand', 'palms', 'wave'];
 export function bearerOf(sc: { props: { asset: string }[]; shapes: { type: string }[]; actors: { wardrobe?: Record<string, unknown> }[]; timeline: { action: string }[] }): string | null {

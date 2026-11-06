@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.dammsuga.1",
+  "kind": "word",
+  "template": "tool-rhythm",
+  "senseId": "s.dammsuga.1",
+  "titleSv": "dammsuga",
+  "meaningHint": "Ta bort damm och smuts från golvet med en maskin.",
+  "category": "action",
+  "durationMs": 4400,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 48,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 1,
+      "wardrobe": {
+        "top": "navy"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "target",
+      "asset": "food.pile",
+      "at": {
+        "x": 76,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": 1,
+      "state": {
+        "contents": "#9aa3ad",
+        "amount": 1,
+        "size": 0.6
+      }
+    },
+    {
+      "id": "tool",
+      "asset": "tool.vacuum",
+      "scale": 1,
+      "rotate": 0,
+      "z": 0,
+      "state": {},
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "target",
+      "tool": "tool",
+      "hand": "left",
+      "motion": "sweep",
+      "durationMs": 4000,
+      "periodMs": 900,
+      "effect": [
+        {
+          "key": "amount",
+          "to": 0
+        },
+        {
+          "prop": "tool",
+          "key": "on",
+          "to": 1,
+          "at": 0.08
+        }
+      ],
+      "bothHands": false
+    },
+    {
+      "t": 350,
+      "action": "sound",
+      "target": "tool",
+      "kind": "hum",
+      "durationMs": 3650
+    }
+  ],
+  "focus": {
+    "targets": [
+      "target"
+    ],
+    "feature": "tool.vacuum sweep on food.pile; effects: target.amount→0, tool.on→1"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "hemmet och vardagliga aktiviteter",
+    "confusableWith": [
+      "s.städa.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (tool-rhythm). stavdammsugare (tool.vacuum): lampan tänds, maskinen brummar, dammhögen försvinner under munstycket – kontrast mot sopa (kvast, tyst)"
+  },
+  "label": {
+    "show": "optional"
+  },
+  "contrast": {
+    "with": [
+      "anim.sopa.1"
+    ],
+    "distinctiveFeatures": [
+      "has:prop:tool.vacuum",
+      "has:sound:hum",
+      "end:target.amount<=0.1"
+    ]
+  }
+}

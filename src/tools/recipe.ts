@@ -14,7 +14,7 @@
 import { isPropAsset } from '../assets/catalog';
 import type { Recipe } from './coverage';
 import { loadSwechan, stripFurigana } from './plan';
-import { NOUN_ASSET, SURFACE_OF, TOOL_VERBS, PROCESS_VERBS, PROPERTIES, ABSTRACT_ICON, SAY_BY_DEF, BOW_BY_DEF, DEF_CATEGORY, DRESS_LEMMAS, LOCOMOTION_LEMMAS, STATE_LEMMAS, PATTERNS, COLOURS, ARRANGE_VERBS, SOCIAL_VERBS, COOK_VERBS, MISSING_ASSET, HARD_WORDS, STATE_BY_ADJ, EAT_VERBS } from './lexicon';
+import { NOUN_ASSET, SURFACE_OF, TOOL_VERBS, PROCESS_VERBS, PROPERTIES, ABSTRACT_ICON, SAY_BY_DEF, BOW_BY_DEF, DEF_CATEGORY, DRESS_LEMMAS, LOCOMOTION_LEMMAS, STATE_LEMMAS, PATTERNS, COLOURS, ARRANGE_VERBS, SOCIAL_VERBS, COOK_VERBS, MISSING_ASSET, HARD_WORDS, STATE_BY_ADJ, EAT_VERBS, verbBehindNoun } from './lexicon';
 import { PROPS } from '../assets/props';
 
 export type Word = { senseId: string; lemma: string; pos: string; defSv?: string; examples?: string[]; jaGloss?: string; antonyms?: string[]; tags?: string[] };
@@ -62,7 +62,12 @@ export function inferRecipe(w: Word, hand: Record<string, Recipe> = {}): Inferre
   }
   if (w.pos === 'preposition') return { ok: true, recipe: { template: 'relation-arrow', note: `relation: ${lemma} – kontrollera pilens riktning och gloss` }, confidence: 'low', why: ['preposition → relation-arrow (två föremål + pil + japanskt ord)'] };
   if (w.pos === 'noun') {
-    if (ACTIVITY_NOUN.test(lemma) || /^att /.test(text)) return manual('aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord', 'event', ['välj verbet bakom substantivet och använd dess recept (t.ex. "tvätt" → tvätta), eller skriv en event-scen']);
+    if (ACTIVITY_NOUN.test(lemma) || /^att /.test(text)) {
+      // the picture of an activity noun is the picture of its verb
+      const verb = verbBehindNoun(lemma);
+      if (verb) { const inner = inferRecipe({ ...w, lemma: verb, pos: 'verb' }, hand); if (inner.ok && inner.recipe.template !== 'image') return { ok: true, recipe: { ...inner.recipe, note: `aktivitetssubstantiv: samma bild som verbet ${verb}` }, confidence: inner.confidence === 'high' ? 'medium' : 'low', why: [`verbet bakom: ${verb}`, ...inner.why] }; }
+      return manual('aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord', 'event', ['välj verbet bakom substantivet och använd dess recept (t.ex. "tvätt" → tvätta), eller skriv en event-scen']);
+    }
     return { ok: true, recipe: { template: 'image', note: 'konkret ting → bild' }, confidence: 'high', why: ['substantiv för konkret ting → bild'] };
   }
   return manual(`okänd ordklass ${w.pos}`, undefined, []);

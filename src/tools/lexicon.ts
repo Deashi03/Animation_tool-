@@ -46,7 +46,7 @@ export const NOUN_ASSET: [RegExp, string][] = B([
 export const SURFACE_OF: [RegExp, string][] = B([[/\bskärbräda|\bbräda/, 'container.board'], [/\bdiskho|\bvask|\bunder kranen|\bvatten/, 'fixture.sink'], [/\bskål/, 'container.bowl'], [/\bgryta|\bkastrull/, 'container.pot']]);
 
 /** Tool verbs: lemma → how the tool works and what visibly changes. `target` is the default food/surface when the definition names none. */
-export type ToolRule = { tool?: string; motion: string; target?: string; surface?: string | null; effects: { role?: 'target' | 'surface' | 'extra'; key: string; to: number | string; at?: number }[]; period?: number; targetState?: Record<string, number>; bothHands?: boolean; note?: string };
+export type ToolRule = { tool?: string; motion: string; target?: string; surface?: string | null; effects: { role?: 'target' | 'surface' | 'extra'; key: string; to: number | string; at?: number }[]; period?: number; targetState?: Record<string, number | string>; bothHands?: boolean; note?: string };
 export const TOOL_VERBS: Record<string, ToolRule> = {
   skära: { tool: 'tool.knife', motion: 'chop', target: 'food.carrot', surface: 'container.board', effects: [{ key: 'pieces', to: 1 }] },
   hacka: { tool: 'tool.knife', motion: 'chop', target: 'food.onion', surface: 'container.board', effects: [{ key: 'pieces', to: 1 }], period: 210 },
@@ -103,6 +103,13 @@ export const TOOL_VERBS: Record<string, ToolRule> = {
   skörda: { motion: 'pull', target: 'fixture.plant', surface: null, effects: [{ key: 'grow', to: 0.3 }], targetState: { grow: 1 } },
   mjölka: { motion: 'pull', target: 'fixture.cow', surface: null, effects: [{ key: 'milk', to: 1 }] },
   bädda: { motion: 'press', target: 'bed', surface: null, effects: [], bothHands: true },
+  reparera: { tool: 'tool.hammer', motion: 'tap', target: 'fixture.wall', surface: null, effects: [{ key: 'flake', to: 0 }], targetState: { flake: 1 } },
+  åtgärda: { tool: 'tool.hammer', motion: 'tap', target: 'fixture.wall', surface: null, effects: [{ key: 'flake', to: 0 }], targetState: { flake: 1 } },
+  renovera: { tool: 'tool.roller', motion: 'brush', target: 'fixture.wall', surface: null, effects: [{ key: 'paint', to: 1 }, { key: 'flake', to: 0 }], targetState: { flake: 1, paint: 0 } },
+  'suga upp': { tool: 'tool.cloth', motion: 'press', target: 'fixture.puddle', surface: null, effects: [{ key: 'size', to: 0 }], targetState: { size: 0.8 } },
+  'torka upp': { tool: 'tool.cloth', motion: 'wipe', target: 'fixture.puddle', surface: null, effects: [{ key: 'size', to: 0 }], targetState: { size: 0.8 } },
+  fritera: { tool: 'tool.tongs', motion: 'hold', target: 'container.pot', surface: null, effects: [{ key: 'boil', to: 1 }], targetState: { fill: 0.6, contents: '#e8c060' } },
+  panera: { motion: 'press', target: 'food.fish', surface: 'container.plate', effects: [], bothHands: true },
 };
 
 /** Process verbs (no person): lemma → the thing and what changes. */
@@ -138,6 +145,19 @@ export const PROCESS_VERBS: Record<string, ProcessRule> = {
   dunka: { asset: 'fixture.washingmachine', change: [{ key: 'spin', to: 1 }], sound: 'thud' },
   ånga: { asset: 'container.pot', change: [{ key: 'steam', to: 1 }], state: { fill: 0.7 } },
   svalna: { asset: 'container.cup', change: [{ key: 'steam', from: 1, to: 0 }], state: { fill: 0.8 } },
+  puttra: { asset: 'container.pot', change: [{ key: 'boil', to: 0.4 }, { key: 'steam', to: 0.6 }], state: { fill: 0.7 }, extra: [{ asset: 'stove', change: { key: 'heat', to: 0.6 } }], sound: 'hum' },
+  grädda: { asset: 'fixture.oven', change: [{ key: 'on', to: 1 }], extra: [{ asset: 'food.bread', change: { key: 'toast', from: 0, to: 0.6 } }] },
+  baka: { asset: 'fixture.oven', change: [{ key: 'on', to: 1 }], extra: [{ asset: 'food.bread', change: { key: 'toast', from: 0, to: 0.6 } }] },
+  tina: { asset: 'fixture.ice', change: [{ key: 'melt', from: 0, to: 0.7 }] },
+  svälla: { asset: 'food.dough', change: [{ key: 'rise', from: 0, to: 1 }] },
+  nöta: { asset: 'garment.shirt', change: [{ key: 'faded', from: 0, to: 0.9 }, { key: 'wrinkled', from: 0, to: 0.5 }] },
+  'nöta ut': { asset: 'garment.shirt', change: [{ key: 'faded', from: 0, to: 0.9 }, { key: 'wrinkled', from: 0, to: 0.5 }] },
+  sylta: { asset: 'container.pot', change: [{ key: 'boil', to: 0.5 }, { key: 'steam', to: 0.6 }], state: { fill: 0.6, contents: '#b23a5a' }, extra: [{ asset: 'stove', change: { key: 'heat', to: 0.8 } }, { asset: 'container.jar', change: { key: 'fill', from: 0, to: 0.9 } }] },
+  konservera: { asset: 'container.jar', change: [{ key: 'fill', from: 0, to: 0.9 }, { key: 'lid', from: 0, to: 1, at: 0.9 }] },
+  värpa: { asset: 'fixture.nest', change: [{ key: 'eggs', from: 0, to: 1 }], extra: [{ asset: 'fixture.hen' }], env: 'outdoors.park' },
+  kläcka: { asset: 'food.egg', change: [{ key: 'cracked', from: 0, to: 1 }], extra: [{ asset: 'fixture.nest' }], env: 'outdoors.park' },
+  kläckas: { asset: 'food.egg', change: [{ key: 'cracked', from: 0, to: 1 }], extra: [{ asset: 'fixture.nest' }], env: 'outdoors.park' },
+  stinka: { asset: 'container.bin', change: [{ key: 'open', to: 1 }, { key: 'full', to: 1 }], sound: 'hum' },
   'värma upp': { asset: 'container.pot', change: [{ key: 'steam', from: 0, to: 1 }], state: { fill: 0.7 }, extra: [{ asset: 'stove', change: { key: 'heat', to: 1 } }] }, värma: { asset: 'container.pot', change: [{ key: 'steam', to: 1 }], state: { fill: 0.7 }, extra: [{ asset: 'stove', change: { key: 'heat', to: 1 } }] },
   torka: { asset: 'garment.shirt', change: [{ key: 'wet', from: 1, to: 0 }], extra: [{ asset: 'fixture.clothesline' }], env: 'outdoors.park' },
 };
@@ -194,7 +214,7 @@ export const SAY_BY_DEF: [RegExp, string, string][] = ([
   [/\bförlåt|\bursäkt/, 'palms', 'sad'], [/\btack/, 'palms', 'happy'], [/\bavbryt|\bstör(a|ande)?\b|\bsluta\b/, 'no', 'angry'],
   [/\bmat\b|\bbeställ|\brestaurang|\bmeny/, 'fork-knife', 'neutral'], [/\bbetal|\bpris|\bnota|\bkvitto|\bpengar/, 'banknote', 'neutral'], [/\bklaga|\bmissnöjd|\bfel\b|\bdåligt/, 'cross', 'angry'],
   [/\bvarna|\bfara|\bakta/, 'exclaim', 'surprised'], [/\bskämt|\brolig|\bskratt/, 'smile', 'happy'], [/\bfråg|\bundra/, 'question', 'question'], [/\bsvar/, 'check', 'neutral'], [/\brekommend|\btips|\bföreslå/, 'star', 'happy'],
-  [/\bförklar|\bberätt|\bbeskriv/, 'ellipsis', 'neutral'], [/\bhot|\barg\b/, 'lightning', 'angry'], [/\bbok(a|ning)|\breserv/, 'calendar', 'neutral'], [/\bansök|\bblankett|\bskriv under|\bkontrakt/, 'document', 'neutral'],
+  [/\bförklar|\bberätt|\bbeskriv/, 'ellipsis', 'neutral'], [/\bhot|\barg\b/, 'lightning', 'angry'], [/\bbok(a|ning)|\breserv/, 'calendar', 'neutral'], [/\bansök|\bblankett|\bskriv(a)? under|\bkontrakt|\bnamn på ett papper/, 'document', 'neutral'],
   [/\bringa|\btelefon/, 'phone', 'neutral'], [/\bpåminn|\bglöm/, 'bell', 'neutral'], [/\bhälsa|\bhej\b|\bvälkomm/, 'smile', 'happy'], [/\bbjud|\binbjud/, 'gift', 'happy'],
 ] as [RegExp, string, string][]).map(([re, a, b]) => [sv(re), a, b]);
 /** Communication verbs where the body bows. */
@@ -206,7 +226,7 @@ export const DEF_CATEGORY: [RegExp, Family][] = ([
   [/\bta på sig|\bklä (på|av)|\bknäpp|\bdra (upp|ner) blixt|\bsätta på sig|\bta av sig/, 'dress'],
   [/^(äta|tugga|bita|smaka|dricka|smutta)\b|\bstoppa .* i munnen/, 'eat'],
   [/\bhälla|\bfylla på|\bslå upp/, 'pour'],
-  [/\bsäga|\bsäger|\bprata|\btala|\bfråga|\bsvara|\bberätta|\bförklara|\bbe om|\bbeställa|\bklaga|\bvarna|\btacka|\bhälsa|\bringa/, 'communicate'],
+  [/\bsäga|\bsäger|\bprata|\btala|\bfråga|\bsvara|\bberätta|\bförklara|\bbe om|\bbeställa|\bklaga|\bvarna|\btacka|\bhälsa|\bringa|\bbetala|\bnotan|\bstöra|\bskriva under|\bkontrakt/, 'communicate'],
   [/\bge\b|\bger\b|\blämna över|\bräcka|\bservera|\bbjuda|\bdela ut|\bskicka/, 'social'],
   [/\blägga|\bställa|\bplacera|\bhänga upp|\bpacka|\bstapla|\bsortera|\bslänga|\bplocka undan|\bflytta|\bsätta in|\bta fram|\bta bort|\bta ut/, 'arrange'],
   [/\bgå\b|\bgår\b|\bspringa|\bhoppa|\bröra sig|\bklättra|\bsmyga|\bpromenera|\bjogga|\bcykla|\bhalka|\bsnubbla|\bkomma in|\bgå ut/, 'locomotion'],
@@ -292,4 +312,13 @@ export const STATE_BY_ADJ: [RegExp, { key: string; to: number; fallback: string;
 
 /** Eating verbs that differ by sound or manner. */
 export const EAT_VERBS: Record<string, { prop: string; sound: 'crunch' | 'splash' | 'none'; reaction?: string }> = { äta: { prop: 'food.apple', sound: 'none' }, tugga: { prop: 'food.bread', sound: 'none' }, bita: { prop: 'food.apple', sound: 'crunch' }, knapra: { prop: 'food.carrot', sound: 'crunch' }, krasa: { prop: 'food.apple', sound: 'crunch' }, smaska: { prop: 'food.apple', sound: 'splash' }, sörpla: { prop: 'container.cup', sound: 'splash' }, dricka: { prop: 'container.cup', sound: 'none' }, smutta: { prop: 'container.cup', sound: 'none' }, smaka: { prop: 'tool.spoon', sound: 'none' }, 'smaka av': { prop: 'tool.spoon', sound: 'none' }, provsmaka: { prop: 'tool.spoon', sound: 'none' }, mumsa: { prop: 'food.cake', sound: 'none', reaction: 'happy' } };
+
+/** Activity nouns whose picture is the verb's picture (tvätt → tvätta). Checked before the generic -ning/-ande stemming. */
+export const NOUN_VERB: Record<string, string> = { tvätt: 'tvätta', disk: 'diska', flytt: 'flytta', städ: 'städa', bak: 'baka', städning: 'städa', tvättning: 'tvätta', matlagning: 'laga mat', packning: 'packa', målning: 'måla', strykning: 'stryka', dammsugning: 'dammsuga', diskning: 'diska', skalning: 'skala', vispning: 'vispa', servering: 'servera', dukning: 'duka', sortering: 'sortera', återvinning: 'återvinna', renovering: 'renovera', reparation: 'reparera', tvättstuga: '' };
+/** Try to find the verb a Swedish activity noun is built on: -ning → -a, -ande → -a, -else → -a. */
+export const verbBehindNoun = (lemma: string): string | undefined => {
+  if (NOUN_VERB[lemma] !== undefined) return NOUN_VERB[lemma] || undefined;
+  const m = /^(.+?)(ning|ande|else|ande)$/.exec(lemma); if (!m) return undefined;
+  const stem = m[1]!; return `${stem.endsWith('n') && m[2] === 'ning' ? stem.slice(0, -1) : stem}a`;
+};
 

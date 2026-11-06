@@ -7,8 +7,8 @@
 | Klar med godkänt blindtest | 54 (9 %) |
 | Scen finns, blindtest saknas | 10 (2 %) |
 | Redo: handskrivet recept och byggstenar finns | 370 (61 %) |
-| Redo: receptet genereras ur ordboken | 1 (0 %) |
-| Manuellt: verktyget säger ifrån (skäl i tabellen nedan, se docs/MANUAL_SCENES.md) | 70 (12 %) |
+| Redo: receptet genereras ur ordboken | 13 (2 %) |
+| Manuellt: verktyget säger ifrån (skäl i tabellen nedan, se docs/MANUAL_SCENES.md) | 58 (10 %) |
 | Blockerad: byggsten saknas, bärare saknas eller receptet är märkt TODO/svagt | 79 (13 %) |
 | Utan recept | 0 (0 %) |
 | Bild (statisk egenskap) | 22 (4 %) |
@@ -20,20 +20,20 @@
 ## Per mall
 
 - attribute-gloss: 251
-- event: 80
-- tool-rhythm: 58
+- event: 69
+- tool-rhythm: 61
 - process: 50
-- –: 27
+- communicate: 33
 - emotion: 27
-- communicate: 27
-- arrange: 25
+- arrange: 26
+- –: 26
 - dress-self: 14
 - cook-rhythm: 11
-- social: 9
+- social: 10
 - property-contrast: 8
 - manipulate-prop: 8
 - state: 5
-- locomotion: 4
+- locomotion: 5
 - relation-arrow: 2
 
 ## Blockerade, manuella och receptlösa
@@ -52,12 +52,9 @@
 | sila | verb | tool-rhythm | svagt recept | kastrullen lutas över vasken; TODO: durkslag |
 | fästning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | sliten | adjective | attribute-gloss | svagt recept | TODO: noppor/hål-tillstånd |
-| dukning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | noppa sig | verb | process | svagt recept | TODO: hål/noppor |
 | nopprig | adjective | attribute-gloss | svagt recept | TODO: noppor/hål-tillstånd |
 | tillverkning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
-| märkning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
-| räkning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | elräkning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | förbrukning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | uppvärmning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
@@ -66,11 +63,8 @@
 | ventilation | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | reparera | verb | tool-rhythm | svagt recept | laga (mat) → cook-rhythm; TODO: trasig-tillstånd på stolen |
 | bokning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
-| beställning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
-| betalning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | dela på notan | phrase | attribute-gloss | svagt recept | SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion |
 | visning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
-| budgivning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | bostadsrättsförening | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | avgiftshöjning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | årsredovisning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
@@ -95,11 +89,9 @@
 | utflyttning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | inflyttning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | besiktning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
-| eftersändning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | stressig | adjective | emotion | svagt recept | klocka + många saker – TODO |
 | pressa | verb | tool-rhythm | svagt recept | TODO: citruspress |
-| störning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
-| skälla | verb | – |  | verbet skälla passar ingen känd familj utifrån definitionen "Om en hund: göra ett högt ljud." |
+| skälla | verb | – |  | skälla: byggsten saknas i katalogen – hund |
 | hållbarhet | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | frysa in | verb | process | svagt recept | TODO: föremål in i frysen |
 | linda | verb | tool-rhythm | svagt recept | TODO: rullat tillstånd |
@@ -113,11 +105,9 @@
 | förlänga | verb | attribute-gloss | svagt recept | SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion |
 | klänning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | sommarklänning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
-| långklänning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | brudklänning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | repig | adjective | attribute-gloss | svagt recept | TODO: spricka/repa-tillstånd på tallrik |
 | torka av | verb | tool-rhythm | svagt recept | TODO: fläck på bordet som försvinner |
-| panera | verb | – |  | verbet panera passar ingen känd familj utifrån definitionen "Ha ägg och små bitar av torrt bröd runt något innan man steker det." |
 | fritera | verb | cook-rhythm | svagt recept | fritera/grilla: TODO egna föremål (fritös, grill) |
 | justera | verb | attribute-gloss | svagt recept | SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion |
 | garva | verb | attribute-gloss | svagt recept | SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion |
@@ -149,7 +139,6 @@
 | spika | verb | tool-rhythm | svagt recept | TODO: spik-tillstånd |
 | limma | verb | tool-rhythm | svagt recept | TODO: två delar som sätts ihop |
 | montera | verb | tool-rhythm | svagt recept | laga (mat) → cook-rhythm; TODO: trasig-tillstånd på stolen |
-| bruksanvisning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | äkta | adjective | attribute-gloss | svagt recept | TODO: äkthetsstämpel |
 | sjunka | verb | locomotion | svagt recept | TODO: boll som sjunker i vatten – vatten-/bassängföremål saknas |
 | sockerfri | adjective | attribute-gloss | svagt recept | symbol "utan": ikonen no över det som saknas; vegetarisk/vegansk: leaf |
@@ -179,7 +168,6 @@
 | avstå | verb | attribute-gloss | svagt recept | SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion |
 | mixa | verb | tool-rhythm | svagt recept | TODO: mixer-föremål |
 | bestå | verb | attribute-gloss | svagt recept | SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion |
-| blandning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | laddning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | laddning | noun | event |  | aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord |
 | kretsa | verb | locomotion | svagt recept | roll i cirkel – TODO |

@@ -711,5 +711,148 @@
       "reviewer": "claude-blind",
       "flag": "Telefonen är liten och kopplingen till en saknad person syns inte; utan texten läses det som 'ledsen'."
     }
+  ],
+  "anim.genomskinlig.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p7",
+      "passed": true,
+      "choice": "genomskinlig",
+      "expected": "genomskinlig",
+      "description": "Ett glas med vatten står på ett bord och framför/omkring det en klar, rektangulär skiva som glittrar – glaset syns tydligt genom skivan; till sist en pratbubbla med 透けている. Betyder: man kan se igenom materialet.",
+      "reviewer": "claude-blind",
+      "flag": "Den klara skivan kan läsas som en telefon/surfplatta eller en tavelram runt glaset snarare än ett genomskinligt tyg/material; glittret hjälper men bäraren är lite abstrakt."
+    }
+  ],
+  "anim.luftig.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p7",
+      "passed": true,
+      "choice": "luftig",
+      "expected": "luftig",
+      "description": "En ljusblå t-shirt hänger på ett bord inomhus vid ett fönster, röda vindlinjer blåser förbi/igenom plagget och ligger kvar; sedan skylt 風通しのよい. Betyder: luften går igenom plagget – luftigt.",
+      "reviewer": "claude-blind",
+      "flag": "Nästan identisk med remsa D (vindlinjer bredvid en tröja). Utan texten går det inte att se om luften går igenom eller stoppas – linjerna börjar till höger om tröjan i båda. Inomhusmiljö plus vind är också lite ologiskt."
+    }
+  ],
+  "anim.töjbar.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p7",
+      "passed": true,
+      "choice": "töjbar",
+      "expected": "töjbar",
+      "description": "En röd stövel står på ett bord och trycks ihop/sträcks ut lite i höjd och bredd (lägre och bredare i ruta 655 ms, åter hög i 1309 ms); skylt 伸縮性のある. Betyder: materialet ger efter och går tillbaka – töjbart.",
+      "reviewer": "claude-blind",
+      "flag": "Töjningen är mycket liten och syns bara om man jämför rutor; i enskilda rutor ser stöveln stilla ut. Hade kunnat vara tydligare (t.ex. dras ut åt sidan)."
+    }
+  ],
+  "anim.vindtät.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p7",
+      "passed": true,
+      "choice": "vindtät",
+      "expected": "vindtät",
+      "description": "En orange tröja hänger på ett bord utomhus mellan buskar, röda vindlinjer kommer från höger och krökar av/studsar vid tröjan; skylt 防風の. Betyder: vinden stoppas av plagget – vindtätt.",
+      "reviewer": "claude-blind",
+      "flag": "Krökningen av vindlinjerna är subtil; remsan är nästan omöjlig att skilja från B utan text. Ingen synlig effekt på tröjan (den fladdrar inte, ingen kontrast mot något som släpper igenom vinden)."
+    }
+  ],
+  "anim.snabbtorkande.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p7",
+      "passed": true,
+      "choice": "snabbtorkande",
+      "expected": "snabbtorkande",
+      "description": "Ett mörkgrönt, vått tygstycke står på ett bord med droppar som rinner ner; det ljusnar stegvis, dropparna försvinner och pratbubblan 速乾性の dyker upp. Betyder: torkar fort.",
+      "reviewer": "claude-blind",
+      "flag": "Det gröna föremålet ser ut som en låda/ett block snarare än en handduk eller ett plagg; dropparna är små och svaga på 180 px. Färgskiftet mörk → ljus läses dock som torkande."
+    }
+  ],
+  "anim.ursäkta.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p7",
+      "passed": true,
+      "choice": "ursäkta",
+      "expected": "ursäkta",
+      "description": "Två personer står inomhus; ett vitt föremål (högtalare/megafon?) ligger omkullvält på golvet mellan dem. Den vänstra bugar djupt med handflatorna ihop och en pratbubbla med 🙏, den högra ler; sedan rätar sig den vänstra upp. Betyder: be om ursäkt/förlåt.",
+      "reviewer": "claude-blind",
+      "flag": "Föremålet på golvet går inte att identifiera (megafon? lampa? bägare?) så orsaken till ursäkten är oklar. I den djupaste bugningen ser huvudet nästan löst ut och ligger vid händerna. Handflatorna i bubblan kan av västerlänning läsas som bön snarare än ursäkt."
+    }
+  ],
+  "anim.vattentät.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p7",
+      "passed": true,
+      "choice": "vattentät",
+      "expected": "vattentät",
+      "description": "En orange tröja hänger på ett bord utomhus, en stor röd-orange droppe växer fram bredvid tröjan; skylt 防水の. Betyder: vattentätt / står emot vatten.",
+      "reviewer": "claude-blind",
+      "flag": "Droppen är röd-orange, inte blå – den kan läsas som eld, blod eller en flamma (varm) snarare än vatten. Droppen rör heller inte tröjan, så det syns inte att vattnet pärlar av; utan text blir det snarare 'varm'."
+    }
+  ],
+  "anim.tidlös.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p7",
+      "passed": true,
+      "choice": "tidlös",
+      "expected": "tidlös",
+      "description": "En ljusblå t-shirt hänger på ett bord inomhus, en stor orange cirkel tonar fram bredvid den och ligger stilla; skylt 流行に左右されない. Jag förstår betydelsen bara via texten (tidlös / oberoende av mode).",
+      "reviewer": "claude-blind",
+      "flag": "Den orange cirkeln bär ingenting – den kan läsas som en sol, en boll eller en knapp. Motivet skulle utan text inte gå att skilja från vilken t-shirt-scen som helst. Texten bär ensam."
+    }
+  ],
+  "anim.tålig.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p7",
+      "passed": true,
+      "choice": "tålig",
+      "expected": "tålig",
+      "description": "En brun träplanka/låda ligger på golvet vid ett fönster; ingenting händer med den, sedan skylt 丈夫な. Betyder: tålig/hållbar – men det syns ingen påfrestning.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.varmhållande.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p7",
+      "passed": true,
+      "choice": "varmhållande",
+      "expected": "varmhållande",
+      "description": "En orange tröja hänger på ett bord utomhus, en röd termometer stiger bredvid tröjan; skylt 保温性のある. Betyder: håller värmen – varmhållande.",
+      "reviewer": "claude-blind",
+      "flag": "Termometern bredvid tröjan kan lika gärna betyda 'varmt väder' eller 'het' som att plagget håller värmen; en tunn t-shirt i sommarmiljö motsäger lite 'varmhållande plagg'."
+    }
+  ],
+  "anim.dunka.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p7",
+      "passed": true,
+      "choice": "dunka",
+      "expected": "dunka",
+      "description": "En tvättmaskin står bredvid ett skåp, trumman snurrar med färgade plagg och tjocka vibrations-/stötstreck slår ut åt höger upprepade gånger; ingen text. Betyder: maskinen dunkar/slår/vibrerar hårt.",
+      "reviewer": "claude-blind",
+      "flag": "Utan ljudkonvention kan det lika gärna läsas som 'tvätta', 'vibrera' eller 'skaka'. Maskinen själv rör sig inte märkbart – bara strecken."
+    }
+  ],
+  "anim.störa.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p7",
+      "passed": true,
+      "choice": "störa",
+      "expected": "störa",
+      "description": "Två personer står inomhus; den vänstra höjer handen och får en fyrkantig bubbla med förbudsskylt 🚫, den högra tittar ner med en bubbla '…' och ser ledsen/osäker ut; till slut står båda stilla. Jag läser det som att den ena säger stopp/nej till den andra – kanske 'sluta störa'.",
+      "reviewer": "claude-blind",
+      "flag": "Det är inte tydligt vem som stör vem eller vad störningen är – ingen handling visas (inget ljud, ingen avbruten aktivitet). Förbudsskylt plus höjd hand kan läsas som 'förbjuda', 'tillrättavisa' eller 'nej', och den högra figurens tysta '…' ser ut som att den blir utskälld."
+    }
   ]
 }

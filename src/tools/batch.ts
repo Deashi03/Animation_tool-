@@ -30,7 +30,7 @@ const BOW: Record<string, 'light' | 'deep'> = { ursäkta: 'deep', 'be om ursäkt
 const BOW_CAUSE: Record<string, { asset: string; rotate?: number; state: J }> = { ursäkta: { asset: 'container.cup', rotate: 90, state: { fill: 0 } }, 'be om ursäkt': { asset: 'container.cup', rotate: 90, state: { fill: 0 } } };
 const DRESS: Record<string, { garment: string; on: boolean; value?: string; start: J }> = { 'ta på sig': { garment: 'top', on: true, value: 'green', start: { top: '#f7f3ea', sleeves: 'short' } }, 'ta av sig': { garment: 'top', on: false, start: { top: 'green' } }, 'klä på sig': { garment: 'top', on: true, value: 'denim', start: { top: '#f7f3ea', sleeves: 'short', bottom: '#efe7d6', shorts: true, shoes: 'skin' } }, 'klä av sig': { garment: 'top', on: false, start: { top: 'denim', bottom: 'navy', shoes: 'brown' } }, 'sätta på sig': { garment: 'hat', on: true, value: 'red', start: {} }, 'byta om': { garment: 'top', on: true, value: 'green', start: { top: 'red' } }, 'klä upp sig': { garment: 'scarf', on: true, value: 'red', start: { top: 'navy', buttons: 1 } }, 'stoppa in': { garment: 'apron', on: true, value: 'white', start: {} } };
 const FASTEN: Record<string, { what: string; on: boolean; start: J }> = { knäppa: { what: 'buttons', on: true, start: { top: 'sky', buttons: 0 } }, 'knäppa upp': { what: 'buttons', on: false, start: { top: 'sky', buttons: 1 } }, 'dra upp': { what: 'zipper', on: true, start: { top: 'orange', zipper: 0 } }, 'dra ner': { what: 'zipper', on: false, start: { top: 'orange', zipper: 1 } }, 'kavla upp': { what: 'sleeves', on: true, start: { top: 'navy', sleeves: 'long', bottom: 'tan' } }, knyta: { what: 'laces', on: true, start: { shoes: 'white' } } };
-const FLOOR_ASSETS = /^(fixture\.(sink|shower|washingmachine|oven|fridge|radiator|clothesline|ironingboard|chair|shelf|wall|bike|cart|tent|tree|bush|toilet|cow|hen|lamp|mirror|puddle|fire|plant|flower|nest|drip)|container\.(bin|crate|suitcase|bucket|basket)|stove|table|sofa|bed|door|castle|ladder|window)$/;
+const FLOOR_ASSETS = /^(fixture\.(sink|shower|washingmachine|oven|fridge|radiator|clothesline|ironingboard|chair|shelf|wall|bike|cart|tent|tree|bush|toilet|cow|hen|lamp|mirror|puddle|fire|plant|flower|nest)|container\.(bin|crate|suitcase|bucket|basket)|stove|table|sofa|bed|door|castle|ladder|window)$/;
 const onFloor = (asset: string) => FLOOR_ASSETS.test(asset);
 /** default scale for a thing shown as the bearer: big enough to read at 140 px, small enough to stay inside the canvas */
 const bearerScale = (asset: string): number => asset === 'fixture.lamp' ? 0.75 : asset === 'fixture.flower' ? 1.7 : asset === 'fixture.plant' ? 1.3 : asset === 'fixture.candle' || asset === 'fixture.drip' ? 1.2 : onFloor(asset) ? 1 : asset.startsWith('food.') ? 1.6 : asset.startsWith('tool.') ? 1.6 : 1.3;
@@ -57,6 +57,7 @@ const propAt = (id: string, asset: string, at: Pt, extra: J = {}): J => ({ id, a
 function placeThing(s: J, id: string, asset: string, x: number, extra: J = {}, surface?: string | null): Pt {
   const props = s.props as J[];
   if (/^fixture\.(sun|cloud)$/.test(asset)) { props.push(propAt(id, asset, { x, y: 26 }, extra)); return { x, y: 26 }; } // sky things hang in the sky, never on a table
+  if (asset === 'fixture.drip') { props.push(propAt(id, asset, { x, y: 62 }, extra)); return { x, y: 62 }; } // a drip hangs from above and falls towards the floor
   if (onFloor(asset)) { props.push(propAt(id, asset, { x, y: 100 }, extra)); return { x, y: 100 }; }
   if (surface === null) { props.push(propAt(id, asset, { x, y: 100 }, extra)); return { x, y: 100 }; }
   const surf = surface ?? 'table';
@@ -113,7 +114,9 @@ function buildAttribute(row: PlanRow, r: Recipe, s: J): J | null {
       let cx = 60, cy = b.asset ? 52 : 56;
       if (b.asset === 'window') { cx = 44; cy = 44; } // the room already has a window top-left: put the symbol beside it instead of a second window on the floor
       else if (b.asset) { const st = stateOf(b.state); placeThing(s, 'bearer', b.asset as string, 46, { scale: onFloor(b.asset as string) ? 1 : 1.4, ...(st.state ? { state: st.state } : {}) }, onFloor(b.asset as string) ? null : 'table'); cx = 84; }
-      (s.shapes as J[]).push({ type: 'icon', id: 'sym', icon: b.icon, x: cx, y: cy, size: b.asset && b.asset !== 'window' ? 30 : 40, stroke: 'accent', fill: 'accent', opacity: 0, z: 4 });
+      const ICON_COLOUR: Record<string, string> = { droplet: 'sky', snowflake: 'sky', wind: 'sky', cloud: 'sky', flame: 'red', sun: 'yellow', leaf: 'green', heart: 'red', coin: 'yellow', banknote: 'green', thermometer: 'red', bulb: 'yellow' }; // a water drop is blue, never the orange accent – the colour is part of the meaning
+      const col = ICON_COLOUR[b.icon as string] ?? 'accent';
+      (s.shapes as J[]).push({ type: 'icon', id: 'sym', icon: b.icon, x: cx, y: cy, size: b.asset && b.asset !== 'window' ? 30 : 40, stroke: col, fill: col, opacity: 0, z: 4 });
       tl.push({ t: 300, action: 'set', target: 'sym', prop: 'opacity', value: 1 }, { t: 300, action: 'tween', target: 'sym', prop: 'progress', from: 0, to: 1, durationMs: 900, ease: 'easeInOut' });
       addGloss(s, ja, 1400, 60, 20, 'panel');
       (s.focus as J).targets = b.asset && b.asset !== 'window' ? ['bearer'] : []; (s.focus as J).feature = `symbol ${b.icon}${b.asset ? ` with ${b.asset}` : ''} + gloss`;

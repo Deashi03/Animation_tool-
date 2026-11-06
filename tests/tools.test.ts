@@ -205,3 +205,26 @@ describe('recipe generator rules (regression)', () => {
     expect(t(v('dela', 'verb', 'Ta delar av något och ge till flera.'))).toMatch(/^manual:dela/);
   });
 });
+
+describe('generated recipes build valid scenes', () => {
+  it('every recipe the generator produces for the Swechan dictionary builds a scene that validates (skipped when the clone is absent)', async () => {
+    const fs = await import('node:fs');
+    const sw = ['/home/user/deashi03/swechan', '../swechan', '../Swechan'].find((d) => fs.existsSync(`${d}/src/content/data/dictionary`));
+    if (!sw) return;
+    const { inferRecipe, wordsFromSwechan } = await import('../src/tools/recipe');
+    const { draftScene } = await import('../src/tools/batch');
+    const { validateScene } = await import('../src/compiler/validate');
+    const { words } = wordsFromSwechan(sw);
+    const bad: string[] = []; let n = 0;
+    for (const w of words) {
+      if (!['verb', 'phrase', 'adjective', 'adverb', 'preposition', 'noun'].includes(w.pos)) continue;
+      const inf = inferRecipe(w, {}); if (!inf.ok || inf.recipe.template === 'image') continue;
+      const row = { senseId: w.senseId, lemma: w.lemma, pos: w.pos, defSv: w.defSv, kind: 'animation' as const, confidence: 'high' as const, contrast: [], jaGloss: w.jaGloss || 'テスト', note: '' };
+      const d = draftScene(row, inf.recipe, 'test', new Map());
+      if (!d) { bad.push(`${w.lemma}: cannot be built (${inf.recipe.template})`); continue; }
+      const errs = validateScene(d as unknown).problems.filter((p) => p.level === 'error').map((p) => p.message);
+      if (errs.length) bad.push(`${w.lemma}: ${errs[0]}`); else n++;
+    }
+    expect(bad).toEqual([]); expect(n).toBeGreaterThan(200);
+  }, 300_000);
+});

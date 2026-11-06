@@ -188,8 +188,8 @@ export const PROPERTIES: Record<string, PropertyRule> = {
   ny: { asset: 'garment.shirt', state: { faded: 0 }, glint: true, env: 'room' }, gammal: { asset: 'garment.shirt', state: { faded: 1, wrinkled: 0.6 }, env: 'room' },
   salt: { taste: { food: 'food.bread', reaction: 'surprised', icon: 'droplet' } }, söt: { taste: { food: 'food.cake', reaction: 'happy', icon: 'heart' } }, sur: { taste: { food: 'food.apple', reaction: 'disgusted', icon: 'lightning' } },
   bitter: { taste: { food: 'food.bread', reaction: 'disgusted', icon: 'frown' } }, god: { taste: { food: 'food.cake', reaction: 'happy', icon: 'star' } }, äcklig: { taste: { food: 'food.fish', reaction: 'disgusted', icon: 'cross' } },
-  stark: { taste: { food: 'food.pancake', reaction: 'hot', icon: 'flame' } }, mild: { taste: { food: 'food.pancake', reaction: 'content', icon: 'leaf' } },
-  frasig: { taste: { food: 'food.bread', reaction: 'happy', icon: 'wave' } }, knaprig: { taste: { food: 'food.bread', reaction: 'happy', icon: 'wave' } }, mjuk: { taste: { food: 'food.cake', reaction: 'content', icon: 'heart' } }, seg: { taste: { food: 'food.bread', reaction: 'tired', icon: 'ellipsis' } },
+  stark: { taste: { food: 'food.pancake', reaction: 'hot', icon: 'flame' } }, mild: { taste: { food: 'food.pancake', reaction: 'neutral', icon: 'leaf' } },
+  frasig: { taste: { food: 'food.bread', reaction: 'happy', icon: 'wave' } }, knaprig: { taste: { food: 'food.bread', reaction: 'happy', icon: 'wave' } }, mjuk: { taste: { food: 'food.cake', reaction: 'happy', icon: 'heart' } }, seg: { taste: { food: 'food.bread', reaction: 'neutral', icon: 'ellipsis' } },
   arg: { emotion: { emotion: 'angry' } }, glad: { emotion: { emotion: 'happy' } }, ledsen: { emotion: { emotion: 'sad' } }, trött: { emotion: { emotion: 'tired', cause: 'fixture.clock' } }, rädd: { emotion: { emotion: 'surprised' } },
   förvånad: { emotion: { emotion: 'surprised', cause: 'container.crate' } }, mätt: { emotion: { emotion: 'full', cause: 'container.plate' } }, hungrig: { emotion: { emotion: 'sad', cause: 'container.plate' } }, nöjd: { emotion: { emotion: 'content', cause: 'container.plate' } },
   stolt: { emotion: { emotion: 'proud', cause: 'food.cake' } }, sakna: { emotion: { emotion: 'sad', cause: 'phone' } }, längta: { emotion: { emotion: 'sad', cause: 'phone' } }, orolig: { emotion: { emotion: 'surprised', cause: 'fixture.clock' } }, lugn: { emotion: { emotion: 'content' } }, generad: { emotion: { emotion: 'surprised' } }, uttråkad: { emotion: { emotion: 'tired', cause: 'fixture.clock' } }, nyfiken: { emotion: { emotion: 'curious', cause: 'container.crate' } }, äcklad: { emotion: { emotion: 'disgusted', cause: 'food.fish' } }, kall_person: { emotion: { emotion: 'cold' } },
@@ -327,4 +327,36 @@ export const verbBehindNoun = (lemma: string): string | undefined => {
   const m = /^(.+?)(ning|ande|else|ande)$/.exec(lemma); if (!m) return undefined;
   const stem = m[1]!; return `${stem.endsWith('n') && m[2] === 'ning' ? stem.slice(0, -1) : stem}a`;
 };
+
+/** Taste and texture adjectives recognised from the definition: what is eaten, how the face reacts, which icon says it. */
+export const TASTE_BY_DEF: [RegExp, { food: string; reaction: string; icon: string }][] = ([
+  [/\bbränner|\bchili|\bkryddstark|\bstark(a)? smak|\bpikant/, { food: 'food.pancake', reaction: 'hot', icon: 'flame' }],
+  [/\bsötsur|\bsöt och sur/, { food: 'food.apple', reaction: 'surprised', icon: 'lightning' }],
+  [/\bbesk|\bbitter|\bkaffe utan socker/, { food: 'container.cup', reaction: 'disgusted', icon: 'frown' }],
+  [/\bsur(t)?\b|\bsyrlig/, { food: 'food.apple', reaction: 'disgusted', icon: 'lightning' }],
+  [/\bsalt/, { food: 'food.bread', reaction: 'surprised', icon: 'droplet' }],
+  [/\bsöt\b|\bsocker|\bhonung/, { food: 'food.cake', reaction: 'happy', icon: 'heart' }],
+  [/\bspröd|\bknaprig|\bkrispig|\bfrasig|\bgår sönder när man biter/, { food: 'food.bread', reaction: 'happy', icon: 'wave' }],
+  [/\bmör\b|\blen\b|\bsaftig|\bfluffig|\bmjuk och|\bkrämig|\bsmält(er)? i munnen/, { food: 'food.cake', reaction: 'happy', icon: 'heart' }],
+  [/\bseg\b|\btorr(t)? (i|mot) munnen|\bsvår att tugga/, { food: 'food.bread', reaction: 'neutral', icon: 'ellipsis' }],
+  [/\bmycket god|\bsmakar gott|\bser god ut|\bvill äta|\butsökt|\bvälsmakande|\baptitlig/, { food: 'food.cake', reaction: 'happy', icon: 'star' }],
+  [/\bäcklig|\bsmakar illa|\bluktar illa/, { food: 'food.fish', reaction: 'disgusted', icon: 'cross' }],
+] as [RegExp, { food: string; reaction: string; icon: string }][]).map(([re, v]) => [sv(re), v]);
+
+/** Feelings recognised from the definition of an adjective or verb. */
+export const EMOTION_BY_DEF: [RegExp, { emotion: string; cause?: string }][] = ([
+  [/\barg\b|\bilsken|\brasande|\bförbannad|\birriterad/, { emotion: 'angry' }],
+  [/\bglad\b|\blycklig|\bnöjd och glad|\bvaknar lätt/, { emotion: 'happy' }],
+  [/\bledsen|\bsorgsen|\bnedstämd|\bsaknar/, { emotion: 'sad' }],
+  [/\brädd|\bskrämd|\bförskräckt|\bchockad/, { emotion: 'surprised' }],
+  [/\btrött|\bsömnig|\borkar inte/, { emotion: 'tired', cause: 'fixture.clock' }],
+  [/\bförvånad|\böverraskad/, { emotion: 'surprised', cause: 'container.crate' }],
+  [/\bvill veta mer|\bnyfiken|\bintresserad/, { emotion: 'curious', cause: 'container.crate' }],
+  [/\bstolt/, { emotion: 'proud', cause: 'food.cake' }],
+  [/\bäcklad|\bavsky/, { emotion: 'disgusted', cause: 'food.fish' }],
+  [/\bfryser|\bkall om/, { emotion: 'cold' }],
+  [/\bsvettig|\bvarm om|\bför varmt/, { emotion: 'hot' }],
+  [/\bmätt\b|\bätit för mycket/, { emotion: 'full', cause: 'container.plate' }],
+  [/\blugn\b|\bavslappnad|\btrevlig och snäll|\bvänlig/, { emotion: 'content' }],
+] as [RegExp, { emotion: string; cause?: string }][]).map(([re, v]) => [sv(re), v]);
 

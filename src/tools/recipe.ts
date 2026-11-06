@@ -14,7 +14,7 @@
 import { isPropAsset } from '../assets/catalog';
 import type { Recipe } from './coverage';
 import { loadSwechan, stripFurigana } from './plan';
-import { NOUN_ASSET, SURFACE_OF, TOOL_VERBS, PROCESS_VERBS, PROPERTIES, ABSTRACT_ICON, SAY_BY_DEF, BOW_BY_DEF, DEF_CATEGORY, DRESS_LEMMAS, LOCOMOTION_LEMMAS, STATE_LEMMAS, PATTERNS, COLOURS, ARRANGE_VERBS, SOCIAL_VERBS, COOK_VERBS, MISSING_ASSET, HARD_WORDS, STATE_BY_ADJ, EAT_VERBS, verbBehindNoun } from './lexicon';
+import { NOUN_ASSET, SURFACE_OF, TOOL_VERBS, PROCESS_VERBS, PROPERTIES, ABSTRACT_ICON, SAY_BY_DEF, BOW_BY_DEF, DEF_CATEGORY, DRESS_LEMMAS, LOCOMOTION_LEMMAS, STATE_LEMMAS, PATTERNS, COLOURS, ARRANGE_VERBS, SOCIAL_VERBS, COOK_VERBS, MISSING_ASSET, HARD_WORDS, STATE_BY_ADJ, EAT_VERBS, verbBehindNoun, TASTE_BY_DEF, EMOTION_BY_DEF } from './lexicon';
 import { PROPS } from '../assets/props';
 
 export type Word = { senseId: string; lemma: string; pos: string; defSv?: string; examples?: string[]; jaGloss?: string; antonyms?: string[]; tags?: string[] };
@@ -147,6 +147,10 @@ function inferAdjective(w: Word, lemma: string, text: string, found: string[], _
   // an antonym in the table whose picture is a contrast: mirror it
   for (const ant of w.antonyms ?? []) { const q = PROPERTIES[ant]; if (q?.contrast) return { ok: true, recipe: { template: 'attribute-gloss', bearer: { kind: 'contrast', a: q.contrast.b, b: q.contrast.a, mark: 'b', env: q.env ?? 'room' } }, confidence: 'medium', why: [`motsatsen ${ant} finns som kontrast – speglad`] }; }
   const thing = found.find((a) => !isTool(a));
+  // taste and texture: the definition talks about eating, mouth or flavour
+  if (/\bsmak|\bmunnen|\bäta\b|\bäter|\bbiter|\btugg|\bluktar|\bgod\b|\bmat\b|\bkött|\bkaffe/.test(text)) { const ta = TASTE_BY_DEF.find(([re]) => re.test(`${lemma} ${text}`))?.[1]; if (ta) return { ok: true, recipe: { template: 'attribute-gloss', bearer: { kind: 'taste', food: found.find(isFood) ?? ta.food, reaction: ta.reaction, icon: ta.icon, env: 'kitchen' } }, confidence: 'medium', why: [`smak/konsistens ur definitionen: ${ta.reaction} + ${ta.icon}`] }; }
+  // feelings
+  { const em = EMOTION_BY_DEF.find(([re]) => re.test(`${lemma} ${text}`))?.[1]; if (em && /\bkänn|\bsom är\b|\bsom vaknar|\bmot andra|\bhumör|\barg\b|\bglad\b|\bledsen|\brädd|\btrött|\bvill veta/.test(`${lemma} ${text}`)) return { ok: true, recipe: { template: 'emotion', bearer: { kind: 'emotion', ...em, env: 'room' } }, confidence: 'medium', why: [`känsla ur definitionen: ${em.emotion}`] }; }
   const st = STATE_BY_ADJ.find(([re]) => re.test(lemma))?.[1];
   if (st) {
     const asset = thing && PROPS[thing]?.defaults[st.key] !== undefined ? thing : st.fallback;

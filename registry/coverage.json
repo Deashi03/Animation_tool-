@@ -764,10 +764,10 @@
    "senseId": "s.dukning.1",
    "lemma": "dukning",
    "pos": "noun",
-   "template": "event",
-   "state": "manual",
+   "template": "arrange",
+   "state": "generated",
    "missing": [],
-   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
+   "note": "genererat (medium): verbet bakom: duka; ställa/ta-verb i tabellen"
   },
   {
    "senseId": "s.levande-ljus.1",
@@ -948,10 +948,10 @@
    "senseId": "s.märkning.1",
    "lemma": "märkning",
    "pos": "noun",
-   "template": "event",
-   "state": "manual",
+   "template": "tool-rhythm",
+   "state": "generated",
    "missing": [],
-   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
+   "note": "genererat (low): verbet bakom: märka; verktygsverb i tabellen utan synlig följd"
   },
   {
    "senseId": "s.importera.1",
@@ -1011,10 +1011,10 @@
    "senseId": "s.räkning.1",
    "lemma": "räkning",
    "pos": "noun",
-   "template": "event",
-   "state": "manual",
+   "template": "communicate",
+   "state": "generated",
    "missing": [],
-   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
+   "note": "genererat (low): verbet bakom: räka; kommunikation: ikon banknote ur definitionen"
   },
   {
    "senseId": "s.elräkning.1",
@@ -1285,10 +1285,10 @@
    "senseId": "s.beställning.1",
    "lemma": "beställning",
    "pos": "noun",
-   "template": "event",
-   "state": "manual",
+   "template": "communicate",
+   "state": "generated",
    "missing": [],
-   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
+   "note": "genererat (low): verbet bakom: beställa; kommunikation: ikon fork-knife ur definitionen"
   },
   {
    "senseId": "s.klaga.1",
@@ -1304,10 +1304,10 @@
    "senseId": "s.betalning.1",
    "lemma": "betalning",
    "pos": "noun",
-   "template": "event",
-   "state": "manual",
+   "template": "communicate",
+   "state": "generated",
    "missing": [],
-   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
+   "note": "genererat (low): verbet bakom: betala; kommunikation: ikon banknote ur definitionen"
   },
   {
    "senseId": "s.kontant.1",
@@ -1533,10 +1533,10 @@
    "senseId": "s.budgivning.1",
    "lemma": "budgivning",
    "pos": "noun",
-   "template": "event",
-   "state": "manual",
+   "template": "communicate",
+   "state": "generated",
    "missing": [],
-   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
+   "note": "genererat (low): verbet bakom: budgiva; kommunikation: ikon banknote ur definitionen"
   },
   {
    "senseId": "s.bostadsrättsförening.1",
@@ -2303,10 +2303,10 @@
    "senseId": "s.eftersändning.1",
    "lemma": "eftersändning",
    "pos": "noun",
-   "template": "event",
-   "state": "manual",
+   "template": "social",
+   "state": "generated",
    "missing": [],
-   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
+   "note": "genererat (low): verbet bakom: eftersända; mellan människor: föremålet byter hand"
   },
   {
    "senseId": "s.i-ordning.1",
@@ -2509,10 +2509,10 @@
    "senseId": "s.störning.1",
    "lemma": "störning",
    "pos": "noun",
-   "template": "event",
-   "state": "manual",
+   "template": "communicate",
+   "state": "generated",
    "missing": [],
-   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
+   "note": "genererat (low): verbet bakom: störa; kommunikation: ikon no ur definitionen"
   },
   {
    "senseId": "s.lyhörd.1",
@@ -2558,7 +2558,7 @@
    "template": "–",
    "state": "manual",
    "missing": [],
-   "note": "verbet skälla passar ingen känd familj utifrån definitionen \"Om en hund: göra ett högt ljud.\""
+   "note": "skälla: byggsten saknas i katalogen – hund"
   },
   {
    "senseId": "s.vänlig.1",
@@ -2954,10 +2954,10 @@
    "senseId": "s.långklänning.1",
    "lemma": "långklänning",
    "pos": "noun",
-   "template": "event",
-   "state": "manual",
+   "template": "locomotion",
+   "state": "generated",
    "missing": [],
-   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
+   "note": "genererat (low): verbet bakom: långkläa; definitionen beskriver förflyttning"
   },
   {
    "senseId": "s.brudklänning.1",
@@ -3140,10 +3140,10 @@
    "senseId": "s.panera.1",
    "lemma": "panera",
    "pos": "verb",
-   "template": "–",
-   "state": "manual",
+   "template": "tool-rhythm",
+   "state": "generated",
    "missing": [],
-   "note": "verbet panera passar ingen känd familj utifrån definitionen \"Ha ägg och små bitar av torrt bröd runt något innan man steker det.\""
+   "note": "genererat (low): verktygsverb i tabellen utan synlig följd"
   },
   {
    "senseId": "s.fritera.1",
@@ -4155,10 +4155,10 @@
    "senseId": "s.bruksanvisning.1",
    "lemma": "bruksanvisning",
    "pos": "noun",
-   "template": "event",
-   "state": "manual",
+   "template": "communicate",
+   "state": "generated",
    "missing": [],
-   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
+   "note": "genererat (low): verbet bakom: bruksanvisa; kommunikation: ikon ellipsis ur definitionen"
   },
   {
    "senseId": "s.äkta.1",
@@ -5485,10 +5485,10 @@
    "senseId": "s.blandning.1",
    "lemma": "blandning",
    "pos": "noun",
-   "template": "event",
-   "state": "manual",
+   "template": "tool-rhythm",
+   "state": "generated",
    "missing": [],
-   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
+   "note": "genererat (medium): verbet bakom: blanda; verktygsverb i tabellen"
   },
   {
    "senseId": "s.blanda.1",
@@ -5689,28 +5689,28 @@
  "totals": {
   "ready": 370,
   "blocked": 79,
-  "manual": 70,
+  "manual": 58,
   "done-blind": 54,
   "done": 10,
   "image": 22,
-  "generated": 1
+  "generated": 13
  },
  "byTemplate": {
   "attribute-gloss": 251,
-  "arrange": 25,
-  "tool-rhythm": 58,
-  "–": 27,
+  "arrange": 26,
+  "tool-rhythm": 61,
+  "–": 26,
   "cook-rhythm": 11,
   "emotion": 27,
-  "event": 80,
+  "event": 69,
   "process": 50,
   "property-contrast": 8,
-  "communicate": 27,
+  "communicate": 33,
   "relation-arrow": 2,
   "dress-self": 14,
   "state": 5,
-  "locomotion": 4,
-  "social": 9,
+  "locomotion": 5,
+  "social": 10,
   "manipulate-prop": 8
  },
  "missingBlocks": {

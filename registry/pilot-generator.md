@@ -43,6 +43,12 @@ Innan mätningen fick generatorn tillståndsregler för adjektiv (`STATE_BY_ADJ`
 
 Flaggorna gav nya regler: rötfrukter som bara skildes åt av texten (*rutten/skämd/möglig/härsken/unken*) → ny byggsten **mögel** på äpplet, *skämd* lättare röta, *härsken/unken* säger verktyget ifrån om; verktygsverb utan synlig följd (*märka*, *såga*, *putsa* …) lämnas som förslag i stället för att byggas; `take … from` tar saken **ur** en öppen väska/kyl; ljudmarkeringar sitter på munsidan; krukväxter större; möbler ställs på golvet; långa glosser klipps inte längre vid kanten; bakord → bröd. Scenerna med dessa rättningar är omrenderade och granskade i remsa men inte blindtestade på nytt.
 
+## Tredje mätningen (2026-11-06, *Tygers egenskaper*, *Grannar och störningar*, *Att beskriva en outfit*)
+
+Den svåra änden: tyg- och stilegenskaper. Före mätningen fick generatorn rörelse-bärare (`motion`: töjbar/elastisk/tålig/vinglig), förlopp (`change`: snabbtorkande), ikon + plagg för vattentät/vindtät/luftig/varmhållande, samt smak- och känsloregler lästa ur definitionen. Utfall: 34 ord, **12 scener**, 22 manuella (stilord som *trendig*, *stilig*, *cool*, *originell* och abstrakta som *isolera*, *sänka* – alla med skäl). Blindtest p7: **12 av 12 rätt ord**, men granskaren flaggade att *tidlös*, *tålig* och paret *luftig/vindtät* bärs av texten, att droppen i *vattentät* var orange (ikonfärg = accent) och att *störa* inte visar vad som stör. Rättat: ikonfärger efter betydelse (droppe blå, låga röd, sol gul). Kvar som kända svagheter: egenskaper som bara skiljs av en riktning (luft igenom/stoppas) och hållfasthet utan påfrestning.
+
+Sammanlagt över tre mätningar: 84 scener, blindtest **96 av 103 rätt ord**; felen inom synonymkluster eller där granskaren svarade "inget" när följden inte syntes.
+
 ## Nästa steg
 
 1. Kör samma mätning på tre nya moduler efter varje regeltillägg; målet är att andelen *manuellt* sjunker och att felvalen stannar inom synonymkluster.

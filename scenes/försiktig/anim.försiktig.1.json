@@ -9,10 +9,10 @@
   "titleSv": "försiktig",
   "meaningHint": "Som gör saker lugnt och tänker på vad som kan vara farligt.",
   "category": "property",
-  "durationMs": 4200,
+  "durationMs": 4600,
   "loop": true,
   "holdMs": 800,
-  "posterMs": 2600,
+  "posterMs": 2400,
   "canvas": {
     "w": 120,
     "h": 120
@@ -27,7 +27,7 @@
       "asset": "character.base",
       "variant": "a",
       "at": {
-        "x": 30,
+        "x": 28,
         "y": 100
       },
       "facing": "right",
@@ -37,11 +37,14 @@
   "props": [
     {
       "id": "held",
-      "asset": "container.tray",
+      "asset": "container.bowl",
       "scale": 0.8,
       "rotate": 0,
       "z": 0,
-      "state": {},
+      "state": {
+        "fill": 0.95,
+        "contents": "#e8a33c"
+      },
       "attachTo": {
         "actor": "p",
         "hand": "left"
@@ -74,31 +77,36 @@
         "x": 84,
         "y": 100
       },
-      "durationMs": 3600
+      "durationMs": 4000,
+      "manner": "careful"
     },
     {
       "t": 1500,
-      "action": "set",
+      "action": "tween",
       "target": "ja",
       "prop": "opacity",
-      "value": 1
+      "to": 1,
+      "from": 0,
+      "durationMs": 350,
+      "ease": "easeOut"
     },
     {
       "t": 1500,
       "action": "tween",
       "target": "ja",
       "prop": "y",
-      "to": 18,
-      "from": -20,
+      "to": 12,
+      "from": 6,
       "durationMs": 450,
       "ease": "easeOut"
     }
   ],
   "focus": {
     "targets": [
-      "p"
+      "p",
+      "held"
     ],
-    "feature": "walk-slow with container.tray"
+    "feature": "walks careful with container.bowl"
   },
   "contrast": {
     "with": [
@@ -107,8 +115,8 @@
       "anim.grov.1"
     ],
     "distinctiveFeatures": [
-      "has:action:walk",
-      "has:prop:container.tray"
+      "has:walk-manner:careful",
+      "has:prop:container.bowl"
     ]
   },
   "pedagogy": {
@@ -120,7 +128,7 @@
       "s.grov.1"
     ],
     "reviewStatus": "ai-draft",
-    "note": "Utkast från recept (attribute-gloss). TODO: långsam gång saknas – gången har fast tempo; brickan bärs"
+    "note": "Utkast från recept (attribute-gloss). går försiktigt med en full skål soppa: korta långsamma steg, blicken på skålen"
   },
   "label": {
     "show": "optional"

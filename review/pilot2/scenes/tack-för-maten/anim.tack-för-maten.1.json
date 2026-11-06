@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.tack-för-maten.1",
+  "kind": "word",
+  "template": "communicate",
+  "senseId": "s.tack-för-maten.1",
+  "titleSv": "tack för maten",
+  "meaningHint": "Det man säger till den som har lagat maten, när man har ätit.",
+  "category": "action",
+  "durationMs": 3800,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 1500,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 30,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.85
+    },
+    {
+      "id": "q",
+      "asset": "character.base",
+      "variant": "b",
+      "at": {
+        "x": 88,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.85
+    }
+  ],
+  "props": [],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 3800,
+      "style": "breathe"
+    },
+    {
+      "t": 300,
+      "action": "bow",
+      "actor": "p",
+      "depth": "light",
+      "hands": "together",
+      "to": "q",
+      "durationMs": 2200
+    },
+    {
+      "t": 700,
+      "action": "say",
+      "actor": "p",
+      "icon": "palms",
+      "mood": "happy",
+      "to": "q",
+      "durationMs": 1500,
+      "gesture": false
+    },
+    {
+      "t": 2600,
+      "action": "express",
+      "actor": "q",
+      "emotion": "happy",
+      "durationMs": 400
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "says palms (happy) to q, q reacts"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matbordets samtal",
+    "confusableWith": [],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (communicate)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

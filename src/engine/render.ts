@@ -48,7 +48,8 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
       const tilt = typeof state.tilt === 'number' ? state.tilt : 0;
       const facing = sampleString<string>(tracks, `${actorId}.facing`, t, 'right') === 'left' ? -1 : 1;
       // held props stay upright in the hand (no arm rotation); `tilt` rotates them forward around the grip
-      const held = g([g([node], { x: -(spec?.grip[0] ?? 0), y: -(spec?.grip[1] ?? 0) })], { rotate: tilt * HELD_TILT_DEG, scale }, { id: `entity.${p.id}` });
+      // a held prop can still be hidden (opacity track): the other half of a split thing waits unseen in the hand
+      const held = g([g([node], { x: -(spec?.grip[0] ?? 0), y: -(spec?.grip[1] ?? 0) })], { rotate: tilt * HELD_TILT_DEG, scale }, { id: `entity.${p.id}`, opacity: sampleNumber(tracks, `${p.id}.opacity`, t, 1) });
       const hset = holding.get(actorId); if (hset) hset[hand] = held;
       void facing;
       continue;
@@ -146,7 +147,7 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
     const mouth: P = [head[0] + aw.facing * 5 * aw.scale, head[1] + 4 * aw.scale];
     const isIcon = content.startsWith('icon:');
     const body = isIcon ? content.slice(5) : content.slice(5);
-    const bw = isIcon ? 22 : Math.min(60, textWidth(body, 8) + 10), bh = isIcon ? 20 : 15;
+    const bw = isIcon ? 28 : Math.min(60, textWidth(body, 8) + 10), bh = isIcon ? 26 : 15; // icon bubbles are large enough for the icon to read at 140 px
     // the bubble sits above and in front of the head, clamped inside the canvas
     let bx = head[0] + aw.facing * (9 + bw / 2) * Math.min(1, aw.scale), by = head[1] - 20 * aw.scale - bh / 2;
     bx = Math.max(bw / 2 + 2, Math.min(w - bw / 2 - 2, bx)); by = Math.max(bh / 2 + 2, by);
@@ -157,7 +158,7 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
       path(`M${r1(ex + nx * tailBase)} ${r1(ey + ny * tailBase)} L${r1(mouth[0])} ${r1(mouth[1])} L${r1(ex - nx * tailBase)} ${r1(ey - ny * tailBase)} Z`, { fill: C.white, stroke: C.ink, sw: 1.4 }),
       rect(bx - bw / 2, by - bh / 2, bw, bh, { rx: mood === 'angry' ? 2 : bh / 2, fill: C.white, stroke: C.ink, sw: mood === 'angry' ? 2 : 1.4 }),
       path(`M${r1(ex + nx * tailBase * 0.8)} ${r1(ey + ny * tailBase * 0.8)} L${r1(mouth[0])} ${r1(mouth[1])} L${r1(ex - nx * tailBase * 0.8)} ${r1(ey - ny * tailBase * 0.8)}`, { fill: C.white, stroke: 'none' }),
-      isIcon ? g([drawIcon(body as IconName, 14, pop, undefined, C.ink)], { x: bx, y: by }) : text(bx, by + 3, body, 8, { fill: C.ink, weight: 800, anchor: 'middle' }),
+      isIcon ? g([drawIcon(body as IconName, 19, pop, undefined, C.ink)], { x: bx, y: by }) : text(bx, by + 3, body, 8, { fill: C.ink, weight: 800, anchor: 'middle' }),
     ], { scale: 0.6 + 0.4 * pop, px: mouth[0], py: mouth[1] });
     fx.push(bubble);
   }
@@ -165,8 +166,10 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
   for (const id of [...scene.actors.map((a) => a.id), ...scene.props.map((p) => p.id)]) {
     const kind = sampleString<string>(tracks, `fx.${id}.sound`, t, '');
     if (!kind) continue;
-    const node = layers.find((l) => (l.node as { id?: string }).id === `entity.${id}`)?.node; const b = node ? bboxOf(node) : null; if (!b) continue;
-    const cx = b.x2 + 3, cy = (b.y1 + b.y2) / 2, u = (t % 600) / 600;
+    // the source may be a held prop drawn inside an actor's layer: search every layer for the entity
+    let b: { x1: number; y1: number; x2: number; y2: number } | null = null; for (const l of layers) { b = bboxOfId(l.node, `entity.${id}`); if (b) break; } if (!b) continue;
+    const owner = sampleString<string>(tracks, `${id}.attach`, t, '').split(':')[0]; const f = (actorWorld.get(owner || id)?.facing ?? 1) as 1 | -1; // held things and people: the mark sits in front of the face, not behind
+    const cx = f === 1 ? b.x2 + 3 : b.x1 - 3, cy = (b.y1 + b.y2) / 2, u = (t % 600) / 600;
     if (kind === 'thump' || kind === 'crunch') { for (let i = 0; i < 5; i++) { const ang = -1.1 + i * 0.55 + (kind === 'crunch' ? Math.sin(t) * 0.1 : 0); const r0 = 4 + ((u + i * 0.2) % 1) * 6; fx.push(line([[cx + Math.cos(ang) * r0, cy + Math.sin(ang) * r0], [cx + Math.cos(ang) * (r0 + 4), cy + Math.sin(ang) * (r0 + 4)]], { stroke: C.ink, sw: kind === 'crunch' ? 1.4 : 2.2, opacity: 0.8 })); } }
     else for (let i = 0; i < 3; i++) { const ph = (u + i * 0.33) % 1; const rr = 5 + ph * 10; fx.push(path(`M${r1(cx + rr * 0.5)} ${r1(cy - rr * 0.85)} q${r1(rr * 0.9)} ${r1(rr * 0.85)} 0 ${r1(rr * 1.7)}`, { fill: 'none', stroke: kind === 'bark' ? C.red : C.ink, sw: 1.8, linecap: 'round', opacity: 0.85 * (1 - ph) })); }
   }
@@ -195,16 +198,18 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
     }
   }
   for (const id of [...scene.actors.map((a) => a.id), ...scene.props.map((p) => p.id), ...scene.shapes.map((s) => s.id)]) {
-    for (const kind of ['ring', 'glow', 'arrowDown', 'glint'] as const) {
+    for (const kind of ['ring', 'glow', 'arrowDown', 'glint', 'crumbs'] as const) {
       const u = sampleNumber(tracks, `fx.${id}.${kind}`, t, -1);
       if (u < 0 || u > 1) continue;
-      const node = layers.find((l) => (l.node as { id?: string }).id === `entity.${id}`)?.node;
-      const b = node ? bboxOf(node) : null;
+      // the entity may be a held prop drawn inside an actor's layer
+      let b: { x1: number; y1: number; x2: number; y2: number } | null = null; for (const l of layers) { b = bboxOfId(l.node, `entity.${id}`); if (b) break; }
       if (!b) continue;
       const cx = (b.x1 + b.x2) / 2, cy = (b.y1 + b.y2) / 2, rad = Math.max(b.x2 - b.x1, b.y2 - b.y1) / 2 + 4;
       if (kind === 'ring') fx.push(circle(cx, cy, rad + u * 10, { stroke: C.accent, sw: 2.5 - u * 2, fill: 'none', opacity: 1 - u }));
       if (kind === 'glow') fx.push(circle(cx, cy, rad + 2, { fill: C.yellow, opacity: 0.25 * Math.sin(u * Math.PI) }));
       if (kind === 'arrowDown') fx.push(g([path('M0 0 l0 10 M-4 6 l4 4 l4 -4', { stroke: C.accent, sw: 2.6, fill: 'none', linecap: 'round' })], { x: cx, y: b.y1 - 16 + Math.sin(u * Math.PI * 2) * 2 }));
+      if (kind === 'crumbs') { // small pieces fly out of the thing and fall: a break (split), a crack, a bite
+        for (let i = 0; i < 6; i++) { const ang = -2.6 + i * 0.44, sp = 14 + (i % 3) * 5; const x = cx + Math.cos(ang) * sp * u, y = cy + Math.sin(ang) * sp * u + 26 * u * u; fx.push(circle(x, y, 1.1 + (i % 2) * 0.5, { fill: C.beige, stroke: C.ink, sw: 0.7, opacity: 0.95 * (1 - u * u) })); } }
       if (kind === 'glint') { // a four-point sparkle travelling along the top edge, plus a small second one: "blank, ny, vass"
         const star = (x: number, y: number, r: number, o: number) => path(`M${r1(x)} ${r1(y - r)} q${r1(r * 0.2)} ${r1(r * 0.8)} ${r1(r)} ${r1(r)} q${r1(-r * 0.8)} ${r1(r * 0.2)} ${r1(-r)} ${r1(r)} q${r1(-r * 0.2)} ${r1(-r * 0.8)} ${r1(-r)} ${r1(-r)} q${r1(r * 0.8)} ${r1(-r * 0.2)} ${r1(r)} ${r1(-r)} Z`, { fill: C.white, stroke: C.ink, sw: 1, opacity: o });
         const k = Math.sin(u * Math.PI); fx.push(star(b.x1 + (b.x2 - b.x1) * (0.2 + 0.6 * u), b.y1 + 1, 2 + 3.5 * k, 0.95), star(b.x2 - 3, b.y1 + (b.y2 - b.y1) * 0.4, 1.2 + 1.8 * Math.sin(u * Math.PI * 2 + 1), 0.8)); }
@@ -249,7 +254,7 @@ function worldAnchor(c: CompiledScene, actors: Map<string, { pos: P; scale: numb
   const x = sampleNumber(c.tracks, `${propId}.x`, t, def.at?.x ?? 0), y = sampleNumber(c.tracks, `${propId}.y`, t, def.at?.y ?? 0);
   return [x + a[0] * scale, y + a[1] * scale];
 }
-import { bbox as bboxOf } from './frame';
+import { bbox as bboxOf, bboxOfId } from './frame';
 
 /** Approximate rendered text width: CJK glyphs are square, Latin ≈ 0.58 em. */
 export function textWidth(txt: string, size: number): number {

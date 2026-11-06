@@ -376,6 +376,16 @@
       "expected": "hacka",
       "description": "En person vid en köksbänk med kniv över en rund gul lök; för varje ruta blir löken alltmer sönderdelad i många små bitar som sprids över skärbrädan (små vita ringar), medan kniven går upp och ner i en snabb rytm – fint hackande av en lök.",
       "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b13",
+      "passed": true,
+      "choice": "hacka",
+      "expected": "hacka",
+      "description": "En person står vid ett bord i ett kök med en kniv i handen; hen lyfter kniven över en rund gul grönsak (lök?) och hugger upprepade gånger så att allt fler små bitar sprids ut åt sidan på bordet tills grönsaken är i strimlor – animationen betyder att hacka något i små bitar.",
+      "reviewer": "claude-blind",
+      "flag": "Ja: (1) i första rutan (0 ms) håller personen kniven hängande med spetsen nedåt längs benet, vilket isolerat kan se hotfullt ut; (2) vid 982 ms har personen slutna ögon medan kniven är i luften – ser ut som att man hugger med ögonen stängda, vilket ser farligt/fel ut; (3) de avhuggna bitarna ritas som små vita cirklar på pinnar och kan läsas som blommor eller popcorn snarare än lökbitar; (4) handen som håller fast grönsakan syns inte och den beige lådan till vänster är oklar (kyl? diskmaskin?). Skillnaden mot 'skära' bygger helt på snabbheten och mängden bitar – i en stillbild blir det 'skära'."
     }
   ],
   "anim.skära.1": [
@@ -405,6 +415,16 @@
       "expected": "skära",
       "description": "En person med kniv över en hel orange morot med gröna blast; kniven skär av den ena skivan efter den andra och morotsskivorna ställs upp som jämna rundlar bredvid den kvarvarande stumpen – att skära en morot i skivor.",
       "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b12",
+      "passed": true,
+      "choice": "skära",
+      "expected": "skära",
+      "description": "En person står vid ett bord med en morot och drar en kniv i sågande rörelser genom moroten så att den delas i allt fler jämna skivor – att skära (grönsaker).",
+      "reviewer": "claude-blind",
+      "flag": "I första rutan hålls kniven pekande rakt ned vid sidan som ett vapen, vilket ser lite hotfullt ut. Knivbladet ligger ovanpå/bakom moroten snarare än i den, och den vänstra handen som håller moroten är en rund klump som kan se ut som en skiva. Skillnaden mot 'hacka' är liten – skivorna är jämna och rörelsen sågande, så det lutar åt skära, men någon kan välja hacka. Det grå föremålet till vänster (kylskåp/skåp?) är svårt att identifiera."
     }
   ],
   "anim.salta.1": [
@@ -669,6 +689,16 @@
       "expected": "servera",
       "description": "En person i svart bär en tallrik med mat genom rummet, ställer den på bordet framför gästen, som ler nöjt – servitören serverar maten.",
       "reviewer": "claude-blind-subagent"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "h2",
+      "passed": true,
+      "choice": "servera",
+      "expected": "servera",
+      "description": "En servitör i svart går med en tallrik mat fram till ett bord, ställer ner tallriken bredvid gästen, som då får en glad pratbubbla – att servera mat.",
+      "reviewer": "claude-blind-session",
+      "flag": "I stillbilden (1964 ms) står servitören delvis framför gästen och tallriken är inte synlig, så enbart stillbilden visar inte serveringen tydligt. Figurerna överlappar nästan varandra i mitten av sekvensen, vilket ser lite trångt ut. Inget stötande."
     }
   ],
   "anim.rekommendera.1": [
@@ -691,6 +721,34 @@
       "expected": "lämna över",
       "description": "Den ena personen håller en papperspåse, räcker fram den och den andra tar emot och håller den – påsen lämnas över.",
       "reviewer": "claude-blind-subagent"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "h2",
+      "passed": true,
+      "choice": "lämna över",
+      "expected": "lämna över",
+      "description": "En person med en papperspåse med äpplen sträcker fram påsen till personen bredvid, som tar emot den och står kvar med påsen – att lämna över något till någon.",
+      "reviewer": "claude-blind-session"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "h3",
+      "passed": true,
+      "choice": "lämna över",
+      "expected": "lämna över",
+      "description": "En person i grön tröja räcker över en papperspåse med äpplen till en person i blå tröja, som tar emot den och håller påsen själv – animationen betyder att överlämna något till någon.",
+      "reviewer": "claude-blind-session"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "h4",
+      "passed": true,
+      "choice": "lämna över",
+      "expected": "lämna över",
+      "description": "En person räcker fram en papperspåse med frukt och den andra tar emot den och står sedan ensam med påsen medan givaren är tomhänt – animationen betyder att lämna över något.",
+      "reviewer": "claude-blind-session",
+      "flag": "I stillbilden ser givarens hand redan tom ut medan påsen hänger mellan dem, så själva greppet är lite otydligt i just den rutan; i övrigt nej."
     }
   ],
   "anim.ursäkta.1": [
@@ -702,6 +760,26 @@
       "expected": "ursäkta",
       "description": "En omkullvält hink/vas med spill ligger på golvet; mannen bugar lätt och visar en hand i en bubbla mot kvinnan, som ser lätt irriterad ut – han ber om ursäkt för att ha vält den. Handikonen i bubblan är otydlig (ser mer ut som ett pekfinger än en ursäkt), så tolkningen bygger mest på det vältade föremålet och bugningen.",
       "reviewer": "claude-blind-subagent"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b12",
+      "passed": true,
+      "choice": "ursäkta",
+      "expected": "ursäkta",
+      "description": "Två personer inomhus; en vit kon-/megafonliknande sak ligger omkullvält på golvet mellan dem, mannen i grön tröja bugar djupt mot kvinnan med en pratbubbla som innehåller ett litet ansikte, hon ler, och sedan rätar han upp sig – han ber om ursäkt för det han vält.",
+      "reviewer": "claude-blind",
+      "flag": "Bugningen kan lika gärna läsas som tacka (båda har buga + bubbla); det som styr mot ursäkt är det omkullvälta föremålet, men det är otydligt vad det är (lampa? megafon? tratt?) och det blir aldrig upprättat. Ikonen i pratbubblan är för liten för att tydas (ser ut som ett litet ansikte eller en hand). Mannens nacke/huvud ser lite onaturligt sträckt ut i de djupaste bugningsrutorna."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b13",
+      "passed": true,
+      "choice": "ursäkta",
+      "expected": "ursäkta",
+      "description": "Två personer står mittemot varandra i ett rum; mellan dem ligger en vält megafon/tratt på golvet; personen i grönt bugar djupt mot personen i rött med en pratbubbla som innehåller en uppsträckt öppen handflata, och rätar sedan upp sig igen medan den andra ler – jag tolkar det som att be om ursäkt (djup bugning + hand + något som vält på golvet).",
+      "reviewer": "claude-blind",
+      "flag": "Ja: (1) 'ursäkta' och 'tacka' är båda djupa bugningar – det enda som skiljer är handflatan i bubblan och det vältade föremålet, och ikonen med handflatan kan lika gärna läsas som 'stopp', 'vinka' eller 'high five'; (2) föremålet på golvet är svårt att identifiera (megafon? strut? tratt?) och det syns aldrig att personen i grönt är den som har vält det, så orsaken är otydlig; (3) handflatan framför ansiktet under bugning är en japansk ursäktsgest som en svensk inte nödvändigtvis läser; (4) i de djupaste bugningsrutorna (982–1636 ms) ser huvudet ut att sitta något löst/framför kroppen och handen hamnar framför ansiktet som om personen täcker munnen. Inget stötande."
     }
   ],
   "anim.skämta.1": [
@@ -887,6 +965,26 @@
       "expected": "försiktig",
       "description": "En person i grön tröja går långsamt framåt och bär en lång, mörk stång vågrätt framför sig med båda händerna, blinkar/sluter ögonen en gång och tar små steg; sedan kommer bubblan 注意深い (försiktig/uppmärksam) – det ser ut som att gå varsamt med något långt.",
       "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b12",
+      "passed": true,
+      "choice": "försiktig",
+      "expected": "försiktig",
+      "description": "En man håller ett glas med båda händerna och går långsamt, nästan på tå med böjda knän och öppen O-mun, medan en vit bubbla med texten 注意深い dyker upp – han bär glaset försiktigt så att inget spills.",
+      "reviewer": "claude-blind",
+      "flag": "Utan texten läser jag snarare 'förvånad/rädd' eller 'smyga' – O-munnen ser skrämd ut, och den vaggande gången med korsade ben ser lite onaturlig ut (höften svänger utåt i rutorna 1255–2091 ms). Textpanelen klipps i rutan 1673 ms (halvt synlig text). Glaset ser mest ut som en vit rektangel; ingen vätska som riskerar spillas, så själva orsaken till försiktigheten syns inte."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b13",
+      "passed": true,
+      "choice": "försiktig",
+      "expected": "försiktig",
+      "description": "En person i grön tröja går långsamt och lite framåtböjd medan hen bär en skål/ett fat med gul mat framför sig med båda händerna, med små försiktiga steg och blicken rakt fram; halvvägs in dyker en pratbubbla upp med japansk text (注意深い) – animationen betyder att göra något försiktigt/aktsamt.",
+      "reviewer": "claude-blind",
+      "flag": "Ja, flera små saker: (1) i rutan vid 1673 ms är pratbubblan avklippt i bildens överkant så att texten inte går att läsa; (2) själva rörelsen är svag – utan texten läses det mest som 'en person går med en skål', det finns ingen tydlig fara (inget som skvalpar, inget hinder, ingen spilld droppe) som visar att det är försiktigheten som är poängen, så 'slö' (långsam) är en möjlig feltolkning; (3) bakre armen syns nästan inte så skålen ser ut att hållas med en hand på ett ostadigt sätt. Inget stötande."
     }
   ],
   "anim.slö.1": [
@@ -956,6 +1054,16 @@
       "expected": "halvera",
       "description": "En person med kniv över ett helt rött äpple; kniven gör ett enda nedåthugg och äpplet delas i två halvor som står kvar på brädan med en liten springa emellan – att dela/halvera ett äpple.",
       "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "h3",
+      "passed": false,
+      "choice": "skära",
+      "expected": "halvera",
+      "description": "En person vid ett bord för en kniv upp och ned över ett äpple flera gånger, och äpplet går från helt till en avskuren halva med synligt vitt fruktkött – animationen betyder att skära något.",
+      "reviewer": "claude-blind-session",
+      "flag": "Knivbladet verkar aldrig nå ner till äpplet utan svävar ovanför, och äpplet krymper/formas om i stället för att synliga skivor eller halvor läggs på bordet; de upprepade huggen kan också läsas som 'hacka' eller 'halvera', och den smala röda resten med vit kant kan misstas för en burk eller ett glas."
     }
   ],
   "anim.vass.1": [
@@ -967,6 +1075,93 @@
       "expected": "vass",
       "description": "En kniv ligger stilla på ett bord och en vit glimt/stjärna vandrar längs den blanka eggen; sedan kommer bubblan よく切れる (skär bra/vass) – kniven är vass.",
       "reviewer": "claude-blind"
+    }
+  ],
+  "anim.sopa.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "h1",
+      "passed": true,
+      "choice": "sopa",
+      "expected": "sopa",
+      "description": "En person i blå overall sopar ihop en hög med skräp på golvet med en kvast bredvid en soptunna, och högen krymper tills golvet är rent; animationen betyder att sopa.",
+      "reviewer": "claude-blind-session"
+    }
+  ],
+  "anim.dela.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "h1",
+      "passed": false,
+      "choice": "lämna över",
+      "expected": "dela",
+      "description": "En person i grön tröja håller en låda med röda saker i, sträcker fram den till en person i röd tröja som tar emot den; animationen betyder att lämna över något.",
+      "reviewer": "claude-blind-session",
+      "flag": "I rutorna 3345–4600 ms ser det ut som om båda personerna håller var sin låda samtidigt, så överlämningen verkar inte fullbordad och kan misstolkas som att de delar (dela) eller som ett dubbleringsfel i grafiken."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "h2",
+      "passed": true,
+      "choice": "dela",
+      "expected": "dela",
+      "description": "En person med en bred låda fylld med röda äpplen delar lådan i två halvor och räcker den ena till personen bredvid, så att båda står med varsin halva till slut – att dela något med någon.",
+      "reviewer": "claude-blind-session",
+      "flag": "Lådan som delas på mitten kan tolkas som att en ny låda plötsligt dyker upp snarare än att den delas; om man missar delningen kan sekvensen läsas som 'lämna över'. Inget stötande."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "h3",
+      "passed": true,
+      "choice": "dela",
+      "expected": "dela",
+      "description": "En man håller ett helt bröd, bryter av en bit så att smulor syns, ger biten till en kvinna och sedan håller båda var sin bit – animationen betyder att dela något med någon.",
+      "reviewer": "claude-blind-session",
+      "flag": "Kan förväxlas med 'riva'/'bryta' eftersom smulorna och avbrytningen är det tydligaste ögonblicket; i de två första rutorna sitter brödet orealistiskt högt över mannens bröst och ser ut som en skylt snarare än ett bröd, och i slutrutorna håller kvinnan sin bit framför ansiktet så att munnen delvis skyms."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "h4",
+      "passed": true,
+      "choice": "dela",
+      "expected": "dela",
+      "description": "En person bryter ett bröd i två delar och ger ena halvan till en annan person, så att båda till slut håller var sin bit – animationen betyder att dela (med sig av) något.",
+      "reviewer": "claude-blind-session",
+      "flag": "Brödet ser i de första rutorna ut som en rektangulär låda eller kudde innan det bryts; ingen ruta i remsa A är markerad med orange ram, så stillbilden syns inte. Inget stötande."
+    }
+  ],
+  "anim.dammsuga.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "h1",
+      "passed": true,
+      "choice": "dammsuga",
+      "expected": "dammsuga",
+      "description": "En person kör en upprättstående dammsugare fram och tillbaka över en smutsfläck på golvet medan ljudvågor syns, och smutsen försvinner; animationen betyder att dammsuga.",
+      "reviewer": "claude-blind-session"
+    }
+  ],
+  "anim.modern.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "h1",
+      "passed": true,
+      "choice": "modern",
+      "expected": "modern",
+      "description": "En enkel golvlampa står tänd vid ett fönster och efter en stund tonar en pratbubbla med japanska ordet 現代的な (modern) in; animationen betyder modern.",
+      "reviewer": "claude-blind-session",
+      "flag": "Själva bilden bär ingen egen betydelse, bara texten i pratbubblan; lampan ser snarare vanlig eller lite gammaldags ut än modern, så utan bubblan förstår man inte ordet. Att en lampa 'talar' kan också förvirra."
+    }
+  ],
+  "anim.mysig.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "h1",
+      "passed": true,
+      "choice": "mysig",
+      "expected": "mysig",
+      "description": "Ett vardagsrum med röd soffa, filt, tänt ljus och en ångande kopp på ett bord vid ett fönster, och en pratbubbla med 居心地のよい (mysig/ombonad) tonar in; animationen betyder mysig.",
+      "reviewer": "claude-blind-session"
     }
   ]
 }

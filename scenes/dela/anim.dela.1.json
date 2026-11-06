@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.dela.1",
+  "kind": "word",
+  "template": "social",
+  "senseId": "s.dela.1",
+  "titleSv": "dela",
+  "meaningHint": "Ta delar av något och ge till flera.",
+  "category": "action",
+  "durationMs": 5200,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 4700,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 38,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.9
+    },
+    {
+      "id": "q",
+      "asset": "character.base",
+      "variant": "c",
+      "at": {
+        "x": 82,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.9
+    }
+  ],
+  "props": [
+    {
+      "id": "thing",
+      "asset": "food.bread",
+      "scale": 1.3,
+      "rotate": 0,
+      "z": 0,
+      "state": {},
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    },
+    {
+      "id": "piece",
+      "asset": "food.bread",
+      "scale": 1.3,
+      "rotate": 0,
+      "z": 0,
+      "state": {},
+      "attachTo": {
+        "actor": "p",
+        "hand": "right"
+      }
+    }
+  ],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 400,
+      "style": "breathe"
+    },
+    {
+      "t": 400,
+      "action": "split",
+      "actor": "p",
+      "prop": "thing",
+      "into": "piece",
+      "durationMs": 1800
+    },
+    {
+      "t": 2300,
+      "action": "give",
+      "from": "p",
+      "to": "q",
+      "prop": "piece",
+      "durationMs": 1500
+    },
+    {
+      "t": 3125,
+      "action": "set",
+      "target": "piece",
+      "prop": "half",
+      "value": 1
+    },
+    {
+      "t": 3900,
+      "action": "pose",
+      "actor": "q",
+      "joints": {
+        "uArmL": 34,
+        "fArmL": 78
+      },
+      "durationMs": 500,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 3900,
+      "action": "pose",
+      "actor": "p",
+      "joints": {
+        "uArmL": 34,
+        "fArmL": 78
+      },
+      "durationMs": 500,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 4400,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 800,
+      "style": "none"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "thing",
+      "piece"
+    ],
+    "feature": "breaks food.bread in two, gives one half to q, keeps the other"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "tillaga och servera",
+    "confusableWith": [
+      "s.dela-med-sig.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (social, split). Ett bröd bryts i två (smulor, bruten kant) och ena halvan ges bort – designad mot ge/lämna över (hela saken byter hand) och halvera (delas men ges inte bort). Tårta lästes som en låda i blindtest h1/h2."
+  },
+  "label": {
+    "show": "optional"
+  },
+  "contrast": {
+    "with": [
+      "anim.lämna-över.1",
+      "anim.servera.1"
+    ],
+    "distinctiveFeatures": [
+      "has:action:split",
+      "has:prop:food.bread"
+    ]
+  }
+}

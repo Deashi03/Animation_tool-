@@ -1,0 +1,289 @@
+{
+  "moduleId": "m.dammsuga-och-torka-golv",
+  "titleSv": "Dammsuga och torka golv",
+  "generatedAt": "2026-11-06",
+  "rows": [
+    {
+      "senseId": "s.smuts.1",
+      "lemma": "smuts",
+      "pos": "noun",
+      "defSv": "Det som gör att något blir smutsigt, till exempel jord eller damm.",
+      "examples": [
+        "Barnen bär in smuts på skorna."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.skyffel.1",
+        "s.dammråtta.1",
+        "s.munstycke.1"
+      ],
+      "jaGloss": "汚れ",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.sopa.1",
+      "lemma": "sopa",
+      "pos": "verb",
+      "defSv": "Ta bort smuts från golvet med en borste.",
+      "examples": [
+        "Hon sopar golvet i hallen."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.moppa.1",
+        "s.våttorka.1"
+      ],
+      "jaGloss": "掃く",
+      "note": "rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.skyffel.1",
+      "lemma": "skyffel",
+      "pos": "noun",
+      "defSv": "En platt sak med handtag som man sopar smuts på.",
+      "examples": [
+        "Sopa upp smulorna på skyffeln."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.smuts.1",
+        "s.dammråtta.1",
+        "s.munstycke.1"
+      ],
+      "jaGloss": "ちりとり",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.dammråtta.1",
+      "lemma": "dammråtta",
+      "pos": "noun",
+      "defSv": "En liten boll av damm, ofta under sängen.",
+      "examples": [
+        "Det finns dammråttor under sängen."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.smuts.1",
+        "s.skyffel.1",
+        "s.munstycke.1"
+      ],
+      "jaGloss": "ほこりのかたまり",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.munstycke.1",
+      "lemma": "munstycke",
+      "pos": "noun",
+      "defSv": "Den del i slutet av en dammsugare eller en slang som man byter.",
+      "examples": [
+        "Använd det smala munstycket i hörnen."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.smuts.1",
+        "s.skyffel.1",
+        "s.dammråtta.1"
+      ],
+      "jaGloss": "ノズル",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.dammsugarpåse.1",
+      "lemma": "dammsugarpåse",
+      "pos": "noun",
+      "defSv": "En påse inne i dammsugaren där dammet samlas.",
+      "examples": [
+        "Dammsugarpåsen är full."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.smuts.1",
+        "s.skyffel.1",
+        "s.dammråtta.1"
+      ],
+      "jaGloss": "掃除機の紙パック",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.sladdlös.1",
+      "lemma": "sladdlös",
+      "pos": "adjective",
+      "defSv": "Utan sladd.",
+      "examples": [
+        "En sladdlös dammsugare är praktisk."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [],
+      "jaGloss": "コードレスの",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.robotdammsugare.1",
+      "lemma": "robotdammsugare",
+      "pos": "noun",
+      "defSv": "En liten dammsugare som åker runt och dammsuger själv.",
+      "examples": [
+        "Robotdammsugaren fastnar under soffan."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.smuts.1",
+        "s.skyffel.1",
+        "s.dammråtta.1"
+      ],
+      "jaGloss": "ロボット掃除機",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.mopp.1",
+      "lemma": "mopp",
+      "pos": "noun",
+      "defSv": "Ett redskap med långt skaft som man torkar golv med.",
+      "examples": [
+        "Moppen står i städskåpet."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.smuts.1",
+        "s.skyffel.1",
+        "s.dammråtta.1"
+      ],
+      "jaGloss": "モップ",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.moppa.1",
+      "lemma": "moppa",
+      "pos": "verb",
+      "defSv": "Torka golvet med en mopp.",
+      "examples": [
+        "Erik moppar köksgolvet."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.sopa.1",
+        "s.våttorka.1"
+      ],
+      "jaGloss": "モップをかける",
+      "note": "rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.våttorka.1",
+      "lemma": "våttorka",
+      "pos": "verb",
+      "defSv": "Torka med en blöt trasa eller mopp.",
+      "examples": [
+        "Våttorka golvet efter att du har dammsugit."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.sopa.1",
+        "s.moppa.1"
+      ],
+      "jaGloss": "水ぶきする",
+      "note": "rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.parkett.1",
+      "lemma": "parkett",
+      "pos": "noun",
+      "defSv": "Ett golv av fina bitar av trä.",
+      "examples": [
+        "Vardagsrummet har parkett."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.smuts.1",
+        "s.skyffel.1",
+        "s.dammråtta.1"
+      ],
+      "jaGloss": "フローリング",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.klinker.1",
+      "lemma": "klinker",
+      "pos": "noun",
+      "defSv": "Hårda plattor av lera på golvet, ofta i hallen och badrummet.",
+      "examples": [
+        "Hallen har klinker."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.smuts.1",
+        "s.skyffel.1",
+        "s.dammråtta.1"
+      ],
+      "jaGloss": "タイル",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.heltäckningsmatta.1",
+      "lemma": "heltäckningsmatta",
+      "pos": "noun",
+      "defSv": "En matta som täcker hela golvet i ett rum.",
+      "examples": [
+        "Det gamla sovrummet hade heltäckningsmatta."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.smuts.1",
+        "s.skyffel.1",
+        "s.dammråtta.1"
+      ],
+      "jaGloss": "敷き込みカーペット",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.golvlist.1",
+      "lemma": "golvlist",
+      "pos": "noun",
+      "defSv": "Den smala biten av trä längst ner på väggen, mot golvet.",
+      "examples": [
+        "Dammet samlas vid golvlisterna."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.smuts.1",
+        "s.skyffel.1",
+        "s.dammråtta.1"
+      ],
+      "jaGloss": "幅木",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    }
+  ]
+}

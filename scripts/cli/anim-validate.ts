@@ -15,7 +15,8 @@ const results = files.map((file) => {
     const strict = flag('strict');
     if (!b) v.problems.push({ level: strict ? 'error' : 'warning', message: 'inget blindtest registrerat – kör anim:blindtest innan scenen räknas som klar' });
     else if (!b.passed) v.problems.push({ level: strict ? 'error' : 'warning', message: `blindtestet ${b.date} (${b.batch}) misslyckades: granskaren svarade "${b.choice}" – scenen är inte klar` });
-    if (v.scene.pedagogy.reviewStatus !== 'ai-draft' && !(b && b.passed)) v.problems.push({ level: 'error', message: 'status validated/reviewed kräver ett godkänt blindtest' });
+    else if (b.flag) v.problems.push({ level: strict ? 'error' : 'warning', message: `blindtestet ${b.date} (${b.batch}) flaggade något som kan missförstås: "${b.flag}" – åtgärda och testa om` });
+    if (v.scene.pedagogy.reviewStatus !== 'ai-draft' && !(b && b.passed && !b.flag)) v.problems.push({ level: 'error', message: 'status validated/reviewed kräver ett godkänt blindtest' });
   }
   return { file: path.relative(process.cwd(), file), ...v, ok: v.ok && !v.problems.some((p) => p.level === 'error') };
 });

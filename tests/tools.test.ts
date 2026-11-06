@@ -131,3 +131,103 @@ describe('recipes and the bearer rule', () => {
     expect(validateScene(withKnife as unknown).problems.some((p) => p.level === 'error' && /saknar bärare/.test(p.message))).toBe(false);
   });
 });
+
+describe('gestures and manner (after the ursäkta/försiktig review)', () => {
+  it('a gesture icon in a bubble without a bodily action is rejected; with a bow it passes', async () => {
+    const { validateScene } = await import('../src/compiler/validate');
+    const base = { schemaVersion: 1, animationId: 'anim.ursäkta.9', senseId: 's.ursäkta.9', titleSv: 'ursäkta', template: 'communicate', meaningHint: 'x', category: 'action', durationMs: 3000, loop: true, holdMs: 300, posterMs: 1500, environment: { id: 'room', time: 'day' },
+      actors: [{ id: 'p', variant: 'a', at: { x: 30, y: 100 }, facing: 'right' }, { id: 'q', variant: 'b', at: { x: 88, y: 100 }, facing: 'left' }], props: [], timeline: [{ t: 200, action: 'say', actor: 'p', icon: 'palms', mood: 'sad', to: 'q', durationMs: 1500 }], focus: { targets: ['p'] }, pedagogy: { quizEligible: false, group: 'x', confusableWith: [] } };
+    expect(validateScene(base as unknown).problems.some((p) => p.level === 'error' && /gest/.test(p.message))).toBe(true);
+    const withBow = { ...base, timeline: [{ t: 100, action: 'bow', actor: 'p', depth: 'deep', hands: 'together', to: 'q', durationMs: 2000 }, ...base.timeline] };
+    expect(validateScene(withBow as unknown).problems.filter((p) => p.level === 'error')).toEqual([]);
+  });
+  it('bow bends torso and head forward and straightens again; careful walk is slower than a normal walk', async () => {
+    const { compileScene } = await import('../src/compiler/compile');
+    const { sampleNumber } = await import('../src/engine/track');
+    const { GAITS, gaitSpeed } = await import('../src/motions/index');
+    const sc = { schemaVersion: 1, animationId: 'ui.test.bow', senseId: 's.x.1', titleSv: 'x', kind: 'word', template: 'communicate', meaningHint: 'x', category: 'action', durationMs: 3000, loop: false, holdMs: 0, posterMs: 1000, environment: { id: 'room', time: 'day' },
+      actors: [{ id: 'p', variant: 'a', at: { x: 40, y: 100 }, facing: 'right' }], props: [], timeline: [{ t: 0, action: 'bow', actor: 'p', depth: 'deep', hands: 'together', durationMs: 2000 }], focus: { targets: ['p'] }, pedagogy: { quizEligible: false, group: 'x', confusableWith: [] } };
+    const { Scene } = await import('../src/schema/scene');
+    const c = compileScene(Scene.parse(sc));
+    expect(sampleNumber(c.tracks, 'p.j.torso', 1000, 0)).toBeGreaterThan(40);
+    expect(sampleNumber(c.tracks, 'p.j.head', 1000, 0)).toBeGreaterThan(10);
+    expect(Math.abs(sampleNumber(c.tracks, 'p.j.torso', 2100, 0))).toBeLessThan(2);
+    expect(gaitSpeed(GAITS.careful)).toBeLessThan(gaitSpeed(GAITS.walk) * 0.5);
+  });
+  it('batch writes no draft for a recipe marked TODO/weak', async () => {
+    const { runBatch } = await import('../src/tools/batch');
+    const plan = { moduleId: 'm.test', titleSv: 'Test', rows: [{ senseId: 's.sjunka.1', lemma: 'sjunka', pos: 'verb', defSv: 'x', kind: 'animation' as const, confidence: 'high' as const, contrast: [], jaGloss: '沈む', note: '' }] };
+    const res = runBatch(plan as never, 'Test', new Map(), { write: false });
+    expect(res[0]!.status).toBe('blocked');
+  });
+});
+
+describe('recipe generator (anim:recipe)', () => {
+  it('reads tool, target and bow out of a definition, respects Swedish word boundaries, and says "manual" honestly', async () => {
+    const { inferRecipe, assetsIn } = await import('../src/tools/recipe');
+    const skära = inferRecipe({ senseId: 's.skära.1', lemma: 'skära', pos: 'verb', defSv: 'Dela något i bitar med en kniv.', examples: ['Skär tomaten i skivor.'] });
+    expect(skära.ok && skära.recipe.template).toBe('tool-rhythm');
+    expect(skära.ok && skära.recipe.target).toBe('food.tomato'); // the example names the food
+    expect(assetsIn('lägga något på bordet')).not.toContain('food.egg'); // "lägga" must not match ägg
+    const urs = inferRecipe({ senseId: 's.ursäkta.1', lemma: 'ursäkta', pos: 'verb', defSv: 'Säga förlåt när man har gjort något fel.' });
+    expect(urs.ok && (urs.recipe.say as { icon: string; bow?: string })).toMatchObject({ icon: 'palms', bow: 'deep' });
+    const praktisk = inferRecipe({ senseId: 's.praktisk.1', lemma: 'praktisk', pos: 'adjective', defSv: 'Lätt och bra att använda.' });
+    expect(praktisk.ok).toBe(false); expect(!praktisk.ok && praktisk.reason).toMatch(/ingen bärare/);
+    const mysig = inferRecipe({ senseId: 's.mysig.1', lemma: 'mysig', pos: 'adjective', defSv: 'Skön, varm och trevlig att vara i.' }); // solved 2026-11-06: a room's atmosphere as an arrangement
+    expect(mysig.ok && (mysig.recipe.bearer as { extra?: unknown[] }).extra?.length).toBeGreaterThan(1);
+    const randig = inferRecipe({ senseId: 's.randig.1', lemma: 'randig', pos: 'adjective', defSv: 'Med ränder.' });
+    expect(randig.ok && (randig.recipe.bearer as { kind: string }).kind).toBe('wardrobe');
+  });
+  it('batch falls back to the generator and hands off manual words with a reason', async () => {
+    const { runBatch } = await import('../src/tools/batch');
+    const rows = [
+      { senseId: 's.testskära.1', lemma: 'testskära', pos: 'verb', defSv: 'Dela något i bitar med en kniv.', examples: ['Skär moroten.'], kind: 'animation' as const, confidence: 'high' as const, contrast: [], jaGloss: '切る', note: '' },
+      { senseId: 's.testmysig.1', lemma: 'testmysig', pos: 'adjective', defSv: 'Skön, varm och trevlig att vara i.', kind: 'animation' as const, confidence: 'high' as const, contrast: [], jaGloss: '居心地がいい', note: '' },
+    ];
+    const res = runBatch({ moduleId: 'm.test', titleSv: 'Test', generatedAt: '2026-11-06', rows } as never, 'Test', new Map(), { write: false });
+    expect(res[0]!.status).toBe('created'); expect(res[0]!.note).toMatch(/genererat/);
+    expect(res[1]!.status).toBe('manual'); expect(res[1]!.note).toMatch(/MANUELLT/); expect(res[1]!.note).toMatch(/MANUAL_SCENES/);
+  });
+});
+
+describe('recipe generator rules (regression)', () => {
+  it('resolves common word functions and hands off the rest with the right reason', async () => {
+    const { inferRecipe } = await import('../src/tools/recipe');
+    const v = (lemma: string, pos: string, defSv: string, examples: string[] = []) => inferRecipe({ senseId: `s.${lemma}.1`, lemma, pos, defSv, examples });
+    const t = (r: ReturnType<typeof v>) => (r.ok ? `${r.recipe.template}:${r.confidence}` : `manual:${r.reason.split(':')[0]}`);
+    expect(t(v('puttra', 'verb', 'Sjuda lugnt och göra ett litet ljud.'))).toBe('process:high');
+    expect(t(v('städning', 'noun', 'Att göra rent i ett rum.'))).toBe('tool-rhythm:medium'); // the verb behind the noun
+    expect(t(v('märka', 'verb', 'Skriva på något vad det är.'))).toBe('tool-rhythm:low'); // no visible consequence → proposal only
+    expect(t(v('möglig', 'adjective', 'Med mögel på.'))).toBe('attribute-gloss:medium');
+    expect(t(v('vissen', 'adjective', 'Om växter: torr och svag.', ['Blomman är vissen.']))).toBe('attribute-gloss:high');
+    expect(t(v('dela på notan', 'phrase', 'Betala lika mycket var.'))).toBe('communicate:medium');
+    expect(t(v('packa upp', 'verb', 'Ta ut sakerna ur lådor eller väskor.'))).toBe('arrange:high');
+    expect(t(v('praktisk', 'adjective', 'Lätt och bra att använda.'))).toMatch(/^manual:egenskapen praktisk har ingen bärare/);
+    expect(t(v('dammsuga', 'verb', 'Göra rent golvet med en dammsugare.'))).toBe('tool-rhythm:high'); // solved in the hand-off test: tool.vacuum
+    expect(t(v('dela', 'verb', 'Ta delar av något och ge till flera.'))).toBe('social:high'); // solved in the hand-off test: split + give
+    expect(t(v('skåla', 'verb', 'Höja glasen mot varandra.'))).toMatch(/^manual:skåla/);
+  });
+});
+
+describe('generated recipes build valid scenes', () => {
+  it('every recipe the generator produces for the Swechan dictionary builds a scene that validates (skipped when the clone is absent)', async () => {
+    const fs = await import('node:fs');
+    const sw = ['/home/user/deashi03/swechan', '../swechan', '../Swechan'].find((d) => fs.existsSync(`${d}/src/content/data/dictionary`));
+    if (!sw) return;
+    const { inferRecipe, wordsFromSwechan } = await import('../src/tools/recipe');
+    const { draftScene } = await import('../src/tools/batch');
+    const { validateScene } = await import('../src/compiler/validate');
+    const { words } = wordsFromSwechan(sw);
+    const bad: string[] = []; let n = 0;
+    for (const w of words) {
+      if (!['verb', 'phrase', 'adjective', 'adverb', 'preposition', 'noun'].includes(w.pos)) continue;
+      const inf = inferRecipe(w, {}); if (!inf.ok || inf.recipe.template === 'image') continue;
+      const row = { senseId: w.senseId, lemma: w.lemma, pos: w.pos, defSv: w.defSv, kind: 'animation' as const, confidence: 'high' as const, contrast: [], jaGloss: w.jaGloss || 'テスト', note: '' };
+      const d = draftScene(row, inf.recipe, 'test', new Map());
+      if (!d) { bad.push(`${w.lemma}: cannot be built (${inf.recipe.template})`); continue; }
+      const errs = validateScene(d as unknown).problems.filter((p) => p.level === 'error').map((p) => p.message);
+      if (errs.length) bad.push(`${w.lemma}: ${errs[0]}`); else n++;
+    }
+    expect(bad).toEqual([]); expect(n).toBeGreaterThan(200);
+  }, 300_000);
+});

@@ -1,0 +1,296 @@
+{
+  "moduleId": "m.tillaga-och-servera",
+  "titleSv": "Tillaga och servera",
+  "generatedAt": "2026-11-06",
+  "rows": [
+    {
+      "senseId": "s.kock.1",
+      "lemma": "kock",
+      "pos": "noun",
+      "defSv": "En person vars arbete är att laga mat, till exempel på en restaurang.",
+      "examples": [
+        "Hans bror är kock."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.fat.1",
+        "s.gäst.1",
+        "s.buffé.1"
+      ],
+      "jaGloss": "コック",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.tillaga.1",
+      "lemma": "tillaga",
+      "pos": "verb",
+      "defSv": "Göra i ordning mat så att den går att äta, till exempel genom att koka eller steka den.",
+      "examples": [
+        "Kocken tillagar fisken i ugnen."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.förbereda.1",
+        "s.lägga-upp.1",
+        "s.garnera.1"
+      ],
+      "jaGloss": "調理する",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.förbereda.1",
+      "lemma": "förbereda",
+      "pos": "verb",
+      "defSv": "Göra saker i förväg, så att allt är klart när man behöver det.",
+      "examples": [
+        "Vi förbereder maten på morgonen."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.tillaga.1",
+        "s.lägga-upp.1",
+        "s.garnera.1"
+      ],
+      "jaGloss": "準備する",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.fat.1",
+      "lemma": "fat",
+      "pos": "noun",
+      "defSv": "En stor och platt tallrik som man lägger upp mat på för flera personer.",
+      "examples": [
+        "Lägg köttet på ett fat."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.kock.1",
+        "s.gäst.1",
+        "s.buffé.1"
+      ],
+      "jaGloss": "大皿",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.lägga-upp.1",
+      "lemma": "lägga upp",
+      "pos": "verb",
+      "defSv": "Lägga mat på en tallrik eller ett fat, så att det ser fint ut.",
+      "examples": [
+        "Kocken lägger upp maten på tallrikarna."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.tillaga.1",
+        "s.förbereda.1",
+        "s.garnera.1"
+      ],
+      "jaGloss": "盛り付ける",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.garnera.1",
+      "lemma": "garnera",
+      "pos": "verb",
+      "defSv": "Lägga något litet och vackert på maten, till exempel örter, så att den ser fin ut.",
+      "examples": [
+        "Garnera med dill."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.tillaga.1",
+        "s.förbereda.1",
+        "s.lägga-upp.1"
+      ],
+      "jaGloss": "飾る",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.servera.1",
+      "lemma": "servera",
+      "pos": "verb",
+      "defSv": "Ge mat eller dryck till någon, till exempel vid bordet.",
+      "examples": [
+        "Vi serverar middag klockan sju."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.tillaga.1",
+        "s.förbereda.1",
+        "s.lägga-upp.1"
+      ],
+      "jaGloss": "出す",
+      "existingAnimation": "anim.servera.1",
+      "note": "rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.gäst.1",
+      "lemma": "gäst",
+      "pos": "noun",
+      "defSv": "En person som kommer på besök eller som man bjuder på mat.",
+      "examples": [
+        "Vi har sex gäster i kväll."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.kock.1",
+        "s.fat.1",
+        "s.buffé.1"
+      ],
+      "jaGloss": "お客さん",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.buffé.1",
+      "lemma": "buffé",
+      "pos": "noun",
+      "defSv": "Mat som står på ett bord, där gästerna själva tar det de vill ha.",
+      "examples": [
+        "På festen var det buffé."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.kock.1",
+        "s.fat.1",
+        "s.gäst.1"
+      ],
+      "jaGloss": "ビュッフェ",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.ta-för-sig.1",
+      "lemma": "ta för sig",
+      "pos": "phrase",
+      "defSv": "Själv ta mat från ett fat eller en buffé.",
+      "examples": [
+        "Varsågoda, ta för er!"
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.smaklig-måltid.1"
+      ],
+      "jaGloss": "自由に取る",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.värma-upp.1",
+      "lemma": "värma upp",
+      "pos": "verb",
+      "defSv": "Göra mat som har blivit kall varm igen.",
+      "examples": [
+        "Jag värmer upp soppan."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.tillaga.1",
+        "s.förbereda.1",
+        "s.lägga-upp.1"
+      ],
+      "jaGloss": "温め直す",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.ljummen.1",
+      "lemma": "ljummen",
+      "pos": "adjective",
+      "defSv": "Inte varm och inte kall.",
+      "examples": [
+        "Kaffet är bara ljummet."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.rykande.1"
+      ],
+      "jaGloss": "ぬるい",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.rykande.1",
+      "lemma": "rykande",
+      "pos": "adjective",
+      "defSv": "Så varm att det kommer ånga från den.",
+      "examples": [
+        "Soppan är rykande het."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.ljummen.1"
+      ],
+      "jaGloss": "湯気の立つ",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.smaklig-måltid.1",
+      "lemma": "smaklig måltid",
+      "pos": "phrase",
+      "defSv": "Det man säger när man börjar äta: att man hoppas att maten ska smaka gott.",
+      "examples": [
+        "Smaklig måltid, allihop!"
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.ta-för-sig.1"
+      ],
+      "jaGloss": "召し上がれ",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.dela.1",
+      "lemma": "dela",
+      "pos": "verb",
+      "defSv": "Ta delar av något och ge till flera.",
+      "examples": [
+        "Vi delar på efterrätten."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.tillaga.1",
+        "s.förbereda.1",
+        "s.lägga-upp.1"
+      ],
+      "jaGloss": "分ける",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    }
+  ]
+}

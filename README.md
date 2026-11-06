@@ -17,9 +17,12 @@ Publicerad studio: `https://deashi03.github.io/Animation_tool-/` när GitHub Pag
 
 ## Arbetsflöde för en modul (Claude eller människa)
 
+**Gren:** verktygets senaste läge ligger på `main` när motsvarande PR är sammanslagen; arbetar du i en annan gren, kontrollera att `docs/MANUAL_SCENES.md` och `src/tools/lexicon.ts` finns – annars är du på en för gammal commit.
+
 ```bash
 npm run anim:coverage -- --swechan ../swechan                             # hur mycket av ordboken recepten och byggstenarna täcker → registry/coverage.md
 npm run anim:plan -- --swechan ../swechan --module m.skara-och-hacka      # plan per ord: typ, mall, kontrast, japanskt ord → registry/plan/<modul>.md
+npm run anim:recipe -- --swechan ../swechan --module m.skara-och-hacka    # recept ur ordboken per ord, eller MANUELLT med skäl (--all --compare: mätning mot handrecepten)
 npm run anim:batch -- --swechan ../swechan --module m.skara-och-hacka --write --strips   # utkast från recepten + remsor + rapport i registry/batch/
 # per utkast: läs anmärkningen i rapporten, justera JSON, validera, titta på remsan
 npm run anim:validate -- scenes/skära/anim.skära.1.json                   # schema, referenser, tider, utsnitt, kontrastkrav, mallkontrakt
@@ -32,7 +35,9 @@ npm run anim:new -- s.ordet.1 --template tool-rhythm                      # en e
 npm run anim:poster -- anim.skära.1 · anim:sheet · anim:report · anim:export
 ```
 
-Regel: **ingen scen rapporteras klar utan att bildremsan har granskats och blindtestet är godkänt.** Vilken förinställd lösning varje ordfunktion har (och vad som räknas som bärare) står i `docs/WORD_FUNCTIONS.md` – läs den innan du skriver recept. Mallar (begreppsfamiljer) finns i `src/compiler/templates.ts`; recepten per ord i `registry/recipes.json`; vilka mallar produktägaren godkänt i `registry/templates.json`.
+Instruktion att klistra in i Swechan-chatten: `docs/SWECHAN_CHAT_PROMPT.md`.
+
+Regel: **ingen scen rapporteras klar utan att bildremsan har granskats och blindtestet är godkänt.** Vilken förinställd lösning varje ordfunktion har (och vad som räknas som bärare) står i `docs/WORD_FUNCTIONS.md`. Saknas handrecept genererar `anim:batch` ett ur ordboken; kan det inte, får raden status *manual* med skäl – då gäller `docs/MANUAL_SCENES.md`. Mätningar körs med `--generated --out <dir>` så att biblioteket i `scenes/` aldrig rörs. Mallar (begreppsfamiljer) finns i `src/compiler/templates.ts`; recepten per ord i `registry/recipes.json`; vilka mallar produktägaren godkänt i `registry/templates.json`.
 
 Bildremsor och kontaktark renderas till PNG med den globalt installerade Playwright-paketet (`/opt/node22/lib/node_modules/playwright` i molnmiljön, `npm install -g playwright@1.63.0 && playwright install chromium` lokalt). Saknas Playwright skrivs bara HTML-filen.
 

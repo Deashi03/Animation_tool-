@@ -56,7 +56,29 @@ function reachJoints(ctx: Ctx, a: string, hand: 'left' | 'right', target: P, t: 
 }
 
 const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
-  walk(ctx, a) { locomote(ctx, a.actor, a.t, a.to, a.durationMs, 'walk'); },
+  walk(ctx, a) {
+    locomote(ctx, a.actor, a.t, a.to, a.durationMs, a.manner === 'careful' ? 'careful' : 'walk');
+    if (a.manner === 'careful') {
+      // eyes on the load: head tilted down, gaze forward-down, arms held still in front (the gait's arm swing is tiny)
+      const tr = ctx.tracks, A = a.actor; const end = a.t + (a.durationMs ?? 2000);
+      tween(tr, M.J(A, 'head'), a.t, a.t + 300, 18, 'easeInOut'); addKey(tr, `${A}.eyes`, { t: a.t, v: 'open' }); addKey(tr, `${A}.brows`, { t: a.t, v: 'neutral' }); addKey(tr, `${A}.mouth`, { t: a.t, v: 'calm' }); // concentration, not fear
+      addKey(tr, `${A}.gaze`, { t: a.t, v: facingAt(ctx, A, a.t) });
+      tween(tr, M.J(A, 'head'), end, end + 300, 0, 'easeInOut'); addKey(tr, `${A}.mouth`, { t: end + 300, v: 'smile' }); addKey(tr, `${A}.brows`, { t: end + 300, v: 'neutral' });
+    }
+  },
+  /** bow: the torso and head bend forward (light 25°, deep 50°), hands together in front or hanging; held for a moment, then back up */
+  bow(ctx, a) {
+    const tr = ctx.tracks, A = a.actor, end = a.t + a.durationMs;
+    if (a.to) { const tp = targetPoint(ctx, a.to, a.t); faceToward(ctx, A, a.t, tp[0]); if (ctx.actors.has(a.to)) faceToward(ctx, a.to, a.t, actorPos(ctx, A, a.t)[0]); }
+    const g0 = poseAt(ctx, A, a.t); const deep = a.depth === 'deep';
+    const down = Math.min(700, a.durationMs * 0.35), up = Math.min(600, a.durationMs * 0.3);
+    const arms = a.hands === 'together' ? { uArmL: 28, fArmL: 95, uArmR: 28, fArmR: 95 } : { uArmL: deep ? 10 : 4, fArmL: 6, uArmR: deep ? 10 : 4, fArmR: 6 };
+    M.poseTo(tr, A, a.t, a.t + down, { torso: deep ? 50 : 25, head: deep ? 20 : 14, ...arms }, 'easeInOut');
+    addKey(tr, `${A}.eyes`, { t: a.t + down * 0.6, v: 'closed' }); addKey(tr, `${A}.brows`, { t: a.t, v: deep ? 'worried' : 'neutral' }); addKey(tr, `${A}.mouth`, { t: a.t, v: deep ? 'calm' : 'smile' });
+    M.poseTo(tr, A, end - up, end, { torso: g0.torso, head: g0.head, uArmL: g0.uArmL, fArmL: g0.fArmL, uArmR: g0.uArmR, fArmR: g0.fArmR }, 'easeInOut');
+    addKey(tr, `${A}.eyes`, { t: end - up * 0.4, v: 'open' }); addKey(tr, `${A}.brows`, { t: end, v: 'neutral' }); addKey(tr, `${A}.mouth`, { t: end, v: 'smile' });
+    M.blinks(tr, A, end, end + 1);
+  },
   run(ctx, a) { locomote(ctx, a.actor, a.t, a.to, a.durationMs, 'run'); },
   jump(ctx, a) {
     M.jump(ctx.tracks, a.actor, a.t, a.durationMs, a.height);
@@ -346,7 +368,7 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     const reachX = toolSpec ? (-(toolSpec.grip[1]) + 3) * Math.abs(Math.sin(tiltRad)) : 0;
     const handAt = (dx: number, dy: number): P => [work[0] - f * reachX + dx, work[1] - reachLen + dy];
     // lean in and look at the work
-    const lean = Math.abs(work[0] - actorPos(ctx, A, a.t)[0]) > 18 ? 24 : 12;
+    const lean = Math.abs(work[0] - actorPos(ctx, A, a.t)[0]) > 18 ? 18 : 10; // a lean of 24 read as 'head in the tub' in blind tests
     tween(tr, M.J(A, 'torso'), a.t, a.t + 350, lean, 'easeInOut'); tween(tr, M.J(A, 'head'), a.t, a.t + 350, -16, 'easeInOut');
     addKey(tr, `${A}.gaze`, { t: a.t, v: f }); addKey(tr, `${A}.eyes`, { t: a.t, v: 'open' });
     const T = a.periodMs ?? { chop: 420, tap: 600, press: 1200, knead: 760, saw: 520, wipe: 900, scrub: 260, sweep: 1100, spread: 900, brush: 420, stir: 950, whisk: 240, pull: 800, peel: 760, grate: 480, sprinkle: 180, squeeze: 900, hold: 1000, roll: 900 }[a.motion];
@@ -395,14 +417,14 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     // visible consequence
     for (const e of a.effect) {
       const prop = e.prop ?? a.on; const id = trackId(ctx, prop, e.key);
-      if (typeof e.to === 'number') { const from = e.from ?? sampleNumber(tr, id, a.t, 0); const tEnd = a.t + a.durationMs * (e.at ?? 1); tween(tr, id, t0, tEnd, e.to, 'linear', 0, from); }
+      if (typeof e.to === 'number') { const decl = ctx.props.get(prop)?.state?.[e.key]; const from = e.from ?? sampleNumber(tr, id, a.t, typeof decl === 'number' ? decl : (PROPS[ctx.props.get(prop)?.asset ?? '']?.defaults[e.key] as number | undefined) ?? 0); /* start from the declared state (a full pile, a dirty plate), not from 0 */ const tEnd = Math.max(t0 + 50, a.t + a.durationMs * (e.at ?? 1)); /* an effect that should be done early (a light that goes on) still needs the hand to have arrived first */ tween(tr, id, t0, tEnd, e.to, 'linear', 0, from); }
       else addKey(tr, id, { t: a.t + a.durationMs * (e.at ?? 0.5), v: e.to, e: 'step' });
     }
     // kneading/pressing squashes the target in rhythm (dough, potato)
     if ((a.motion === 'knead' || a.motion === 'press') && target) { fxStart(tr, `${a.on}.s.squash`, t0, 0); dense(tr, `${a.on}.s.squash`, t0, end, (t) => { const u = cyc(t); return a.motion === 'knead' ? Math.max(0, Math.sin(2 * Math.PI * u)) : u < 0.7 ? 1 : 0; }, 0, 30); addKey(tr, `${a.on}.s.squash`, { t: end + 1, v: 0 }); }
     // phase for props that animate with it (dough wobble, bowl swirl)
     if (target) { const ph0 = sampleNumber(tr, `${a.on}.s.phase`, a.t, 0); dense(tr, `${a.on}.s.phase`, t0, end, (t) => ph0 + (t - t0) / T, 0, 60); }
-    M.blinks(tr, A, a.t, end);
+    if (!a.tool) M.blinks(tr, A, a.t, end); // eyes stay open while a tool is at work – a blink mid-chop looks like cutting blind
     // settle: upright, tool stays in hand
     tween(tr, M.J(A, 'torso'), end, end + 400, 4, 'easeInOut'); tween(tr, M.J(A, 'head'), end, end + 400, -6, 'easeInOut');
   },
@@ -447,6 +469,38 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     M.poseTo(tr, a.from, mid + 100, a.t + d, { uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR }, 'easeInOut');
     M.poseTo(tr, a.to, mid + 100, a.t + d, { uArmL: 30, fArmL: 70 }, 'easeInOut');
     addKey(tr, `${a.to}.mouth`, { t: mid, v: 'smile' });
+  },
+  /** Split a held thing in two: the free hand joins the holding hand at the thing, a short pull apart, and from the midpoint the
+   *  held prop shows only its left half while `into` (hidden until now) is the right half in the other hand. The visible result
+   *  (one thing → two halves in two hands) is the pedagogical core of dela; a following `give` hands one half over. */
+  split(ctx, a) {
+    const tr = ctx.tracks, A = a.actor, d = a.durationMs, t0 = a.t, mid = t0 + d * 0.5, end = t0 + d;
+    const owner = sampleString<string>(tr, `${a.prop}.attach`, t0, '');
+    const hand: 'left' | 'right' = owner.endsWith(':right') ? 'right' : 'left';
+    const other: 'left' | 'right' = hand === 'left' ? 'right' : 'left';
+    if (!owner) addKey(tr, `${a.prop}.attach`, { t: t0, v: `${A}:${hand}` });
+    // the other half is hidden until the break
+    addKey(tr, `${a.into}.opacity`, { t: 0, v: 0 }); addKey(tr, `${a.into}.attach`, { t: 0, v: `${A}:${other}` });
+    // whole until the break: a track samples its first key's value before it, so the start must be written explicitly
+    addKey(tr, `${a.prop}.s.half`, { t: 0, v: 0 }); addKey(tr, `${a.into}.s.half`, { t: 0, v: 0 });
+    // bring the thing up to chest height in front of the body and look at it
+    const up = hand === 'left' ? { uArmL: 42, fArmL: 92 } : { uArmR: 42, fArmR: 92 };
+    M.poseTo(tr, A, t0, t0 + d * 0.3, { ...up, head: 10 }, 'easeInOut');
+    addKey(tr, `${A}.gaze`, { t: t0, v: facingAt(ctx, A, t0) }); addKey(tr, `${A}.eyes`, { t: t0, v: 'open' });
+    // the free hand comes to the thing and stays on it until the break
+    followGrip(ctx, A, a.prop, other, t0 + d * 0.3, mid, () => facingAt(ctx, A, t0) * 4);
+    // the break: halves, the second one appears in the other hand
+    addKey(tr, `${a.prop}.s.half`, { t: mid, v: 1, e: 'step' }); addKey(tr, `${a.into}.s.half`, { t: mid, v: 2, e: 'step' });
+    addKey(tr, `${a.into}.opacity`, { t: mid, v: 1, e: 'step' });
+    fxStart(tr, `fx.${a.prop}.shake`, mid - 1, 0); addKey(tr, `fx.${a.prop}.shake`, { t: mid, v: 1 }); addKey(tr, `fx.${a.prop}.shake`, { t: mid + 120, v: 0 });
+    (H.emphasis as (c: Ctx, x: ActionOf<'emphasis'>) => void)(ctx, { action: 'emphasis', t: mid - 60, target: a.prop, kind: 'crumbs', durationMs: 520 }); // crumbs fly: it broke, it did not get swapped
+    // hands move apart: each half clearly in its own hand
+    // a small gap opens between the halves at chest height and is held: one thing, visibly in two (the handover comes after)
+    const apart = other === 'right' ? { uArmR: 56, fArmR: 84 } : { uArmL: 56, fArmL: 84 };
+    const keep = hand === 'left' ? { uArmL: 34, fArmL: 96 } : { uArmR: 34, fArmR: 96 };
+    M.poseTo(tr, A, mid, mid + d * 0.25, { ...apart, ...keep, head: 6 }, 'easeOut');
+    addKey(tr, `${A}.mouth`, { t: mid, v: 'smile' });
+    tween(tr, M.J(A, 'head'), end - 200, end, 0, 'easeInOut');
   },
   put(ctx, a) { (H.release as (c: Ctx, x: ActionOf<'release'>) => void)(ctx, { action: 'release', t: a.t, actor: a.actor, prop: a.prop, at: a.at, on: a.on, z: a.z, durationMs: a.durationMs }); },
   take(ctx, a) { (H.grab as (c: Ctx, x: ActionOf<'grab'>) => void)(ctx, { action: 'grab', t: a.t, actor: a.actor, prop: a.prop, hand: a.hand, durationMs: a.durationMs }); },
@@ -580,7 +634,7 @@ function trackId(ctx: Ctx, target: string, prop: string): string {
  * and the environment scrolls at the remaining speed (treadmill). Either way
  * planted feet move at exactly the ground speed.
  */
-function locomote(ctx: Ctx, a: string, t: number, to: { x: number; y: number }, durationMs: number | undefined, gaitKind: 'walk' | 'run'): void {
+function locomote(ctx: Ctx, a: string, t: number, to: { x: number; y: number }, durationMs: number | undefined, gaitKind: 'walk' | 'run' | 'careful'): void {
   const [x0, y0] = actorPos(ctx, a, t);
   const g = M.GAITS[gaitKind];
   const v = M.gaitSpeed(g); // units per second the feet demand

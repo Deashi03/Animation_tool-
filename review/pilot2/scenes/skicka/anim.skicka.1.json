@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.skicka.1",
+  "kind": "word",
+  "template": "social",
+  "senseId": "s.skicka.1",
+  "titleSv": "skicka",
+  "meaningHint": "Ge något till någon vid bordet, så att den kan ta.",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 1900,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 40,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.9
+    },
+    {
+      "id": "q",
+      "asset": "character.base",
+      "variant": "c",
+      "at": {
+        "x": 80,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.9
+    }
+  ],
+  "props": [
+    {
+      "id": "thing",
+      "asset": "container.bag",
+      "scale": 0.8,
+      "rotate": 0,
+      "z": 0,
+      "state": {},
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 400,
+      "style": "breathe"
+    },
+    {
+      "t": 400,
+      "action": "give",
+      "from": "p",
+      "to": "q",
+      "prop": "thing",
+      "durationMs": 1600
+    },
+    {
+      "t": 2000,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 1200,
+      "style": "breathe"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "thing"
+    ],
+    "feature": "gives container.bag"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matbordets samtal",
+    "confusableWith": [
+      "s.sörpla.1",
+      "s.smaska.1",
+      "s.vänta-in.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (social)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

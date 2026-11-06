@@ -1,0 +1,299 @@
+{
+  "moduleId": "m.att-beskriva-en-bostad",
+  "titleSv": "Att beskriva en bostad",
+  "generatedAt": "2026-11-06",
+  "rows": [
+    {
+      "senseId": "s.rymlig.1",
+      "lemma": "rymlig",
+      "pos": "adjective",
+      "defSv": "Med mycket plats.",
+      "examples": [
+        "Lägenheten är ljus och rymlig."
+      ],
+      "antonyms": [
+        "trång"
+      ],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.trång.1",
+        "s.mysig.1",
+        "s.modern.1"
+      ],
+      "jaGloss": "広い",
+      "note": "egenskap buren av utseende/föremål + japanskt ord; antonym true finns – property-contrast bara om motsatsen är poängen",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.trång.1",
+      "lemma": "trång",
+      "pos": "adjective",
+      "defSv": "Med lite plats.",
+      "examples": [
+        "Köket är trångt."
+      ],
+      "antonyms": [
+        "rymlig"
+      ],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.rymlig.1",
+        "s.mysig.1",
+        "s.modern.1"
+      ],
+      "jaGloss": "狭い",
+      "note": "egenskap buren av utseende/föremål + japanskt ord; antonym true finns – property-contrast bara om motsatsen är poängen",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.mysig.1",
+      "lemma": "mysig",
+      "pos": "adjective",
+      "defSv": "Skön, varm och trevlig att vara i.",
+      "examples": [
+        "Vi har ett mysigt vardagsrum."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.rymlig.1",
+        "s.trång.1",
+        "s.modern.1"
+      ],
+      "jaGloss": "居心地のよい",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.modern.1",
+      "lemma": "modern",
+      "pos": "adjective",
+      "defSv": "Ny och gjord på ett sätt som är vanligt i dag.",
+      "examples": [
+        "Badrummet är modernt."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.rymlig.1",
+        "s.trång.1",
+        "s.mysig.1"
+      ],
+      "jaGloss": "現代的な",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.renovera.1",
+      "lemma": "renovera",
+      "pos": "verb",
+      "defSv": "Göra ett gammalt rum eller hus fint och nytt igen.",
+      "examples": [
+        "Vi ska renovera köket."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [],
+      "jaGloss": "リフォームする",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.nybyggd.1",
+      "lemma": "nybyggd",
+      "pos": "adjective",
+      "defSv": "Som man har byggt nyss.",
+      "examples": [
+        "De bor i ett nybyggt hus."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.rymlig.1",
+        "s.trång.1",
+        "s.mysig.1"
+      ],
+      "jaGloss": "新築の",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.sliten.1",
+      "lemma": "sliten",
+      "pos": "adjective",
+      "defSv": "Gammal och inte fin längre, för att man har använt den mycket.",
+      "examples": [
+        "Golvet är slitet."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.rymlig.1",
+        "s.trång.1",
+        "s.mysig.1"
+      ],
+      "jaGloss": "古びた",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.charmig.1",
+      "lemma": "charmig",
+      "pos": "adjective",
+      "defSv": "Fin på ett sätt som man tycker om, ofta gammal och personlig.",
+      "examples": [
+        "Det är ett charmigt gammalt hus."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.rymlig.1",
+        "s.trång.1",
+        "s.mysig.1"
+      ],
+      "jaGloss": "魅力的な",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.praktisk.1",
+      "lemma": "praktisk",
+      "pos": "adjective",
+      "defSv": "Lätt och bra att använda.",
+      "examples": [
+        "Köket är litet men praktiskt."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.rymlig.1",
+        "s.trång.1",
+        "s.mysig.1"
+      ],
+      "jaGloss": "実用的な",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.central.1",
+      "lemma": "central",
+      "pos": "adjective",
+      "defSv": "Nära centrum.",
+      "examples": [
+        "Lägenheten ligger centralt."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.rymlig.1",
+        "s.trång.1",
+        "s.mysig.1"
+      ],
+      "jaGloss": "中心部にある",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.läge.1",
+      "lemma": "läge",
+      "pos": "noun",
+      "labelSv": "plats",
+      "defSv": "Var något ligger, och hur bra platsen är.",
+      "examples": [
+        "Huset har ett bra läge nära sjön."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [],
+      "jaGloss": "立地",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.bullrig.1",
+      "lemma": "bullrig",
+      "pos": "adjective",
+      "defSv": "Med mycket ljud, till exempel från trafik.",
+      "examples": [
+        "Gatan är bullrig på natten."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.rymlig.1",
+        "s.trång.1",
+        "s.mysig.1"
+      ],
+      "jaGloss": "うるさい",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.solig.1",
+      "lemma": "solig",
+      "pos": "adjective",
+      "defSv": "Med mycket sol.",
+      "examples": [
+        "Balkongen är solig på eftermiddagen."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.rymlig.1",
+        "s.trång.1",
+        "s.mysig.1"
+      ],
+      "jaGloss": "日当たりのよい",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.dragig.1",
+      "lemma": "dragig",
+      "pos": "adjective",
+      "defSv": "Där kall luft kommer in, till exempel vid gamla fönster.",
+      "examples": [
+        "Det är dragigt vid fönstret."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.rymlig.1",
+        "s.trång.1",
+        "s.mysig.1"
+      ],
+      "jaGloss": "すきま風の入る",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.högt-i-tak.1",
+      "lemma": "högt i tak",
+      "pos": "phrase",
+      "defSv": "När det är långt mellan golvet och taket.",
+      "examples": [
+        "Gamla lägenheter har ofta högt i tak."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [],
+      "jaGloss": "天井が高い",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    }
+  ]
+}

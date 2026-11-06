@@ -8,3 +8,5 @@ review/posters
 *.log
 review/blind
 *.tsbuildinfo
+review/pilot
+.claude/worktrees

@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.packa-upp.1",
+  "kind": "word",
+  "template": "arrange",
+  "senseId": "s.packa-upp.1",
+  "titleSv": "packa upp",
+  "meaningHint": "Ta ut sakerna ur lådor eller väskor.",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 1900,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 40,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.9
+    }
+  ],
+  "props": [
+    {
+      "id": "place",
+      "asset": "container.suitcase",
+      "at": {
+        "x": 92,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": 1,
+      "state": {
+        "open": 1
+      }
+    },
+    {
+      "id": "thing",
+      "asset": "container.bag",
+      "at": {
+        "x": 92,
+        "y": 80
+      },
+      "scale": 0.75,
+      "rotate": 0,
+      "z": 2,
+      "state": {}
+    }
+  ],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 200,
+      "action": "walk",
+      "actor": "p",
+      "to": {
+        "x": 56,
+        "y": 100
+      },
+      "manner": "normal"
+    },
+    {
+      "t": 1500,
+      "action": "take",
+      "actor": "p",
+      "prop": "thing",
+      "hand": "left",
+      "durationMs": 700
+    },
+    {
+      "t": 2300,
+      "action": "walk",
+      "actor": "p",
+      "to": {
+        "x": 30,
+        "y": 100
+      },
+      "manner": "normal"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "thing"
+    ],
+    "feature": "takes container.bag"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "flytta till ny bostad",
+    "confusableWith": [
+      "s.flytta.1",
+      "s.packa.1",
+      "s.märka.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (arrange)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

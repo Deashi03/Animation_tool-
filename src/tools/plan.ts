@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { TEMPLATES } from '../compiler/templates';
 
-type Sense = { id: string; ja?: string; defSv?: string; labelSv?: string; tags?: string[]; synonyms?: { senseId: string; relation: string }[] };
+type Sense = { id: string; ja?: string; defSv?: string; labelSv?: string; tags?: string[]; examples?: { sv: string }[]; synonyms?: { senseId: string; relation: string }[] };
 type Entry = { id: string; lemma: string; pos: string; senses: Sense[] };
 type ModuleFile = { id: string; titleSv: string; words: { senseId: string; active: boolean }[] };
 type ImageRow = { senseId: string; kind: string; group?: string; quiz?: boolean; confusableWith?: string[]; symbol?: boolean };
@@ -19,6 +19,7 @@ export type PlanRow = {
   kind: 'animation' | 'image' | 'symbol' | 'none';
   template?: string; confidence: 'high' | 'medium' | 'low';
   contrast: string[]; jaGloss: string; existingImage?: string; existingAnimation?: string; note: string;
+  /** for the recipe generator */ examples?: string[]; antonyms?: string[];
 };
 export type Plan = { moduleId: string; titleSv: string; generatedAt: string; rows: PlanRow[] };
 
@@ -62,7 +63,7 @@ export function buildPlan(swechanDir: string, moduleId: string, existingAnimatio
     const rel = (sense?.synonyms ?? []).filter((r) => ['antonym', 'near', 'synonym'].includes(r.relation)).map((r) => r.senseId);
     const img = images.get(w.senseId);
     const contrast = [...new Set([...rel, ...(img?.confusableWith ?? []), ...sameModule.slice(0, 3)])];
-    const row: PlanRow = { senseId: w.senseId, lemma, pos, labelSv: sense?.labelSv, defSv: sense?.defSv, kind: 'image', confidence: 'medium', contrast, jaGloss, existingImage: img ? `${img.kind}${img.quiz ? ' (quiz)' : ''}` : undefined, existingAnimation: existingAnimations.get(w.senseId), note: '' };
+    const row: PlanRow = { senseId: w.senseId, lemma, pos, labelSv: sense?.labelSv, defSv: sense?.defSv, examples: (sense?.examples ?? []).map((x) => x.sv), antonyms: (sense?.synonyms ?? []).filter((r) => r.relation === 'antonym').map((r) => r.senseId.split('.')[1]!.replace(/-/g, ' ')), kind: 'image', confidence: 'medium', contrast, jaGloss, existingImage: img ? `${img.kind}${img.quiz ? ' (quiz)' : ''}` : undefined, existingAnimation: existingAnimations.get(w.senseId), note: '' };
     const antonym = (sense?.synonyms ?? []).some((r) => r.relation === 'antonym');
     if (pos === 'verb' || pos === 'phrase') {
       row.kind = 'animation';

@@ -27,11 +27,13 @@ export function restPose(tr: Tracks, a: string, from: number, to: number): void 
  *   duty    = fraction of the cycle a foot is on the ground (walk ≈ 0.62, run ≈ 0.36 → flight phase)
  */
 export type Gait = { stepLen: number; cycleMs: number; duty: number; swingLift: number; lean: number; armSwing: number; elbow: number; bob: number; flightLift: number };
-export const GAITS: Record<'walk' | 'run' | 'jog', Gait> = {
+export const GAITS: Record<'walk' | 'run' | 'jog' | 'careful', Gait> = {
   // step lengths keep the contact leg reachable (leg = 32 units): d = hypot(step/2, hipH + lift − 2.4) < 32
   walk: { stepLen: 17, cycleMs: 1100, duty: 0.62, swingLift: 3.5, lean: 3, armSwing: 16, elbow: 18, bob: 1.8, flightLift: 0 },
   run: { stepLen: 22, cycleMs: 660, duty: 0.36, swingLift: 9, lean: 15, armSwing: 32, elbow: 95, bob: 3.2, flightLift: 5 },
   jog: { stepLen: 14, cycleMs: 760, duty: 0.42, swingLift: 6, lean: 8, armSwing: 22, elbow: 90, bob: 2.4, flightLift: 3 },
+  // careful: short slow steps, almost no bob or arm swing – the gait of someone carrying something that must not spill
+  careful: { stepLen: 9, cycleMs: 1500, duty: 0.66, swingLift: 2, lean: 0, armSwing: 3, elbow: 70, bob: 0.6, flightLift: 0 },
 };
 export const gaitSpeed = (g: Gait): number => g.stepLen / ((g.duty * g.cycleMs) / 1000); // the planted foot covers stepLen during its stance time
 

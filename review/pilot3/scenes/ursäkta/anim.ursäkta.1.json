@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.ursäkta.1",
+  "kind": "word",
+  "template": "communicate",
+  "senseId": "s.ursäkta.1",
+  "titleSv": "ursäkta",
+  "meaningHint": "Säga att något inte gör så mycket; man säger ”ursäkta” när man har gjort fel.",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 1500,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 30,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.85
+    },
+    {
+      "id": "q",
+      "asset": "character.base",
+      "variant": "b",
+      "at": {
+        "x": 88,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.85
+    }
+  ],
+  "props": [
+    {
+      "id": "cause",
+      "asset": "container.cup",
+      "at": {
+        "x": 56,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 90,
+      "z": 1,
+      "state": {
+        "fill": 0
+      }
+    },
+    {
+      "id": "puddle",
+      "asset": "fixture.puddle",
+      "at": {
+        "x": 61,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": 0,
+      "state": {
+        "size": 0.4,
+        "col": "#8a5a3a"
+      }
+    }
+  ],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "lookAt",
+      "actor": "p",
+      "target": "cause",
+      "durationMs": 300
+    },
+    {
+      "t": 0,
+      "action": "lookAt",
+      "actor": "q",
+      "target": "cause",
+      "durationMs": 300
+    },
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 3800,
+      "style": "breathe"
+    },
+    {
+      "t": 700,
+      "action": "bow",
+      "actor": "p",
+      "depth": "deep",
+      "hands": "together",
+      "to": "q",
+      "durationMs": 2200
+    },
+    {
+      "t": 700,
+      "action": "say",
+      "actor": "p",
+      "icon": "palms",
+      "mood": "sad",
+      "to": "q",
+      "durationMs": 1500,
+      "gesture": false
+    },
+    {
+      "t": 2600,
+      "action": "express",
+      "actor": "q",
+      "emotion": "content",
+      "durationMs": 400
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "says palms (sad) to q, q reacts"
+  },
+  "contrast": {
+    "with": [
+      "anim.dunka.1"
+    ],
+    "distinctiveFeatures": [
+      "has:say-icon:palms",
+      "has:say-mood:sad",
+      "has:bow:deep"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "grannar och störningar",
+    "confusableWith": [
+      "s.störa.1",
+      "s.festa.1",
+      "s.dunka.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (communicate)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

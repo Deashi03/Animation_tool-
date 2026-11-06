@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.flyttstäda.1",
+  "kind": "word",
+  "template": "tool-rhythm",
+  "senseId": "s.flyttstäda.1",
+  "titleSv": "flyttstäda",
+  "meaningHint": "Städa noga i en bostad när man flyttar därifrån.",
+  "category": "action",
+  "durationMs": 4400,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 48,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 1,
+      "wardrobe": {
+        "top": "navy"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "target",
+      "asset": "food.pile",
+      "at": {
+        "x": 76,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": 1,
+      "state": {
+        "amount": 1,
+        "size": 0.6
+      }
+    },
+    {
+      "id": "tool",
+      "asset": "tool.broom",
+      "scale": 1,
+      "rotate": 0,
+      "z": 0,
+      "state": {},
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "target",
+      "tool": "tool",
+      "hand": "left",
+      "motion": "sweep",
+      "durationMs": 4000,
+      "effect": [
+        {
+          "key": "amount",
+          "to": 0
+        }
+      ],
+      "bothHands": false
+    }
+  ],
+  "focus": {
+    "targets": [
+      "target"
+    ],
+    "feature": "tool.broom sweep on food.pile; effects: target.amount→0"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "flytta till ny bostad",
+    "confusableWith": [
+      "s.flytta.1",
+      "s.packa.1",
+      "s.packa-upp.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (tool-rhythm)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.mysig.1",
+  "kind": "word",
+  "template": "attribute-gloss",
+  "senseId": "s.mysig.1",
+  "titleSv": "mysig",
+  "meaningHint": "Skön, varm och trevlig att vara i.",
+  "category": "property",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "evening"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 50,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": -1,
+      "state": {}
+    },
+    {
+      "id": "bearer",
+      "asset": "fixture.candle",
+      "at": {
+        "x": 50,
+        "y": 70
+      },
+      "scale": 1.2,
+      "rotate": 0,
+      "z": 1,
+      "state": {
+        "lit": 1
+      }
+    },
+    {
+      "id": "extra1",
+      "asset": "sofa",
+      "at": {
+        "x": 32,
+        "y": 100
+      },
+      "scale": 0.75,
+      "rotate": 0,
+      "z": 1,
+      "state": {},
+      "color": "red"
+    },
+    {
+      "id": "extra2",
+      "asset": "blanket",
+      "at": {
+        "x": 48,
+        "y": 87
+      },
+      "scale": 1.2,
+      "rotate": 0,
+      "z": 2,
+      "state": {
+        "length": 24,
+        "bulge": 9
+      },
+      "color": "yellow"
+    },
+    {
+      "id": "extra3",
+      "asset": "container.cup",
+      "at": {
+        "x": 76,
+        "y": 70
+      },
+      "scale": 1.1,
+      "rotate": 0,
+      "z": 1,
+      "state": {
+        "fill": 0.8,
+        "steam": 1
+      }
+    }
+  ],
+  "shapes": [
+    {
+      "type": "text",
+      "id": "ja",
+      "x": 60,
+      "y": -20,
+      "text": "居心地のよい",
+      "size": 11,
+      "weight": 800,
+      "fill": "ink",
+      "anchor": "middle",
+      "opacity": 0,
+      "z": 5,
+      "bg": "panel",
+      "pad": 6
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "bearer",
+      "prop": "phase",
+      "to": 4,
+      "from": 0,
+      "durationMs": 3600,
+      "ease": "linear"
+    },
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "extra3",
+      "prop": "phase",
+      "to": 4,
+      "from": 0,
+      "durationMs": 3600,
+      "ease": "linear"
+    },
+    {
+      "t": 1200,
+      "action": "tween",
+      "target": "ja",
+      "prop": "opacity",
+      "to": 1,
+      "from": 0,
+      "durationMs": 350,
+      "ease": "easeOut"
+    },
+    {
+      "t": 1200,
+      "action": "tween",
+      "target": "ja",
+      "prop": "y",
+      "to": 16,
+      "from": 10,
+      "durationMs": 450,
+      "ease": "easeOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "bearer",
+      "extra1",
+      "extra2",
+      "extra3"
+    ],
+    "feature": "fixture.candle with sofa, blanket, container.cup bear the property together (evening); gloss on a panel"
+  },
+  "contrast": {
+    "with": [
+      "anim.modern.1"
+    ],
+    "distinctiveFeatures": [
+      "has:prop:fixture.candle",
+      "environment.time:evening",
+      "has:prop:sofa",
+      "has:prop:blanket",
+      "has:prop:container.cup",
+      "start:bearer.lit>=1"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "att beskriva en bostad",
+    "confusableWith": [
+      "s.rymlig.1",
+      "s.trång.1",
+      "s.modern.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (attribute-gloss). rummets stämning: tänt ljus, ångande kopp, soffa med pläd, kvällsljus + 居心地のよい på panel (egenskap hos en plats = liten uppställning, inte ett föremål)"
+  },
+  "label": {
+    "show": "optional"
+  }
+}

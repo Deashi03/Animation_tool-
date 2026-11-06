@@ -1,0 +1,406 @@
+{
+  "moduleId": "m.hemmet-vardag",
+  "titleSv": "Hemmet och vardagliga aktiviteter",
+  "generatedAt": "2026-11-06",
+  "rows": [
+    {
+      "senseId": "s.kök.1",
+      "lemma": "kök",
+      "pos": "noun",
+      "labelSv": "rum",
+      "defSv": "Ett rum där man gör mat och ofta äter.",
+      "examples": [
+        "Vi äter frukost i köket."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.sovrum.1",
+        "s.badrum.1",
+        "s.säng.1"
+      ],
+      "jaGloss": "台所",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.sovrum.1",
+      "lemma": "sovrum",
+      "pos": "noun",
+      "defSv": "Ett rum där man sover.",
+      "examples": [
+        "Mitt sovrum är litet."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.kök.1",
+        "s.badrum.1",
+        "s.säng.1"
+      ],
+      "jaGloss": "寝室",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.badrum.1",
+      "lemma": "badrum",
+      "pos": "noun",
+      "defSv": "Ett rum med toalett och dusch eller badkar.",
+      "examples": [
+        "Badrummet är ledigt nu."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.kök.1",
+        "s.sovrum.1",
+        "s.säng.1"
+      ],
+      "jaGloss": "浴室",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.säng.1",
+      "lemma": "säng",
+      "pos": "noun",
+      "defSv": "Det man ligger och sover i.",
+      "examples": [
+        "Katten ligger i min säng."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.kök.1",
+        "s.sovrum.1",
+        "s.badrum.1"
+      ],
+      "jaGloss": "ベッド",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.golv.1",
+      "lemma": "golv",
+      "pos": "noun",
+      "defSv": "Det man går på i ett rum.",
+      "examples": [
+        "Det ligger leksaker på golvet."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.kök.1",
+        "s.sovrum.1",
+        "s.badrum.1"
+      ],
+      "jaGloss": "床",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.fönster.1",
+      "lemma": "fönster",
+      "pos": "noun",
+      "defSv": "Ett hål med glas i en vägg. Ljus och luft kommer in genom fönstret.",
+      "examples": [
+        "Kan du öppna fönstret?"
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.kök.1",
+        "s.sovrum.1",
+        "s.badrum.1"
+      ],
+      "jaGloss": "窓",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.ren.1",
+      "lemma": "ren",
+      "pos": "adjective",
+      "defSv": "Utan smuts.",
+      "examples": [
+        "Handdukarna är rena."
+      ],
+      "antonyms": [
+        "smutsig"
+      ],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.smutsig.1",
+        "s.stökig.1"
+      ],
+      "jaGloss": "きれいな",
+      "note": "egenskap buren av utseende/föremål + japanskt ord; antonym true finns – property-contrast bara om motsatsen är poängen",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.smutsig.1",
+      "lemma": "smutsig",
+      "pos": "adjective",
+      "defSv": "Som har smuts eller fläckar på sig.",
+      "examples": [
+        "Dina skor är smutsiga."
+      ],
+      "antonyms": [
+        "ren"
+      ],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.ren.1",
+        "s.stökig.1"
+      ],
+      "jaGloss": "汚い",
+      "note": "egenskap buren av utseende/föremål + japanskt ord; antonym true finns – property-contrast bara om motsatsen är poängen",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.stökig.1",
+      "lemma": "stökig",
+      "pos": "adjective",
+      "defSv": "När saker ligger överallt och inte på sin plats.",
+      "examples": [
+        "Mitt rum är stökigt."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.smutsig.1",
+        "s.ren.1"
+      ],
+      "jaGloss": "散らかった",
+      "note": "egenskap buren av utseende/föremål + japanskt ord (normativ regel 2.1.3)",
+      "template": "attribute-gloss"
+    },
+    {
+      "senseId": "s.städa.1",
+      "lemma": "städa",
+      "pos": "verb",
+      "defSv": "Göra ett rum eller ett hus rent och fint.",
+      "examples": [
+        "Vi städar lägenheten varje lördag."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.plocka-undan.1",
+        "s.tvätta.1",
+        "s.hänga.1"
+      ],
+      "jaGloss": "掃除する",
+      "note": "rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.plocka-undan.1",
+      "lemma": "plocka undan",
+      "pos": "verb",
+      "defSv": "Lägga saker på sin plats igen.",
+      "examples": [
+        "Plocka undan dina leksaker innan middagen."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.städa.1",
+        "s.tvätta.1",
+        "s.hänga.1"
+      ],
+      "jaGloss": "片付ける",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.tvätta.1",
+      "lemma": "tvätta",
+      "pos": "verb",
+      "defSv": "Göra något rent med vatten och tvål.",
+      "examples": [
+        "Jag måste tvätta i kväll.",
+        "Tvätta händerna före maten!"
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.städa.1",
+        "s.plocka-undan.1",
+        "s.hänga.1"
+      ],
+      "jaGloss": "洗う",
+      "note": "rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.tvätt.1",
+      "lemma": "tvätt",
+      "pos": "noun",
+      "defSv": "Kläder som man ska tvätta eller har tvättat.",
+      "examples": [
+        "Det finns mycket tvätt i dag."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.kök.1",
+        "s.sovrum.1",
+        "s.badrum.1"
+      ],
+      "jaGloss": "洗濯物",
+      "note": "substantiv som kan vara en händelse – avgör animation eller bild",
+      "template": "event"
+    },
+    {
+      "senseId": "s.tvättmaskin.1",
+      "lemma": "tvättmaskin",
+      "pos": "noun",
+      "defSv": "En maskin som tvättar kläder.",
+      "examples": [
+        "Tvättmaskinen är full."
+      ],
+      "antonyms": [],
+      "kind": "image",
+      "confidence": "high",
+      "contrast": [
+        "s.kök.1",
+        "s.sovrum.1",
+        "s.badrum.1"
+      ],
+      "jaGloss": "洗濯機",
+      "note": "konkret ting → bild (Swechan wordArt)"
+    },
+    {
+      "senseId": "s.hänga.1",
+      "lemma": "hänga",
+      "pos": "verb",
+      "defSv": "Sätta upp något så att det inte står eller ligger, till exempel en bild på väggen eller tvätt på ett torkställ.",
+      "examples": [
+        "Hon hänger tvätten på balkongen.",
+        "Bilden hänger på väggen."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.städa.1",
+        "s.plocka-undan.1",
+        "s.tvätta.1"
+      ],
+      "jaGloss": "掛ける",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.diska.1",
+      "lemma": "diska",
+      "pos": "verb",
+      "defSv": "Tvätta tallrikar, glas, koppar och kastruller.",
+      "examples": [
+        "Efter middagen diskar vi tillsammans."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.tvätta.1",
+        "s.städa.1",
+        "s.plocka-undan.1"
+      ],
+      "jaGloss": "皿洗いをする",
+      "note": "rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.dammsuga.1",
+      "lemma": "dammsuga",
+      "pos": "verb",
+      "defSv": "Ta bort damm och smuts från golvet med en maskin.",
+      "examples": [
+        "Har du dammsugit vardagsrummet?"
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.städa.1",
+        "s.plocka-undan.1",
+        "s.tvätta.1"
+      ],
+      "jaGloss": "掃除機をかける",
+      "note": "rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.laga.1",
+      "lemma": "laga",
+      "pos": "verb",
+      "labelSv": "göra mat",
+      "defSv": "Göra mat, till exempel koka eller steka.",
+      "examples": [
+        "Vi lagar middag tillsammans."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.städa.1",
+        "s.plocka-undan.1",
+        "s.tvätta.1"
+      ],
+      "jaGloss": "料理する",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.handla.1",
+      "lemma": "handla",
+      "pos": "verb",
+      "labelSv": "köpa",
+      "defSv": "Köpa mat och andra saker i en affär.",
+      "examples": [
+        "Vi handlar mat efter jobbet."
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "low",
+      "contrast": [
+        "s.städa.1",
+        "s.plocka-undan.1",
+        "s.tvätta.1"
+      ],
+      "jaGloss": "買い物をする",
+      "note": "verb utan känd familj – avgör: föremål med synlig följd, händelse, eller ingen visualisering",
+      "template": "manipulate-prop"
+    },
+    {
+      "senseId": "s.slänga.1",
+      "lemma": "slänga",
+      "pos": "verb",
+      "defSv": "Lägga något som man inte vill ha i soporna.",
+      "examples": [
+        "Glöm inte att slänga soporna!"
+      ],
+      "antonyms": [],
+      "kind": "animation",
+      "confidence": "medium",
+      "contrast": [
+        "s.städa.1",
+        "s.plocka-undan.1",
+        "s.tvätta.1"
+      ],
+      "jaGloss": "捨てる",
+      "note": "rytmisk handling med synlig förändring av råvara/yta – kontrollera att föremålet finns i biblioteket",
+      "template": "manipulate-prop"
+    }
+  ]
+}

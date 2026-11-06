@@ -23,6 +23,7 @@
     "anim:plan": "vite-node scripts/cli/anim-plan.ts",
     "anim:props": "vite-node scripts/cli/anim-props.ts",
     "anim:coverage": "vite-node scripts/cli/anim-coverage.ts",
+    "anim:recipe": "vite-node scripts/cli/anim-recipe.ts",
     "anim:batch": "vite-node scripts/cli/anim-batch.ts",
     "anim:perf": "node scripts/perf.mjs",
     "anim:package": "vite-node scripts/cli/anim-package.ts"

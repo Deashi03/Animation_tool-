@@ -8,8 +8,8 @@ export function approvedTemplates(): Set<string> {
   return new Set(Object.entries(r.templates).filter(([, v]) => v.approved).map(([k]) => k));
 }
 export type BlindResult = { date: string; batch: string; passed: boolean; choice: string; expected: string; description?: string; reviewer?: string; /** what the reviewer thought could be misread or offensive – a flagged scene is not done even if the choice was right */ flag?: string };
-export function blindResults(): Record<string, BlindResult[]> { return readJson(path.join(registryDir(), 'blind.json'), {}); }
-export function writeBlindResults(r: Record<string, BlindResult[]>): void { fs.mkdirSync(registryDir(), { recursive: true }); fs.writeFileSync(path.join(registryDir(), 'blind.json'), JSON.stringify(r, null, 2) + '\n'); }
+export function blindResults(file = 'blind.json'): Record<string, BlindResult[]> { return readJson(path.isAbsolute(file) ? file : path.join(registryDir(), file), {}); }
+export function writeBlindResults(r: Record<string, BlindResult[]>, file = 'blind.json'): void { fs.mkdirSync(registryDir(), { recursive: true }); fs.writeFileSync(path.isAbsolute(file) ? file : path.join(registryDir(), file), JSON.stringify(r, null, 2) + '\n'); }
 /** Latest blind result for a scene, if any. */
 export function blindStatus(animationId: string): BlindResult | undefined { const all = blindResults()[animationId]; return all?.[all.length - 1]; }
 /** a blind result counts only if the choice was right AND the reviewer flagged nothing as misleading or offensive */

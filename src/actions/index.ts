@@ -368,7 +368,7 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     const reachX = toolSpec ? (-(toolSpec.grip[1]) + 3) * Math.abs(Math.sin(tiltRad)) : 0;
     const handAt = (dx: number, dy: number): P => [work[0] - f * reachX + dx, work[1] - reachLen + dy];
     // lean in and look at the work
-    const lean = Math.abs(work[0] - actorPos(ctx, A, a.t)[0]) > 18 ? 24 : 12;
+    const lean = Math.abs(work[0] - actorPos(ctx, A, a.t)[0]) > 18 ? 18 : 10; // a lean of 24 read as 'head in the tub' in blind tests
     tween(tr, M.J(A, 'torso'), a.t, a.t + 350, lean, 'easeInOut'); tween(tr, M.J(A, 'head'), a.t, a.t + 350, -16, 'easeInOut');
     addKey(tr, `${A}.gaze`, { t: a.t, v: f }); addKey(tr, `${A}.eyes`, { t: a.t, v: 'open' });
     const T = a.periodMs ?? { chop: 420, tap: 600, press: 1200, knead: 760, saw: 520, wipe: 900, scrub: 260, sweep: 1100, spread: 900, brush: 420, stir: 950, whisk: 240, pull: 800, peel: 760, grate: 480, sprinkle: 180, squeeze: 900, hold: 1000, roll: 900 }[a.motion];
@@ -417,7 +417,7 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     // visible consequence
     for (const e of a.effect) {
       const prop = e.prop ?? a.on; const id = trackId(ctx, prop, e.key);
-      if (typeof e.to === 'number') { const from = e.from ?? sampleNumber(tr, id, a.t, 0); const tEnd = a.t + a.durationMs * (e.at ?? 1); tween(tr, id, t0, tEnd, e.to, 'linear', 0, from); }
+      if (typeof e.to === 'number') { const decl = ctx.props.get(prop)?.state?.[e.key]; const from = e.from ?? sampleNumber(tr, id, a.t, typeof decl === 'number' ? decl : (PROPS[ctx.props.get(prop)?.asset ?? '']?.defaults[e.key] as number | undefined) ?? 0); /* start from the declared state (a full pile, a dirty plate), not from 0 */ const tEnd = a.t + a.durationMs * (e.at ?? 1); tween(tr, id, t0, tEnd, e.to, 'linear', 0, from); }
       else addKey(tr, id, { t: a.t + a.durationMs * (e.at ?? 0.5), v: e.to, e: 'step' });
     }
     // kneading/pressing squashes the target in rhythm (dough, potato)

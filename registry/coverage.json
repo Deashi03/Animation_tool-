@@ -62,9 +62,9 @@
    "lemma": "tvätt",
    "pos": "noun",
    "template": "–",
-   "state": "no-recipe",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "tvätt: aktivitetssubstantiv – använd verbet tvätta eller en event-scen"
   },
   {
    "senseId": "s.hänga.1",
@@ -333,19 +333,19 @@
    "senseId": "s.tärning.1",
    "lemma": "tärning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.tärning.2",
    "lemma": "tärning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.riva.1",
@@ -447,10 +447,10 @@
    "senseId": "s.fästning.1",
    "lemma": "fästning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.belägra.1",
@@ -764,10 +764,10 @@
    "senseId": "s.dukning.1",
    "lemma": "dukning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.levande-ljus.1",
@@ -858,10 +858,10 @@
    "senseId": "s.tillverkning.1",
    "lemma": "tillverkning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.miljömärkt.1",
@@ -948,10 +948,10 @@
    "senseId": "s.märkning.1",
    "lemma": "märkning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.importera.1",
@@ -1011,19 +1011,19 @@
    "senseId": "s.räkning.1",
    "lemma": "räkning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.elräkning.1",
    "lemma": "elräkning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.rörlig.1",
@@ -1038,37 +1038,37 @@
    "senseId": "s.förbrukning.1",
    "lemma": "förbrukning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.uppvärmning.1",
    "lemma": "uppvärmning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.sophämtning.1",
    "lemma": "sophämtning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.vattenledning.1",
    "lemma": "vattenledning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.droppa.1",
@@ -1093,10 +1093,10 @@
    "senseId": "s.ventilation.1",
    "lemma": "ventilation",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.mögla.1",
@@ -1257,10 +1257,10 @@
    "senseId": "s.bokning.1",
    "lemma": "bokning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.ledig.1",
@@ -1285,10 +1285,10 @@
    "senseId": "s.beställning.1",
    "lemma": "beställning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.klaga.1",
@@ -1304,10 +1304,10 @@
    "senseId": "s.betalning.1",
    "lemma": "betalning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.kontant.1",
@@ -1506,10 +1506,10 @@
    "senseId": "s.visning.1",
    "lemma": "visning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.intresserad.1",
@@ -1533,37 +1533,37 @@
    "senseId": "s.budgivning.1",
    "lemma": "budgivning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.bostadsrättsförening.1",
    "lemma": "bostadsrättsförening",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.avgiftshöjning.1",
    "lemma": "avgiftshöjning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.årsredovisning.1",
    "lemma": "årsredovisning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.ansöka.1",
@@ -1587,19 +1587,19 @@
    "senseId": "s.andrahandsuthyrning.1",
    "lemma": "andrahandsuthyrning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.ombildning.1",
    "lemma": "ombildning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.ha-på-sig.1",
@@ -1780,10 +1780,10 @@
    "senseId": "s.inredning.1",
    "lemma": "inredning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.skandinavisk.1",
@@ -2230,28 +2230,28 @@
    "senseId": "s.inflyttningsfest.1",
    "lemma": "inflyttningsfest",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.utflyttning.1",
    "lemma": "utflyttning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.inflyttning.1",
    "lemma": "inflyttning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.lasta.1",
@@ -2284,10 +2284,10 @@
    "senseId": "s.besiktning.1",
    "lemma": "besiktning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.lämna-över.1",
@@ -2303,10 +2303,10 @@
    "senseId": "s.eftersändning.1",
    "lemma": "eftersändning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.i-ordning.1",
@@ -2509,10 +2509,10 @@
    "senseId": "s.störning.1",
    "lemma": "störning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.lyhörd.1",
@@ -2556,9 +2556,9 @@
    "lemma": "skälla",
    "pos": "verb",
    "template": "–",
-   "state": "no-recipe",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "verbet skälla passar ingen känd familj utifrån definitionen \"Om en hund: göra ett högt ljud.\""
   },
   {
    "senseId": "s.vänlig.1",
@@ -2673,10 +2673,10 @@
    "senseId": "s.hållbarhet.2",
    "lemma": "hållbarhet",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.hållbar.1",
@@ -2758,10 +2758,10 @@
    "senseId": "s.torka-sig.1",
    "lemma": "torka sig",
    "pos": "phrase",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "tool-rhythm",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "torka sig: verktyg och råvara hittades (händer, garment.towel) men ingen synlig följd – vad ändras?"
   },
   {
    "senseId": "s.suga-upp.1",
@@ -2785,10 +2785,10 @@
    "senseId": "s.firande.1",
    "lemma": "firande",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.högtidlig.1",
@@ -2803,28 +2803,28 @@
    "senseId": "s.våning.1",
    "lemma": "våning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.övervåning.1",
    "lemma": "övervåning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.bottenvåning.1",
    "lemma": "bottenvåning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.borsta.1",
@@ -2868,10 +2868,10 @@
    "senseId": "s.hyreshöjning.1",
    "lemma": "hyreshöjning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.förlänga.1",
@@ -2936,37 +2936,37 @@
    "senseId": "s.klänning.1",
    "lemma": "klänning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.sommarklänning.1",
    "lemma": "sommarklänning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.långklänning.1",
    "lemma": "långklänning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.brudklänning.1",
    "lemma": "brudklänning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.knyta.1",
@@ -3141,9 +3141,9 @@
    "lemma": "panera",
    "pos": "verb",
    "template": "–",
-   "state": "no-recipe",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "verbet panera passar ingen känd familj utifrån definitionen \"Ha ägg och små bitar av torrt bröd runt något innan man steker det.\""
   },
   {
    "senseId": "s.fritera.1",
@@ -3267,19 +3267,19 @@
    "senseId": "s.belysning.1",
    "lemma": "belysning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.tända.1",
    "lemma": "tända",
    "pos": "verb",
    "template": "–",
-   "state": "no-recipe",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "verbet tända passar ingen känd familj utifrån definitionen \"Få en lampa att lysa eller ett ljus att brinna.\""
   },
   {
    "senseId": "s.lysa.1",
@@ -3294,10 +3294,10 @@
    "senseId": "s.mysbelysning.1",
    "lemma": "mysbelysning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.mikra.1",
@@ -3330,10 +3330,10 @@
    "senseId": "s.sällskap.1",
    "lemma": "sällskap",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.exotisk.1",
@@ -3798,10 +3798,10 @@
    "senseId": "s.knäcka.1",
    "lemma": "knäcka",
    "pos": "verb",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "tool-rhythm",
+   "state": "generated",
    "missing": [],
-   "note": ""
+   "note": "genererat (high): verktygsverb i tabellen"
   },
   {
    "senseId": "s.rosta.1",
@@ -3834,10 +3834,10 @@
    "senseId": "s.planlösning.1",
    "lemma": "planlösning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.öppen-planlösning.1",
@@ -3852,10 +3852,10 @@
    "senseId": "s.ritning.1",
    "lemma": "ritning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.i-förhållande-till.1",
@@ -3946,10 +3946,10 @@
    "senseId": "s.påfyllning.1",
    "lemma": "påfyllning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.rekommendera.1",
@@ -3985,10 +3985,10 @@
    "senseId": "s.säkerhet.1",
    "lemma": "säkerhet",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.brinna.1",
@@ -4155,10 +4155,10 @@
    "senseId": "s.bruksanvisning.1",
    "lemma": "bruksanvisning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.äkta.1",
@@ -4437,9 +4437,9 @@
    "lemma": "svettas",
    "pos": "verb",
    "template": "–",
-   "state": "no-recipe",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "verbet svettas passar ingen känd familj utifrån definitionen \"När vatten kommer ut ur huden, till exempel när det är varmt eller när man äter stark mat.\""
   },
   {
    "senseId": "s.släcka.1",
@@ -4536,10 +4536,10 @@
    "senseId": "s.gyllenbrun.1",
    "lemma": "gyllenbrun",
    "pos": "adjective",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "attribute-gloss",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "egenskapen gyllenbrun har ingen bärare: definitionen \"Fint brun, som guld. Så ska mat ofta se ut när den är färdigstekt.\" nämner inget föremål i katalogen och ingen känd symbol"
   },
   {
    "senseId": "s.vända.1",
@@ -4753,10 +4753,10 @@
    "senseId": "s.hygien.1",
    "lemma": "hygien",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.upptagen.1",
@@ -4771,10 +4771,10 @@
    "senseId": "s.förpackning.1",
    "lemma": "förpackning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.kortärmad.1",
@@ -4887,10 +4887,10 @@
    "senseId": "s.kemtvätt.1",
    "lemma": "kemtvätt",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.vädra.1",
@@ -4905,19 +4905,19 @@
    "senseId": "s.kulörtvätt.1",
    "lemma": "kulörtvätt",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.vittvätt.1",
    "lemma": "vittvätt",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.missfärga.1",
@@ -5207,10 +5207,10 @@
    "senseId": "s.ansvar.1",
    "lemma": "ansvar",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.ansvara.1",
@@ -5245,19 +5245,19 @@
    "senseId": "s.veckostädning.1",
    "lemma": "veckostädning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.storstädning.1",
    "lemma": "storstädning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.damma.1",
@@ -5485,10 +5485,10 @@
    "senseId": "s.blandning.1",
    "lemma": "blandning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.blanda.1",
@@ -5503,19 +5503,19 @@
    "senseId": "s.laddning.1",
    "lemma": "laddning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.laddning.2",
    "lemma": "laddning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.neutral.1",
@@ -5561,10 +5561,10 @@
    "senseId": "s.bindning.1",
    "lemma": "bindning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.kemisk.1",
@@ -5579,19 +5579,19 @@
    "senseId": "s.förening.1",
    "lemma": "förening",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.förening.2",
    "lemma": "förening",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.reagera.1",
@@ -5617,10 +5617,10 @@
    "senseId": "s.rustning.1",
    "lemma": "rustning",
    "pos": "noun",
-   "template": "–",
-   "state": "no-recipe",
+   "template": "event",
+   "state": "manual",
    "missing": [],
-   "note": ""
+   "note": "aktivitetssubstantiv: en händelse med flera figurer måste komponeras per ord"
   },
   {
    "senseId": "s.skydda.1",
@@ -5689,20 +5689,21 @@
  "totals": {
   "ready": 370,
   "blocked": 79,
-  "no-recipe": 71,
+  "manual": 70,
   "done-blind": 54,
   "done": 10,
-  "image": 22
+  "image": 22,
+  "generated": 1
  },
  "byTemplate": {
-  "attribute-gloss": 250,
+  "attribute-gloss": 251,
   "arrange": 25,
-  "tool-rhythm": 56,
-  "–": 93,
+  "tool-rhythm": 58,
+  "–": 27,
   "cook-rhythm": 11,
   "emotion": 27,
+  "event": 80,
   "process": 50,
-  "event": 17,
   "property-contrast": 8,
   "communicate": 27,
   "relation-arrow": 2,

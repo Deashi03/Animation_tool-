@@ -161,3 +161,29 @@ describe('gestures and manner (after the ursäkta/försiktig review)', () => {
     expect(res[0]!.status).toBe('blocked');
   });
 });
+
+describe('recipe generator (anim:recipe)', () => {
+  it('reads tool, target and bow out of a definition, respects Swedish word boundaries, and says "manual" honestly', async () => {
+    const { inferRecipe, assetsIn } = await import('../src/tools/recipe');
+    const skära = inferRecipe({ senseId: 's.skära.1', lemma: 'skära', pos: 'verb', defSv: 'Dela något i bitar med en kniv.', examples: ['Skär tomaten i skivor.'] });
+    expect(skära.ok && skära.recipe.template).toBe('tool-rhythm');
+    expect(skära.ok && skära.recipe.target).toBe('food.tomato'); // the example names the food
+    expect(assetsIn('lägga något på bordet')).not.toContain('food.egg'); // "lägga" must not match ägg
+    const urs = inferRecipe({ senseId: 's.ursäkta.1', lemma: 'ursäkta', pos: 'verb', defSv: 'Säga förlåt när man har gjort något fel.' });
+    expect(urs.ok && (urs.recipe.say as { icon: string; bow?: string })).toMatchObject({ icon: 'palms', bow: 'deep' });
+    const mysig = inferRecipe({ senseId: 's.mysig.1', lemma: 'mysig', pos: 'adjective', defSv: 'Skön, varm och trevlig att vara i.' });
+    expect(mysig.ok).toBe(false); expect(!mysig.ok && mysig.reason).toMatch(/ingen bärare/);
+    const randig = inferRecipe({ senseId: 's.randig.1', lemma: 'randig', pos: 'adjective', defSv: 'Med ränder.' });
+    expect(randig.ok && (randig.recipe.bearer as { kind: string }).kind).toBe('wardrobe');
+  });
+  it('batch falls back to the generator and hands off manual words with a reason', async () => {
+    const { runBatch } = await import('../src/tools/batch');
+    const rows = [
+      { senseId: 's.testskära.1', lemma: 'testskära', pos: 'verb', defSv: 'Dela något i bitar med en kniv.', examples: ['Skär moroten.'], kind: 'animation' as const, confidence: 'high' as const, contrast: [], jaGloss: '切る', note: '' },
+      { senseId: 's.testmysig.1', lemma: 'testmysig', pos: 'adjective', defSv: 'Skön, varm och trevlig att vara i.', kind: 'animation' as const, confidence: 'high' as const, contrast: [], jaGloss: '居心地がいい', note: '' },
+    ];
+    const res = runBatch({ moduleId: 'm.test', titleSv: 'Test', generatedAt: '2026-11-06', rows } as never, 'Test', new Map(), { write: false });
+    expect(res[0]!.status).toBe('created'); expect(res[0]!.note).toMatch(/genererat/);
+    expect(res[1]!.status).toBe('manual'); expect(res[1]!.note).toMatch(/MANUELLT/); expect(res[1]!.note).toMatch(/MANUAL_SCENES/);
+  });
+});

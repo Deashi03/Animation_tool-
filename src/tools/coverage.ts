@@ -14,9 +14,10 @@ import { TEMPLATES } from '../compiler/templates';
 import { isPropAsset } from '../assets/catalog';
 import { ACTION_NAMES } from '../schema/scene';
 import { registryDir, blindResults, blindOk } from './registry';
+import { inferRecipe } from './recipe';
 
 export type Recipe = { template: string; actions?: string[]; props?: string[]; note?: string; bearer?: Record<string, unknown>; [k: string]: unknown };
-export type CoverageRow = { senseId: string; lemma: string; pos: string; template: string; state: 'done-blind' | 'done' | 'ready' | 'blocked' | 'no-recipe' | 'image'; missing: string[]; note: string; animationId?: string };
+export type CoverageRow = { senseId: string; lemma: string; pos: string; template: string; state: 'done-blind' | 'done' | 'ready' | 'generated' | 'manual' | 'blocked' | 'no-recipe' | 'image'; missing: string[]; note: string; animationId?: string };
 export type Coverage = { generatedAt: string; rows: CoverageRow[]; totals: Record<string, number>; byTemplate: Record<string, number>; missingBlocks: Record<string, number> };
 
 const ACTIVITY_NOUN = /(ning|ande|else|flytt|fest|möte|match|lek|resa|städ|tvätt|fika|middag|frukost|lunch)$/u;
@@ -42,7 +43,14 @@ export function buildCoverage(swechanDir: string, scenesBySense: Map<string, str
       if (pos === 'adjective' && STATIC_ADJ.test(lemma)) { rows.push({ senseId: s.id, lemma, pos, template: '–', state: 'image', missing: [], note: 'statisk egenskap → bild' }); continue; }
       const rec = recipes[s.id] ?? recipes[lemma] ?? null; void defaultRecipe;
       const missing: string[] = [];
-      if (!rec) { rows.push({ senseId: s.id, lemma, pos, template: '–', state: 'no-recipe', missing: [], note: '' }); continue; }
+      if (!rec) {
+        // no hand recipe: can the generator do it from the dictionary entry?
+        const inf = inferRecipe({ senseId: s.id, lemma, pos, defSv: s.defSv, examples: ((s as { examples?: { sv: string }[] }).examples ?? []).map((x) => x.sv), antonyms: ((s as { synonyms?: { senseId: string; relation: string }[] }).synonyms ?? []).filter((r) => r.relation === 'antonym').map((r) => r.senseId.split('.')[1]!.replace(/-/g, ' ')) }, recipes);
+        if (inf.ok && inf.recipe.template === 'image') rows.push({ senseId: s.id, lemma, pos, template: '–', state: 'image', missing: [], note: inf.recipe.note ?? '' });
+        else if (inf.ok) rows.push({ senseId: s.id, lemma, pos, template: inf.recipe.template, state: 'generated', missing: [], note: `genererat (${inf.confidence}): ${inf.why.join('; ')}` });
+        else rows.push({ senseId: s.id, lemma, pos, template: inf.family ?? '–', state: 'manual', missing: [], note: inf.reason });
+        continue;
+      }
       if (rec.template === 'image') { rows.push({ senseId: s.id, lemma, pos, template: '–', state: 'image', missing: [], note: rec.note ?? '' }); continue; }
       if (!TEMPLATES[rec.template]) missing.push(`mall:${rec.template}`);
       for (const a of rec.actions ?? []) if (!(ACTION_NAMES as readonly string[]).includes(a)) missing.push(`handling:${a}`);
@@ -74,11 +82,11 @@ export function coverageMarkdown(c: Coverage): string {
   const t = c.totals; const n = c.rows.length;
   const pct = (k: string) => `${t[k] ?? 0} (${Math.round(((t[k] ?? 0) / Math.max(1, n)) * 100)} %)`;
   const lines = [`# Täckning av Swechans ordbok (${c.generatedAt})`, '', `${n} betydelser behöver animation (verb, fraser, adjektiv, adverb, prepositioner, aktivitetssubstantiv; statiska adjektiv räknas som bild).`, '',
-    `| Läge | Antal |`, `|---|---|`, `| Klar med godkänt blindtest | ${pct('done-blind')} |`, `| Scen finns, blindtest saknas | ${pct('done')} |`, `| Redo: recept och byggstenar finns | ${pct('ready')} |`, `| Blockerad: byggsten saknas, bärare saknas eller receptet är märkt TODO/svagt | ${pct('blocked')} |`, `| Utan recept | ${pct('no-recipe')} |`, `| Bild (statisk egenskap) | ${pct('image')} |`, '',
+    `| Läge | Antal |`, `|---|---|`, `| Klar med godkänt blindtest | ${pct('done-blind')} |`, `| Scen finns, blindtest saknas | ${pct('done')} |`, `| Redo: handskrivet recept och byggstenar finns | ${pct('ready')} |`, `| Redo: receptet genereras ur ordboken | ${pct('generated')} |`, `| Manuellt: verktyget säger ifrån (skäl i tabellen nedan, se docs/MANUAL_SCENES.md) | ${pct('manual')} |`, `| Blockerad: byggsten saknas, bärare saknas eller receptet är märkt TODO/svagt | ${pct('blocked')} |`, `| Utan recept | ${pct('no-recipe')} |`, `| Bild (statisk egenskap) | ${pct('image')} |`, '',
     '## Saknade byggstenar (antal betydelser)', '', ...Object.entries(c.missingBlocks).sort((a, b) => b[1] - a[1]).map(([k, v]) => `- ${k}: ${v}`), '',
     '## Per mall', '', ...Object.entries(c.byTemplate).sort((a, b) => b[1] - a[1]).map(([k, v]) => `- ${k}: ${v}`), '',
-    '## Blockerade och receptlösa', '', '| Ord | Ordklass | Mall | Saknas | Anm. |', '|---|---|---|---|---|',
-    ...c.rows.filter((r) => r.state === 'blocked' || r.state === 'no-recipe').map((r) => `| ${r.lemma} | ${r.pos} | ${r.template} | ${r.missing.join(', ')} | ${r.note} |`), ''];
+    '## Blockerade, manuella och receptlösa', '', '| Ord | Ordklass | Mall | Saknas | Anm. |', '|---|---|---|---|---|',
+    ...c.rows.filter((r) => r.state === 'blocked' || r.state === 'no-recipe' || r.state === 'manual').map((r) => `| ${r.lemma} | ${r.pos} | ${r.template} | ${r.missing.join(', ')} | ${r.note} |`), ''];
   return lines.join('\n');
 }
 void stripFurigana;

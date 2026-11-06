@@ -1,0 +1,397 @@
+{
+  "anim.laga.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p1",
+      "passed": false,
+      "choice": "tillaga",
+      "expected": "laga",
+      "description": "En person står vid en spis och håller i en stekpanna; plattan blir röd, det ryker och ägget i pannan går från en gul klick till ett färdigstekt ägg med vit kant – maten tillagas på spisen.",
+      "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p3",
+      "passed": false,
+      "choice": "tillaga",
+      "expected": "laga",
+      "description": "En person står vid en spis med en stekpanna; plattan blir röd, ånga stiger och ett ägg i pannan går från rått (gult/genomskinligt) till stekt (vit äggvita med gul gula) – att laga/tillaga mat, steka.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.dela.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p1",
+      "passed": true,
+      "choice": "dela",
+      "expected": "dela",
+      "description": "En person med en papperspåse med röda frukter räcker över påsen till en annan person, som tar emot den och håller den mot magen – det ser ut som att ge/överlämna något.",
+      "reviewer": "claude-blind",
+      "flag": "Betydelsen läses som 'ge' eller 'överräcka', inte 'dela' – ingenting delas upp eller fördelas (påsen byter bara ägare). Den mottagande figurens hår/huvudbonad ser ut som en brun huva eller hjälm."
+    }
+  ],
+  "anim.lägga-upp.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p1",
+      "passed": true,
+      "choice": "lägga upp",
+      "expected": "lägga upp",
+      "description": "En person bär en tom tallrik fram till ett bord, går med böjda knän och ställer ner tallriken på bordet, sedan står hen stilla bredvid – det ser ut som att duka eller lägga fram en tallrik.",
+      "reviewer": "claude-blind",
+      "flag": "Tallriken är tom, så inget 'läggs upp'; motivet läses som 'duka' eller 'ställa fram'. Remsan är identisk med remsa E. I rutorna 327–982 ms går figuren med kraftigt böjda knän och tallriken skär genom underarmen, vilket ser stelt/fel ut."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p3",
+      "passed": false,
+      "choice": "servera",
+      "expected": "lägga upp",
+      "description": "En person bär en tallrik med mat (ägg/omelett) fram till ett tomt bord, ställer ner tallriken på bordet och står sedan kvar bredvid – att sätta fram/servera mat.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.dragig.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p1",
+      "passed": true,
+      "choice": "dragig",
+      "expected": "dragig",
+      "description": "Två fönster, ett på väggen och ett lågt vid golvet, med en röd snöflinge-/asteriskliknande symbol mellan dem och sedan en pratbubbla med texten すきま風の入る (draget kommer in) – det betyder dragigt.",
+      "reviewer": "claude-blind",
+      "flag": "Utan texten läses den röda symbolen som snöflinga/'kallt' eller 'trasigt', inte som drag – ingen rörelse visar luften. Det övre fönstret ser ut att krympa/hamna delvis bakom bubblan, vilket ser ut som ett ritfel."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p3",
+      "passed": true,
+      "choice": "dragig",
+      "expected": "dragig",
+      "description": "Ett fönster på en tom vägg; vid fönstrets kant dyker en orange stjärnformad ikon med pilar åt alla håll upp (luft som strömmar in), följt av texten すきま風の入る – det drar från fönstret, dragig.",
+      "reviewer": "claude-blind",
+      "flag": "Ikonen ser mest ut som en snöflinga/asterisk och kan utan texten läsas som 'kallt', 'is' eller 'snö' snarare än luftdrag; inga vågiga vindlinjer eller fladdrande gardin som visar själva draget. Scenen är i övrigt tom och svårläst utan text."
+    }
+  ],
+  "anim.servera.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p1",
+      "passed": true,
+      "choice": "servera",
+      "expected": "servera",
+      "description": "Samma rörelse som C: en person bär en tom tallrik till bordet och ställer ner den – servera eller duka.",
+      "reviewer": "claude-blind",
+      "flag": "Identisk med remsa C, så de två orden kan inte skiljas åt. Tallriken är tom, så 'servera' saknar mat; läses lika gärna som 'duka'. Samma stela gång med böjda knän och tallrik som skär genom armen."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p3",
+      "passed": true,
+      "choice": "servera",
+      "expected": "servera",
+      "description": "En person i grönt håller en tallrik med mat, sträcker fram den mot en annan person i rött som tar emot tallriken och sedan håller den – att servera/räcka över mat till någon.",
+      "reviewer": "claude-blind",
+      "flag": "Vid 1309 ms sträcks armen rakt ut och överlappar den mottagande personens kropp så att det kortvarigt ser ut som en knuff eller att armen går in i henne; i slutet har den gröna figuren händerna knäppta lågt framför kroppen, lite stel men inte stötande."
+    }
+  ],
+  "anim.diska.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p1",
+      "passed": true,
+      "choice": "diska",
+      "expected": "diska",
+      "description": "En person i mörkblå kläder står vid en diskho med vatten och tallrikar, kranen är på och hen gnuggar med en gul svamp – diskar.",
+      "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p3",
+      "passed": true,
+      "choice": "diska",
+      "expected": "diska",
+      "description": "En person i mörk overall står vid en diskho/balja med kran, håller en gul svamp i handen och gnuggar på en tallrik medan skumbubblor dyker upp i baljan – att diska.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.hänga.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p1",
+      "passed": true,
+      "choice": "hänga",
+      "expected": "hänga",
+      "description": "En person med en ljusblå t-shirt går fram till en tvättlina, lyfter upp tröjan och hänger den på linan, där den sedan sitter kvar – hänga (upp tvätt).",
+      "reviewer": "claude-blind",
+      "flag": "En lodrät linje (linans stolpe) går rakt genom figurens ansikte och kropp i alla rutor, och den vågräta linan skär genom huvudet – ser ut som en stång genom personen. Vid 1964 ms täcker tröjan ansiktet."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p3",
+      "passed": true,
+      "choice": "hänga",
+      "expected": "hänga",
+      "description": "En person håller en ljusblå t-shirt, går fram till en tvättlina mellan två stolpar, lyfter upp tröjan och hänger den på linan där den sedan hänger kvar – att hänga (upp tvätt).",
+      "reviewer": "claude-blind",
+      "flag": "I slutrutorna (2291–3600 ms) står figuren rakt framför stolpen så att stolpen och linan går rakt genom huvudet/ansiktet, vilket ser ut som en stång genom ögat; stolpen borde ligga bakom eller figuren stå bredvid. Betydelsen går ändå fram."
+    }
+  ],
+  "anim.plocka-undan.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p1",
+      "passed": true,
+      "choice": "plocka undan",
+      "expected": "plocka undan",
+      "description": "En person står vid ett bord med en tom tallrik, tar tallriken och bär bort den från bordet – plockar undan.",
+      "reviewer": "claude-blind",
+      "flag": "Tallriken är tom och ren, så det kan också läsas som att hen hämtar en tallrik för att servera; i rutorna 2618–2945 ms lutar figuren kraftigt med ett ben långt bakom – ser ut som att hen snubblar."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p3",
+      "passed": true,
+      "choice": "plocka undan",
+      "expected": "plocka undan",
+      "description": "En person går fram till ett bord där det står en tallrik med rester/smulor, tar upp tallriken och bär bort den från bordet – att duka av eller plocka undan efter maten.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.ren.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p1",
+      "passed": true,
+      "choice": "ren",
+      "expected": "ren",
+      "description": "En ljusblå t-shirt står/svävar uppe på ett bord, sedan dyker en pratbubbla upp från tröjan med texten きれいな (ren/fin) – ren.",
+      "reviewer": "claude-blind",
+      "flag": "Utan texten syns inget som visar att tröjan är ren (inga gnistrar, ingen kontrast mot smuts); きれいな kan också läsas som 'fin/vacker'. Tröjan står upprätt på bordet som om den svävar, och bubblans svans får det att se ut som att tröjan talar."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p3",
+      "passed": true,
+      "choice": "ren",
+      "expected": "ren",
+      "description": "Två likadana ljusblå t-shirts på ett bord, den vänstra med bruna fläckar, den högra fläckfri; en cirkel och en pil markerar den fläckfria tröjan och texten きれいな visas – egenskapen 'ren' (i motsats till smutsig).",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.modern.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p1",
+      "passed": true,
+      "choice": "modern",
+      "expected": "modern",
+      "description": "En golvlampa med tratt­formad gul skärm som lyser står i ett rum, sedan kommer en pratbubbla med texten 現代的な (modern) – modern (stil).",
+      "reviewer": "claude-blind",
+      "flag": "Bubblan täcker hela lampskärmen i de senare rutorna så att föremålet inte längre går att känna igen; utan texten läses bilden som 'lampa/lysa' eller möjligen 'solig' (gul glöd), inte som 'modern'."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p3",
+      "passed": true,
+      "choice": "modern",
+      "expected": "modern",
+      "description": "En golvlampa med trapetsformad gul skärm står och lyser på ett golv framför ett fönster, nästan stilla; en pratbubbla med 現代的な (modern) glider in bredvid lampan – egenskapen 'modern'.",
+      "reviewer": "claude-blind",
+      "flag": "Lampan själv signalerar inte tydligt 'modern' (den ser ut som en vanlig, snarare retro golvlampa); utan texten skulle man bara se 'lampa' eller 'lysa'. Ingen kontrast mot något gammaldags. Texten bär betydelsen nästan ensam."
+    }
+  ],
+  "anim.tillaga.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p2",
+      "passed": true,
+      "choice": "tillaga",
+      "expected": "tillaga",
+      "description": "En person står vid en spis och håller i en stekpanna med en rosa köttbit; plattan blir röd och det börjar ryka från pannan, dvs. någon steker/tillagar mat.",
+      "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p4",
+      "passed": true,
+      "choice": "tillaga",
+      "expected": "tillaga",
+      "description": "En person står vid en spis och håller i handtaget på en stekpanna med något rosa i; plattan glöder rött och ånga stiger upp – någon lagar/tillagar mat på spisen.",
+      "reviewer": "claude-blind",
+      "flag": "Innehållet i pannan ändrar inte färg eller form, så remsan kan lika gärna läsas som 'värma upp' (värmer upp mat); skillnaden mot det alternativet syns inte. Posen är OK, inget stötande."
+    }
+  ],
+  "anim.städa.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p2",
+      "passed": true,
+      "choice": "städa",
+      "expected": "städa",
+      "description": "En person sopar golvet med en kvast fram och tillbaka vid en liten smulhög bredvid ett skåp, dvs. städar/sopar.",
+      "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p4",
+      "passed": true,
+      "choice": "städa",
+      "expected": "städa",
+      "description": "En person sopar golvet med en kvast; en liten hög med skräp vid fötterna blir mindre och försvinner – betyder städa/sopa.",
+      "reviewer": "claude-blind",
+      "flag": "Vid 0 ms ligger kvasten på golvet under figuren innan den greppas, vilket ser lite märkligt ut men är kort. Inget stötande."
+    }
+  ],
+  "anim.ta-för-sig.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p2",
+      "passed": true,
+      "choice": "ta för sig",
+      "expected": "ta för sig",
+      "description": "En man i grön tröja håller en tom vit tallrik, räcker över den till en kvinna i röd tröja som tar emot den och håller den; det ser ut som att ge/räcka/servera en tallrik.",
+      "reviewer": "claude-blind",
+      "flag": "Tallriken är tom, så inget tas eller serveras – scenen läses som 'ge/räcka över', inte som att någon tar för sig av mat; svagt val. Inget stötande."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p4",
+      "passed": true,
+      "choice": "ta för sig",
+      "expected": "ta för sig",
+      "description": "En person går fram till ett bord där en tallrik med mat redan står, tar upp tallriken och står sedan och håller den i händerna; ser ut som att personen tar maten/plockar upp tallriken snarare än ställer fram den.",
+      "reviewer": "claude-blind",
+      "flag": "Riktningen är tvetydig: tallriken står på bordet från början och slutar i personens händer, så det läses som att ta/plocka bort – om avsikten är 'servera' borde tallriken bäras fram och ställas ned. Tallriken hoppar också runt (2291 ms svävar den vänster om bordet, 2618–2945 ms på bordskanten, 3273 ms i händerna). Inget stötande."
+    }
+  ],
+  "anim.sliten.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p2",
+      "passed": true,
+      "choice": "sliten",
+      "expected": "sliten",
+      "description": "En ljusblå t-shirt ligger på ett bord med små vågiga streck och bruna prickar (slitage/trådar), sedan kommer en pratbubbla med 古びた; en gammal, sliten tröja.",
+      "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p4",
+      "passed": true,
+      "choice": "sliten",
+      "expected": "sliten",
+      "description": "En ljusblå tröja ligger på ett bord; den har vågiga linjer och bruna fläckar och bleknar/ser urtvättad ut, sedan kommer en pratbubbla med 古びた (gammal/utsliten) – betyder sliten.",
+      "reviewer": "claude-blind",
+      "flag": "Utan texten läses de bruna fläckarna snarare som 'smutsig' än sliten; det som ska visa slitage (vågiga linjer/blekning) är svårt att se i 140–180 px. Pratbubblan täcker dessutom större delen av tröjan från 1309 ms och framåt. Inget stötande."
+    }
+  ],
+  "anim.smutsig.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p2",
+      "passed": true,
+      "choice": "smutsig",
+      "expected": "smutsig",
+      "description": "En ljusblå t-shirt på ett bord med stora bruna fläckar, sedan pratbubbla 汚い; en smutsig tröja.",
+      "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p4",
+      "passed": true,
+      "choice": "smutsig",
+      "expected": "smutsig",
+      "description": "Två likadana ljusblå tröjor på ett bord, den vänstra ren och den högra med bruna fläckar; den fläckiga ringas in, får en pil och ordet 汚い – betyder smutsig.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.solig.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p2",
+      "passed": true,
+      "choice": "solig",
+      "expected": "solig",
+      "description": "Ett bord med en gul sol-/strålform som ligger ovanpå bordsskivan, en röd sol dyker upp till höger och växer, sedan panel 日当たりのよい; ett soligt rum/plats med bra solljus.",
+      "reviewer": "claude-blind",
+      "flag": "Den gula solen ligger på bordet som ett föremål (kan läsas som lampa eller stekt ägg) och det finns två solar samtidigt; solljuset kommer inte via fönstret. Inget stötande."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p4",
+      "passed": true,
+      "choice": "solig",
+      "expected": "solig",
+      "description": "Ett fönster och en strålande sol, stilla; sedan en vit textpanel med 日当たりのよい (solig/välbelyst) – betyder solig.",
+      "reviewer": "claude-blind",
+      "flag": "Scenen är nästan helt statisk och bärs i praktiken av texten; utan den kunde den betyda 'sol', 'dag' eller 'väder'. Inget stötande."
+    }
+  ],
+  "anim.slänga.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p2",
+      "passed": true,
+      "choice": "slänga",
+      "expected": "slänga",
+      "description": "En person med en plastflaska går fram till en grön soptunna som står på ett bord, lyfter flaskan och ställer den – flaskan hamnar ovanpå det stängda locket; avsikten är att slänga flaskan.",
+      "reviewer": "claude-blind",
+      "flag": "Flaskan hamnar synligt ovanpå locket i stället för i tunnan, så slutläget läses som 'ställa på' snarare än 'slänga'; soptunnan står dessutom på ett bord. Vid 1964 ms är armen/flaskan vid ansiktet otydlig."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p4",
+      "passed": true,
+      "choice": "slänga",
+      "expected": "slänga",
+      "description": "En person går med en plastflaska fram till en grön soptunna med öppet lock och släpper ner flaskan i tunnan; betyder slänga/kasta något i soporna.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.värma-upp.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p2",
+      "passed": true,
+      "choice": "värma upp",
+      "expected": "värma upp",
+      "description": "En mikrovågsugn bredvid en kopp på ett bord; det börjar ryka från koppen och mikron tänds (orange lampa), dvs. något värms upp.",
+      "reviewer": "claude-blind",
+      "flag": "Koppen står utanför mikron men blir varm när mikron går, och ångan syns innan mikron tänds – orsakssambandet ser fel ut. Inget stötande."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p4",
+      "passed": true,
+      "choice": "värma upp",
+      "expected": "värma upp",
+      "description": "En kastrull med ljusblått innehåll står på en spisplatta som glöder rött; efter en stund stiger ånga upp ur kastrullen – något värms upp på spisen.",
+      "reviewer": "claude-blind",
+      "flag": "Kan också läsas som 'koka' eller 'tillaga'; innehållet ändras inte, bara ångan tillkommer, så skillnaden mellan värma upp och koka syns inte. Inget stötande."
+    }
+  ],
+  "anim.tvätta.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p2",
+      "passed": true,
+      "choice": "tvätta",
+      "expected": "tvätta",
+      "description": "En person böjer sig över en balja på ett bord, håller en fläckig ljusblå tröja i vattnet och gnuggar; i slutet lyfts tröjan upp utan fläckar – tvättar för hand.",
+      "reviewer": "claude-blind",
+      "flag": "Posen är onaturlig: huvudet är nedböjt till armen och ena handen (med grön/gul manschett) sitter vid ögat under nästan hela remsan, vilket kan läsas som att personen gnuggar sig i ögat eller gråter. Inget stötande."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "p4",
+      "passed": true,
+      "choice": "tvätta",
+      "expected": "tvätta",
+      "description": "En person står böjd över en balja på ett bord och gnuggar en fläckig ljusblå tröja; fläckarna försvinner och i slutet hålls den rena tröjan upp – betyder tvätta.",
+      "reviewer": "claude-blind",
+      "flag": "Posen är överdriven: huvudet hänger nästan nere i baljan och ryggen är helt rund, vilket ser lite obekvämt/kusligt ut; tröjan svävar också ovanför baljan i stället för i vattnet. Inget stötande."
+    }
+  ]
+}

@@ -11,7 +11,7 @@ import { makeBlindBatch, gradeBlind, type BlindKey, type BlindAnswers } from '..
 import { args, flag, opt, rel, fail } from './_shared';
 
 const [cmd, ...rest] = args();
-const { scenes } = loadScenes();
+const { scenes } = loadScenes(opt('scenes') ? path.resolve(opt('scenes')!) : undefined); // --scenes <dir>: a measurement library outside scenes/
 if (cmd === 'make') {
   const batch = opt('batch', new Date().toISOString().slice(0, 10))!;
   const ids = flag('all') ? [...scenes.values()].filter((s) => s.kind === 'word').map((s) => s.animationId) : rest;
@@ -24,8 +24,8 @@ if (cmd === 'make') {
   if (!batch || !answersFile) fail('Ange batch och svarsfil');
   const key = JSON.parse(fs.readFileSync(path.join(reviewDir(), 'blind', `${batch}.key.json`), 'utf8')) as BlindKey;
   const answers = JSON.parse(fs.readFileSync(answersFile, 'utf8')) as BlindAnswers;
-  const g = gradeBlind(key, answers, opt('reviewer', 'claude-blind'));
+  const g = gradeBlind(key, answers, opt('reviewer', 'claude-blind'), opt('store') ?? 'blind.json'); // --store pilot-blind.json keeps measurements out of the library's record
   for (const r of g.results) console.log(`${r.passed ? (r.flag ? 'FLAGG' : 'RÄTT') : 'FEL '} ${r.letter} ${r.animationId}: svar "${r.choice}" (facit "${r.expected}")${r.description ? ` – ${r.description}` : ''}${r.flag ? `\n      ⚠ ${r.flag}` : ''}`);
-  console.log(`${g.passed}/${g.total} godkända (rätt val och ingen flagga). Resultat sparade i registry/blind.json`);
+  console.log(`${g.passed}/${g.total} godkända (rätt val och ingen flagga). Resultat sparade i registry/${opt("store") ?? "blind.json"}`);
   process.exit(g.passed === g.total ? 0 : 1);
 } else fail('Använd: make … | grade <batch> <answers.json>');

@@ -1,0 +1,44 @@
+# Pilot: receptgeneratorn utan handrecept (2026-11-06)
+
+**Fråga:** hur långt kommer verktyget på egen hand, utan Claudes handskrivna recept? Tre moduler kördes med `anim:batch --generated --out review/pilot/scenes` (handrecepten dolda, biblioteket orört): *Att beskriva en bostad*, *Hemmet och vardagliga aktiviteter*, *Tillaga och servera*.
+
+## Utfall per ord (36 ord som behöver animation)
+
+| Läge | Antal | Ord |
+|---|---|---|
+| Scen byggd (hög/medel säkerhet) | 18 | diska, dragig, hänga, laga, lägga upp, modern, plocka undan, ren, servera, sliten, slänga, smutsig, solig, städa, ta för sig, tillaga, tvätta, värma upp |
+| Manuellt – ingen bärare i definitionen | 9 | trång, mysig, praktisk, central, bullrig, stökig, rymlig, högt i tak, renovera |
+| Manuellt – bara familjen säker (förslag lämnat) | 4 | nybyggd, charmig, ljummen, rykande |
+| Manuellt – byggsten saknas / känt svårt | 3 | dammsuga (dammsugare), dela (bryta i två), tvätt (aktivitetssubstantiv) |
+| Manuellt – övrigt | 2 | handla, förbereda, garnera, smaklig måltid (ikon saknas) |
+
+Varje manuell rad har skäl, ledtråd och liknande lösta ord i batchrapporten; `docs/MANUAL_SCENES.md` är överlämningen.
+
+## Blindtest (oberoende granskare, bara remsa + frågor, tredje frågan om missförstånd)
+
+| Omgång | Scener | Rätt ord | Rätt utan flagga | Viktigaste flaggor |
+|---|---|---|---|---|
+| p1 + p2 (första bygget) | 19 | 18 | 5 | identiska scener för *lägga upp*/*servera*/*duka*; tomma tallrikar; flaska ovanpå soptunnans lock; klädstreckets stolpe genom figuren; sol på bordet; effekter som aldrig startade (smulor, smuts) |
+| p3 + p4 (efter rättningarna) | 18 | 16 | 5 | synonymkluster *laga/tillaga/värma upp* och *lägga upp/servera* erbjöds mot varandra; stolpen fortfarande nära ansiktet; tvättposen; *sliten* och *modern* bärs av texten; drag-ikonen lästes som snöflinga |
+
+Fel val var uteslutande inom synonymkluster (*laga*→*tillaga*, *lägga upp*→*servera*). Inget bedömdes som stötande.
+
+## Vad piloten gav upphov till (regler, inte handrättningar)
+
+- **Motorfel:** en följd (`effects`) startade från 0 i stället för föremålets deklarerade tillstånd – smulor försvann aldrig, smutsiga tallrikar var rena från början. Rättat i `use`.
+- **Identiska scener:** batchen stoppar två ord med samma bild i samma modul (status *manual*: "samma bild som …").
+- **Synonymkluster** (`SYNONYM_GROUPS`): *laga/tillaga*, *servera/lägga upp/duka*, *värma upp/koka* … är `confusableWith`, inte kontrastpar – de erbjuds inte mot varandra i blindtest eller bildfrågor.
+- **Byggare:** tallrikar med mat för serveringsord; soptunnan öppnas och saken försvinner ner i den; soptunnor, lådor och hinkar står på golvet; klädstrecket står så att stolpen inte går genom figuren; himlaföremål i skyn med gloss under; rummets fönster används som bärare; pratbubblan står bredvid föremål på bord och täcker aldrig bäraren; solen pulserar; ny ikon `wind` för drag; mindre framåtlutning vid verktygsarbete.
+- **Generatorn:** låg säkerhet byggs inte utan lämnas som förslag; `HARD_WORDS` med ärliga skäl (dela, skåla, sjunka, fika, tvätt); saknade byggstenar namnges (`MISSING_ASSET`); kontrast vinner över ensamt tillstånd (ren/smutsig, full/tom).
+
+## Kvarstående svagheter (ärligt)
+
+- Egenskaper utan synlig förändring (*modern*, *sliten*, *solig*) bärs i hög grad av glossen. Det är inom policyn (egenskap + japanskt ord) men granskaren ser det som svagt.
+- Tvättposen (huvudet mot baljan) ser obekväm ut; verktygsarbete vid låga kärl behöver en bättre lutningsmodell.
+- Generatorn klarar ungefär hälften av orden i en typisk modul på egen hand; resten säger den ifrån om, med skäl. Mot hela ordboken: 272 recept av 600 (173 hög, 49 medel, 50 låg), 328 manuella; där handrecept finns stämmer mallen i 83 %.
+
+## Nästa steg
+
+1. Kör samma mätning på tre nya moduler efter varje regeltillägg; målet är att andelen *manuellt* sjunker och att felvalen stannar inom synonymkluster.
+2. Bygg de byggstenar som flest manuella ord pekar på (dammsugare, bryta i två, gardin/vind för rum).
+3. Låt en separat Claude-session göra tre manuella ord med bara `docs/MANUAL_SCENES.md` som instruktion och mät hur det går.

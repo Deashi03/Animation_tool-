@@ -7,7 +7,7 @@
 import { g, path, circle, rect, line, type FrameNode, r1 } from '../engine/frame';
 import { palette as C } from './palette';
 
-export const ICON_NAMES = ['check', 'cross', 'star', 'arrow-right', 'arrow-left', 'arrow-up', 'arrow-down', 'arc-arrow', 'swap', 'flag', 'heart', 'exclaim', 'question', 'ellipsis', 'coin', 'banknote', 'clock', 'calendar', 'magnifier', 'scale', 'house', 'key', 'document', 'pen', 'music', 'thermometer', 'droplet', 'flame', 'snowflake', 'sun', 'cloud', 'leaf', 'recycle', 'bin', 'phone', 'plate', 'bed', 'speech', 'lightning', 'lock', 'shield', 'swords', 'crown', 'hand', 'palms', 'eye', 'ear', 'nose', 'footprints', 'equals', 'plus', 'minus', 'no', 'hourglass', 'gift', 'cart', 'book', 'smile', 'frown', 'bell', 'tshirt', 'trousers', 'shoe', 'hat', 'cup', 'fork-knife', 'wave', 'zzz', 'bulb'] as const;
+export const ICON_NAMES = ['check', 'cross', 'star', 'arrow-right', 'arrow-left', 'arrow-up', 'arrow-down', 'arc-arrow', 'swap', 'flag', 'heart', 'exclaim', 'question', 'ellipsis', 'coin', 'banknote', 'clock', 'calendar', 'magnifier', 'scale', 'house', 'key', 'document', 'pen', 'music', 'thermometer', 'droplet', 'flame', 'snowflake', 'sun', 'cloud', 'leaf', 'recycle', 'bin', 'phone', 'plate', 'bed', 'speech', 'lightning', 'lock', 'shield', 'swords', 'crown', 'hand', 'palms', 'eye', 'ear', 'nose', 'footprints', 'equals', 'plus', 'minus', 'no', 'hourglass', 'gift', 'cart', 'book', 'smile', 'frown', 'bell', 'tshirt', 'trousers', 'shoe', 'hat', 'cup', 'fork-knife', 'wave', 'wind', 'zzz', 'bulb'] as const;
 export type IconName = (typeof ICON_NAMES)[number];
 
 export function drawIcon(name: IconName, size: number, progress = 1, fill?: string, stroke?: string): FrameNode {
@@ -103,6 +103,7 @@ export function drawIcon(name: IconName, size: number, progress = 1, fill?: stri
     case 'cup': node = g([path('M-6 -6 h12 l-1.5 13 h-9 Z', { fill: fill ?? C.white, stroke: stroke ?? C.ink, sw: 1.6 }), stroked('M6 -3 q5 0 4 4 q-1 3 -5 2', 1.6), ...(u > 0.5 ? [stroked('M-2 -10 q-1 -2 0 -4 M2 -10 q-1 -2 0 -4', 1.2)] : [])]); break;
     case 'fork-knife': node = g([stroked('M-5 -9 v18 M-7 -9 v5 q0 3 2 3 q2 0 2 -3 v-5', 1.8), stroked('M5 -9 v18 M5 -9 q4 4 2 9 h-2', 1.8)]); break;
     case 'wave': node = stroked(partial([[-9, 0], [-6, -4], [-3, 0], [0, 4], [3, 0], [6, -4], [9, 0]]), 2.2); break;
+    case 'wind': node = g([stroked('M-10 -5 h10 q4 0 4 -3 q0 -2 -2 -2', 2), stroked(partial([[-10, 1], [-4, 1], [4, 1], [8, 1]]), 2.2), stroked('M-10 7 h8 q4 0 4 3 q0 2 -2 2', 2)]); break; // three streaks of moving air
     case 'bulb': node = g([circle(0, -2, 7, { fill: fill ?? C.yellow, stroke: stroke ?? C.ink, sw: 1.6, opacity: 0.4 + 0.6 * u }), rect(-3, 5, 6, 4, { rx: 1, fill: C.grey, stroke: stroke ?? C.ink, sw: 1.2 }), ...(u > 0.6 ? [stroked('M-10 -8 l2 2 M10 -8 l-2 2 M0 -12 v2', 1.4)] : [])]); break;
     case 'zzz': node = g([stroked('M-8 6 h5 l-5 5 h5', 1.8), stroked('M-1 -1 h5 l-5 5 h5', 2), ...(u > 0.5 ? [stroked('M5 -9 h5 l-5 5 h5', 2.2)] : [])]); break;
   }

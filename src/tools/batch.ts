@@ -14,10 +14,12 @@ import { validateScene } from '../compiler/validate';
 import { Scene, type SceneInput, type Scene as SceneT } from '../schema/scene';
 import { loadRecipes, type Recipe } from './coverage';
 import { sceneFilePath, writeScene } from './scenes';
+import { inferRecipe } from './recipe';
+import { synonymsOf } from './lexicon';
 import { registryDir } from './registry';
 import { PROPS } from '../assets/props';
 
-export type BatchResult = { senseId: string; lemma: string; animationId?: string; template?: string; status: 'created' | 'exists' | 'skipped' | 'invalid' | 'no-recipe' | 'image' | 'blocked'; file?: string; note: string; problems?: string[] };
+export type BatchResult = { senseId: string; lemma: string; animationId?: string; template?: string; status: 'created' | 'exists' | 'skipped' | 'invalid' | 'no-recipe' | 'image' | 'blocked' | 'manual'; file?: string; note: string; problems?: string[] };
 type J = Record<string, unknown>;
 type Pt = { x: number; y: number };
 
@@ -28,7 +30,7 @@ const BOW: Record<string, 'light' | 'deep'> = { ursäkta: 'deep', 'be om ursäkt
 const BOW_CAUSE: Record<string, { asset: string; rotate?: number; state: J }> = { ursäkta: { asset: 'container.cup', rotate: 90, state: { fill: 0 } }, 'be om ursäkt': { asset: 'container.cup', rotate: 90, state: { fill: 0 } } };
 const DRESS: Record<string, { garment: string; on: boolean; value?: string; start: J }> = { 'ta på sig': { garment: 'top', on: true, value: 'green', start: { top: '#f7f3ea', sleeves: 'short' } }, 'ta av sig': { garment: 'top', on: false, start: { top: 'green' } }, 'klä på sig': { garment: 'top', on: true, value: 'denim', start: { top: '#f7f3ea', sleeves: 'short', bottom: '#efe7d6', shorts: true, shoes: 'skin' } }, 'klä av sig': { garment: 'top', on: false, start: { top: 'denim', bottom: 'navy', shoes: 'brown' } }, 'sätta på sig': { garment: 'hat', on: true, value: 'red', start: {} }, 'byta om': { garment: 'top', on: true, value: 'green', start: { top: 'red' } }, 'klä upp sig': { garment: 'scarf', on: true, value: 'red', start: { top: 'navy', buttons: 1 } }, 'stoppa in': { garment: 'apron', on: true, value: 'white', start: {} } };
 const FASTEN: Record<string, { what: string; on: boolean; start: J }> = { knäppa: { what: 'buttons', on: true, start: { top: 'sky', buttons: 0 } }, 'knäppa upp': { what: 'buttons', on: false, start: { top: 'sky', buttons: 1 } }, 'dra upp': { what: 'zipper', on: true, start: { top: 'orange', zipper: 0 } }, 'dra ner': { what: 'zipper', on: false, start: { top: 'orange', zipper: 1 } }, 'kavla upp': { what: 'sleeves', on: true, start: { top: 'navy', sleeves: 'long', bottom: 'tan' } }, knyta: { what: 'laces', on: true, start: { shoes: 'white' } } };
-const FLOOR_ASSETS = /^(fixture\.(sink|shower|washingmachine|oven|fridge|radiator|clothesline|ironingboard|chair|shelf|wall|bike|cart|tent|tree|bush|toilet|cow|hen|lamp|mirror|puddle|fire|plant|flower|nest|drip)|stove|table|sofa|bed|door|castle|ladder|window)$/;
+const FLOOR_ASSETS = /^(fixture\.(sink|shower|washingmachine|oven|fridge|radiator|clothesline|ironingboard|chair|shelf|wall|bike|cart|tent|tree|bush|toilet|cow|hen|lamp|mirror|puddle|fire|plant|flower|nest|drip)|container\.(bin|crate|suitcase|bucket|basket)|stove|table|sofa|bed|door|castle|ladder|window)$/;
 const onFloor = (asset: string) => FLOOR_ASSETS.test(asset);
 /** default scale for a thing shown as the bearer: big enough to read at 140 px, small enough to stay inside the canvas */
 const bearerScale = (asset: string): number => asset === 'fixture.lamp' ? 0.75 : asset === 'fixture.candle' || asset === 'fixture.drip' ? 1.2 : onFloor(asset) ? 1 : asset.startsWith('food.') ? 1.6 : asset.startsWith('tool.') ? 1.6 : 1.3;
@@ -53,6 +55,7 @@ const propAt = (id: string, asset: string, at: Pt, extra: J = {}): J => ({ id, a
 /** Place a thing: fixtures and furniture stand on the floor; small things stand on a table at y 70 (or on the given surface's mouth). */
 function placeThing(s: J, id: string, asset: string, x: number, extra: J = {}, surface?: string | null): Pt {
   const props = s.props as J[];
+  if (/^fixture\.(sun|cloud)$/.test(asset)) { props.push(propAt(id, asset, { x, y: 26 }, extra)); return { x, y: 26 }; } // sky things hang in the sky, never on a table
   if (onFloor(asset)) { props.push(propAt(id, asset, { x, y: 100 }, extra)); return { x, y: 100 }; }
   if (surface === null) { props.push(propAt(id, asset, { x, y: 100 }, extra)); return { x, y: 100 }; }
   const surf = surface ?? 'table';
@@ -81,12 +84,17 @@ function buildAttribute(row: PlanRow, r: Recipe, s: J): J | null {
     case 'prop': {
       const asset = b.asset as string; const st = stateOf(b.state); const scale = Math.min((b.scale as number) ?? bearerScale(asset), asset === 'fixture.lamp' ? 0.75 : 9);
       s.environment = { id: (b.env as string) ?? 'room', time: (b.time as string) ?? 'day' };
-      const at = placeThing(s, 'bearer', asset, 60, { scale, ...(st.state ? { state: st.state } : {}), ...(st.rotate !== undefined ? { rotate: st.rotate } : {}), ...(b.color ? { color: b.color } : st.color ? { color: st.color } : {}) }, b.surface === undefined ? 'table' : (b.surface as string | null));
+      const tallFloor = /^fixture\.(lamp|plant|clothesline|shelf|mirror|fridge|shower)$/.test(asset);
+      const at = placeThing(s, 'bearer', asset, tallFloor ? 40 : /^fixture\.(sun|cloud)$/.test(asset) ? 60 : onFloor(asset) ? 60 : 50, { scale, ...(st.state ? { state: st.state } : {}), ...(st.rotate !== undefined ? { rotate: st.rotate } : {}), ...(b.color ? { color: b.color } : st.color ? { color: st.color } : {}) }, b.surface === undefined ? 'table' : (b.surface as string | null));
       const change = b.change as J | undefined;
       if (change) tl.push({ t: 400, action: 'tween', target: 'bearer', prop: change.key, ...(change.from !== undefined ? { from: change.from } : {}), to: change.to, durationMs: 2000, ease: 'easeInOut' });
       if (b.glint) tl.push({ t: 300, action: 'emphasis', target: 'bearer', kind: 'glint', durationMs: 900 }, { t: 1700, action: 'emphasis', target: 'bearer', kind: 'glint', durationMs: 900 });
+      if (asset === 'fixture.sun') tl.push({ t: 200, action: 'emphasis', target: 'bearer', kind: 'glow', durationMs: 1400 }, { t: 1800, action: 'emphasis', target: 'bearer', kind: 'glow', durationMs: 1400 });
       const top = at.y - (onFloor(asset) ? 40 : 12) * scale;
-      addGloss(s, ja, change ? 2400 : 1200, 60, Math.max(16, top - 14), 'bubble', { x: 0, y: 30 });
+      if (/^fixture\.(sun|cloud)$/.test(asset)) addGloss(s, ja, change ? 2400 : 1200, 60, 66, 'panel'); // sky bearers: the text goes below, never over the sun
+      else if (tallFloor) addGloss(s, ja, change ? 2400 : 1200, 84, 34, 'bubble', { x: -26, y: 14 }); // beside the thing, tail towards it
+      else if (!onFloor(asset)) addGloss(s, ja, change ? 2400 : 1200, 88, Math.max(14, top - 10), 'bubble', { x: -24, y: 18 }); // beside the thing on the table, tail towards it: the text never covers the bearer
+      else addGloss(s, ja, change ? 2400 : 1200, 60, Math.max(16, top - 14), 'bubble', { x: 0, y: 30 });
       (s.focus as J).targets = ['bearer']; (s.focus as J).feature = `${asset} bears the property; gloss in a bubble`;
       (s.contrast as J | undefined) && ((s.contrast as J).distinctiveFeatures = bearerFeatures('bearer', asset, st.state as J | undefined, [...(change ? [`end:bearer.${change.key}${(change.to as number) >= 0.5 ? '>=0.5' : '<=0.5'}`] : []), ...(b.glint ? ['has:emphasis:glint'] : [])]));
       return s; }
@@ -101,13 +109,14 @@ function buildAttribute(row: PlanRow, r: Recipe, s: J): J | null {
       return s; }
     case 'icon': {
       s.environment = { id: (b.env as string) ?? 'neutral', time: 'day' };
-      let cx = 60;
-      if (b.asset) { const st = stateOf(b.state); placeThing(s, 'bearer', b.asset as string, 46, { scale: onFloor(b.asset as string) ? 1 : 1.4, ...(st.state ? { state: st.state } : {}) }, onFloor(b.asset as string) ? null : 'table'); cx = 84; }
-      (s.shapes as J[]).push({ type: 'icon', id: 'sym', icon: b.icon, x: cx, y: b.asset ? 52 : 56, size: b.asset ? 30 : 44, stroke: 'accent', fill: 'accent', opacity: 0, z: 4 });
+      let cx = 60, cy = b.asset ? 52 : 56;
+      if (b.asset === 'window') { cx = 44; cy = 44; } // the room already has a window top-left: put the symbol beside it instead of a second window on the floor
+      else if (b.asset) { const st = stateOf(b.state); placeThing(s, 'bearer', b.asset as string, 46, { scale: onFloor(b.asset as string) ? 1 : 1.4, ...(st.state ? { state: st.state } : {}) }, onFloor(b.asset as string) ? null : 'table'); cx = 84; }
+      (s.shapes as J[]).push({ type: 'icon', id: 'sym', icon: b.icon, x: cx, y: cy, size: b.asset && b.asset !== 'window' ? 30 : 40, stroke: 'accent', fill: 'accent', opacity: 0, z: 4 });
       tl.push({ t: 300, action: 'set', target: 'sym', prop: 'opacity', value: 1 }, { t: 300, action: 'tween', target: 'sym', prop: 'progress', from: 0, to: 1, durationMs: 900, ease: 'easeInOut' });
       addGloss(s, ja, 1400, 60, 20, 'panel');
-      (s.focus as J).targets = b.asset ? ['bearer'] : []; (s.focus as J).feature = `symbol ${b.icon}${b.asset ? ` with ${b.asset}` : ''} + gloss`;
-      if (s.contrast) (s.contrast as J).distinctiveFeatures = [`has:icon:${b.icon}`, ...(b.asset ? bearerFeatures('bearer', b.asset as string, stateOf(b.state).state as J | undefined) : [])];
+      (s.focus as J).targets = b.asset && b.asset !== 'window' ? ['bearer'] : []; (s.focus as J).feature = `symbol ${b.icon}${b.asset ? ` with ${b.asset}` : ''} + gloss`;
+      if (s.contrast) (s.contrast as J).distinctiveFeatures = [`has:icon:${b.icon}`, ...(b.asset && b.asset !== 'window' ? bearerFeatures('bearer', b.asset as string, stateOf(b.state).state as J | undefined) : [])];
       return s; }
     case 'contrast': {
       s.template = 'property-contrast'; s.environment = { id: (b.env as string) ?? 'room', time: 'day' };
@@ -179,7 +188,8 @@ function buildTool(_row: PlanRow, r: Recipe, s: J): J {
   let targetId = 'target';
   // round, tall foods (apple, onion, potato, tomato) are drawn large for readability; on a board they reach the figure's chest, so shrink them for hand work
   const tall = target ? /^food\.(apple|onion|potato|tomato)$/.test(target) : false;
-  if (target) { const st = stateOf(r.targetState); placeThing(s, 'target', target, 76, { ...(st.state ? { state: st.state } : {}), ...(tall ? { scale: 0.75 } : {}) }, onFloor(target) ? null : surface); }
+  const nearX = surface === 'container.tub' || surface === 'fixture.sink' ? 72 : 76;
+  if (target) { const st = stateOf(r.targetState); placeThing(s, 'target', target, nearX, { ...(st.state ? { state: st.state } : {}), ...(tall ? { scale: 0.75 } : {}) }, onFloor(target) ? null : surface); }
   else if (surface) { placeThing(s, 'surface', surface, 76, {}, null); targetId = 'surface'; }
   const extra = r.extra as J | undefined; if (extra) { const st = stateOf(extra.state); props.push(propAt('extra', extra.asset as string, { x: 92, y: (props.find((p) => p.id === 'target')?.at as Pt | undefined)?.y ?? 70 }, { ...(st.state ? { state: st.state } : {}) })); }
   if (tool) props.push({ id: 'tool', asset: tool, attachTo: { actor: 'p', hand: 'left' }, ...(tool === 'tool.grater' ? { scale: 0.75 } : {}) });
@@ -239,9 +249,17 @@ function buildSocial(_row: PlanRow, r: Recipe, s: J): J | null {
   const give = r.give as J | undefined, put = r.put as J | undefined, take = r.take as J | undefined;
   if (!give && !put && !take) return null;
   s.template = give ? 'social' : 'arrange';
-  if (give) { (s.actors as J[]).push({ id: 'q', variant: 'c', at: { x: 80, y: 100 }, facing: 'left', scale: 0.9 }); props.push({ id: 'thing', asset: give.prop, attachTo: { actor: 'p', hand: 'left' }, scale: 0.8 }); tl.push({ t: 0, action: 'idle', actor: 'q', durationMs: 400 }, { t: 400, action: 'give', from: 'p', to: 'q', prop: 'thing', durationMs: 1600 }, { t: 2000, action: 'idle', actor: 'p', durationMs: 1200 }); (s.focus as J).targets = ['thing']; }
-  else if (put) { (s.actors as J[]).push({ id: 'q', variant: 'c', at: { x: 104, y: 100 }, facing: 'left', scale: 0.9, opacity: 0 }); const on = put.on as string | undefined; const onAt = on ? placeThing(s, 'place', on, 92, { scale: onFloor(on) ? 1 : 1.2 }, onFloor(on) ? null : 'table') : null; props.push({ id: 'thing', asset: put.prop, attachTo: { actor: 'p', hand: 'left' }, scale: 0.8 }); const target = onAt ? { x: onAt.x + (PROPS[on!]?.mouth?.[0] ?? 0), y: onAt.y + (PROPS[on!]?.mouth?.[1] ?? -4) } : { x: 92, y: 70 }; if (!onAt) props.push({ id: 'table', asset: 'table', at: { x: 92, y: 100 }, z: -1 }); tl.push({ t: 200, action: 'walk', actor: 'p', to: { x: 62, y: 100 } }, { t: 1500, action: 'put', actor: 'p', prop: 'thing', at: target, durationMs: 800 }, { t: 2400, action: 'idle', actor: 'p', durationMs: 1200 }); (s.actors as J[]).pop(); (s.focus as J).targets = ['thing']; }
-  else if (take) { const thingAt = placeThing(s, 'thing', take.prop as string, 90, { scale: 0.9 }, onFloor(take.prop as string) ? null : 'table'); void thingAt; tl.push({ t: 200, action: 'walk', actor: 'p', to: { x: 64, y: 100 } }, { t: 1500, action: 'take', actor: 'p', prop: 'thing', hand: 'left', durationMs: 700 }, { t: 2300, action: 'walk', actor: 'p', to: { x: 30, y: 100 } }); (s.focus as J).targets = ['thing']; }
+  if (give) { (s.actors as J[]).push({ id: 'q', variant: 'c', at: { x: 80, y: 100 }, facing: 'left', scale: 0.9 }); props.push({ id: 'thing', asset: give.prop, attachTo: { actor: 'p', hand: 'left' }, scale: 0.8, ...(give.state ? { state: give.state } : {}) }); tl.push({ t: 0, action: 'idle', actor: 'q', durationMs: 400 }, { t: 400, action: 'give', from: 'p', to: 'q', prop: 'thing', durationMs: 1600 }, { t: 2000, action: 'idle', actor: 'p', durationMs: 1200 }); (s.focus as J).targets = ['thing']; }
+  else if (put) {
+    const on = put.on as string | undefined; const wide = on === 'fixture.clothesline'; const placeX = wide ? 92 : 92; // clothesline poles stand at ±40: centre 92 puts the near pole at 52, clear of the figure
+    const intoOpen = on ? PROPS[on]?.defaults.open !== undefined : false; // bins, bags, suitcases: the lid opens and the thing goes in
+    const onAt = on ? placeThing(s, 'place', on, placeX, { scale: onFloor(on) ? 1 : 1.2, ...(intoOpen ? { state: { open: 1 } } : {}) }, onFloor(on) ? null : 'table') : null;
+    props.push({ id: 'thing', asset: put.prop, attachTo: { actor: 'p', hand: 'left' }, scale: 0.8, ...(put.state ? { state: put.state } : {}) });
+    const target = wide && onAt ? { x: 66, y: onAt.y - 56 } : onAt ? { x: onAt.x + (PROPS[on!]?.mouth?.[0] ?? 0), y: onAt.y + (PROPS[on!]?.mouth?.[1] ?? -4) } : { x: 92, y: 70 }; if (!onAt) props.push({ id: 'table', asset: 'table', at: { x: 92, y: 100 }, z: -1 });
+    tl.push({ t: 200, action: 'walk', actor: 'p', to: { x: wide ? 28 : 62, y: 100 } }, { t: 1500, action: 'put', actor: 'p', prop: 'thing', at: target, durationMs: 800 }, { t: 2400, action: 'idle', actor: 'p', durationMs: 1200 });
+    if (intoOpen) tl.push({ t: 2300, action: 'tween', target: 'thing', prop: 'opacity', from: 1, to: 0, durationMs: 250 }, { t: 2600, action: 'set', target: 'place', prop: 'full', value: 1 }); // it is inside now
+    (s.focus as J).targets = ['thing']; }
+  else if (take) { const thingAt = placeThing(s, 'thing', take.prop as string, 90, { scale: 0.9, ...(take.state ? { state: take.state } : {}) }, onFloor(take.prop as string) ? null : 'table'); void thingAt; tl.push({ t: 200, action: 'walk', actor: 'p', to: { x: 64, y: 100 } }, { t: 1500, action: 'take', actor: 'p', prop: 'thing', hand: 'left', durationMs: 700 }, { t: 2300, action: 'walk', actor: 'p', to: { x: 30, y: 100 } }); (s.focus as J).targets = ['thing']; }
   (s.focus as J).feature = `${give ? 'gives' : put ? 'puts down' : 'takes'} ${(give ?? put ?? take)?.prop}`;
   if (s.contrast) (s.contrast as J).distinctiveFeatures = [`has:action:${give ? 'give' : put ? 'put' : 'take'}`];
   return s;
@@ -278,9 +296,13 @@ function buildManipulate(_row: PlanRow, r: Recipe, s: J): J | null {
 }
 
 export function draftScene(row: PlanRow, recipe: Recipe, moduleTitle: string, existingBySense: Map<string, string>): SceneInput | null {
-  const partners = row.contrast.map((c) => existingBySense.get(c)).filter((x): x is string => !!x);
+  // near-synonyms are never contrast partners: the same picture covers them, so they go to confusableWith instead
+  const syn = synonymsOf(row.lemma); const lemmaOf = (senseId: string) => (senseId.split('.')[1] ?? '').replace(/-/g, ' ');
+  const synIds = row.contrast.filter((c) => syn.includes(lemmaOf(c)));
+  const partners = row.contrast.filter((c) => !syn.includes(lemmaOf(c))).map((c) => existingBySense.get(c)).filter((x): x is string => !!x);
   const env = (recipe.env as string) ?? ((recipe.bearer as J | undefined)?.env as string | undefined) ?? 'room';
   const s = base(row, recipe.template, moduleTitle, recipe, partners, env);
+  if (synIds.length) (s.pedagogy as J).confusableWith = synIds;
   let out: J | null = null;
   switch (recipe.template) {
     case 'attribute-gloss': case 'property-contrast': case 'emotion': out = buildAttribute(row, recipe, s); break;
@@ -298,16 +320,39 @@ export function draftScene(row: PlanRow, recipe: Recipe, moduleTitle: string, ex
   return out as unknown as SceneInput;
 }
 
-export function runBatch(plan: Plan, moduleTitle: string, existingBySense: Map<string, string>, opts: { write?: boolean; force?: boolean; files?: Map<string, string> } = {}): BatchResult[] {
-  const recipes = loadRecipes(); const out: BatchResult[] = [];
+/** Hand-off text for a word the tool cannot do on its own: what is missing, what to imitate, where the rules are. */
+export function handoffNote(reason: string, hints: string[], nearest: string[]): string {
+  return [`MANUELLT – ${reason}`, ...hints.map((h) => `• ${h}`), nearest.length ? `• liknande lösta ord: ${nearest.join(', ')} (registry/recipes.json)` : '', '• läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut'].filter(Boolean).join(' ');
+}
+
+export function runBatch(plan: Plan, moduleTitle: string, existingBySense: Map<string, string>, opts: { write?: boolean; force?: boolean; files?: Map<string, string>; /** 'fallback': generate when no hand recipe exists (default); 'only': ignore hand recipes – for measuring the generator */ generate?: 'fallback' | 'only' | 'off'; /** build low-confidence generated recipes too (default: they are handed off as proposals) */ allowLow?: boolean; /** write scenes under this directory instead of scenes/ (measurements never touch the library) */ outDir?: string } = {}): BatchResult[] {
+  const hand = loadRecipes(); const out: BatchResult[] = [];
+  const generate = opts.generate ?? 'fallback'; const seen = new Map<string, string>();
+  const recipeFor = (row: PlanRow): { recipe?: Recipe; manual?: { reason: string; hints: string[]; nearest: string[] }; generated?: string } => {
+    const h = generate === 'only' ? undefined : hand[row.senseId] ?? hand[row.lemma];
+    if (h) return { recipe: h };
+    if (generate === 'off') return {};
+    const inf = inferRecipe({ senseId: row.senseId, lemma: row.lemma, pos: row.pos, defSv: row.defSv, examples: row.examples, jaGloss: row.jaGloss, antonyms: row.antonyms }, hand);
+    if (inf.ok && inf.confidence === 'low' && !opts.allowLow) return { manual: { reason: `bara familjen är säker (${inf.why.join('; ')}) – förslag: ${JSON.stringify(inf.recipe)}`, hints: ['bekräfta eller ändra förslaget och skriv det som regel i lexicon.ts eller recept i recipes.json'], nearest: [] } };
+    return inf.ok ? { recipe: inf.recipe, generated: `${inf.confidence}: ${inf.why.join('; ')}` } : { manual: { reason: inf.reason, hints: inf.hints, nearest: inf.nearest } };
+  };
+  const recipes = new Proxy({} as Record<string, Recipe>, { get: () => undefined }); void recipes;
   // contrast partners may be created in this same run: every row that has a buildable recipe will exist afterwards
   const willExist = new Map(existingBySense);
   for (const row of plan.rows) { if (row.kind !== 'animation' || willExist.has(row.senseId)) continue; const rec = recipes[row.senseId] ?? recipes[row.lemma]; if (!rec || rec.template === 'image') continue; const m = /^s\.([^.]+)\.(\d+)$/.exec(row.senseId); if (m) willExist.set(row.senseId, `anim.${m[1]}.${m[2]}`); }
   for (const row of plan.rows) {
     if (row.kind !== 'animation') { out.push({ senseId: row.senseId, lemma: row.lemma, status: 'skipped', note: `${row.kind} – ingen animation` }); continue; }
-    if (existingBySense.has(row.senseId) && !opts.force) { out.push({ senseId: row.senseId, lemma: row.lemma, animationId: existingBySense.get(row.senseId), status: 'exists', note: 'scen finns' }); continue; }
-    const recipe = recipes[row.senseId] ?? recipes[row.lemma];
+    if (existingBySense.has(row.senseId) && !opts.force && !opts.outDir) { out.push({ senseId: row.senseId, lemma: row.lemma, animationId: existingBySense.get(row.senseId), status: 'exists', note: 'scen finns' }); continue; }
+    const pick = recipeFor(row);
+    if (pick.recipe && !pick.manual) {
+      const sig = JSON.stringify({ ...pick.recipe, note: undefined, generated: undefined });
+      const twin = seen.get(sig); if (twin) { out.push({ senseId: row.senseId, lemma: row.lemma, status: 'manual', note: handoffNote(`samma bild som *${twin}* – två ord får inte ha identiska scener`, [`skilj dem åt (föremål, tillstånd, tempo, slutläge) eller markera det ena som synonym i receptet`], []) }); continue; }
+      seen.set(sig, row.lemma);
+    }
+    if (pick.manual) { out.push({ senseId: row.senseId, lemma: row.lemma, status: 'manual', note: handoffNote(pick.manual.reason, pick.manual.hints, pick.manual.nearest) }); continue; }
+    const recipe = pick.recipe;
     if (!recipe) { out.push({ senseId: row.senseId, lemma: row.lemma, status: 'no-recipe', note: 'inget recept – skriv ett recept med bärare/följd i registry/recipes.json innan scenen görs' }); continue; }
+    const genNote = pick.generated ? ` [genererat ${pick.generated}]` : '';
     if (recipe.template === 'image') { out.push({ senseId: row.senseId, lemma: row.lemma, status: 'image', note: recipe.note ?? 'bild' }); continue; }
     // a recipe marked TODO/SVAGT/saknas is a known gap: no draft is written, so the product owner never sees a scene the tool itself knows is wrong
     if (/TODO|SVAGT|svag|saknas/i.test(recipe.note ?? '')) { out.push({ senseId: row.senseId, lemma: row.lemma, template: recipe.template, status: 'blocked', note: `receptet är märkt som svagt – ingen scen skapas: ${recipe.note}` }); continue; }
@@ -315,8 +360,8 @@ export function runBatch(plan: Plan, moduleTitle: string, existingBySense: Map<s
     if (!draft) { out.push({ senseId: row.senseId, lemma: row.lemma, template: recipe.template, status: 'no-recipe', note: `receptet kan inte byggas (${recipe.template}${recipe.bearer ? '' : ', ingen bärare'})` }); continue; }
     const v = validateScene(draft as unknown);
     const errors = v.problems.filter((p) => p.level === 'error').map((p) => p.message);
-    const file = opts.files?.get(draft.animationId) ?? sceneFilePath(draft.animationId); // --force updates the scene where it already lives
-    const weak = /TODO|SVAGT|svag|saknas/i.test(recipe.note ?? '') ? ` ⚠ ${recipe.note}` : (recipe.note ?? '');
+    const file = opts.outDir ? path.join(opts.outDir, draft.animationId.split('.')[1] ?? 'misc', `${draft.animationId}.json`) : (opts.files?.get(draft.animationId) ?? sceneFilePath(draft.animationId)); // --force updates the scene where it already lives
+    const weak = (/TODO|SVAGT|svag|saknas/i.test(recipe.note ?? '') ? ` ⚠ ${recipe.note}` : (recipe.note ?? '')) + genNote;
     if (errors.length) { out.push({ senseId: row.senseId, lemma: row.lemma, animationId: draft.animationId, template: recipe.template, status: 'invalid', note: weak, problems: errors }); continue; }
     if (opts.write) { fs.mkdirSync(path.dirname(file), { recursive: true }); writeScene(file, Scene.parse(draft)); }
     out.push({ senseId: row.senseId, lemma: row.lemma, animationId: draft.animationId, template: recipe.template, status: 'created', file, note: weak });
@@ -326,8 +371,8 @@ export function runBatch(plan: Plan, moduleTitle: string, existingBySense: Map<s
 
 export function batchMarkdown(plan: Plan, results: BatchResult[]): string {
   const count = (k: BatchResult['status']) => results.filter((r) => r.status === k).length;
-  return [`# Batch: ${plan.titleSv} (${plan.moduleId})`, '', `Skapade ${count('created')} utkast, ${count('exists')} fanns, ${count('skipped')} ej animation, ${count('image')} bild, ${count('blocked')} blockerade (svagt recept, ingen scen), ${count('invalid')} ogiltiga, ${count('no-recipe')} utan recept.`, '',
-    '**Regel:** ett utkast är klart först när remsan är granskad och blindtestet godkänt (`anim:blindtest`). Rader märkta ⚠ har ett recept med känd svaghet – läs anmärkningen och förbättra scenen eller receptet innan blindtest.', '',
+  return [`# Batch: ${plan.titleSv} (${plan.moduleId})`, '', `Skapade ${count('created')} utkast, ${count('exists')} fanns, ${count('skipped')} ej animation, ${count('image')} bild, ${count('blocked')} blockerade (svagt recept, ingen scen), ${count('manual')} manuella (verktyget säger ifrån – se anmärkningen), ${count('invalid')} ogiltiga, ${count('no-recipe')} utan recept.`, '',
+    '**Regel:** ett utkast är klart först när remsan är granskad och blindtestet godkänt (`anim:blindtest`). Rader märkta ⚠ har ett recept med känd svaghet – läs anmärkningen och förbättra scenen eller receptet innan blindtest. Rader med status *manual* kan verktyget inte göra själv: följ anmärkningen och `docs/MANUAL_SCENES.md`, och lägg det du lär dig i `src/tools/lexicon.ts` så att nästa liknande ord går automatiskt.', '',
     '| Ord | Status | Scen | Mall | Anmärkning |', '|---|---|---|---|---|',
     ...results.map((r) => `| ${r.lemma} | ${r.status} | ${r.animationId ?? '–'} | ${r.template ?? '–'} | ${[r.note, ...(r.problems ?? [])].filter(Boolean).join('; ')} |`), ''].join('\n');
 }

@@ -72,3 +72,9 @@ Produktägaren såg att *ursäkta* visade en hand-ikon som lästes som ett lång
 
 Förinställda lösningar nu: handlingen `bow` (bugning, djup/lätt, händer ihop) bär förlåt/tack/hälsning; ikonen `palms` (🙏) finns och `hand` är omritad som öppen handflata; validatorn **stoppar** en gest-ikon i bubbla utan kroppslig handling; gångsättet `walk.manner: careful` och bäraren `manner` finns för sätt-adjektiv; blindtestet har en tredje fråga om missförstånd/stötande innehåll och ett flaggat svar räknas inte som godkänt; batchen skriver **inget utkast** för recept märkta TODO/SVAGT/saknas.
 
+## Receptgeneratorn (`anim:recipe`, 2026-11-06)
+
+Verktyget skriver nu recepten själv för de vanliga funktionerna och **säger ifrån** för resten. Ordningen är: handskrivet recept → lemmatabeller i `src/tools/lexicon.ts` (verktygsverb, processverb, ställa/ta-verb, verb mellan människor, matlagning, egenskaper, mönster/färger, klädfraser) → definitionsregler med substantiv översatta till katalogföremål → *manuellt* med skäl, ledtrådar och liknande lösta ord. Säkerhet *hög* (tabell), *medel* (definition + föremål), *låg* (bara familj: lämnas som **förslag**, byggs inte utan `--allow-low`). `anim:batch` använder generatorn automatiskt när handrecept saknas; `anim:coverage` visar läget *Redo: receptet genereras* och *Manuellt*; `docs/MANUAL_SCENES.md` är överlämningen till Claude.
+
+Mätning 2026-11-06 mot hela ordboken (600 betydelser, handrecepten dolda): recept för 273 (175 hög, 47 medel, 51 låg), manuellt 327. Där handrecept finns: samma mall 84 %, medelpoäng 0,76. Tre moduler byggda enbart av generatorn (36 ord): 19 scener, 17 manuella med skäl – se `registry/pilot-generator.md`.
+

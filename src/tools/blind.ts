@@ -52,17 +52,17 @@ export async function makeBlindBatch(scenes: Map<string, Scene>, ids: string[], 
 }
 
 /** Grade answers against the key and record the result per scene. */
-export function gradeBlind(key: BlindKey, answers: BlindAnswers, reviewer = 'claude-blind'): { results: (BlindResult & { animationId: string; letter: string })[]; passed: number; total: number } {
-  const store = blindResults();
+export function gradeBlind(key: BlindKey, answers: BlindAnswers, reviewer = 'claude-blind', store = 'blind.json'): { results: (BlindResult & { animationId: string; letter: string })[]; passed: number; total: number } {
+  const all = blindResults(store);
   const results = key.items.map((it) => {
     const a = answers[it.letter];
     const norm = (s: string) => s.trim().toLowerCase();
     const passed = !!a && norm(a.choice) === norm(it.expected);
-    const flagRaw = (a?.flag ?? '').trim(); const flag = /^(nej|no|-|inget|ingen|none)?\.?$/i.test(flagRaw) ? undefined : flagRaw;
+    const flagRaw = (a?.flag ?? '').trim(); const flag = /^(nej|no|-|inget|ingen|none|mindre sak)?\b/i.test(flagRaw) && !/^(ja|yes)\b/i.test(flagRaw) && (/^(nej|no|inget|ingen|none|mindre)/i.test(flagRaw) || flagRaw === '' || flagRaw === '-') ? undefined : flagRaw; // 'nej – möjligen …' is a note, not a flag
     const r: BlindResult & { animationId: string; letter: string } = { animationId: it.animationId, letter: it.letter, date: new Date().toISOString().slice(0, 10), batch: key.batch, passed, choice: a?.choice ?? '', expected: it.expected, description: a?.description, reviewer, ...(flag ? { flag } : {}) };
-    (store[it.animationId] ??= []).push({ date: r.date, batch: r.batch, passed: r.passed, choice: r.choice, expected: r.expected, description: r.description, reviewer, ...(flag ? { flag } : {}) });
+    (all[it.animationId] ??= []).push({ date: r.date, batch: r.batch, passed: r.passed, choice: r.choice, expected: r.expected, description: r.description, reviewer, ...(flag ? { flag } : {}) });
     return r;
   });
-  writeBlindResults(store);
+  writeBlindResults(all, store);
   return { results, passed: results.filter((r) => r.passed && !r.flag).length, total: results.length }; // a flagged scene is not passed
 }

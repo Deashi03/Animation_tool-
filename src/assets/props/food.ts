@@ -31,6 +31,13 @@ function sliced(body: FrameNode, w: number, h: number, pieces: number, k = 4): F
   }
   return g(out);
 }
+/** mould: pale green patches with white specks – the sign of "möglig", distinct from brown rot */
+function moldSpots(cx: number, cy: number, r: number, m: number): FrameNode[] {
+  if (m < 0.05) return [];
+  const out: FrameNode[] = []; const spots: [number, number, number][] = [[-0.35, -0.3, 0.34], [0.3, 0.15, 0.3], [-0.05, 0.5, 0.24]];
+  for (const [x, y, k] of spots) { out.push(circle(cx + x * r, cy + y * r, r * k * Math.min(1, m * 1.5), { fill: '#a7c49a', stroke: INK, sw: 0.8, opacity: 0.95 * m })); for (const [dx, dy] of [[-0.3, -0.2], [0.25, 0.1], [0, 0.35]] as [number, number][]) out.push(circle(cx + (x + dx * k) * r, cy + (y + dy * k) * r, r * 0.05, { fill: C.white, opacity: m })); }
+  return out;
+}
 function rotSpots(cx: number, cy: number, r: number, rot: number): FrameNode[] {
   if (rot < 0.05) return [];
   const out: FrameNode[] = []; const spots: [number, number, number][] = [[-0.4, -0.2, 0.25], [0.35, 0.1, 0.3], [0, 0.45, 0.2], [-0.2, 0.5, 0.15]];
@@ -42,7 +49,7 @@ const mashedHeap = (c: string, w: number): FrameNode => path(`M${r1(-w / 2)} 0 q
 
 const F: Record<FoodShape, PropSpec> = {
   apple: {
-    defaults: { pieces: 0, peeled: 0, ripeness: 1, rot: 0, bite: 0, mashed: 0 }, grip: [0, -7], mouth: [0, -14],
+    defaults: { pieces: 0, peeled: 0, ripeness: 1, rot: 0, bite: 0, mashed: 0, mold: 0 }, grip: [0, -7], mouth: [0, -14],
     draw: (s) => { const rip = clamp01(n(s, 'ripeness', 1)), rot = clamp01(n(s, 'rot', 0)), peeled = clamp01(n(s, 'peeled', 0)), bite = clamp01(n(s, 'bite', 0)), mashed = clamp01(n(s, 'mashed', 0));
       const skin = mix(rip < 0.5 ? mix('#7bb661', '#e9c93a', rip * 2) : mix('#e9c93a', C.red, (rip - 0.5) * 2), '#8a6a4a', rot * 0.6), flesh = '#f7edc8';
       const r = 7 * (1 - rot * 0.12), cy = -r;
@@ -51,7 +58,7 @@ const F: Record<FoodShape, PropSpec> = {
         circle(0, cy, r, { fill: mix(skin, flesh, peeled), stroke: INK, sw: 1.8 }),
         bite > 0.3 ? circle(r * 0.7, cy - r * 0.4, r * 0.45, { fill: C.paper, stroke: INK, sw: 1.2 }) : g([]),
         bite > 0.3 ? circle(r * 0.7, cy - r * 0.4, r * 0.32, { fill: flesh }) : g([]),
-        ...rotSpots(0, cy, r, rot),
+        ...rotSpots(0, cy, r, rot), ...moldSpots(0, cy, r, clamp01(n(s, 'mold', 0))),
         line([[0, cy - r + 1], [1, cy - r - 4]], { stroke: C.brown, sw: 1.6 }), path(`M1 ${r1(cy - r - 2)} q4 -4 7 -1 q-4 3 -7 1 Z`, { fill: C.green, stroke: INK, sw: 1 }),
         peeled > 0.3 ? path(`M${r1(r * 0.8)} ${r1(cy + r * 0.3)} q6 2 4 7 q-3 2 -2 5`, { fill: 'none', stroke: skin, sw: 1.8, opacity: peeled }) : g([]),
       ]);

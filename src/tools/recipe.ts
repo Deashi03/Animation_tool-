@@ -84,7 +84,9 @@ function inferVerb(w: Word, lemma: string, text: string, found: string[], _hand:
     r.target = named ?? tv.target; if (tv.surface !== undefined) r.surface = tv.surface; if (tv.period) r.period = tv.period; if (tv.targetState) r.targetState = tv.targetState; if (tv.bothHands) r.bothHands = true;
     if (tv.effects.length) r.claim = tv.effects.filter((e) => typeof e.to === 'number' && (!e.role || e.role === 'target')).map((e) => `end:target.${e.key}${(e.to as number) >= 0.5 ? '>=' : '<='}${e.to}`);
     if (!r.target || !isPropAsset(r.target as string)) return manual(`verktygsverbet ${lemma} saknar råvara/yta i katalogen`, 'tool-rhythm', [`lägg till föremålet i assets/props/ eller välj närmaste (hittade: ${found.join(', ') || 'inget'})`]);
-    return { ok: true, recipe: r, confidence: named ? 'high' : 'high', why: [`verktygsverb i tabellen${named ? `, råvara från definitionen: ${named}` : ''}`] };
+    // a tool that moves over something that never changes is not a typical example yet: hand it off as a proposal
+    if (!tv.effects.length) return { ok: true, recipe: { ...r, note: `ingen synlig följd – verktyget rör sig bara; lägg till ett tillstånd på ${r.target} som ändras` }, confidence: 'low', why: ['verktygsverb i tabellen utan synlig följd'] };
+    return { ok: true, recipe: r, confidence: 'high', why: [`verktygsverb i tabellen${named ? `, råvara från definitionen: ${named}` : ''}`] };
   }
   const pv = PROCESS_VERBS[lemma];
   if (pv) { const r: Recipe = { template: 'process', asset: pv.asset, change: pv.change, ...(pv.state ? { state: pv.state } : {}), ...(pv.extra ? { extra: pv.extra } : {}), ...(pv.sound ? { sound: pv.sound } : {}), env: pv.env ?? 'kitchen' } as Recipe; if (pv.change[0]) r.claim = [`end:thing.${pv.change[0].key}${pv.change[0].to >= 0.5 ? '>=' : '<='}${pv.change[0].to}`]; return { ok: true, recipe: r, confidence: 'high', why: ['processverb i tabellen'] }; }

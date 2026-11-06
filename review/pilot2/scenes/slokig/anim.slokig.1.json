@@ -30,7 +30,7 @@
         "x": 60,
         "y": 100
       },
-      "scale": 1,
+      "scale": 1.7,
       "rotate": 0,
       "z": 1,
       "state": {
@@ -75,8 +75,8 @@
       "action": "tween",
       "target": "ja",
       "prop": "y",
-      "to": 46,
-      "from": 40,
+      "to": 18,
+      "from": 12,
       "durationMs": 450,
       "ease": "easeOut"
     }

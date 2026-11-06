@@ -37,6 +37,12 @@ Fel val var uteslutande inom synonymkluster (*laga*→*tillaga*, *lägga upp*→
 - Tvättposen (huvudet mot baljan) ser obekväm ut; verktygsarbete vid låga kärl behöver en bättre lutningsmodell.
 - Generatorn klarar ungefär hälften av orden i en typisk modul på egen hand; resten säger den ifrån om, med skäl. Mot hela ordboken: 272 recept av 600 (173 hög, 49 medel, 50 låg), 328 manuella; där handrecept finns stämmer mallen i 83 %.
 
+## Andra mätningen (2026-11-06, tre nya moduler: *Färskhet och mognad*, *Flytta till ny bostad*, *Matbordets samtal*)
+
+Innan mätningen fick generatorn tillståndsregler för adjektiv (`STATE_BY_ADJ`: mogen/rutten/vissen/blöt/skrynklig … på det föremål definitionen nämner), ätverb med ljud, synonymgrupper och känsloverb. Utfall: 35 ord, **27 scener byggda** (p5/p6), 8 manuella med skäl (tejp saknas, ömtålig, oartig, skåla, inflyttningsfest, vänta in, härsken, unken). Blindtest p5/p6: **rätt ord 25 av 27**; de två felen var *packa upp* (lådan öppnades aldrig) och *märka* (pennan lämnade inget spår) – båda svarade granskaren ärligt "inget".
+
+Flaggorna gav nya regler: rötfrukter som bara skildes åt av texten (*rutten/skämd/möglig/härsken/unken*) → ny byggsten **mögel** på äpplet, *skämd* lättare röta, *härsken/unken* säger verktyget ifrån om; verktygsverb utan synlig följd (*märka*, *såga*, *putsa* …) lämnas som förslag i stället för att byggas; `take … from` tar saken **ur** en öppen väska/kyl; ljudmarkeringar sitter på munsidan; krukväxter större; möbler ställs på golvet; långa glosser klipps inte längre vid kanten; bakord → bröd. Scenerna med dessa rättningar är omrenderade och granskade i remsa men inte blindtestade på nytt.
+
 ## Nästa steg
 
 1. Kör samma mätning på tre nya moduler efter varje regeltillägg; målet är att andelen *manuellt* sjunker och att felvalen stannar inom synonymkluster.

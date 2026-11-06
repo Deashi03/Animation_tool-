@@ -1,6 +1,6 @@
 # Batch: Flytta till ny bostad (m.flytta-till-ny-bostad)
 
-Skapade 7 utkast, 0 fanns, 5 ej animation, 0 bild, 0 blockerade (svagt recept, ingen scen), 3 manuella (verktyget säger ifrån – se anmärkningen), 0 ogiltiga, 0 utan recept.
+Skapade 6 utkast, 0 fanns, 5 ej animation, 0 bild, 0 blockerade (svagt recept, ingen scen), 4 manuella (verktyget säger ifrån – se anmärkningen), 0 ogiltiga, 0 utan recept.
 
 **Regel:** ett utkast är klart först när remsan är granskad och blindtestet godkänt (`anim:blindtest`). Rader märkta ⚠ har ett recept med känd svaghet – läs anmärkningen och förbättra scenen eller receptet innan blindtest. Rader med status *manual* kan verktyget inte göra själv: följ anmärkningen och `docs/MANUAL_SCENES.md`, och lägg det du lär dig i `src/tools/lexicon.ts` så att nästa liknande ord går automatiskt.
 
@@ -10,7 +10,7 @@ Skapade 7 utkast, 0 fanns, 5 ej animation, 0 bild, 0 blockerade (svagt recept, i
 | packa | created | anim.packa.1 | arrange |  [genererat high: ställa/ta-verb i tabellen] |
 | packa upp | created | anim.packa-upp.1 | arrange |  [genererat high: ställa/ta-verb i tabellen] |
 | flyttkartong | skipped | – | – | image – ingen animation |
-| märka | created | anim.märka.1 | tool-rhythm |  [genererat high: verktygsverb i tabellen] |
+| märka | manual | – | – | MANUELLT – bara familjen är säker (verktygsverb i tabellen utan synlig följd) – förslag: {"template":"tool-rhythm","motion":"wipe","effects":[],"env":"kitchen","tool":"tool.pen","target":"container.crate","surface":null,"period":500,"note":"ingen synlig följd – verktyget rör sig bara; lägg till ett tillstånd på container.crate som ändras"} • bekräfta eller ändra förslaget och skriv det som regel i lexicon.ts eller recept i recipes.json • läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut |
 | ömtålig | manual | – | – | MANUELLT – ömtålig: föremålet glass hittades men inget tillstånd visar egenskapen • välj ett tillstånd på glass som visar ömtålig (eller en kontrast a/b) och lägg till i PROPERTIES • en figur som bara säger ordet är inte en bärare • liknande lösta ord: vass, grov, jämn (registry/recipes.json) • läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut |
 | bubbelplast | skipped | – | – | image – ingen animation |
 | tejp | skipped | – | – | image – ingen animation |

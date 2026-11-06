@@ -36,15 +36,29 @@
   ],
   "props": [
     {
-      "id": "thing",
-      "asset": "container.crate",
+      "id": "place",
+      "asset": "container.suitcase",
       "at": {
-        "x": 90,
+        "x": 92,
         "y": 100
       },
-      "scale": 0.9,
+      "scale": 1,
       "rotate": 0,
       "z": 1,
+      "state": {
+        "open": 1
+      }
+    },
+    {
+      "id": "thing",
+      "asset": "container.bag",
+      "at": {
+        "x": 92,
+        "y": 80
+      },
+      "scale": 0.75,
+      "rotate": 0,
+      "z": 2,
       "state": {}
     }
   ],
@@ -55,7 +69,7 @@
       "action": "walk",
       "actor": "p",
       "to": {
-        "x": 64,
+        "x": 56,
         "y": 100
       },
       "manner": "normal"
@@ -83,7 +97,7 @@
     "targets": [
       "thing"
     ],
-    "feature": "takes container.crate"
+    "feature": "takes container.bag"
   },
   "pedagogy": {
     "quizEligible": false,

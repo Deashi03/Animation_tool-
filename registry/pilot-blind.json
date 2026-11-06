@@ -393,5 +393,323 @@
       "reviewer": "claude-blind",
       "flag": "Posen är överdriven: huvudet hänger nästan nere i baljan och ryggen är helt rund, vilket ser lite obekvämt/kusligt ut; tröjan svävar också ovanför baljan i stället för i vattnet. Inget stötande."
     }
+  ],
+  "anim.flyttstäda.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": true,
+      "choice": "flyttstäda",
+      "expected": "flyttstäda",
+      "description": "En person i blå overall sopar med en kvast bredvid en hög beige låda/skåp; små smulor på golvet försvinner mot slutet – betyder att sopa/städa.",
+      "reviewer": "claude-blind",
+      "flag": "Remsan visar bara 'sopa' – inget (flyttlådor, tomt rum) pekar på just flyttstädning; den höga lådan läses som kyl/skåp, inte flyttlåda."
+    }
+  ],
+  "anim.nybakad.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": true,
+      "choice": "nybakad",
+      "expected": "nybakad",
+      "description": "Ett rött äpple på ett bord får glittergnistor och sedan en pratbubbla; motivet säger 'fräscht äpple', texten 焼きたての säger 'nybakad'.",
+      "reviewer": "claude-blind",
+      "flag": "Motivet (ett äpple) kan inte vara nybakat – utan texten läses det som 'fräsch/färsk'. Samma bild som remsa H och I; bara texten skiljer dem."
+    }
+  ],
+  "anim.packa-upp.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": false,
+      "choice": "inget",
+      "expected": "packa upp",
+      "description": "En person går fram till en liten trälåda på golvet, böjer sig, lyfter upp den och bär iväg den åt vänster – betyder att lyfta/bära (eller flytta) en låda.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.lämna.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": true,
+      "choice": "lämna",
+      "expected": "lämna",
+      "description": "En person går utomhus i dagsljus medan buskar och marken rullar förbi (världen scrollar) – en vanlig promenad utan tydligt mål eller start.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.märka.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": false,
+      "choice": "inget",
+      "expected": "märka",
+      "description": "En person står mellan en hög beige låda och en låg trälåda och för upprepat båda händerna ner mot trälådans ovansida, som om hen trycker till eller tejpar locket – betyder packa/stänga en låda.",
+      "reviewer": "claude-blind",
+      "flag": "Händerna håller inget och ingenting i lådan förändras, så handlingen är otydlig (packa? tejpa? klappa?). Varken 'skicka' eller 'märka' syns – ingen penna/etikett, ingen brevlåda."
+    }
+  ],
+  "anim.mogna.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": true,
+      "choice": "mogna",
+      "expected": "mogna",
+      "description": "En banan på ett bord skiftar gradvis färg från grön till gul – betyder att mogna.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.flytta.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": true,
+      "choice": "flytta",
+      "expected": "flytta",
+      "description": "En person bär en liten stol fram till ett bord och ställer upp den ovanpå bordet, släpper och står kvar – betyder att flytta (möbler).",
+      "reviewer": "claude-blind",
+      "flag": "Stolen hamnar ovanpå bordet, vilket ser konstigt ut och kan läsas som städning (stolar upp på bordet) snarare än flytt; föremålet är litet och svårläst som stol."
+    }
+  ],
+  "anim.dagsfärsk.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": true,
+      "choice": "dagsfärsk",
+      "expected": "dagsfärsk",
+      "description": "Ett rött äpple på ett bord får glittergnistor och en pratbubbla; motivet säger 'fräscht', texten その日に作った säger 'gjord samma dag'.",
+      "reviewer": "claude-blind",
+      "flag": "Bubblans text klipps av vid högerkanten i varje ruta (sista tecknet syns inte). Ett äpple 'görs' inte, så texten passar inte motivet. Identisk med B och I utan text."
+    }
+  ],
+  "anim.fräsch.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": true,
+      "choice": "fräsch",
+      "expected": "fräsch",
+      "description": "Ett rött äpple på ett bord får glittergnistor och pratbubblan 新鮮な – betyder fräsch/färsk.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.avbryta.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": true,
+      "choice": "avbryta",
+      "expected": "avbryta",
+      "description": "Två personer står mitt emot varandra; den gröna håller upp en skylt med förbudssymbol (⃠) mot den andra, som sedan får en bubbla med '…' och tystnar – betyder stopp/avbryta eller att något inte får göras.",
+      "reviewer": "claude-blind",
+      "flag": "Förbudssymbolen är abstrakt och kan läsas som 'förbjudet', 'nej' eller 'sluta'; '…'-bubblan kan läsas som förlägenhet (skämd) lika gärna som avbrutet tal. Inget stötande."
+    }
+  ],
+  "anim.möglig.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": true,
+      "choice": "möglig",
+      "expected": "möglig",
+      "description": "Ett mörkt, brunfläckigt äpple på ett bord får pratbubblan カビの生えた – betyder möglig.",
+      "reviewer": "claude-blind",
+      "flag": "Fläckarna ser ut som bruna rötfläckar snarare än mögel (ingen grön/vit ludd), så utan text läses det som 'rutten'. Ingen förändring sker – äpplet är fläckigt från ruta 1."
+    }
+  ],
+  "anim.härsken.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": true,
+      "choice": "härsken",
+      "expected": "härsken",
+      "description": "Samma mörka, brunfläckiga äpple som i K på ett bord får pratbubblan 酸化した ('oxiderad') – betyder skämd/härsken.",
+      "reviewer": "claude-blind",
+      "flag": "Motivet är identiskt med K (möglig) och läses lika gärna som rutten/skämd; 'härsken' gäller fett/nötter, inte äpplen, så bara texten bär betydelsen."
+    }
+  ],
+  "anim.omogen.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p5",
+      "passed": true,
+      "choice": "omogen",
+      "expected": "omogen",
+      "description": "En grön banan på ett bord, oförändrad, får pratbubblan 熟していない – betyder omogen.",
+      "reviewer": "claude-blind",
+      "flag": "Bubblans text klipps aningen av vid högerkanten; annars nej."
+    }
+  ],
+  "anim.ruttna.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "ruttna",
+      "expected": "ruttna",
+      "description": "Ett rött äpple på ett bord blir gradvis brunt och fläckigt medan tiden går, utan text – frukten förstörs/ruttnar.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.smaska.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "smaska",
+      "expected": "smaska",
+      "description": "En kvinna håller ett äpple mot munnen, tuggar med slutna ögon och ljudvågor syns vid munnen – att äta högljutt/smaska.",
+      "reviewer": "claude-blind",
+      "flag": "Ljudvågorna sitter till höger om kroppen i luften, inte vid munnen; utan dem ser det ut som vanligt 'äta'. Äpplet skymmer nästan hela ansiktet."
+    }
+  ],
+  "anim.sörpla.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "sörpla",
+      "expected": "sörpla",
+      "description": "Samma kvinna dricker ur en kopp med slutna ögon och ljudvågor bredvid – att dricka högljutt/sörpla.",
+      "reviewer": "claude-blind",
+      "flag": "Mycket lik remsa B (samma figur, pose och ljudvågor) – skillnaden är bara äpple kontra kopp, och ljudvågorna svävar bredvid kroppen i stället för vid munnen."
+    }
+  ],
+  "anim.övermogen.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "övermogen",
+      "expected": "övermogen",
+      "description": "En banan med bruna fläckar ligger stilla på ett bord och en pratbubbla med 熟しすぎた (övermogen) glider in – egenskapen övermogen.",
+      "reviewer": "claude-blind",
+      "flag": "Bananen rör sig inte och fläckarna är små; utan den japanska texten är det svårt att skilja från 'mogen' eller 'banan'."
+    }
+  ],
+  "anim.unken.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "unken",
+      "expected": "unken",
+      "description": "Ett brunt, fläckigt äpple ligger på ett bord och en pratbubbla med かび臭い (unken/mögellukt) visas – luktar unket/mögel.",
+      "reviewer": "claude-blind",
+      "flag": "Bilden visar ett ruttet äpple, inte lukt; utan texten läses den som 'rutten'. Remsorna E, I och M är nästan identiska och skiljs enbart av den japanska texten."
+    }
+  ],
+  "anim.tack-för-maten.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "tack för maten",
+      "expected": "tack för maten",
+      "description": "En person bugar djupt mot en annan med händerna ihop framför bröstet och en bubbla med en handflate-ikon (🙏) ovanför – tack/artighetsfras, troligen tack för maten.",
+      "reviewer": "claude-blind"
+    }
+  ],
+  "anim.skämta.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "skämta",
+      "expected": "skämta",
+      "description": "En person säger något med en gul smiley i pratbubblan, och den andra svarar med en bock i en bubbla – ett skämt eller glatt budskap som tas emot/godkänns.",
+      "reviewer": "claude-blind",
+      "flag": "Bocken läses som 'rätt/godkänt' snarare än skratt; ingen av figurerna skrattar. Kan lika gärna betyda 'hålla med', 'berömma' eller 'tacka'."
+    }
+  ],
+  "anim.slokig.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "slokig",
+      "expected": "slokig",
+      "description": "En blomma hänger med huvudet nedåt på sin stjälk på golvet och en bubbla med しんなりした (slak/slokig) visas – slokig.",
+      "reviewer": "claude-blind",
+      "flag": "Blomman är mycket liten (svår att läsa i 140 px) och står på golvet utan kruka; den ser också brun/vissen ut så 'vissen' är nästan lika rimligt."
+    }
+  ],
+  "anim.skämd.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "skämd",
+      "expected": "skämd",
+      "description": "Ett brunt, fläckigt äpple på ett bord med en bubbla med 傷んだ (skämd/skadad) – skämd (frukt).",
+      "reviewer": "claude-blind",
+      "flag": "Identisk motiv med E och M; endast texten skiljer. Kan inte särskiljas från 'rutten' utan text."
+    }
+  ],
+  "anim.packa.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "packa",
+      "expected": "packa",
+      "description": "En man bär en trälåda fram till en öppen resväska, lägger ner den och locket stängs så att packade saker syns – packa.",
+      "reviewer": "claude-blind",
+      "flag": "Resväskans öppna lock är en mörk avlång form som överlappar mannens arm och kropp (ser ut som en påse eller en extra lem). Lådan försvinner abrupt i väskan."
+    }
+  ],
+  "anim.vissen.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "vissen",
+      "expected": "vissen",
+      "description": "En krukväxt med slaka, bruna stjälkar som hänger ner och en bubbla med しおれた (vissnad) – vissen.",
+      "reviewer": "claude-blind",
+      "flag": "Växten är tunn och ser mer ut som kvistar/korsade pinnar än en vissnad blomma; bubblan pekar mot tom luft, inte mot växten."
+    }
+  ],
+  "anim.skicka.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "skicka",
+      "expected": "skicka",
+      "description": "En man räcker över en papperskasse med äpplen till en kvinna, som tar emot den och håller den – ge/överlämna en påse.",
+      "reviewer": "claude-blind",
+      "flag": "Handlingen är 'ge/räcka över' snarare än 'skicka'; ingen av alternativen passar riktigt. Påsen hoppar mellan händerna utan tydlig överlämning i mitten."
+    }
+  ],
+  "anim.rutten.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "rutten",
+      "expected": "rutten",
+      "description": "Ett brunt, fläckigt äpple på ett bord med en bubbla med 腐った (rutten) – rutten.",
+      "reviewer": "claude-blind",
+      "flag": "Samma bild som E och I, endast texten skiljer."
+    }
+  ],
+  "anim.sakna.1": [
+    {
+      "date": "2026-11-06",
+      "batch": "p6",
+      "passed": true,
+      "choice": "sakna",
+      "expected": "sakna",
+      "description": "En man står vid ett bord med en telefon, hans leende övergår i sorgset ansikte och hängande axlar, och en panel med 恋しく思う (sakna) glider in – sakna någon.",
+      "reviewer": "claude-blind",
+      "flag": "Telefonen är liten och kopplingen till en saknad person syns inte; utan texten läses det som 'ledsen'."
+    }
   ]
 }

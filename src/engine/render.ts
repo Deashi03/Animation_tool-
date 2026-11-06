@@ -166,7 +166,8 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
     const kind = sampleString<string>(tracks, `fx.${id}.sound`, t, '');
     if (!kind) continue;
     const node = layers.find((l) => (l.node as { id?: string }).id === `entity.${id}`)?.node; const b = node ? bboxOf(node) : null; if (!b) continue;
-    const cx = b.x2 + 3, cy = (b.y1 + b.y2) / 2, u = (t % 600) / 600;
+    const owner = sampleString<string>(tracks, `${id}.attach`, t, '').split(':')[0]; const f = (actorWorld.get(owner || id)?.facing ?? 1) as 1 | -1; // held things and people: the mark sits in front of the face, not behind
+    const cx = f === 1 ? b.x2 + 3 : b.x1 - 3, cy = (b.y1 + b.y2) / 2, u = (t % 600) / 600;
     if (kind === 'thump' || kind === 'crunch') { for (let i = 0; i < 5; i++) { const ang = -1.1 + i * 0.55 + (kind === 'crunch' ? Math.sin(t) * 0.1 : 0); const r0 = 4 + ((u + i * 0.2) % 1) * 6; fx.push(line([[cx + Math.cos(ang) * r0, cy + Math.sin(ang) * r0], [cx + Math.cos(ang) * (r0 + 4), cy + Math.sin(ang) * (r0 + 4)]], { stroke: C.ink, sw: kind === 'crunch' ? 1.4 : 2.2, opacity: 0.8 })); } }
     else for (let i = 0; i < 3; i++) { const ph = (u + i * 0.33) % 1; const rr = 5 + ph * 10; fx.push(path(`M${r1(cx + rr * 0.5)} ${r1(cy - rr * 0.85)} q${r1(rr * 0.9)} ${r1(rr * 0.85)} 0 ${r1(rr * 1.7)}`, { fill: 'none', stroke: kind === 'bark' ? C.red : C.ink, sw: 1.8, linecap: 'round', opacity: 0.85 * (1 - ph) })); }
   }

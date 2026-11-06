@@ -33,7 +33,7 @@ const FASTEN: Record<string, { what: string; on: boolean; start: J }> = { knäpp
 const FLOOR_ASSETS = /^(fixture\.(sink|shower|washingmachine|oven|fridge|radiator|clothesline|ironingboard|chair|shelf|wall|bike|cart|tent|tree|bush|toilet|cow|hen|lamp|mirror|puddle|fire|plant|flower|nest|drip)|container\.(bin|crate|suitcase|bucket|basket)|stove|table|sofa|bed|door|castle|ladder|window)$/;
 const onFloor = (asset: string) => FLOOR_ASSETS.test(asset);
 /** default scale for a thing shown as the bearer: big enough to read at 140 px, small enough to stay inside the canvas */
-const bearerScale = (asset: string): number => asset === 'fixture.lamp' ? 0.75 : asset === 'fixture.candle' || asset === 'fixture.drip' ? 1.2 : onFloor(asset) ? 1 : asset.startsWith('food.') ? 1.6 : asset.startsWith('tool.') ? 1.6 : 1.3;
+const bearerScale = (asset: string): number => asset === 'fixture.lamp' ? 0.75 : asset === 'fixture.flower' ? 1.7 : asset === 'fixture.plant' ? 1.3 : asset === 'fixture.candle' || asset === 'fixture.drip' ? 1.2 : onFloor(asset) ? 1 : asset.startsWith('food.') ? 1.6 : asset.startsWith('tool.') ? 1.6 : 1.3;
 
 function base(row: PlanRow, template: string, moduleTitle: string, recipe: Recipe, partners: string[], env: string, time = 'day'): J {
   const m = /^s\.([^.]+)\.(\d+)$/.exec(row.senseId)!;
@@ -258,10 +258,16 @@ function buildSocial(_row: PlanRow, r: Recipe, s: J): J | null {
     props.push({ id: 'thing', asset: put.prop, attachTo: { actor: 'p', hand: 'left' }, scale: 0.8, ...(put.state ? { state: put.state } : {}) });
     const floorThing = onFloor(put.prop as string);
     const target = wide && onAt ? { x: 66, y: onAt.y - 56 } : onAt ? { x: onAt.x + (PROPS[on!]?.mouth?.[0] ?? 0), y: onAt.y + (PROPS[on!]?.mouth?.[1] ?? -4) } : floorThing ? { x: 94, y: 100 } : { x: 92, y: 70 }; if (!onAt && !floorThing) props.push({ id: 'table', asset: 'table', at: { x: 92, y: 100 }, z: -1 }); // furniture goes on the floor, never on a table
-    tl.push({ t: 200, action: 'walk', actor: 'p', to: { x: wide ? 28 : 62, y: 100 } }, { t: 1500, action: 'put', actor: 'p', prop: 'thing', at: target, durationMs: 800 }, { t: 2400, action: 'idle', actor: 'p', durationMs: 1200 });
+    tl.push({ t: 200, action: 'walk', actor: 'p', to: { x: wide ? 28 : on && onFloor(on) ? 54 : 62, y: 100 } }, /* floor containers (suitcases, bins) have lids and bulk: stand further back */ { t: 1500, action: 'put', actor: 'p', prop: 'thing', at: target, durationMs: 800 }, { t: 2400, action: 'idle', actor: 'p', durationMs: 1200 });
     if (intoOpen) tl.push({ t: 2300, action: 'tween', target: 'thing', prop: 'opacity', from: 1, to: 0, durationMs: 250 }, { t: 2600, action: 'set', target: 'place', prop: 'full', value: 1 }); // it is inside now
     (s.focus as J).targets = ['thing']; }
-  else if (take) { const thingAt = placeThing(s, 'thing', take.prop as string, 90, { scale: 0.9, ...(take.state ? { state: take.state } : {}) }, onFloor(take.prop as string) ? null : 'table'); void thingAt; tl.push({ t: 200, action: 'walk', actor: 'p', to: { x: 64, y: 100 } }, { t: 1500, action: 'take', actor: 'p', prop: 'thing', hand: 'left', durationMs: 700 }, { t: 2300, action: 'walk', actor: 'p', to: { x: 30, y: 100 } }); (s.focus as J).targets = ['thing']; }
+  else if (take) {
+    const from = take.from as string | undefined;
+    if (from) { // the thing comes OUT of an open container or cupboard
+      const fromAt = placeThing(s, 'place', from, 92, { scale: 1, ...(PROPS[from]?.defaults.open !== undefined ? { state: { open: 1 } } : {}) }, onFloor(from) ? null : 'table');
+      props.push({ id: 'thing', asset: take.prop, at: { x: fromAt.x + (PROPS[from]?.mouth?.[0] ?? 0), y: fromAt.y + (PROPS[from]?.mouth?.[1] ?? -4) + 2 }, z: 2, scale: 0.75, ...(take.state ? { state: take.state } : {}) });
+    } else placeThing(s, 'thing', take.prop as string, 90, { scale: 0.9, ...(take.state ? { state: take.state } : {}) }, onFloor(take.prop as string) ? null : 'table');
+    tl.push({ t: 200, action: 'walk', actor: 'p', to: { x: from && onFloor(from) ? 56 : 64, y: 100 } }, { t: 1500, action: 'take', actor: 'p', prop: 'thing', hand: 'left', durationMs: 700 }, { t: 2300, action: 'walk', actor: 'p', to: { x: 30, y: 100 } }); (s.focus as J).targets = ['thing']; }
   (s.focus as J).feature = `${give ? 'gives' : put ? 'puts down' : 'takes'} ${(give ?? put ?? take)?.prop}`;
   if (s.contrast) (s.contrast as J).distinctiveFeatures = [`has:action:${give ? 'give' : put ? 'put' : 'take'}`];
   return s;

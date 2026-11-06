@@ -226,13 +226,13 @@ export const PATTERNS: Record<string, Record<string, string>> = { randig: { top:
 export const COLOURS: Record<string, string> = { beige: 'beige', lila: 'purple', turkos: '#4fb8c4', röd: 'red', blå: 'denim', grön: 'green', gul: 'yellow', svart: 'black', vit: 'white', grå: 'grey', brun: 'brown', rosa: 'pink', orange: 'orange' };
 
 /** Verbs where a person puts or takes a thing (template arrange) – ported from the hand recipes so every sense of the lemma gets the same picture. */
-export const ARRANGE_VERBS: Record<string, { put?: { prop: string; on?: string; state?: Record<string, number | string> }; take?: { prop: string; state?: Record<string, number | string> } }> = {
+export const ARRANGE_VERBS: Record<string, { put?: { prop: string; on?: string; state?: Record<string, number | string> }; take?: { prop: string; from?: string; state?: Record<string, number | string> } }> = {
   duka: { put: { prop: 'container.plate' } }, 'lägga upp': { put: { prop: 'container.plate', state: { food: 1 } } }, 'duka av': { take: { prop: 'container.plate', state: { dirty: 0.7 } } }, 'plocka undan': { take: { prop: 'container.plate', state: { dirty: 0.7 } } },
-  packa: { put: { prop: 'container.crate', on: 'container.suitcase' } }, lasta: { put: { prop: 'container.crate', on: 'container.suitcase' } }, 'packa upp': { take: { prop: 'container.crate' } }, 'lasta av': { take: { prop: 'container.crate' } }, stapla: { put: { prop: 'container.crate', on: 'container.crate' } },
+  packa: { put: { prop: 'container.crate', on: 'container.suitcase' } }, lasta: { put: { prop: 'container.crate', on: 'container.suitcase' } }, 'packa upp': { take: { prop: 'container.bag', from: 'container.suitcase' } }, 'lasta av': { take: { prop: 'container.crate', from: 'fixture.cart' } }, stapla: { put: { prop: 'container.crate', on: 'container.crate' } },
   placera: { put: { prop: 'container.jar', on: 'fixture.shelf' } }, förvara: { put: { prop: 'container.jar', on: 'fixture.shelf' } }, ersätta: { put: { prop: 'container.jar', on: 'fixture.shelf' } }, 'byta ut': { put: { prop: 'container.jar', on: 'fixture.shelf' } },
   'hänga upp': { put: { prop: 'garment.shirt', on: 'fixture.clothesline' } }, hänga: { put: { prop: 'garment.shirt', on: 'fixture.clothesline' } }, möblera: { put: { prop: 'fixture.chair' } }, ommöblera: { put: { prop: 'fixture.chair' } }, flytta: { put: { prop: 'fixture.chair' } },
   kompostera: { put: { prop: 'container.bottle', on: 'container.bin' } }, källsortera: { put: { prop: 'container.bottle', on: 'container.bin' } }, sortera: { put: { prop: 'container.bottle', on: 'container.bin' } }, slänga: { put: { prop: 'container.bottle', on: 'container.bin' } }, panta: { put: { prop: 'container.bottle', on: 'container.bin' } }, återvinna: { put: { prop: 'container.bottle', on: 'container.bin' } },
-  'ta för sig': { take: { prop: 'container.plate', state: { food: 1 } } }, 'ta fram': { take: { prop: 'container.jar' } }, 'ställa in': { put: { prop: 'container.jar', on: 'fixture.fridge' } }, 'sätta in': { put: { prop: 'container.jar', on: 'fixture.fridge' } }, 'ta ut': { take: { prop: 'container.jar' } }, 'ställa undan': { put: { prop: 'container.jar', on: 'fixture.shelf' } },
+  'ta för sig': { take: { prop: 'container.plate', state: { food: 1 } } }, 'ta fram': { take: { prop: 'container.jar', from: 'fixture.fridge' } }, 'ställa in': { put: { prop: 'container.jar', on: 'fixture.fridge' } }, 'sätta in': { put: { prop: 'container.jar', on: 'fixture.fridge' } }, 'ta ut': { take: { prop: 'container.jar', from: 'fixture.fridge' } }, 'ställa undan': { put: { prop: 'container.jar', on: 'fixture.shelf' } },
 };
 /** Verbs between people with a thing changing hands (template social). */
 export const SOCIAL_VERBS: Record<string, { prop: string; state?: Record<string, number | string> }> = { servera: { prop: 'container.plate', state: { food: 1 } }, 'ta om': { prop: 'container.plate', state: { food: 1 } }, 'turas om': { prop: 'tool.spoon' }, ge: { prop: 'container.bag' }, skicka: { prop: 'container.bag' }, 'lämna över': { prop: 'container.bag' }, 'bjuda på': { prop: 'container.bag' }, räcka: { prop: 'container.bag' }, låna: { prop: 'book' }, 'låna ut': { prop: 'container.bag' } };
@@ -252,7 +252,7 @@ export const HARD_WORDS: Record<string, string> = {
 };
 
 /** Near-synonyms that the same picture legitimately covers: never offered against each other in blind tests or picture quizzes (declared as confusableWith). */
-export const SYNONYM_GROUPS: string[][] = [['rutten', 'skämd', 'möglig', 'härsken', 'unken', 'dålig'], ['färsk', 'fräsch', 'nybakad', 'dagsfärsk', 'nyplockad'], ['vissen', 'slokig'], ['mogen', 'mogna'], ['laga', 'tillaga', 'laga mat', 'steka'], ['servera', 'lägga upp', 'duka', 'ställa fram'], ['värma upp', 'värma', 'koka'], ['städa', 'sopa'], ['plocka undan', 'duka av'], ['slänga', 'kasta', 'återvinna', 'källsortera', 'sortera'], ['tvätta', 'diska', 'skölja'], ['ta av sig', 'klä av sig'], ['ta på sig', 'klä på sig', 'sätta på sig']];
+export const SYNONYM_GROUPS: string[][] = [['rutten', 'skämd', 'dålig'], ['färsk', 'fräsch', 'nybakad', 'dagsfärsk', 'nyplockad'], ['vissen', 'slokig'], ['mogen', 'mogna'], ['laga', 'tillaga', 'laga mat', 'steka'], ['servera', 'lägga upp', 'duka', 'ställa fram'], ['värma upp', 'värma', 'koka'], ['städa', 'sopa'], ['plocka undan', 'duka av'], ['slänga', 'kasta', 'återvinna', 'källsortera', 'sortera'], ['tvätta', 'diska', 'skölja'], ['ta av sig', 'klä av sig'], ['ta på sig', 'klä på sig', 'sätta på sig']];
 export const synonymsOf = (lemma: string): string[] => SYNONYM_GROUPS.find((g) => g.includes(lemma))?.filter((x) => x !== lemma) ?? [];
 
 /** Adjective keywords → a state that shows the property on whatever thing the definition names (applied only when the thing has that key; otherwise the fallback asset is used). */
@@ -260,7 +260,9 @@ export const STATE_BY_ADJ: [RegExp, { key: string; to: number; fallback: string;
   [/^övermog|\bövermogen/, { key: 'rot', to: 0.45, fallback: 'food.banana' }],
   [/^mog(en|na)\b/, { key: 'ripeness', to: 1, fallback: 'food.banana' }],
   [/^omog/, { key: 'ripeness', to: 0.1, fallback: 'food.banana' }],
-  [/^(rutten|skämd|möglig|härsken|unken|dålig|gammal)\b|\bmögel|\bruttn/, { key: 'rot', to: 1, fallback: 'food.apple' }],
+  [/^möglig\b|\bmögel/, { key: 'mold', to: 1, fallback: 'food.apple' }],
+  [/^(rutten|dålig)\b|\bruttn/, { key: 'rot', to: 1, fallback: 'food.apple' }],
+  [/^skämd\b/, { key: 'rot', to: 0.65, fallback: 'food.apple' }],
   [/^(vissen|slokig|slak)\b|\bvissn|\bslokar/, { key: 'wilt', to: 1, fallback: 'fixture.flower' }],
   [/^(nybakad|nygräddad|färskbakad)\b/, { key: 'toast', to: 0, fallback: 'food.bread', glint: true }],
   [/^(färsk|fräsch|nyplockad|dagsfärsk|krispig|spänstig)\b/, { key: 'ripeness', to: 0.9, fallback: 'food.apple', glint: true }],

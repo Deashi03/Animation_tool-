@@ -47,6 +47,10 @@
     },
     "dress-self": {
       "approved": false
+    },
+    "arrange": {
+      "approved": false,
+      "note": "En person ställer/tar ett föremål (duka, packa, stapla, hänga upp). Väntar på produktägarens godkännande."
     }
   }
 }

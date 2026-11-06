@@ -102,3 +102,32 @@ describe('reliability machinery', () => {
     } finally { process.chdir(cwd); fs.rmSync(tmp, { recursive: true, force: true }); }
   });
 });
+
+describe('recipes and the bearer rule', () => {
+  it('every recipe in registry/recipes.json builds a scene that validates (the word-function presets are complete)', async () => {
+    const { loadRecipes } = await import('../src/tools/coverage');
+    const { draftScene } = await import('../src/tools/batch');
+    const { validateScene } = await import('../src/compiler/validate');
+    const R = loadRecipes(); const bad: string[] = []; let n = 0;
+    for (const [key, rec] of Object.entries(R)) {
+      if (rec.template === 'image') continue;
+      const lemma = key.startsWith('s.') ? key.split('.')[1]! : key; const senseId = key.startsWith('s.') ? key : `s.${lemma.replace(/ /g, '-')}.1`;
+      const row = { senseId, lemma, pos: 'verb', defSv: 'def', kind: 'animation' as const, confidence: 'high' as const, contrast: [], jaGloss: 'テスト', note: '' };
+      const d = draftScene(row, rec, 'test', new Map());
+      if (!d) { bad.push(`${key}: cannot be built (${rec.template})`); continue; }
+      const errs = validateScene(d as unknown).problems.filter((p) => p.level === 'error').map((p) => p.message);
+      if (errs.length) bad.push(`${key}: ${errs[0]}`); else n++;
+    }
+    expect(bad).toEqual([]); expect(n).toBeGreaterThan(500);
+  }, 120_000);
+
+  it('a word scene where a person only says the word has no bearer and is rejected', async () => {
+    const { validateScene } = await import('../src/compiler/validate');
+    const base = { schemaVersion: 1, animationId: 'anim.vass.1', senseId: 's.vass.1', titleSv: 'vass', template: 'attribute-gloss', meaningHint: 'x', category: 'property', durationMs: 2000, loop: true, holdMs: 300, posterMs: 1500, environment: { id: 'room', time: 'day' },
+      actors: [{ id: 'p', variant: 'a', at: { x: 60, y: 100 }, facing: 'right' }], props: [], timeline: [{ t: 0, action: 'say', actor: 'p', text: '鋭い', durationMs: 1800 }], focus: { targets: ['p'] }, pedagogy: { quizEligible: false, group: 'x', confusableWith: [] } };
+    const v = validateScene(base as unknown);
+    expect(v.problems.some((p) => p.level === 'error' && /saknar bärare/.test(p.message))).toBe(true);
+    const withKnife = { ...base, props: [{ id: 'k', asset: 'tool.knife', at: { x: 60, y: 60 }, rotate: 90, scale: 1.5 }], timeline: [...base.timeline, { t: 200, action: 'emphasis', target: 'k', kind: 'glint', durationMs: 900 }] };
+    expect(validateScene(withKnife as unknown).problems.some((p) => p.level === 'error' && /saknar bärare/.test(p.message))).toBe(false);
+  });
+});

@@ -15,7 +15,7 @@ export const TOOL_SHAPES = ['knife', 'masher', 'spoon', 'ladle', 'fork', 'whisk'
 export type ToolShape = (typeof TOOL_SHAPES)[number];
 
 const T: Record<ToolShape, PropSpec> = {
-  knife: { defaults: {}, grip: [0, -14], heldTilt: 75, draw: (_s, col) => g([...handle(20, color(col ?? C.brown), 3), path('M-2.2 -3 h4.4 l-0.6 12 q-1.6 3 -3.2 0 Z', { fill: C.silver, stroke: INK, sw: 1.4 })]) },
+  knife: { defaults: { dull: 0 }, grip: [0, -14], heldTilt: 75, draw: (s, col) => g([...handle(20, color(col ?? C.brown), 3), path('M-2.2 -3 h4.4 l-0.6 12 q-1.6 3 -3.2 0 Z', { fill: n(s, 'dull', 0) > 0.5 ? '#9aa0a6' : C.silver, stroke: INK, sw: 1.4 }), ...(n(s, 'dull', 0) > 0.5 ? [path('M-2.6 -1 l1.6 1.8 l-1.6 1.8 l1.6 1.8 l-1.6 1.8 l1.6 1.8', { fill: 'none', stroke: INK, sw: 1.2 })] : [])]) },
   masher: { defaults: {}, grip: [0, -14], heldTilt: 0, draw: (_s, col) => g([...handle(20, color(col ?? C.dark), 3), rect(-7, -2, 14, 3, { rx: 1, fill: C.silver, stroke: INK, sw: 1.4 }), path('M-5 1 v4 M-2 1 v4 M1 1 v4 M4 1 v4 M-7 3 h14', { fill: 'none', stroke: C.silver, sw: 1.6 }), path('M-5 1 v4 M-2 1 v4 M1 1 v4 M4 1 v4 M-7 3 h14', { fill: 'none', stroke: INK, sw: 0.6 })]) },
   spoon: { defaults: {}, grip: [0, -14], heldTilt: 40, draw: (_s, col) => g([...handle(20, color(col ?? C.tan), 2.6), ellipse(0, 1, 4, 5.2, { fill: color(col ?? C.tan), stroke: INK, sw: 1.5 }), ellipse(0, 1, 2.2, 3.2, { fill: 'rgba(0,0,0,0.12)' })]) },
   ladle: { defaults: {}, grip: [0, -18], heldTilt: 30, draw: (_s, col) => g([...handle(24, color(col ?? C.silver), 2), path('M-5 -1 q0 7 5 7 q5 0 5 -7 Z', { fill: color(col ?? C.silver), stroke: INK, sw: 1.4 })]) },

@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.grov.1",
+  "kind": "word",
+  "template": "property-contrast",
+  "senseId": "s.grov.1",
+  "titleSv": "grov",
+  "meaningHint": "Med stora bitar; inte fint.",
+  "category": "property",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 59,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": -1,
+      "state": {}
+    },
+    {
+      "id": "a",
+      "asset": "food.pile",
+      "at": {
+        "x": 40,
+        "y": 70
+      },
+      "scale": 1.4,
+      "rotate": 0,
+      "z": 1,
+      "state": {
+        "size": 0.7,
+        "amount": 1,
+        "contents": "#e0a243"
+      }
+    },
+    {
+      "id": "b",
+      "asset": "food.pile",
+      "at": {
+        "x": 78,
+        "y": 70
+      },
+      "scale": 1.4,
+      "rotate": 0,
+      "z": 1,
+      "state": {
+        "size": 2.4,
+        "amount": 1,
+        "contents": "#e0a243"
+      }
+    }
+  ],
+  "shapes": [
+    {
+      "type": "text",
+      "id": "ja",
+      "x": 60,
+      "y": -20,
+      "text": "粗い",
+      "size": 11,
+      "weight": 800,
+      "fill": "ink",
+      "anchor": "middle",
+      "opacity": 0,
+      "z": 5,
+      "bg": "panel",
+      "pad": 6
+    }
+  ],
+  "timeline": [
+    {
+      "t": 900,
+      "action": "emphasis",
+      "target": "b",
+      "kind": "ring",
+      "durationMs": 900
+    },
+    {
+      "t": 1900,
+      "action": "emphasis",
+      "target": "b",
+      "kind": "arrowDown",
+      "durationMs": 1400
+    },
+    {
+      "t": 1300,
+      "action": "set",
+      "target": "ja",
+      "prop": "opacity",
+      "value": 1
+    },
+    {
+      "t": 1300,
+      "action": "tween",
+      "target": "ja",
+      "prop": "y",
+      "to": 18,
+      "from": -20,
+      "durationMs": 450,
+      "ease": "easeOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "b"
+    ],
+    "feature": "two bearers side by side; b is the word"
+  },
+  "contrast": {
+    "with": [
+      "anim.vass.1",
+      "anim.slö.1",
+      "anim.försiktig.1"
+    ],
+    "distinctiveFeatures": [
+      "has:prop:food.pile",
+      "start:b.size>=2.4",
+      "start:b.amount>=1",
+      "start:b.contents==#e0a243",
+      "has:actors==0"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "skära och hacka",
+    "confusableWith": [
+      "s.vass.1",
+      "s.slö.1",
+      "s.försiktig.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (attribute-gloss). stora bitar bredvid fina – grov läses bara mot sin motsats"
+  },
+  "label": {
+    "show": "optional"
+  }
+}

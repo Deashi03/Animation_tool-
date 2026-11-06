@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.halvera.1",
+  "kind": "word",
+  "template": "tool-rhythm",
+  "senseId": "s.halvera.1",
+  "titleSv": "halvera",
+  "meaningHint": "Dela något i två lika stora delar.",
+  "category": "action",
+  "durationMs": 4400,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 48,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 1,
+      "wardrobe": {
+        "top": "navy"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 76,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": -1,
+      "state": {}
+    },
+    {
+      "id": "surface",
+      "asset": "container.board",
+      "at": {
+        "x": 76,
+        "y": 70
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": 0,
+      "state": {}
+    },
+    {
+      "id": "target",
+      "asset": "food.apple",
+      "at": {
+        "x": 76,
+        "y": 66
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": 1,
+      "state": {
+        "parts": 2
+      }
+    },
+    {
+      "id": "tool",
+      "asset": "tool.knife",
+      "scale": 1,
+      "rotate": 0,
+      "z": 0,
+      "state": {},
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "target",
+      "tool": "tool",
+      "hand": "left",
+      "motion": "chop",
+      "durationMs": 4000,
+      "periodMs": 900,
+      "effect": [
+        {
+          "key": "pieces",
+          "to": 1,
+          "at": 0.5
+        }
+      ],
+      "bothHands": false
+    }
+  ],
+  "focus": {
+    "targets": [
+      "target"
+    ],
+    "feature": "tool.knife chop on food.apple; effects: target.pieces→1"
+  },
+  "contrast": {
+    "with": [
+      "anim.skära.1",
+      "anim.skölja.1",
+      "anim.hacka.1"
+    ],
+    "distinctiveFeatures": [
+      "end:target.pieces>=0.9",
+      "start:target.parts==2"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "skära och hacka",
+    "confusableWith": [
+      "s.skära.1",
+      "s.skölja.1",
+      "s.hacka.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (tool-rhythm). ett snitt, två halvor (parts 2)"
+  },
+  "label": {
+    "show": "optional"
+  }
+}

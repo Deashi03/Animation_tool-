@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-05",
+ "generatedAt": "2026-11-06",
  "rows": [
   {
    "senseId": "s.ren.1",
@@ -8,7 +8,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.smutsig.1",
@@ -17,16 +17,18 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.stökig.1",
    "lemma": "stökig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: flera saker huller om buller"
   },
   {
    "senseId": "s.städa.1",
@@ -35,13 +37,13 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.plocka-undan.1",
    "lemma": "plocka undan",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
    "note": ""
@@ -53,25 +55,25 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": "shirt.stain↓, tub.foam"
+   "note": ""
   },
   {
    "senseId": "s.tvätt.1",
    "lemma": "tvätt",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.hänga.1",
    "lemma": "hänga",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
-   "note": "garment.hanging"
+   "note": ""
   },
   {
    "senseId": "s.vika.1",
@@ -90,43 +92,51 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": "plate.dirty 1→0 + sink.foam"
+   "note": ""
   },
   {
    "senseId": "s.dammsuga.1",
    "lemma": "dammsuga",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
-   "missing": [],
-   "note": "dammsugare: tool.nozzle + pile som försvinner"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: dammsugarkropp"
   },
   {
    "senseId": "s.bädda.1",
    "lemma": "bädda",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
-   "missing": [],
-   "note": "blanket.cover 0→1"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: täcke slätas ut"
   },
   {
    "senseId": "s.laga.1",
    "lemma": "laga",
    "pos": "verb",
-   "template": "process",
-   "state": "ready",
-   "missing": [],
-   "note": "laga = person + spis: cook-rhythm"
+   "template": "cook-rhythm",
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "fritera/grilla: TODO egna föremål (fritös, grill)"
   },
   {
    "senseId": "s.laga.2",
    "lemma": "laga",
    "pos": "verb",
-   "template": "process",
-   "state": "ready",
-   "missing": [],
-   "note": "laga = person + spis: cook-rhythm"
+   "template": "cook-rhythm",
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "fritera/grilla: TODO egna föremål (fritös, grill)"
   },
   {
    "senseId": "s.handla.1",
@@ -135,7 +145,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.handla.2",
@@ -144,52 +154,54 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.slänga.1",
    "lemma": "slänga",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
-   "note": "föremål läggs i rätt kärl; källsortera = flera kärl"
+   "note": ""
   },
   {
    "senseId": "s.arg.1",
    "lemma": "arg",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.irriterad.1",
    "lemma": "irriterad",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "mildare: bryn ner, ingen gest"
   },
   {
    "senseId": "s.upprörd.1",
    "lemma": "upprörd",
    "pos": "adjective",
-   "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "template": "emotion",
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "arg + ledsen: angry med tårar – TODO"
   },
   {
    "senseId": "s.rasande.1",
    "lemma": "rasande",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.odla.1",
@@ -198,7 +210,7 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": "skörda: plant/tree + basket.full↑"
+   "note": "skörda: + basket"
   },
   {
    "senseId": "s.färsk.1",
@@ -207,7 +219,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.rå.1",
@@ -216,7 +228,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.skala.1",
@@ -243,54 +255,61 @@
    "lemma": "vass",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
+   "state": "done-blind",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "kniv som ligger på brädan och blänker",
+   "animationId": "anim.vass.1"
   },
   {
    "senseId": "s.slö.1",
    "lemma": "slö",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
+   "state": "done-blind",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "kniv utan glans och med hackig egg",
+   "animationId": "anim.slö.1"
   },
   {
    "senseId": "s.slö.2",
    "lemma": "slö",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.försiktig.1",
    "lemma": "försiktig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "done-blind",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: långsam gång saknas – gången har fast tempo; brickan bärs",
+   "animationId": "anim.försiktig.1"
   },
   {
    "senseId": "s.skölja.1",
    "lemma": "skölja",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
+   "state": "done-blind",
    "missing": [],
-   "note": ""
+   "note": "kranen rinner över grönsaken",
+   "animationId": "anim.skölja.1"
   },
   {
    "senseId": "s.halvera.1",
    "lemma": "halvera",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
+   "state": "done-blind",
    "missing": [],
-   "note": ""
+   "note": "ett snitt, två halvor (parts 2)",
+   "animationId": "anim.halvera.1"
   },
   {
    "senseId": "s.hacka.1",
@@ -299,7 +318,7 @@
    "template": "tool-rhythm",
    "state": "done-blind",
    "missing": [],
-   "note": "",
+   "note": "extra: food.pile fin",
    "animationId": "anim.hacka.1"
   },
   {
@@ -307,27 +326,28 @@
    "lemma": "grov",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
+   "state": "done-blind",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "stora bitar bredvid fina – grov läses bara mot sin motsats",
+   "animationId": "anim.grov.1"
   },
   {
    "senseId": "s.tärning.1",
    "lemma": "tärning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.tärning.2",
    "lemma": "tärning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.riva.1",
@@ -336,7 +356,7 @@
    "template": "tool-rhythm",
    "state": "done-blind",
    "missing": [],
-   "note": "riva = rivjärn; riva (hus) = event med vägg som faller",
+   "note": "",
    "animationId": "anim.riva.1"
   },
   {
@@ -346,7 +366,7 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": "riva = rivjärn; riva (hus) = event med vägg som faller"
+   "note": ""
   },
   {
    "senseId": "s.koka.1",
@@ -355,7 +375,7 @@
    "template": "process",
    "state": "done-blind",
    "missing": [],
-   "note": "laga = person + spis: cook-rhythm",
+   "note": "",
    "animationId": "anim.koka.1"
   },
   {
@@ -365,7 +385,7 @@
    "template": "process",
    "state": "ready",
    "missing": [],
-   "note": "laga = person + spis: cook-rhythm"
+   "note": ""
   },
   {
    "senseId": "s.salta.1",
@@ -374,7 +394,7 @@
    "template": "tool-rhythm",
    "state": "done-blind",
    "missing": [],
-   "note": "",
+   "note": "pot på spis; söta: socker",
    "animationId": "anim.salta.1"
   },
   {
@@ -382,9 +402,11 @@
    "lemma": "sila",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
-   "missing": [],
-   "note": "vattnet silas av: pot.fill↓, bowl.fill↑ via tween"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "kastrullen lutas över vasken; TODO: durkslag"
   },
   {
    "senseId": "s.mör.1",
@@ -393,7 +415,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "bytt till panna med mört kött; tool-rhythm med kniv som skär lätt vore bättre"
   },
   {
    "senseId": "s.sjuda.1",
@@ -402,7 +424,7 @@
    "template": "process",
    "state": "done-blind",
    "missing": [],
-   "note": "laga = person + spis: cook-rhythm",
+   "note": "",
    "animationId": "anim.sjuda.1"
   },
   {
@@ -412,7 +434,7 @@
    "template": "process",
    "state": "ready",
    "missing": [],
-   "note": "laga = person + spis: cook-rhythm"
+   "note": ""
   },
   {
    "senseId": "s.medeltida.1",
@@ -427,10 +449,10 @@
    "senseId": "s.fästning.1",
    "lemma": "fästning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.belägra.1",
@@ -439,7 +461,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+   "note": "kapitulera/ge upp = vit fana + armar upp"
   },
   {
    "senseId": "s.kapitulera.1",
@@ -448,7 +470,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+   "note": "kapitulera/ge upp = vit fana + armar upp"
   },
   {
    "senseId": "s.storma.1",
@@ -457,7 +479,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+   "note": "kapitulera/ge upp = vit fana + armar upp"
   },
   {
    "senseId": "s.storma.2",
@@ -466,7 +488,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+   "note": "kapitulera/ge upp = vit fana + armar upp"
   },
   {
    "senseId": "s.erövra.1",
@@ -475,7 +497,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+   "note": "kapitulera/ge upp = vit fana + armar upp"
   },
   {
    "senseId": "s.befästa.1",
@@ -484,7 +506,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+   "note": "kapitulera/ge upp = vit fana + armar upp"
   },
   {
    "senseId": "s.ointaglig.1",
@@ -493,25 +515,25 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.rymlig.1",
    "lemma": "rymlig",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "property-contrast",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.trång.1",
    "lemma": "trång",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "property-contrast",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.mysig.1",
@@ -520,7 +542,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.modern.1",
@@ -529,7 +551,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.renovera.1",
@@ -538,7 +560,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.nybyggd.1",
@@ -547,16 +569,18 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.sliten.1",
    "lemma": "sliten",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: noppor/hål-tillstånd"
   },
   {
    "senseId": "s.charmig.1",
@@ -565,7 +589,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.praktisk.1",
@@ -574,7 +598,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.central.1",
@@ -583,7 +607,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.bullrig.1",
@@ -592,7 +616,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "med sound thump"
   },
   {
    "senseId": "s.solig.1",
@@ -601,7 +625,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.dragig.1",
@@ -610,25 +634,25 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.högt-i-tak.1",
    "lemma": "högt i tak",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.klä-sig.1",
    "lemma": "klä sig",
    "pos": "verb",
-   "template": "dress-self",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+   "note": ""
   },
   {
    "senseId": "s.trendig.1",
@@ -637,7 +661,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.omodern.1",
@@ -646,7 +670,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.tidlös.1",
@@ -655,7 +679,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.klädsam.1",
@@ -664,7 +688,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.välklädd.1",
@@ -673,7 +697,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.stilig.1",
@@ -682,7 +706,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.cool.1",
@@ -691,7 +715,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.originell.1",
@@ -700,16 +724,16 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.modemedveten.1",
    "lemma": "modemedveten",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.uttrycka.1",
@@ -718,13 +742,13 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.duka.1",
    "lemma": "duka",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
    "note": ""
@@ -733,7 +757,7 @@
    "senseId": "s.duka-av.1",
    "lemma": "duka av",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
    "note": ""
@@ -742,37 +766,37 @@
    "senseId": "s.dukning.1",
    "lemma": "dukning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.levande-ljus.1",
    "lemma": "levande ljus",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.till-vänster.1",
    "lemma": "till vänster",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "relation-arrow",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": "pil åt sidan + 右/左"
   },
   {
    "senseId": "s.till-höger.1",
    "lemma": "till höger",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "relation-arrow",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": "pil åt sidan + 右/左"
   },
   {
    "senseId": "s.granska.1",
@@ -781,7 +805,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.kontrollera.1",
@@ -790,7 +814,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.slitstark.1",
@@ -799,7 +823,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.noppa-sig.1",
@@ -810,34 +834,36 @@
    "missing": [
     "svagt recept"
    ],
-   "note": "nöta/noppa: garment.holes/pills saknas – svag"
+   "note": "TODO: hål/noppor"
   },
   {
    "senseId": "s.nopprig.1",
    "lemma": "nopprig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: noppor/hål-tillstånd"
   },
   {
    "senseId": "s.slit-och-släng.1",
    "lemma": "slit och släng",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": "fras: symbolisk ikon + gloss – avgör per fras"
   },
   {
    "senseId": "s.tillverkning.1",
    "lemma": "tillverkning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.miljömärkt.1",
@@ -846,7 +872,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.secondhand.1",
@@ -855,7 +881,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.vintage.1",
@@ -864,31 +890,31 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.möblera.1",
    "lemma": "möblera",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
-   "note": "flytta (bostad) = event med lådor"
+   "note": ""
   },
   {
    "senseId": "s.ommöblera.1",
    "lemma": "ommöblera",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
-   "note": "flytta (bostad) = event med lådor"
+   "note": ""
   },
   {
    "senseId": "s.placera.1",
    "lemma": "placera",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
    "note": ""
@@ -900,7 +926,7 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": "effect cake.decorated 0→1"
+   "note": ""
   },
   {
    "senseId": "s.symmetrisk.1",
@@ -909,7 +935,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.jämföra.1",
@@ -918,16 +944,16 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.märkning.1",
    "lemma": "märkning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.importera.1",
@@ -936,7 +962,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.närproducerad.1",
@@ -945,7 +971,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.ekologisk.1",
@@ -954,7 +980,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.vild.1",
@@ -963,7 +989,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.odlad.1",
@@ -972,7 +998,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.utländsk.1",
@@ -987,19 +1013,19 @@
    "senseId": "s.räkning.1",
    "lemma": "räkning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.elräkning.1",
    "lemma": "elräkning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.rörlig.1",
@@ -1008,43 +1034,43 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.förbrukning.1",
    "lemma": "förbrukning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.uppvärmning.1",
    "lemma": "uppvärmning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.sophämtning.1",
    "lemma": "sophämtning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.vattenledning.1",
    "lemma": "vattenledning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.droppa.1",
@@ -1063,16 +1089,16 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "kranen rinner över grönsaken"
   },
   {
    "senseId": "s.ventilation.1",
    "lemma": "ventilation",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.mögla.1",
@@ -1088,9 +1114,11 @@
    "lemma": "reparera",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
-   "missing": [],
-   "note": "laga (mat) = cook-rhythm"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "laga (mat) → cook-rhythm; TODO: trasig-tillstånd på stolen"
   },
   {
    "senseId": "s.torka-ut.1",
@@ -1108,7 +1136,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.fälla-ihop.1",
@@ -1117,7 +1145,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.glömma-kvar.1",
@@ -1126,7 +1154,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.beskriva.1",
@@ -1135,7 +1163,7 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.aptitlig.1",
@@ -1144,7 +1172,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.äcklig.1",
@@ -1153,7 +1181,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.utsökt.1",
@@ -1162,7 +1190,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.smaskig.1",
@@ -1171,7 +1199,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.välsmakande.1",
@@ -1180,7 +1208,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.mättande.1",
@@ -1189,7 +1217,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.passa.1",
@@ -1198,7 +1226,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.kombinera.1",
@@ -1207,7 +1235,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.påminna.1",
@@ -1216,7 +1244,7 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.boka.1",
@@ -1225,16 +1253,16 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.bokning.1",
    "lemma": "bokning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.ledig.1",
@@ -1243,7 +1271,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.beställa.1",
@@ -1252,17 +1280,17 @@
    "template": "communicate",
    "state": "done-blind",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)",
+   "note": "",
    "animationId": "anim.beställa.1"
   },
   {
    "senseId": "s.beställning.1",
    "lemma": "beställning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.klaga.1",
@@ -1271,17 +1299,17 @@
    "template": "communicate",
    "state": "done-blind",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)",
+   "note": "",
    "animationId": "anim.klaga.1"
   },
   {
    "senseId": "s.betalning.1",
    "lemma": "betalning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.kontant.1",
@@ -1290,7 +1318,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.swisha.1",
@@ -1299,7 +1327,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.var-för-sig.1",
@@ -1308,16 +1336,18 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": "två personer, kvitto"
   },
   {
    "senseId": "s.dela-på-notan.1",
    "lemma": "dela på notan",
    "pos": "phrase",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion"
   },
   {
    "senseId": "s.äga.1",
@@ -1326,7 +1356,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.köa.1",
@@ -1335,17 +1365,17 @@
    "template": "communicate",
    "state": "done-blind",
    "missing": [],
-   "note": "",
+   "note": "tre figurer i rad mot dörr",
    "animationId": "anim.köa.1"
   },
   {
    "senseId": "s.i-andra-hand.1",
    "lemma": "i andra hand",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": "fras: symbolisk ikon + gloss – avgör per fras"
   },
   {
    "senseId": "s.tillverka.1",
@@ -1354,7 +1384,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.färga.1",
@@ -1363,7 +1393,7 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": "wall.paint"
+   "note": ""
   },
   {
    "senseId": "s.torkad.1",
@@ -1372,7 +1402,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "konserveringsmetod: burk + tid"
   },
   {
    "senseId": "s.blötlägga.1",
@@ -1381,7 +1411,7 @@
    "template": "process",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "råvaran täcks"
   },
   {
    "senseId": "s.svälla.1",
@@ -1406,10 +1436,10 @@
    "senseId": "s.mätt.1",
    "lemma": "mätt",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "tom tallrik, händer på magen"
   },
   {
    "senseId": "s.nyttig.1",
@@ -1418,13 +1448,13 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.ersätta.1",
    "lemma": "ersätta",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
    "note": ""
@@ -1436,7 +1466,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.utdragbar.1",
@@ -1445,7 +1475,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.fällbar.1",
@@ -1454,16 +1484,16 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.stapla.1",
    "lemma": "stapla",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
-   "note": "flera lådor på varandra"
+   "note": ""
   },
   {
    "senseId": "s.massiv.1",
@@ -1472,25 +1502,25 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.visning.1",
    "lemma": "visning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.intresserad.1",
    "lemma": "intresserad",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.buda.1",
@@ -1499,43 +1529,43 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.budgivning.1",
    "lemma": "budgivning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.bostadsrättsförening.1",
    "lemma": "bostadsrättsförening",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.avgiftshöjning.1",
    "lemma": "avgiftshöjning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.årsredovisning.1",
    "lemma": "årsredovisning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.ansöka.1",
@@ -1544,7 +1574,7 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.godkänna.1",
@@ -1553,34 +1583,34 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.andrahandsuthyrning.1",
    "lemma": "andrahandsuthyrning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.ombildning.1",
    "lemma": "ombildning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.ha-på-sig.1",
    "lemma": "ha på sig",
    "pos": "verb",
-   "template": "dress-self",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+   "note": ""
   },
   {
    "senseId": "s.knälång.1",
@@ -1598,7 +1628,7 @@
    "template": "dress-self",
    "state": "ready",
    "missing": [],
-   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+   "note": ""
   },
   {
    "senseId": "s.sopa.1",
@@ -1616,7 +1646,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.moppa.1",
@@ -1634,9 +1664,9 @@
    "template": "tool-rhythm",
    "state": "blocked",
    "missing": [
-    "föremål:fixture.window"
+    "svagt recept"
    ],
-   "note": "effect: plate.dirty↓ eller eget smutsföremål"
+   "note": "TODO: fläck på bordet som försvinner"
   },
   {
    "senseId": "s.duscha.1",
@@ -1645,7 +1675,7 @@
    "template": "state",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "fixture.shower flow 1 + person"
   },
   {
    "senseId": "s.bada.1",
@@ -1654,16 +1684,18 @@
    "template": "state",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "fixture.shower flow 1 + person"
   },
   {
    "senseId": "s.stänka.1",
    "lemma": "stänka",
    "pos": "verb",
    "template": "process",
-   "state": "ready",
-   "missing": [],
-   "note": ""
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: droppar som flyger"
   },
   {
    "senseId": "s.halka.1",
@@ -1674,7 +1706,7 @@
    "missing": [
     "svagt recept"
    ],
-   "note": "kräver små rörelsemönster: halka = pose + lift, vingla = walk med kroppsrotation (saknas)"
+   "note": "TODO: pose + lift – saknas"
   },
   {
    "senseId": "s.rinna.1",
@@ -1695,7 +1727,7 @@
    "missing": [
     "svagt recept"
    ],
-   "note": "grill saknas – svag"
+   "note": "fritera/grilla: TODO egna föremål (fritös, grill)"
   },
   {
    "senseId": "s.värpa.1",
@@ -1711,18 +1743,22 @@
    "lemma": "kläcka",
    "pos": "verb",
    "template": "process",
-   "state": "ready",
-   "missing": [],
-   "note": ""
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: kyckling"
   },
   {
    "senseId": "s.hårdkokt.1",
    "lemma": "hårdkokt",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: gula hård"
   },
   {
    "senseId": "s.löskokt.1",
@@ -1731,7 +1767,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.frigående.1",
@@ -1740,16 +1776,16 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.inredning.1",
    "lemma": "inredning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.skandinavisk.1",
@@ -1758,7 +1794,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.minimalistisk.1",
@@ -1767,7 +1803,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.lantlig.1",
@@ -1776,7 +1812,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.tapetsera.1",
@@ -1785,7 +1821,7 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": "wall.paper 0→1"
+   "note": ""
   },
   {
    "senseId": "s.enfärgad.1",
@@ -1867,7 +1903,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.övermogen.1",
@@ -1876,7 +1912,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.fräsch.1",
@@ -1885,7 +1921,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.nybakad.1",
@@ -1894,7 +1930,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.dagsfärsk.1",
@@ -1903,7 +1939,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.vissen.1",
@@ -1912,7 +1948,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.slokig.1",
@@ -1921,7 +1957,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.möglig.1",
@@ -1930,7 +1966,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.ruttna.1",
@@ -1949,7 +1985,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.skämd.1",
@@ -1958,7 +1994,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.härsken.1",
@@ -1967,16 +2003,18 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.unken.1",
    "lemma": "unken",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: stängt fönster + lukt-linjer"
   },
   {
    "senseId": "s.felanmäla.1",
@@ -1985,16 +2023,18 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.åtgärda.1",
    "lemma": "åtgärda",
    "pos": "verb",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion"
   },
   {
    "senseId": "s.akut.1",
@@ -2003,7 +2043,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.släppa-in.1",
@@ -2012,7 +2052,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.högklackad.1",
@@ -2030,7 +2070,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "kontrast mot bekväm"
   },
   {
    "senseId": "s.nöta.1",
@@ -2041,7 +2081,7 @@
    "missing": [
     "svagt recept"
    ],
-   "note": "nöta/noppa: garment.holes/pills saknas – svag"
+   "note": "TODO: hål/noppor"
   },
   {
    "senseId": "s.vingla.1",
@@ -2052,27 +2092,29 @@
    "missing": [
     "svagt recept"
    ],
-   "note": "kräver små rörelsemönster: halka = pose + lift, vingla = walk med kroppsrotation (saknas)"
+   "note": "walk + bodyRotate pendling – TODO"
   },
   {
    "senseId": "s.klacka-om.1",
    "lemma": "klacka om",
    "pos": "verb",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "symbolisk + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion"
   },
   {
    "senseId": "s.fiska.1",
    "lemma": "fiska",
    "pos": "verb",
-   "template": "tool-rhythm",
+   "template": "state",
    "state": "blocked",
    "missing": [
-    "handling:hold"
+    "svagt recept"
    ],
-   "note": "behöver spö/vatten – svag"
+   "note": "TODO: spö och vatten"
   },
   {
    "senseId": "s.rökt.1",
@@ -2081,7 +2123,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "konserveringsmetod: burk + tid"
   },
   {
    "senseId": "s.gravad.1",
@@ -2090,7 +2132,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "konserveringsmetod: burk + tid"
   },
   {
    "senseId": "s.inlagd.1",
@@ -2099,22 +2141,22 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "konserveringsmetod: burk + tid"
   },
   {
    "senseId": "s.flytta.1",
    "lemma": "flytta",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
-   "note": "flytta (bostad) = event med lådor"
+   "note": ""
   },
   {
    "senseId": "s.packa.1",
    "lemma": "packa",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
    "note": ""
@@ -2123,7 +2165,7 @@
    "senseId": "s.packa-upp.1",
    "lemma": "packa upp",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
    "note": ""
@@ -2135,25 +2177,29 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.ömtålig.1",
    "lemma": "ömtålig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: spricka"
   },
   {
    "senseId": "s.tejpa.1",
    "lemma": "tejpa",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
-   "missing": [],
-   "note": "två delar som sätts ihop: box-variant"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: två delar som sätts ihop"
   },
   {
    "senseId": "s.flyttstäda.1",
@@ -2162,7 +2208,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.lämna.1",
@@ -2171,7 +2217,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.sakna.1",
@@ -2180,40 +2226,40 @@
    "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+   "note": "kroppskänsla: express + ikon; stinka: express disgusted + wave-ikon vid källan"
   },
   {
    "senseId": "s.inflyttningsfest.1",
    "lemma": "inflyttningsfest",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.utflyttning.1",
    "lemma": "utflyttning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.inflyttning.1",
    "lemma": "inflyttning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.lasta.1",
    "lemma": "lasta",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
    "note": ""
@@ -2222,7 +2268,7 @@
    "senseId": "s.lasta-av.1",
    "lemma": "lasta av",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
    "note": ""
@@ -2231,19 +2277,19 @@
    "senseId": "s.svettig.1",
    "lemma": "svettig",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "svettdroppar vid tinningen, fläktar sig"
   },
   {
    "senseId": "s.besiktning.1",
    "lemma": "besiktning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.lämna-över.1",
@@ -2259,28 +2305,28 @@
    "senseId": "s.eftersändning.1",
    "lemma": "eftersändning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.i-ordning.1",
    "lemma": "i ordning",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.hänga-upp.1",
    "lemma": "hänga upp",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
-   "note": "garment.hanging"
+   "note": ""
   },
   {
    "senseId": "s.överfull.1",
@@ -2289,7 +2335,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.tät.1",
@@ -2298,7 +2344,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "droppar som pärlar av: fixture.drip ovanför + jacket wet 0"
   },
   {
    "senseId": "s.läcka.1",
@@ -2317,7 +2363,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.sylta.1",
@@ -2326,7 +2372,7 @@
    "template": "process",
    "state": "ready",
    "missing": [],
-   "note": "laga = person + spis: cook-rhythm"
+   "note": "sylta: röd; stuva: vit sås"
   },
   {
    "senseId": "s.konservera.1",
@@ -2335,7 +2381,7 @@
    "template": "process",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "råvaran täcks"
   },
   {
    "senseId": "s.bre.1",
@@ -2344,16 +2390,18 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": "smörklick på brödet: effect bread.toast? behöver bread.butter-tillstånd"
+   "note": ""
   },
   {
    "senseId": "s.stressig.1",
    "lemma": "stressig",
    "pos": "adjective",
-   "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "template": "emotion",
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "klocka + många saker – TODO"
   },
   {
    "senseId": "s.hoppa-över.1",
@@ -2362,25 +2410,25 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.morgonpigg.1",
    "lemma": "morgonpigg",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "sträcker på sig, ler, fönster med sol"
   },
   {
    "senseId": "s.morgontrött.1",
    "lemma": "morgontrött",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "miljö bedroom, morgonljus"
   },
   {
    "senseId": "s.mogen.1",
@@ -2389,7 +2437,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.plocka.1",
@@ -2398,16 +2446,18 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": "skörda: plant/tree + basket.full↑"
+   "note": "skörda: + basket"
   },
   {
    "senseId": "s.pressa.1",
    "lemma": "pressa",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
-   "missing": [],
-   "note": ""
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: citruspress"
   },
   {
    "senseId": "s.jäsa.1",
@@ -2455,16 +2505,16 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.störning.1",
    "lemma": "störning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.lyhörd.1",
@@ -2473,7 +2523,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "med sound thump"
   },
   {
    "senseId": "s.festa.1",
@@ -2482,7 +2532,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "fika = två personer, kopp, bulle; festa = flera personer + musik-ikon"
+   "note": ""
   },
   {
    "senseId": "s.kvällstid.1",
@@ -2491,7 +2541,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: sätt/grad som kontrast + gloss"
+   "note": "fönster med kvällsljus"
   },
   {
    "senseId": "s.dunka.1",
@@ -2499,31 +2549,27 @@
    "pos": "verb",
    "template": "process",
    "state": "done-blind",
-   "missing": [
-    "svagt recept"
-   ],
-   "note": "skälla: hund saknas",
+   "missing": [],
+   "note": "",
    "animationId": "anim.dunka.1"
   },
   {
    "senseId": "s.skälla.1",
    "lemma": "skälla",
    "pos": "verb",
-   "template": "process",
-   "state": "blocked",
-   "missing": [
-    "svagt recept"
-   ],
-   "note": "skälla: hund saknas"
+   "template": "–",
+   "state": "no-recipe",
+   "missing": [],
+   "note": ""
   },
   {
    "senseId": "s.vänlig.1",
    "lemma": "vänlig",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.ursäkta.1",
@@ -2532,7 +2578,7 @@
    "template": "communicate",
    "state": "done-blind",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)",
+   "note": "",
    "animationId": "anim.ursäkta.1"
   },
   {
@@ -2542,7 +2588,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.besk.1",
@@ -2551,7 +2597,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.bitter.1",
@@ -2560,16 +2606,16 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.bitter.2",
    "lemma": "bitter",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.dofta.1",
@@ -2578,7 +2624,7 @@
    "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+   "note": "kroppskänsla: express + ikon; stinka: express disgusted + wave-ikon vid källan"
   },
   {
    "senseId": "s.stinka.1",
@@ -2587,7 +2633,7 @@
    "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+   "note": "kroppskänsla: express + ikon; stinka: express disgusted + wave-ikon vid källan"
   },
   {
    "senseId": "s.känna.1",
@@ -2596,13 +2642,13 @@
    "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+   "note": "kroppskänsla: express + ikon; stinka: express disgusted + wave-ikon vid källan"
   },
   {
    "senseId": "s.förvara.1",
    "lemma": "förvara",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
    "note": ""
@@ -2614,7 +2660,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.tina.1",
@@ -2629,10 +2675,10 @@
    "senseId": "s.hållbarhet.2",
    "lemma": "hållbarhet",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.hållbar.1",
@@ -2641,7 +2687,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.hållbar.2",
@@ -2650,16 +2696,16 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.bäst-före.1",
    "lemma": "bäst före",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.lufttät.1",
@@ -2668,25 +2714,27 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.frysa-in.1",
    "lemma": "frysa in",
    "pos": "verb",
    "template": "process",
-   "state": "ready",
-   "missing": [],
-   "note": ""
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: föremål in i frysen"
   },
   {
    "senseId": "s.frusen.1",
    "lemma": "frusen",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "person som huttrar – frusen om person"
   },
   {
    "senseId": "s.linda.1",
@@ -2697,7 +2745,7 @@
    "missing": [
     "svagt recept"
    ],
-   "note": "behöver bandage-/lindningstillstånd – svag"
+   "note": "TODO: rullat tillstånd"
   },
   {
    "senseId": "s.borttappad.1",
@@ -2706,14 +2754,14 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.torka-sig.1",
    "lemma": "torka sig",
    "pos": "phrase",
-   "template": "process",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
    "note": ""
   },
@@ -2733,16 +2781,16 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.firande.1",
    "lemma": "firande",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.högtidlig.1",
@@ -2751,43 +2799,45 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.våning.1",
    "lemma": "våning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.övervåning.1",
    "lemma": "övervåning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.bottenvåning.1",
    "lemma": "bottenvåning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.borsta.1",
    "lemma": "borsta",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
-   "missing": [],
-   "note": "tänder: handen vid munnen (offset)"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "tänder: on = aktören själv (offset vid munnen) – TODO stöd för mål = egen mun; nu: borste i handen vid spegel"
   },
   {
    "senseId": "s.raka-sig.1",
@@ -2796,7 +2846,7 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "offset mot egen haka"
   },
   {
    "senseId": "s.hyra.1",
@@ -2805,7 +2855,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.skriva-under.1",
@@ -2814,25 +2864,27 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.hyreshöjning.1",
    "lemma": "hyreshöjning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.förlänga.1",
    "lemma": "förlänga",
    "pos": "verb",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion"
   },
   {
    "senseId": "s.säga-upp.1",
@@ -2841,7 +2893,7 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.dra-upp.1",
@@ -2870,7 +2922,7 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.förklara.1",
@@ -2879,44 +2931,44 @@
    "template": "communicate",
    "state": "done-blind",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)",
+   "note": "",
    "animationId": "anim.förklara.1"
   },
   {
    "senseId": "s.klänning.1",
    "lemma": "klänning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.sommarklänning.1",
    "lemma": "sommarklänning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.långklänning.1",
    "lemma": "långklänning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.brudklänning.1",
    "lemma": "brudklänning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.knyta.1",
@@ -2935,7 +2987,7 @@
    "template": "dress-self",
    "state": "ready",
    "missing": [],
-   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss"
+   "note": ""
   },
   {
    "senseId": "s.inbyggd.1",
@@ -2953,7 +3005,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.brumma.1",
@@ -2961,10 +3013,8 @@
    "pos": "verb",
    "template": "process",
    "state": "done-blind",
-   "missing": [
-    "svagt recept"
-   ],
-   "note": "skälla: hund saknas",
+   "missing": [],
+   "note": "",
    "animationId": "anim.brumma.1"
   },
   {
@@ -2974,7 +3024,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.rostfri.1",
@@ -2983,16 +3033,18 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.repig.1",
    "lemma": "repig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: spricka/repa-tillstånd på tallrik"
   },
   {
    "senseId": "s.värmetålig.1",
@@ -3001,7 +3053,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.lättskött.1",
@@ -3010,7 +3062,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.torka-av.1",
@@ -3019,9 +3071,9 @@
    "template": "tool-rhythm",
    "state": "blocked",
    "missing": [
-    "föremål:fixture.window"
+    "svagt recept"
    ],
-   "note": "effect: plate.dirty↓ eller eget smutsföremål"
+   "note": "TODO: fläck på bordet som försvinner"
   },
   {
    "senseId": "s.fläckig.1",
@@ -3030,7 +3082,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.krispig.1",
@@ -3039,7 +3091,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "bit + crunch-ljud; ljudmarkeringen bär skillnaden mot mjuk"
   },
   {
    "senseId": "s.knaprig.1",
@@ -3048,7 +3100,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "bit + crunch-ljud; ljudmarkeringen bär skillnaden mot mjuk"
   },
   {
    "senseId": "s.frasig.1",
@@ -3057,7 +3109,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "bit + crunch-ljud; ljudmarkeringen bär skillnaden mot mjuk"
   },
   {
    "senseId": "s.spröd.1",
@@ -3066,7 +3118,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "bättre: person som biter + crunch-ljud (taste-bärare)"
   },
   {
    "senseId": "s.knapra.1",
@@ -3075,18 +3127,16 @@
    "template": "manipulate-prop",
    "state": "ready",
    "missing": [],
-   "note": "sound: crunch/splash vid munnen"
+   "note": "sörpla: container.cup + splash"
   },
   {
    "senseId": "s.krasa.1",
    "lemma": "krasa",
    "pos": "verb",
-   "template": "process",
-   "state": "blocked",
-   "missing": [
-    "svagt recept"
-   ],
-   "note": "skälla: hund saknas"
+   "template": "manipulate-prop",
+   "state": "ready",
+   "missing": [],
+   "note": "sörpla: container.cup + splash"
   },
   {
    "senseId": "s.panera.1",
@@ -3102,9 +3152,11 @@
    "lemma": "fritera",
    "pos": "verb",
    "template": "cook-rhythm",
-   "state": "ready",
-   "missing": [],
-   "note": "pot med olja + bubblor"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "fritera/grilla: TODO egna föremål (fritös, grill)"
   },
   {
    "senseId": "s.krydda-verb.1",
@@ -3113,7 +3165,7 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "pot på spis; söta: socker"
   },
   {
    "senseId": "s.peppra.1",
@@ -3122,7 +3174,7 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "pot på spis; söta: socker"
   },
   {
    "senseId": "s.söta.1",
@@ -3131,7 +3183,7 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "pot på spis; söta: socker"
   },
   {
    "senseId": "s.smaka-av.1",
@@ -3140,7 +3192,7 @@
    "template": "manipulate-prop",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "sked från grytan till munnen, nickar"
   },
   {
    "senseId": "s.provsmaka.1",
@@ -3149,16 +3201,18 @@
    "template": "manipulate-prop",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "sked från grytan till munnen, nickar"
   },
   {
    "senseId": "s.justera.1",
    "lemma": "justera",
    "pos": "verb",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion"
   },
   {
    "senseId": "s.fadd.1",
@@ -3167,7 +3221,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.smakrik.1",
@@ -3176,52 +3230,58 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.garva.1",
    "lemma": "garva",
    "pos": "verb",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion"
   },
   {
    "senseId": "s.impregnera.1",
    "lemma": "impregnera",
    "pos": "verb",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "symbolisk + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion"
   },
   {
    "senseId": "s.mjukna.1",
    "lemma": "mjukna",
    "pos": "verb",
    "template": "process",
-   "state": "ready",
-   "missing": [],
-   "note": ""
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: mjuk-tillstånd"
   },
   {
    "senseId": "s.belysning.1",
    "lemma": "belysning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.tända.1",
    "lemma": "tända",
    "pos": "verb",
-   "template": "process",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "tända/släcka lampa = person + reach + set lamp.on"
+   "note": ""
   },
   {
    "senseId": "s.lysa.1",
@@ -3236,10 +3296,10 @@
    "senseId": "s.mysbelysning.1",
    "lemma": "mysbelysning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.mikra.1",
@@ -3254,10 +3314,10 @@
    "senseId": "s.dagens-rätt.1",
    "lemma": "dagens rätt",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": "fras: symbolisk ikon + gloss – avgör per fras"
   },
   {
    "senseId": "s.äta-ute.1",
@@ -3266,16 +3326,16 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "fika = två personer, kopp, bulle; festa = flera personer + musik-ikon"
+   "note": ""
   },
   {
    "senseId": "s.sällskap.1",
    "lemma": "sällskap",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.exotisk.1",
@@ -3284,7 +3344,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "långväga: pil + frukt"
   },
   {
    "senseId": "s.inspirera.1",
@@ -3293,7 +3353,7 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.italiensk.1",
@@ -3353,10 +3413,10 @@
    "senseId": "s.oartig.1",
    "lemma": "oartig",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.sörpla.1",
@@ -3365,7 +3425,7 @@
    "template": "manipulate-prop",
    "state": "ready",
    "missing": [],
-   "note": "sound: crunch/splash vid munnen"
+   "note": "sörpla: container.cup + splash"
   },
   {
    "senseId": "s.smaska.1",
@@ -3374,7 +3434,7 @@
    "template": "manipulate-prop",
    "state": "ready",
    "missing": [],
-   "note": "sound: crunch/splash vid munnen"
+   "note": "sörpla: container.cup + splash"
   },
   {
    "senseId": "s.vänta-in.1",
@@ -3383,16 +3443,18 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "tre figurer i rad mot dörr"
   },
   {
    "senseId": "s.skåla.1",
    "lemma": "skåla",
    "pos": "verb",
    "template": "social",
-   "state": "ready",
-   "missing": [],
-   "note": "två glas höjs: pose + say icon cup"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: skåla = två glas höjs mot varandra; i dag räcker p ett glas till q – fel betydelse tills en toast-pose finns"
   },
   {
    "senseId": "s.tack-för-maten.1",
@@ -3401,7 +3463,7 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.avbryta.1",
@@ -3410,7 +3472,7 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.skämta.1",
@@ -3419,7 +3481,7 @@
    "template": "communicate",
    "state": "done-blind",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)",
+   "note": "",
    "animationId": "anim.skämta.1"
   },
   {
@@ -3429,7 +3491,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.ta-vara-på.1",
@@ -3438,7 +3500,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.slösa.1",
@@ -3447,7 +3509,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.planera.1",
@@ -3456,7 +3518,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.utgången.1",
@@ -3465,7 +3527,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "burk + kalenderikon överstruken"
   },
   {
    "senseId": "s.skrapa.1",
@@ -3480,10 +3542,10 @@
    "senseId": "s.kompostera.1",
    "lemma": "kompostera",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
-   "note": "föremål läggs i rätt kärl; källsortera = flera kärl"
+   "note": ""
   },
   {
    "senseId": "s.mjölka.1",
@@ -3501,16 +3563,18 @@
    "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+   "note": "kroppskänsla: express + ikon; stinka: express disgusted + wave-ikon vid källan"
   },
   {
    "senseId": "s.laktosfri.1",
    "lemma": "laktosfri",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "symbol \"utan\": ikonen no över det som saknas; vegetarisk/vegansk: leaf"
   },
   {
    "senseId": "s.fika.1",
@@ -3519,7 +3583,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "fika = två personer, kopp, bulle; festa = flera personer + musik-ikon"
+   "note": ""
   },
   {
    "senseId": "s.fika-verb.1",
@@ -3528,7 +3592,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "fika = två personer, kopp, bulle; festa = flera personer + musik-ikon"
+   "note": ""
   },
   {
    "senseId": "s.bjuda-på.1",
@@ -3546,7 +3610,7 @@
    "template": "manipulate-prop",
    "state": "ready",
    "missing": [],
-   "note": "sound: crunch/splash vid munnen"
+   "note": "sörpla: container.cup + splash"
   },
   {
    "senseId": "s.seg.1",
@@ -3555,7 +3619,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "tuggar länge: lång eat-duration"
   },
   {
    "senseId": "s.krämig.1",
@@ -3564,25 +3628,29 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.len.1",
    "lemma": "len",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "textur – svag utan närbild; kontrast len/sträv i samma bild rekommenderas"
   },
   {
    "senseId": "s.saftig.1",
    "lemma": "saftig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: saftdroppar vid snittet"
   },
   {
    "senseId": "s.mjölig.1",
@@ -3591,25 +3659,29 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.slemmig.1",
    "lemma": "slemmig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: drag i degen med trådar (kladd)"
   },
   {
    "senseId": "s.kladdig.1",
    "lemma": "kladdig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: drag i degen med trådar (kladd)"
   },
   {
    "senseId": "s.prickig.1",
@@ -3633,19 +3705,21 @@
    "senseId": "s.sträv.1",
    "lemma": "sträv",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "property-contrast",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.luddig.1",
    "lemma": "luddig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: luddkant"
   },
   {
    "senseId": "s.glansig.1",
@@ -3654,7 +3728,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.matt.1",
@@ -3663,7 +3737,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "kontrast mot glansig (ingen glans)"
   },
   {
    "senseId": "s.ribbad.1",
@@ -3681,7 +3755,7 @@
    "template": "dress-self",
    "state": "done-blind",
    "missing": [],
-   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss",
+   "note": "",
    "animationId": "anim.sätta-på-sig.1"
   },
   {
@@ -3689,9 +3763,11 @@
    "lemma": "bakfram",
    "pos": "adverb",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: sätt/grad som kontrast + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "tröjan med trycket bakåt: TODO vänd figuren"
   },
   {
    "senseId": "s.hälsosam.1",
@@ -3700,7 +3776,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.onyttig.1",
@@ -3709,7 +3785,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.balanserad.1",
@@ -3718,7 +3794,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.knäcka.1",
@@ -3734,22 +3810,18 @@
    "lemma": "rosta",
    "pos": "verb",
    "template": "process",
-   "state": "blocked",
-   "missing": [
-    "svagt recept"
-   ],
-   "note": "rosta (metall): rust-tillstånd saknas – svag"
+   "state": "ready",
+   "missing": [],
+   "note": ""
   },
   {
    "senseId": "s.rosta.2",
    "lemma": "rosta",
    "pos": "verb",
    "template": "process",
-   "state": "blocked",
-   "missing": [
-    "svagt recept"
-   ],
-   "note": "rosta (metall): rust-tillstånd saknas – svag"
+   "state": "ready",
+   "missing": [],
+   "note": ""
   },
   {
    "senseId": "s.strö.1",
@@ -3758,97 +3830,101 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "pot på spis; söta: socker"
   },
   {
    "senseId": "s.planlösning.1",
    "lemma": "planlösning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.öppen-planlösning.1",
    "lemma": "öppen planlösning",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.ritning.1",
    "lemma": "ritning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.i-förhållande-till.1",
    "lemma": "i förhållande till",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": "fras: symbolisk ikon + gloss – avgör per fras"
   },
   {
    "senseId": "s.kantstött.1",
    "lemma": "kantstött",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: spricka/repa-tillstånd på tallrik"
   },
   {
    "senseId": "s.sprucken.1",
    "lemma": "sprucken",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: spricka/repa-tillstånd på tallrik"
   },
   {
    "senseId": "s.djup.1",
    "lemma": "djup",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "property-contrast",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.flat.1",
    "lemma": "flat",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "property-contrast",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.generös.1",
    "lemma": "generös",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "property-contrast",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.snål.1",
    "lemma": "snål",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "property-contrast",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.räcka-till.1",
@@ -3857,7 +3933,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.ta-om.1",
@@ -3872,10 +3948,10 @@
    "senseId": "s.påfyllning.1",
    "lemma": "påfyllning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.rekommendera.1",
@@ -3884,7 +3960,7 @@
    "template": "communicate",
    "state": "done-blind",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)",
+   "note": "",
    "animationId": "anim.rekommendera.1"
   },
   {
@@ -3892,27 +3968,29 @@
    "lemma": "alkoholfri",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "symbol \"utan\": ikonen no över det som saknas; vegetarisk/vegansk: leaf"
   },
   {
    "senseId": "s.inklusive.1",
    "lemma": "inklusive",
    "pos": "preposition",
-   "template": "relation-arrow",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: två föremål, pil, gloss"
+   "note": "fras: symbolisk ikon + gloss – avgör per fras"
   },
   {
    "senseId": "s.säkerhet.1",
    "lemma": "säkerhet",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.brinna.1",
@@ -3921,7 +3999,7 @@
    "template": "process",
    "state": "done-blind",
    "missing": [],
-   "note": "tända/släcka lampa = person + reach + set lamp.on",
+   "note": "",
    "animationId": "anim.brinna.1"
   },
   {
@@ -3929,9 +4007,11 @@
    "lemma": "kyla ner",
    "pos": "verb",
    "template": "process",
-   "state": "ready",
-   "missing": [],
-   "note": ""
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: föremål in i frysen"
   },
   {
    "senseId": "s.giftig.1",
@@ -3940,7 +4020,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "varningssymbol"
   },
   {
    "senseId": "s.barnsäker.1",
@@ -3949,7 +4029,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.sova-middag.1",
@@ -3958,16 +4038,18 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "fika = två personer, kopp, bulle; festa = flera personer + musik-ikon"
+   "note": ""
   },
   {
    "senseId": "s.skadad.1",
    "lemma": "skadad",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: spricka/repa-tillstånd på tallrik"
   },
   {
    "senseId": "s.gå-sönder.1",
@@ -3978,13 +4060,13 @@
    "missing": [
     "svagt recept"
    ],
-   "note": "nöta/noppa: garment.holes/pills saknas – svag"
+   "note": "TODO: hål/noppor"
   },
   {
    "senseId": "s.byta-ut.1",
    "lemma": "byta ut",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
    "note": ""
@@ -3995,10 +4077,8 @@
    "pos": "verb",
    "template": "process",
    "state": "done-blind",
-   "missing": [
-    "svagt recept"
-   ],
-   "note": "nöta/noppa: garment.holes/pills saknas – svag",
+   "missing": [],
+   "note": "",
    "animationId": "anim.blekna.1"
   },
   {
@@ -4007,10 +4087,8 @@
    "pos": "verb",
    "template": "process",
    "state": "done-blind",
-   "missing": [
-    "svagt recept"
-   ],
-   "note": "rosta (metall): rust-tillstånd saknas – svag",
+   "missing": [],
+   "note": "",
    "animationId": "anim.flagna.1"
   },
   {
@@ -4018,9 +4096,11 @@
    "lemma": "nött",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: noppor/hål-tillstånd"
   },
   {
    "senseId": "s.reklamera.1",
@@ -4029,16 +4109,18 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.spika.1",
    "lemma": "spika",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
-   "missing": [],
-   "note": ""
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: spik-tillstånd"
   },
   {
    "senseId": "s.borra.1",
@@ -4054,36 +4136,42 @@
    "lemma": "limma",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
-   "missing": [],
-   "note": "två delar som sätts ihop: box-variant"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: två delar som sätts ihop"
   },
   {
    "senseId": "s.montera.1",
    "lemma": "montera",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
-   "missing": [],
-   "note": "laga (mat) = cook-rhythm"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "laga (mat) → cook-rhythm; TODO: trasig-tillstånd på stolen"
   },
   {
    "senseId": "s.bruksanvisning.1",
    "lemma": "bruksanvisning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.äkta.1",
    "lemma": "äkta",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: äkthetsstämpel"
   },
   {
    "senseId": "s.glittra.1",
@@ -4092,7 +4180,7 @@
    "template": "process",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "+ emphasis glint loop"
   },
   {
    "senseId": "s.bekväm.1",
@@ -4101,7 +4189,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.sjunka.1",
@@ -4112,7 +4200,7 @@
    "missing": [
     "svagt recept"
    ],
-   "note": "kräver små rörelsemönster: halka = pose + lift, vingla = walk med kroppsrotation (saknas)"
+   "note": "TODO: boll som sjunker i vatten – vatten-/bassängföremål saknas"
   },
   {
    "senseId": "s.slappna-av.1",
@@ -4127,46 +4215,46 @@
    "senseId": "s.sortera.1",
    "lemma": "sortera",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
-   "note": "föremål läggs i rätt kärl; källsortera = flera kärl"
+   "note": ""
   },
   {
    "senseId": "s.källsortera.1",
    "lemma": "källsortera",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
-   "note": "föremål läggs i rätt kärl; källsortera = flera kärl"
+   "note": ""
   },
   {
    "senseId": "s.återvinna.1",
    "lemma": "återvinna",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
-   "note": "föremål läggs i rätt kärl; källsortera = flera kärl"
+   "note": ""
   },
   {
    "senseId": "s.farligt-avfall.1",
    "lemma": "farligt avfall",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.panta.1",
    "lemma": "panta",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
-   "note": "föremål läggs i rätt kärl; källsortera = flera kärl"
+   "note": ""
   },
   {
    "senseId": "s.syrlig.1",
@@ -4175,7 +4263,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.sötsur.1",
@@ -4184,7 +4272,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.sockrig.1",
@@ -4193,16 +4281,18 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.sockerfri.1",
    "lemma": "sockerfri",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "symbol \"utan\": ikonen no över det som saknas; vegetarisk/vegansk: leaf"
   },
   {
    "senseId": "s.skörda.1",
@@ -4211,18 +4301,16 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": "skörda: plant/tree + basket.full↑"
+   "note": "skörda: + basket"
   },
   {
    "senseId": "s.mala.1",
    "lemma": "mala",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "blocked",
-   "missing": [
-    "svagt recept"
-   ],
-   "note": "kvarn/mixer saknas – använd container + pile som växer; markera som svag"
+   "state": "ready",
+   "missing": [],
+   "note": "grova korn blir fina (size)"
   },
   {
    "senseId": "s.allergisk.1",
@@ -4231,16 +4319,18 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "utslag/reaktion: express surprised + ikon"
   },
   {
    "senseId": "s.glutenfri.1",
    "lemma": "glutenfri",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "symbol \"utan\": ikonen no över det som saknas; vegetarisk/vegansk: leaf"
   },
   {
    "senseId": "s.överkänslig.1",
@@ -4249,7 +4339,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "utslag/reaktion: express surprised + ikon"
   },
   {
    "senseId": "s.varna.1",
@@ -4258,7 +4348,7 @@
    "template": "communicate",
    "state": "done-blind",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)",
+   "note": "",
    "animationId": "anim.varna.1"
   },
   {
@@ -4268,7 +4358,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "symbol: godkänd-märke på maten"
   },
   {
    "senseId": "s.kosher.1",
@@ -4277,7 +4367,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "symbol: godkänd-märke på maten"
   },
   {
    "senseId": "s.sportig.1",
@@ -4286,7 +4376,7 @@
    "template": "attribute-gloss",
    "state": "done",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss",
+   "note": "",
    "animationId": "anim.sportig.1"
   },
   {
@@ -4306,7 +4396,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "varningssymbol"
   },
   {
    "senseId": "s.kryddstark.1",
@@ -4315,7 +4405,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.kryddig.1",
@@ -4324,7 +4414,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.pikant.1",
@@ -4333,7 +4423,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.svida.1",
@@ -4342,16 +4432,16 @@
    "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+   "note": "kroppskänsla: express + ikon; stinka: express disgusted + wave-ikon vid källan"
   },
   {
    "senseId": "s.svettas.1",
    "lemma": "svettas",
    "pos": "verb",
-   "template": "emotion",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+   "note": ""
   },
   {
    "senseId": "s.släcka.1",
@@ -4360,7 +4450,7 @@
    "template": "process",
    "state": "done-blind",
    "missing": [],
-   "note": "tända/släcka lampa = person + reach + set lamp.on",
+   "note": "hinken tippas: se scen anim.släcka.1",
    "animationId": "anim.släcka.1"
   },
   {
@@ -4370,7 +4460,7 @@
    "template": "process",
    "state": "ready",
    "missing": [],
-   "note": "tända/släcka lampa = person + reach + set lamp.on"
+   "note": "hinken tippas: se scen anim.släcka.1"
   },
   {
    "senseId": "s.mild.1",
@@ -4379,7 +4469,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.mustig.1",
@@ -4388,7 +4478,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.kraftig.1",
@@ -4397,7 +4487,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.vänja-sig.1",
@@ -4406,7 +4496,7 @@
    "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+   "note": "kroppskänsla: express + ikon; stinka: express disgusted + wave-ikon vid källan"
   },
   {
    "senseId": "s.steka.1",
@@ -4414,8 +4504,10 @@
    "pos": "verb",
    "template": "cook-rhythm",
    "state": "done-blind",
-   "missing": [],
-   "note": "",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "fritera/grilla: TODO egna föremål (fritös, grill)",
    "animationId": "anim.steka.1"
   },
   {
@@ -4424,8 +4516,10 @@
    "pos": "verb",
    "template": "cook-rhythm",
    "state": "done-blind",
-   "missing": [],
-   "note": "",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "fritera/grilla: TODO egna föremål (fritös, grill)",
    "animationId": "anim.fräsa.1"
   },
   {
@@ -4434,19 +4528,20 @@
    "pos": "verb",
    "template": "cook-rhythm",
    "state": "done-blind",
-   "missing": [],
-   "note": "",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "fritera/grilla: TODO egna föremål (fritös, grill)",
    "animationId": "anim.bryna.1"
   },
   {
    "senseId": "s.gyllenbrun.1",
    "lemma": "gyllenbrun",
    "pos": "adjective",
-   "template": "attribute-gloss",
-   "state": "done-blind",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss",
-   "animationId": "anim.gyllenbrun.1"
+   "note": ""
   },
   {
    "senseId": "s.vända.1",
@@ -4464,8 +4559,10 @@
    "pos": "verb",
    "template": "cook-rhythm",
    "state": "done-blind",
-   "missing": [],
-   "note": "",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "fritera/grilla: TODO egna föremål (fritös, grill)",
    "animationId": "anim.bränna.1"
   },
   {
@@ -4483,9 +4580,11 @@
    "lemma": "slakta",
    "pos": "verb",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion"
   },
   {
    "senseId": "s.mager.1",
@@ -4494,7 +4593,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.gammaldags.1",
@@ -4503,7 +4602,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.stuva.1",
@@ -4512,7 +4611,7 @@
    "template": "process",
    "state": "ready",
    "missing": [],
-   "note": "laga = person + spis: cook-rhythm"
+   "note": "sylta: röd; stuva: vit sås"
   },
   {
    "senseId": "s.syntetisk.1",
@@ -4521,7 +4620,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "symbol: ämne i flaska"
   },
   {
    "senseId": "s.återvunnen.1",
@@ -4530,7 +4629,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.miljövänlig.1",
@@ -4539,16 +4638,18 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.tillaga.1",
    "lemma": "tillaga",
    "pos": "verb",
-   "template": "process",
-   "state": "ready",
-   "missing": [],
-   "note": "laga = person + spis: cook-rhythm"
+   "template": "cook-rhythm",
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "fritera/grilla: TODO egna föremål (fritös, grill)"
   },
   {
    "senseId": "s.förbereda.1",
@@ -4557,13 +4658,13 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.lägga-upp.1",
    "lemma": "lägga upp",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "ready",
    "missing": [],
    "note": ""
@@ -4575,13 +4676,13 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": "effect cake.decorated 0→1"
+   "note": ""
   },
   {
    "senseId": "s.servera.1",
    "lemma": "servera",
    "pos": "verb",
-   "template": "social",
+   "template": "arrange",
    "state": "done-blind",
    "missing": [],
    "note": "",
@@ -4612,7 +4713,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.rykande.1",
@@ -4621,7 +4722,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.smaklig-måltid.1",
@@ -4630,7 +4731,7 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "fras utan recept: pratbubbla + gloss – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.dela.1",
@@ -4654,10 +4755,10 @@
    "senseId": "s.hygien.1",
    "lemma": "hygien",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.upptagen.1",
@@ -4666,16 +4767,16 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.förpackning.1",
    "lemma": "förpackning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.kortärmad.1",
@@ -4732,7 +4833,7 @@
    "template": "dress-self",
    "state": "done-blind",
    "missing": [],
-   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss",
+   "note": "",
    "animationId": "anim.ta-på-sig.1"
   },
   {
@@ -4742,7 +4843,7 @@
    "template": "dress-self",
    "state": "done-blind",
    "missing": [],
-   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss",
+   "note": "",
    "animationId": "anim.ta-av-sig.1"
   },
   {
@@ -4752,7 +4853,7 @@
    "template": "tool-rhythm",
    "state": "ready",
    "missing": [],
-   "note": "shirt.stain↓, tub.foam"
+   "note": ""
   },
   {
    "senseId": "s.stryka.1",
@@ -4771,25 +4872,27 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.noppig.1",
    "lemma": "noppig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: noppor/hål-tillstånd"
   },
   {
    "senseId": "s.kemtvätt.1",
    "lemma": "kemtvätt",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.vädra.1",
@@ -4798,25 +4901,25 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.kulörtvätt.1",
    "lemma": "kulörtvätt",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.vittvätt.1",
    "lemma": "vittvätt",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.missfärga.1",
@@ -4827,7 +4930,7 @@
    "missing": [
     "svagt recept"
    ],
-   "note": "nöta/noppa: garment.holes/pills saknas – svag"
+   "note": "TODO: rosa missfärgning"
   },
   {
    "senseId": "s.krympa.1",
@@ -4835,10 +4938,8 @@
    "pos": "verb",
    "template": "process",
    "state": "done-blind",
-   "missing": [
-    "svagt recept"
-   ],
-   "note": "nöta/noppa: garment.holes/pills saknas – svag",
+   "missing": [],
+   "note": "",
    "animationId": "anim.krympa.1"
   },
   {
@@ -4848,7 +4949,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.vattentät.1",
@@ -4857,7 +4958,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.vindtät.1",
@@ -4866,34 +4967,36 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.andas.1",
    "lemma": "andas",
    "pos": "verb",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "kemi/fysik: symbolisk scen + gloss"
+   "note": "bröstkorg höjs: idle breathe + gloss"
   },
   {
    "senseId": "s.andas.2",
    "lemma": "andas",
    "pos": "verb",
-   "template": "attribute-gloss",
+   "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "kemi/fysik: symbolisk scen + gloss"
+   "note": "bröstkorg höjs: idle breathe + gloss"
   },
   {
    "senseId": "s.luftig.1",
    "lemma": "luftig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "textur – svag utan närbild; kontrast len/sträv i samma bild rekommenderas"
   },
   {
    "senseId": "s.varmhållande.1",
@@ -4902,16 +5005,18 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.isolera.1",
    "lemma": "isolera",
    "pos": "verb",
-   "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "kemi/fysik: symbolisk scen + gloss"
+   "template": "process",
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "symbolisk – svag"
   },
   {
    "senseId": "s.snabbtorkande.1",
@@ -4920,7 +5025,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.töjbar.1",
@@ -4929,7 +5034,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.elastisk.1",
@@ -4938,16 +5043,18 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.styv.1",
    "lemma": "styv",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: styv = ingen töjning; visa kontrast"
   },
   {
    "senseId": "s.tålig.1",
@@ -4956,7 +5063,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.genomskinlig.1",
@@ -4965,7 +5072,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.smutsavvisande.1",
@@ -4974,7 +5081,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "droppar som pärlar av: fixture.drip ovanför + jacket wet 0"
   },
   {
    "senseId": "s.brandfarlig.1",
@@ -4983,7 +5090,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "varningssymbol"
   },
   {
    "senseId": "s.handstickad.1",
@@ -4992,7 +5099,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.ullig.1",
@@ -5001,7 +5108,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.klia.1",
@@ -5010,7 +5117,7 @@
    "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+   "note": "kroppskänsla: express + ikon; stinka: express disgusted + wave-ikon vid källan"
   },
   {
    "senseId": "s.lyxig.1",
@@ -5019,25 +5126,27 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.skör.1",
    "lemma": "skör",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "TODO: spricka"
   },
   {
    "senseId": "s.udda.1",
    "lemma": "udda",
    "pos": "adjective",
-   "template": "attribute-gloss",
+   "template": "property-contrast",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.klä-på-sig.1",
@@ -5046,7 +5155,7 @@
    "template": "dress-self",
    "state": "done-blind",
    "missing": [],
-   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss",
+   "note": "",
    "animationId": "anim.klä-på-sig.1"
   },
   {
@@ -5056,7 +5165,7 @@
    "template": "dress-self",
    "state": "done",
    "missing": [],
-   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss",
+   "note": "",
    "animationId": "anim.klä-av-sig.1"
   },
   {
@@ -5066,7 +5175,7 @@
    "template": "dress-self",
    "state": "done",
    "missing": [],
-   "note": "klä upp sig = fina kläder + gloss; ha på sig = attribute-gloss",
+   "note": "",
    "animationId": "anim.byta-om.1"
   },
   {
@@ -5076,16 +5185,16 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.gå-in.1",
    "lemma": "gå in",
    "pos": "verb",
-   "template": "locomotion",
+   "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.rymma.1",
@@ -5094,34 +5203,36 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.ansvar.1",
    "lemma": "ansvar",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.ansvara.1",
    "lemma": "ansvara",
    "pos": "verb",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion"
   },
   {
    "senseId": "s.turas-om.1",
    "lemma": "turas om",
    "pos": "phrase",
-   "template": "communicate",
+   "template": "social",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "föremålet går fram och tillbaka"
   },
   {
    "senseId": "s.dela-upp.1",
@@ -5136,19 +5247,19 @@
    "senseId": "s.veckostädning.1",
    "lemma": "veckostädning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.storstädning.1",
    "lemma": "storstädning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.damma.1",
@@ -5157,20 +5268,18 @@
    "template": "tool-rhythm",
    "state": "blocked",
    "missing": [
-    "föremål:fixture.window"
+    "svagt recept"
    ],
-   "note": "effect: plate.dirty↓ eller eget smutsföremål"
+   "note": "TODO: damm-tillstånd på hyllan"
   },
   {
    "senseId": "s.putsa.1",
    "lemma": "putsa",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "blocked",
-   "missing": [
-    "föremål:fixture.window"
-   ],
-   "note": "effect: plate.dirty↓ eller eget smutsföremål"
+   "state": "ready",
+   "missing": [],
+   "note": "fönster blir blankt: glint efteråt"
   },
   {
    "senseId": "s.vattna.1",
@@ -5179,16 +5288,18 @@
    "template": "manipulate-prop",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "kanna häller över växten, växten rätar upp sig"
   },
   {
    "senseId": "s.slarva.1",
    "lemma": "slarva",
    "pos": "verb",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion"
   },
   {
    "senseId": "s.vegetarisk.1",
@@ -5197,7 +5308,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.vegansk.1",
@@ -5206,16 +5317,18 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.köttfri.1",
    "lemma": "köttfri",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "symbol \"utan\": ikonen no över det som saknas; vegetarisk/vegansk: leaf"
   },
   {
    "senseId": "s.växtbaserad.1",
@@ -5224,7 +5337,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.marinera.1",
@@ -5233,16 +5346,18 @@
    "template": "process",
    "state": "ready",
    "missing": [],
-   "note": ""
+   "note": "råvaran täcks"
   },
   {
    "senseId": "s.avstå.1",
    "lemma": "avstå",
    "pos": "verb",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion"
   },
   {
    "senseId": "s.lida.1",
@@ -5251,7 +5366,7 @@
    "template": "emotion",
    "state": "ready",
    "missing": [],
-   "note": "kroppskänsla: express + ikon (droplet, thermometer, nose)"
+   "note": "kroppskänsla: express + ikon; stinka: express disgusted + wave-ikon vid källan"
   },
   {
    "senseId": "s.röra.1",
@@ -5279,7 +5394,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "slät smet utan klumpar"
   },
   {
    "senseId": "s.vispa.1",
@@ -5298,7 +5413,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.mixa.1",
@@ -5309,16 +5424,18 @@
    "missing": [
     "svagt recept"
    ],
-   "note": "kvarn/mixer saknas – använd container + pile som växer; markera som svag"
+   "note": "TODO: mixer-föremål"
   },
   {
    "senseId": "s.bestå.1",
    "lemma": "bestå",
    "pos": "verb",
    "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "kemi/fysik: symbolisk scen + gloss"
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "SVAGT: abstrakt verb utan egen minischen – välj ikon/bärare per ord innan produktion"
   },
   {
    "senseId": "s.fast.1",
@@ -5327,7 +5444,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.fast.2",
@@ -5336,7 +5453,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.flytande.1",
@@ -5345,16 +5462,16 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.smälta.1",
    "lemma": "smälta",
    "pos": "verb",
-   "template": "cook-rhythm",
+   "template": "process",
    "state": "done-blind",
    "missing": [],
-   "note": "alt. process: fixture.ice",
+   "note": "",
    "animationId": "anim.smälta.1"
   },
   {
@@ -5364,16 +5481,16 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.blandning.1",
    "lemma": "blandning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.blanda.1",
@@ -5388,19 +5505,19 @@
    "senseId": "s.laddning.1",
    "lemma": "laddning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.laddning.2",
    "lemma": "laddning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.neutral.1",
@@ -5409,7 +5526,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.neutral.2",
@@ -5418,7 +5535,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": ""
   },
   {
    "senseId": "s.kretsa.1",
@@ -5429,25 +5546,27 @@
    "missing": [
     "svagt recept"
    ],
-   "note": "kräver små rörelsemönster: halka = pose + lift, vingla = walk med kroppsrotation (saknas)"
+   "note": "roll i cirkel – TODO"
   },
   {
    "senseId": "s.binda.1",
    "lemma": "binda",
    "pos": "verb",
-   "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "kemi/fysik: symbolisk scen + gloss"
+   "template": "process",
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "kemi: TODO färgbyte i burk – svag"
   },
   {
    "senseId": "s.bindning.1",
    "lemma": "bindning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.kemisk.1",
@@ -5456,34 +5575,36 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "standard: egenskap buren av utseende + gloss"
+   "note": "symbol: ämne i flaska"
   },
   {
    "senseId": "s.förening.1",
    "lemma": "förening",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.förening.2",
    "lemma": "förening",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.reagera.1",
    "lemma": "reagera",
    "pos": "verb",
-   "template": "attribute-gloss",
-   "state": "ready",
-   "missing": [],
-   "note": "kemi/fysik: symbolisk scen + gloss"
+   "template": "process",
+   "state": "blocked",
+   "missing": [
+    "svagt recept"
+   ],
+   "note": "kemi: TODO färgbyte i burk – svag"
   },
   {
    "senseId": "s.kämpa.1",
@@ -5492,16 +5613,16 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+   "note": "kapitulera/ge upp = vit fana + armar upp"
   },
   {
    "senseId": "s.rustning.1",
    "lemma": "rustning",
    "pos": "noun",
-   "template": "event",
-   "state": "ready",
+   "template": "–",
+   "state": "no-recipe",
    "missing": [],
-   "note": "aktivitetssubstantiv: händelse med flera figurer – avgör per ord"
+   "note": ""
   },
   {
    "senseId": "s.skydda.1",
@@ -5510,7 +5631,7 @@
    "template": "attribute-gloss",
    "state": "ready",
    "missing": [],
-   "note": "symbolisk minischen + japanskt ord; många kan senare få egna familjer"
+   "note": "symbolisk minischen: ikon + bärare + gloss"
   },
   {
    "senseId": "s.anfalla.1",
@@ -5519,7 +5640,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+   "note": "kapitulera/ge upp = vit fana + armar upp"
   },
   {
    "senseId": "s.försvara.1",
@@ -5528,7 +5649,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+   "note": "kapitulera/ge upp = vit fana + armar upp"
   },
   {
    "senseId": "s.hota.1",
@@ -5537,7 +5658,7 @@
    "template": "communicate",
    "state": "ready",
    "missing": [],
-   "note": "ikon per verb: document (ansöka, skriva under), phone (boka, felanmäla), cross (reklamera), check (godkänna), two bubbles (översätta)"
+   "note": ""
   },
   {
    "senseId": "s.omringa.1",
@@ -5546,7 +5667,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+   "note": "kapitulera/ge upp = vit fana + armar upp"
   },
   {
    "senseId": "s.besegra.1",
@@ -5555,7 +5676,7 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+   "note": "kapitulera/ge upp = vit fana + armar upp"
   },
   {
    "senseId": "s.ge-upp.1",
@@ -5564,36 +5685,36 @@
    "template": "event",
    "state": "ready",
    "missing": [],
-   "note": "kapitulera/ge upp = vit fana (castle.banner white) + armar upp"
+   "note": "kapitulera/ge upp = vit fana + armar upp"
   }
  ],
  "totals": {
-  "ready": 502,
-  "done-blind": 53,
+  "ready": 370,
+  "blocked": 79,
+  "no-recipe": 71,
+  "done-blind": 58,
   "image": 22,
-  "blocked": 21,
-  "done": 6,
-  "no-recipe": 2
+  "done": 6
  },
  "byTemplate": {
-  "attribute-gloss": 266,
-  "social": 33,
-  "tool-rhythm": 57,
-  "event": 81,
-  "process": 53,
-  "–": 24,
-  "communicate": 40,
-  "dress-self": 16,
-  "state": 4,
-  "locomotion": 5,
-  "cook-rhythm": 9,
-  "emotion": 10,
-  "manipulate-prop": 7,
-  "relation-arrow": 1
+  "attribute-gloss": 250,
+  "arrange": 25,
+  "tool-rhythm": 56,
+  "–": 93,
+  "cook-rhythm": 11,
+  "emotion": 27,
+  "process": 50,
+  "event": 17,
+  "property-contrast": 8,
+  "communicate": 27,
+  "relation-arrow": 2,
+  "dress-self": 14,
+  "state": 5,
+  "locomotion": 4,
+  "social": 9,
+  "manipulate-prop": 8
  },
  "missingBlocks": {
-  "svagt recept": 21,
-  "föremål:fixture.window": 4,
-  "handling:hold": 1
+  "svagt recept": 84
  }
 }

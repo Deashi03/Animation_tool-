@@ -12,13 +12,13 @@ import { runBatch, batchMarkdown, batchDir } from '../../src/tools/batch';
 import { stripHtml, writeReview } from '../../src/tools/render';
 import { args, opt, flag, fail } from './_shared';
 
-const { scenes } = loadScenes();
+const { scenes, files } = loadScenes();
 const bySense = new Map<string, string>();
 for (const s of scenes.values()) if (s.senseId && !bySense.has(s.senseId)) bySense.set(s.senseId, s.animationId);
 let plan: Plan;
 if (opt('module')) { const sw = opt('swechan') ?? fail('Ange --swechan'); plan = buildPlan(path.resolve(sw), opt('module')!, bySense); }
 else { const f = args()[0] ?? fail('Ange en planfil eller --swechan + --module'); plan = JSON.parse(fs.readFileSync(f, 'utf8')) as Plan; }
-const results = runBatch(plan, plan.titleSv, bySense, { write: flag('write'), force: flag('force') });
+const results = runBatch(plan, plan.titleSv, bySense, { write: flag('write'), force: flag('force'), files });
 fs.mkdirSync(batchDir(), { recursive: true });
 const report = path.join(batchDir(), `${plan.moduleId.replace(/^m\./, '')}.md`);
 fs.writeFileSync(report, batchMarkdown(plan, results));

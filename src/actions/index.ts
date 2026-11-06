@@ -208,6 +208,12 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
       case 'sad': face('half', 'worried', 'frown'); M.poseTo(tr, A, t, t + d, { torso: 10, head: 16, uArmL: 4, uArmR: -4, fArmL: 4, fArmR: 4 }, 'easeInOut'); break;
       case 'tired': face('half', 'worried', 'neutral'); M.poseTo(tr, A, t, t + d, { torso: 14, head: 18, uArmL: 2, uArmR: -2, fArmL: 2, fArmR: 2 }, 'easeInOut'); break;
       case 'content': face('half', 'neutral', 'calm'); break;
+      case 'cold': { face('half', 'worried', 'neutral'); M.poseTo(tr, A, t, t + d, { torso: 6, head: 6, uArmL: 40, fArmL: 130, uArmR: 40, fArmR: 130 }, 'easeOut'); for (let k = t + d; k + 160 < t + d + 2400; k += 160) { tween(tr, M.J(A, 'torso'), k, k + 80, 8, 'easeInOut'); tween(tr, M.J(A, 'torso'), k + 80, k + 160, 4, 'easeInOut'); } break; } // hugging oneself, shivering
+      case 'hot': { face('half', 'up', 'open'); M.poseTo(tr, A, t, t + d, { torso: 2, head: 4, uArmL: 60, fArmL: 120 }, 'easeOut'); for (let k = t + d; k + 400 < t + d + 2400; k += 400) { tween(tr, M.J(A, 'fArmL'), k, k + 200, 100, 'easeInOut'); tween(tr, M.J(A, 'fArmL'), k + 200, k + 400, 125, 'easeInOut'); } fxStart(tr, `fx.${A}.sweat`, t, -1); addKey(tr, `fx.${A}.sweat`, { t, v: 0 }); addKey(tr, `fx.${A}.sweat`, { t: t + 2400, v: 1, e: 'linear' }); break; } // fanning the face, sweat drops
+      case 'disgusted': face('half', 'down', 'frown'); M.poseTo(tr, A, t, t + d, { torso: -8, head: -8, uArmL: 50, fArmL: 110 }, 'easeOut'); break; // pulls back, hand up
+      case 'proud': face('open', 'up', 'smile', true); M.poseTo(tr, A, t, t + d, { torso: -6, head: -4, uArmL: -10, fArmL: 6, uArmR: -10, fArmR: 6 }, 'easeOut'); break;
+      case 'curious': face('wide', 'up', 'o'); M.poseTo(tr, A, t, t + d, { torso: 10, head: -10, uArmL: 20, fArmL: 40 }, 'easeOut'); break;
+      case 'full': face('half', 'neutral', 'smile'); M.poseTo(tr, A, t, t + d, { torso: -8, head: 4, uArmL: 30, fArmL: 95, uArmR: 30, fArmR: 95 }, 'easeOut'); break; // leaning back, hands on the belly
     }
   },
   face(ctx, a) { for (const k of ['eyes', 'brows', 'mouth', 'gaze'] as const) if (a[k] !== undefined) addKey(ctx.tracks, `${a.actor}.${k}`, { t: a.t, v: a[k]! }); },
@@ -336,7 +342,9 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     // distance from the hand down to the tool's working tip (shorter when the tool is tilted forward); bare hands work right at the surface
     const tiltRad = toolSpec ? ((toolSpec.heldTilt ?? 60) * Math.PI) / 180 : 0;
     const reachLen = toolSpec ? Math.max(3, (-(toolSpec.grip[1]) + 3) * Math.abs(Math.cos(tiltRad)) + 2) : a.motion === 'knead' || a.motion === 'press' ? -1 : 1;
-    const handAt = (dx: number, dy: number): P => [work[0] + dx, work[1] - reachLen + dy];
+    // the tilted tool also reaches FORWARD: the hand stays behind the work point by that much so the blade (not the handle) is over it
+    const reachX = toolSpec ? (-(toolSpec.grip[1]) + 3) * Math.abs(Math.sin(tiltRad)) : 0;
+    const handAt = (dx: number, dy: number): P => [work[0] - f * reachX + dx, work[1] - reachLen + dy];
     // lean in and look at the work
     const lean = Math.abs(work[0] - actorPos(ctx, A, a.t)[0]) > 18 ? 24 : 12;
     tween(tr, M.J(A, 'torso'), a.t, a.t + 350, lean, 'easeInOut'); tween(tr, M.J(A, 'head'), a.t, a.t + 350, -16, 'easeInOut');
@@ -407,7 +415,7 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     const restMouth = sampleString<string>(tr, `${A}.mouth`, a.t, 'smile');
     for (let t = a.t; t < end - 150; t += 300) { addKey(tr, `${A}.mouth`, { t, v: 'open' }); addKey(tr, `${A}.mouth`, { t: t + 150, v: a.mood === 'happy' ? 'smile' : 'neutral' }); }
     addKey(tr, `${A}.mouth`, { t: end, v: restMouth });
-    const brows: Record<string, string> = { neutral: 'neutral', happy: 'up', angry: 'down', sad: 'worried', question: 'asym', surprised: 'up' };
+    const brows: Record<string, string> = { neutral: 'neutral', happy: 'up', angry: 'down', sad: 'worried', question: 'up', surprised: 'up' };
     const eyes: Record<string, string> = { neutral: 'open', happy: 'open', angry: 'open', sad: 'half', question: 'open', surprised: 'wide' };
     addKey(tr, `${A}.brows`, { t: a.t, v: brows[a.mood] ?? 'neutral' }); addKey(tr, `${A}.eyes`, { t: a.t, v: eyes[a.mood] ?? 'open' });
     addKey(tr, `${A}.brows`, { t: end + 200, v: 'neutral' });
@@ -534,6 +542,27 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
         M.poseTo(tr, A, t0 + d * 0.85, end, { uArmL: 20, fArmL: 80, uArmR: 20, fArmR: 80 }, 'easeInOut'); // forearms out: the rolled sleeves show
         break; }
     }
+  },
+  /** Eat/drink: the held prop goes to the mouth, a bite or sip, chewing, then a reaction. */
+  eat(ctx, a) {
+    const tr = ctx.tracks, A = a.actor, d = a.durationMs, t0 = a.t;
+    const owner = sampleString<string>(tr, `${a.prop}.attach`, t0, '');
+    const hand: 'left' | 'right' = owner.endsWith(':right') ? 'right' : 'left';
+    if (!owner) addKey(tr, `${a.prop}.attach`, { t: t0, v: `${A}:${hand}` });
+    const up = hand === 'left' ? { uArmL: 55, fArmL: 138 } : { uArmR: 55, fArmR: 138 };
+    const mid = t0 + d * 0.35;
+    M.poseTo(tr, A, t0, mid, { ...up, head: 4 }, 'easeInOut');
+    addKey(tr, `${A}.eyes`, { t: mid - 60, v: 'closed' }); addKey(tr, `${A}.mouth`, { t: mid - 60, v: 'open' });
+    const asset = ctx.props.get(a.prop)?.asset ?? '';
+    if (asset.startsWith('food.')) addKey(tr, `${a.prop}.s.bite`, { t: mid, v: 1, e: 'step' });
+    if (asset === 'container.cup' || asset === 'glass' || asset === 'mug') { const k = asset === 'glass' ? 'fill' : 'level'; const cur = sampleNumber(tr, `${a.prop}.s.${k}`, t0, 0.7); tween(tr, `${a.prop}.s.${k}`, mid, mid + 300, Math.max(0, cur - 0.3), 'linear', 0, cur); }
+    if (a.sound !== 'none') { fxStart(tr, `fx.${A}.sound`, mid, ''); addKey(tr, `fx.${A}.sound`, { t: mid, v: a.sound }); addKey(tr, `fx.${A}.sound`, { t: mid + 700, v: '' }); }
+    // chewing: small jaw motion = mouth open/neutral, head bobs
+    for (let k = mid + 150; k + 220 < t0 + d; k += 220) { addKey(tr, `${A}.mouth`, { t: k, v: 'neutral' }); addKey(tr, `${A}.mouth`, { t: k + 110, v: 'open' }); tween(tr, M.J(A, 'head'), k, k + 110, 2, 'easeInOut'); tween(tr, M.J(A, 'head'), k + 110, k + 220, 5, 'easeInOut'); }
+    addKey(tr, `${A}.eyes`, { t: mid + 250, v: 'open' });
+    M.poseTo(tr, A, mid + 250, t0 + d * 0.7, hand === 'left' ? { uArmL: 30, fArmL: 70 } : { uArmR: 30, fArmR: 70 }, 'easeInOut');
+    const reaction: Record<string, 'happy' | 'disgusted' | 'hot' | 'content' | 'surprised'> = { happy: 'happy', disgusted: 'disgusted', hot: 'hot', neutral: 'content', surprised: 'surprised' };
+    (H.express as (c: Ctx, x: ActionOf<'express'>) => void)(ctx, { action: 'express', t: t0 + d * 0.7, actor: A, emotion: reaction[a.reaction] ?? 'content', durationMs: 350 });
   },
   emphasis(ctx, a) { fxStart(ctx.tracks, `fx.${a.target}.${a.kind}`, a.t, -1); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t, v: 0 }); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t + a.durationMs, v: 1, e: 'linear' }); addKey(ctx.tracks, `fx.${a.target}.${a.kind}`, { t: a.t + a.durationMs + 1, v: -1 }); },
 };

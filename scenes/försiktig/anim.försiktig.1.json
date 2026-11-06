@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.försiktig.1",
+  "kind": "word",
+  "template": "attribute-gloss",
+  "senseId": "s.försiktig.1",
+  "titleSv": "försiktig",
+  "meaningHint": "Som gör saker lugnt och tänker på vad som kan vara farligt.",
+  "category": "property",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 30,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 1
+    }
+  ],
+  "props": [
+    {
+      "id": "held",
+      "asset": "container.tray",
+      "scale": 0.8,
+      "rotate": 0,
+      "z": 0,
+      "state": {},
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "shapes": [
+    {
+      "type": "text",
+      "id": "ja",
+      "x": 60,
+      "y": -20,
+      "text": "注意深い",
+      "size": 11,
+      "weight": 800,
+      "fill": "ink",
+      "anchor": "middle",
+      "opacity": 0,
+      "z": 5,
+      "bg": "panel",
+      "pad": 6
+    }
+  ],
+  "timeline": [
+    {
+      "t": 200,
+      "action": "walk",
+      "actor": "p",
+      "to": {
+        "x": 84,
+        "y": 100
+      },
+      "durationMs": 3600
+    },
+    {
+      "t": 1500,
+      "action": "set",
+      "target": "ja",
+      "prop": "opacity",
+      "value": 1
+    },
+    {
+      "t": 1500,
+      "action": "tween",
+      "target": "ja",
+      "prop": "y",
+      "to": 18,
+      "from": -20,
+      "durationMs": 450,
+      "ease": "easeOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "walk-slow with container.tray"
+  },
+  "contrast": {
+    "with": [
+      "anim.vass.1",
+      "anim.slö.1",
+      "anim.grov.1"
+    ],
+    "distinctiveFeatures": [
+      "has:action:walk",
+      "has:prop:container.tray"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "skära och hacka",
+    "confusableWith": [
+      "s.vass.1",
+      "s.slö.1",
+      "s.grov.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (attribute-gloss). TODO: långsam gång saknas – gången har fast tempo; brickan bärs"
+  },
+  "label": {
+    "show": "optional"
+  }
+}

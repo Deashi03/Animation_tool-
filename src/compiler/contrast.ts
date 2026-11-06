@@ -16,6 +16,7 @@
  *   has:cjk-text                                           (a text shape with Japanese characters)
  *   has:contrast                                           (a contrast pair is declared)
  *   has:say-icon:<a|b> | has:say-mood:<a|b> | has:sound:<a|b> | has:prop:<asset|asset>
+ *   has:emphasis:<glint|ring|…> | has:express:<emotion|emotion>
  */
 import { JOINTS } from '../schema/scene';
 import { fractionEqual, sample, sampleNumber, sampleBool, sampleString } from '../engine/track';
@@ -43,9 +44,12 @@ export function evaluateFeature(c: CompiledScene, feature: string): { ok: boolea
     if (rhsRaw.startsWith('icon:')) { const names = rhsRaw.slice(5).split('|'); const have = sc.shapes.filter((x) => x.type === 'icon').map((x) => (x as { icon: string }).icon); return { ok: names.some((x) => have.includes(x)), detail: `icons: ${have.join(', ') || 'none'}` }; }
     if (rhsRaw === 'cjk-text') { const ok = sc.shapes.some((x) => x.type === 'text' && /[\u3000-\u9fff\uf900-\ufaff\uff00-\uffef]/.test((x as { text: string }).text)); return { ok, detail: ok ? 'has Japanese text' : 'no Japanese text shape' }; }
     if (rhsRaw === 'contrast') return { ok: !!sc.contrast, detail: sc.contrast ? `contrast with ${sc.contrast.with.join(', ')}` : 'no contrast pair' };
+    if (rhsRaw === 'bearer') { const r = bearerOf(sc); return { ok: !!r, detail: r ? `bearer: ${r}` : 'no bearer: no prop, no wardrobe detail, no icon and no bodily action shows the word' }; }
     if (rhsRaw.startsWith('say-icon:')) { const names = rhsRaw.slice(9).split('|'); const have = sc.timeline.filter((x) => x.action === 'say').map((x) => (x as { icon?: string }).icon ?? ''); return { ok: names.some((x) => have.includes(x)), detail: `say icons: ${have.filter(Boolean).join(', ') || 'none'}` }; }
     if (rhsRaw.startsWith('say-mood:')) { const names = rhsRaw.slice(9).split('|'); const have = sc.timeline.filter((x) => x.action === 'say').map((x) => (x as { mood: string }).mood); return { ok: names.some((x) => have.includes(x)), detail: `say moods: ${have.join(', ') || 'none'}` }; }
     if (rhsRaw.startsWith('sound:')) { const names = rhsRaw.slice(6).split('|'); const have = sc.timeline.filter((x) => x.action === 'sound').map((x) => (x as { kind: string }).kind); return { ok: names.some((x) => have.includes(x)), detail: `sounds: ${have.join(', ') || 'none'}` }; }
+    if (rhsRaw.startsWith('emphasis:')) { const names = rhsRaw.slice(9).split('|'); const have = sc.timeline.filter((x) => x.action === 'emphasis').map((x) => (x as { kind: string }).kind); return { ok: names.some((x) => have.includes(x)), detail: `emphasis: ${have.join(', ') || 'none'}` }; }
+    if (rhsRaw.startsWith('express:')) { const names = rhsRaw.slice(8).split('|'); const have = sc.timeline.filter((x) => x.action === 'express').map((x) => (x as { emotion: string }).emotion); return { ok: names.some((x) => have.includes(x)), detail: `expressions: ${have.join(', ') || 'none'}` }; }
     if (rhsRaw.startsWith('prop:')) { const names = rhsRaw.slice(5).split('|'); const have = sc.props.map((x) => x.asset); return { ok: names.some((x) => have.includes(x)), detail: `props: ${have.join(', ') || 'none'}` }; }
     return { ok: false, detail: `unknown has-feature "${rhsRaw}"` };
   }
@@ -63,6 +67,12 @@ export function evaluateFeature(c: CompiledScene, feature: string): { ok: boolea
   if (lhs === 'peaklift') {
     const a = rhs!; let peak = 0; for (let t = 0; t <= D; t += 40) peak = Math.max(peak, sampleNumber(c.tracks, `${a}.lift`, t, 0));
     return { ok: le ? peak <= minFrac : peak >= minFrac, detail: `${a} peak lift is ${peak.toFixed(1)}` };
+  }
+  if (lhs === 'start') {
+    const [prop, key] = rhs!.split('.'); const def = c.scene.props.find((p) => p.id === prop); const stat = def?.state?.[key!];
+    const tr = c.tracks.get(`${prop}.s.${key}`); const v = tr && (tr.keys[0]?.t ?? 1) <= 0 ? sampleNumber(c.tracks, `${prop}.s.${key}`, 0, NaN) : typeof stat === 'number' ? stat : NaN;
+    if (eqStr !== undefined) return { ok: String(tr ? sample(c.tracks, `${prop}.s.${key}`, 0) : stat) === eqStr, detail: `${prop}.${key} starts as ${String(stat)}` };
+    return { ok: Number.isNaN(v) ? false : le ? v <= minFrac : v >= minFrac, detail: `${prop}.${key} starts at ${Number.isNaN(v) ? 'undefined' : v.toFixed(2)}` };
   }
   if (lhs === 'end') {
     const [prop, key] = rhs!.split('.'); const v = sampleNumber(c.tracks, `${prop}.s.${key}`, D, NaN);
@@ -116,4 +126,16 @@ export function checkContrast(c: CompiledScene, others: Map<string, Scene>): Pro
     if (!differs) out.push({ level: 'error', message: `every distinctive feature also holds in "${otherId}" – the pair is not visibly different` });
   }
   return out;
+}
+
+/** The entity that bears the word: a prop, a wardrobe detail, an icon, or a bodily action. Null when the scene is only a person (and text). */
+export const WARDROBE_DETAILS = ['hat', 'glasses', 'scarf', 'buttons', 'zipper', 'sleeves', 'apron', 'laces', 'pattern', 'headband', 'number', 'shorts', 'topLength', 'top', 'bottom', 'shoes'];
+export const BODY_ACTIONS = ['walk', 'run', 'jump', 'exercise', 'express', 'dress', 'fasten', 'climb', 'roll', 'relax', 'sleep', 'eat', 'give', 'use', 'cook', 'flip', 'pour', 'open', 'close'];
+export function bearerOf(sc: { props: { asset: string }[]; shapes: { type: string }[]; actors: { wardrobe?: Record<string, unknown> }[]; timeline: { action: string }[] }): string | null {
+  if (sc.props.length) return `prop ${sc.props[0]!.asset}`;
+  const icon = sc.shapes.find((x) => x.type === 'icon'); if (icon) return 'icon';
+  for (const a of sc.actors) { const w = a.wardrobe ?? {}; const d = WARDROBE_DETAILS.find((k) => w[k] !== undefined && w[k] !== 'none' && w[k] !== false); if (d) return `wardrobe ${d}`; }
+  const act = sc.timeline.find((x) => BODY_ACTIONS.includes(x.action)); if (act) return `action ${act.action}`;
+  const say = sc.timeline.find((x) => x.action === 'say' && (x as { icon?: string }).icon); if (say) return `say icon ${(say as { icon?: string }).icon}`;
+  return null;
 }

@@ -75,3 +75,16 @@
 - **`docs/SWECHAN_INTEGRATION.md`**: fil-lista, åtta steg, register `wordVisuals.json`, laddning, tester. Swechan är inte rört.
 - Scener: 75 (59 med godkänt blindtest; b7 11/13 → två rättade; b8 12/12). Tester: 61.
 
+## 0.6.0 – 2026-11-05 (bärar-regeln: varje ordscen visar ett typexempel)
+- **Orsak:** produktägaren fann att batch-utkasten för *vass*, *grov*, *halvera* och *skölja* var tomma eller fel (figur som säger ordet; morot i fyra delar; sköljning utan vatten). Rotorsaker: mallkontraktet för egenskaper krävde bara text, startscenen var tom, 285 adjektivrecept skrevs i bulk utan bärare, täckningen räknade dem som redo, utkasten blindtestades inte.
+- **Normativ regel:** `docs/WORD_FUNCTIONS.md` – tabell *ordfunktion → mall → vad som bär betydelsen → text → förbjudet* för 21 funktioner, plus receptformatet. Pekare från CLAUDE.md §2.1, STYLE_GUIDE, SCENE_FORMAT, README.
+- **Validatorn:** fel för ordscener utan bärare (`bearerOf`: föremål, ikon, klädseldetalj inkl. uttrycklig färg, kroppslig handling eller pratbubbla med ikon). Kontrakt: `attribute-gloss` och `property-contrast` kräver `has:bearer`; `manipulate-prop` tar `eat`; `tool-rhythm` ≥ 1 föremål; `social` = `give`; ny mall **`arrange`** (en person ställer/tar ett föremål: duka, packa, stapla, hänga upp – 25 recept + `anim.servera.1` flyttade dit; ej godkänd ännu).
+- **Recept:** varje adjektiv har `bearer` (prop 102, ikon 128, smak 26, känsla 26, klädsel 23, kontrast 10, rörelse 5, person 1); verb har mallspecifika fält (verktyg, råvara, följd, grad, ikon). Nycklar per betydelse (`s.slö.1`) vinner över lemma. Svaga recept är märkta `TODO` och räknas som blockerade. 564 recept.
+- **Byggare:** `anim:batch` komponerar hela scener av recepten (placering på bord/golv, skala per familj, gloss-bubbla med svans mot bäraren, kontrastkrav), i stället för att fylla luckor i en tom startscen.
+- **Motor:** `scaleX/scaleY` med pivot (`px/py`) i både transform och bbox – stretch/wobble/bounce och bubblornas pop skalar nu kring sin egen punkt, inte kring origo. Schema: ikon-scener utan aktör/föremål tillåtna. Snapshot av bildhashar uppdaterad avsiktligt (22 scener, kontrollerade i remsor).
+- **Verktygsarbete:** handen stannar bakom arbetspunkten med verktygets framåträckvidd (sin av lutningen), så bladet – inte skaftet – ligger över råvaran (skära, hacka, halvera, vispa kontrollerade i remsor). Halvor glider tydligt isär (`parts: 2`), slö kniv har synliga hack, `grov` visas mot *fin* på samma bord.
+- **Batch:** kontrastpartner som skapas i samma körning länkas; `--force` uppdaterar scenen där den redan ligger i stället för att skriva en dubblett i ny mapp.
+- **Blindtest:** b7 6/6 (vass, slö, grov, halvera, skölja, försiktig – granskaren påpekade att grov/slö/försiktig bars av glossen), b9 efter omarbetning 2/3 (grov och slö godkända, halvera underkänd: bladet låg bredvid äpplet), b10 efter handrättningen – se `registry/blind.json`.
+- **Tester (63):** varje recept bygger en scen som validerar (564/564); bärar-regeln avvisar person + text och godkänner kniv + glint.
+- **Täckning (606 betydelser):** 52 klara med blindtest, 12 scener utan blindtest, 370 redo, 79 blockerade (svaga recept), 71 utan recept, 22 bild. Siffrorna är lägre än i 0.5.0 därför att de nu är ärliga.
+

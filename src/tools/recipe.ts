@@ -14,7 +14,8 @@
 import { isPropAsset } from '../assets/catalog';
 import type { Recipe } from './coverage';
 import { loadSwechan, stripFurigana } from './plan';
-import { NOUN_ASSET, SURFACE_OF, TOOL_VERBS, PROCESS_VERBS, PROPERTIES, ABSTRACT_ICON, SAY_BY_DEF, BOW_BY_DEF, DEF_CATEGORY, DRESS_LEMMAS, LOCOMOTION_LEMMAS, STATE_LEMMAS, PATTERNS, COLOURS, ARRANGE_VERBS, SOCIAL_VERBS, COOK_VERBS, MISSING_ASSET, HARD_WORDS } from './lexicon';
+import { NOUN_ASSET, SURFACE_OF, TOOL_VERBS, PROCESS_VERBS, PROPERTIES, ABSTRACT_ICON, SAY_BY_DEF, BOW_BY_DEF, DEF_CATEGORY, DRESS_LEMMAS, LOCOMOTION_LEMMAS, STATE_LEMMAS, PATTERNS, COLOURS, ARRANGE_VERBS, SOCIAL_VERBS, COOK_VERBS, MISSING_ASSET, HARD_WORDS, STATE_BY_ADJ, EAT_VERBS } from './lexicon';
+import { PROPS } from '../assets/props';
 
 export type Word = { senseId: string; lemma: string; pos: string; defSv?: string; examples?: string[]; jaGloss?: string; antonyms?: string[]; tags?: string[] };
 export type Inferred =
@@ -69,6 +70,7 @@ export function inferRecipe(w: Word, hand: Record<string, Recipe> = {}): Inferre
 
 function inferVerb(w: Word, lemma: string, text: string, found: string[], _hand: Record<string, Recipe>, manual: (r: string, f: string | undefined, h: string[]) => Inferred): Inferred {
   if (DRESS_LEMMAS.includes(lemma)) return { ok: true, recipe: { template: 'dress-self' }, confidence: 'high', why: ['klädfras i tabellen'] };
+  const ev = EAT_VERBS[lemma]; if (ev) return { ok: true, recipe: { template: 'manipulate-prop', eat: { prop: ev.prop, sound: ev.sound } }, confidence: 'high', why: ['ätverb i tabellen'] };
   const cv = COOK_VERBS[lemma]; if (cv) return { ok: true, recipe: { template: 'cook-rhythm', ...cv }, confidence: 'high', why: ['matlagning i panna (tabell)'] };
   const av = ARRANGE_VERBS[lemma]; if (av) return { ok: true, recipe: { template: 'arrange', ...av }, confidence: 'high', why: ['ställa/ta-verb i tabellen'] };
   const sv2 = SOCIAL_VERBS[lemma]; if (sv2) return { ok: true, recipe: { template: 'social', give: sv2 }, confidence: 'high', why: ['verb mellan människor i tabellen'] };
@@ -86,6 +88,7 @@ function inferVerb(w: Word, lemma: string, text: string, found: string[], _hand:
   }
   const pv = PROCESS_VERBS[lemma];
   if (pv) { const r: Recipe = { template: 'process', asset: pv.asset, change: pv.change, ...(pv.state ? { state: pv.state } : {}), ...(pv.extra ? { extra: pv.extra } : {}), ...(pv.sound ? { sound: pv.sound } : {}), env: pv.env ?? 'kitchen' } as Recipe; if (pv.change[0]) r.claim = [`end:thing.${pv.change[0].key}${pv.change[0].to >= 0.5 ? '>=' : '<='}${pv.change[0].to}`]; return { ok: true, recipe: r, confidence: 'high', why: ['processverb i tabellen'] }; }
+  const pe = PROPERTIES[lemma]; if (pe?.emotion) return { ok: true, recipe: { template: 'emotion', bearer: { kind: 'emotion', ...pe.emotion, env: 'room' } }, confidence: 'high', why: ['känsloverb i tabellen'] };
   if (LOCOMOTION_LEMMAS.includes(lemma)) return { ok: true, recipe: { template: 'locomotion' }, confidence: 'high', why: ['förflyttningsverb'] };
   if (STATE_LEMMAS.includes(lemma)) return { ok: true, recipe: { template: 'state', note: `tillstånd: ${lemma} – kontrollera hållning, ögon och ljus mot grannordet` }, confidence: 'medium', why: ['tillståndsverb'] };
   // bows and speech by definition
@@ -136,8 +139,13 @@ function inferAdjective(w: Word, lemma: string, text: string, found: string[], _
   if (p) return { ok: true, recipe: recipeFromProperty(p), confidence: 'high', why: ['egenskap i tabellen'] };
   // an antonym in the table whose picture is a contrast: mirror it
   for (const ant of w.antonyms ?? []) { const q = PROPERTIES[ant]; if (q?.contrast) return { ok: true, recipe: { template: 'attribute-gloss', bearer: { kind: 'contrast', a: q.contrast.b, b: q.contrast.a, mark: 'b', env: q.env ?? 'room' } }, confidence: 'medium', why: [`motsatsen ${ant} finns som kontrast – speglad`] }; }
-  const icon = ABSTRACT_ICON.find(([re]) => re.test(`${lemma} ${text}`))?.[1];
   const thing = found.find((a) => !isTool(a));
+  const st = STATE_BY_ADJ.find(([re]) => re.test(lemma))?.[1];
+  if (st) {
+    const asset = thing && PROPS[thing]?.defaults[st.key] !== undefined ? thing : st.fallback;
+    return { ok: true, recipe: { template: 'attribute-gloss', bearer: { kind: 'prop', asset, state: { [st.key]: st.to }, ...(st.glint ? { glint: true } : {}), env: isFixture(asset) ? 'room' : 'kitchen' } }, confidence: asset === thing ? 'high' : 'medium', why: [`tillståndet ${st.key}=${st.to} på ${asset}${asset === thing ? ' (ur definitionen)' : ' (standardföremål)'}`] };
+  }
+  const icon = ABSTRACT_ICON.find(([re]) => re.test(`${lemma} ${text}`))?.[1];
   // when the icon just repeats the thing (sun + sun), the thing itself is the bearer
   const ICON_OF_ASSET: Record<string, string> = { 'fixture.sun': 'sun', 'fixture.cloud': 'cloud', 'fixture.clock': 'clock', phone: 'phone', 'fixture.scale': 'scale', 'fixture.fire': 'flame', 'fixture.ice': 'snowflake', bed: 'bed', 'container.cup': 'cup', 'container.plate': 'plate', 'container.bin': 'bin', 'garment.shirt': 'tshirt', 'garment.trousers': 'trousers', 'fixture.lamp': 'bulb' };
   if (icon && thing && ICON_OF_ASSET[thing] === icon) return { ok: true, recipe: { template: 'attribute-gloss', bearer: { kind: 'prop', asset: thing, env: isFixture(thing) ? 'room' : 'kitchen', ...(thing === 'fixture.sun' ? { surface: null } : {}) } }, confidence: 'medium', why: [`föremålet ${thing} ur definitionen bär egenskapen`] };

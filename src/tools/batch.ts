@@ -46,7 +46,8 @@ function base(row: PlanRow, template: string, moduleTitle: string, recipe: Recip
 const gloss = (text: string, x: number, y: number, bg: 'panel' | 'bubble', tail?: Pt): J => ({ type: 'text', id: 'ja', x, y: -20, text: text.slice(0, 12) || '…', size: 11, weight: 800, fill: 'ink', anchor: 'middle', bg, pad: 6, opacity: 0, z: 5, ...(bg === 'bubble' && tail ? { tail } : {}), _y: y });
 function addGloss(s: J, text: string, at: number, x: number, y: number, bg: 'panel' | 'bubble', tail?: Pt): void {
   if (!text) return;
-  const g = gloss(text, x, y, bg, tail); const yEnd = g._y as number; delete g._y;
+  const shown = text.slice(0, 12); const w = shown.length * 11 + 14; const cx = Math.max(w / 2 + 2, Math.min(118 - w / 2, x)); // long Japanese glosses must not run off the right edge
+  const g = gloss(text, cx, y, bg, tail ? { x: tail.x + (x - cx), y: tail.y } : undefined); const yEnd = g._y as number; delete g._y;
   (s.shapes as J[]).push(g);
   // fade + a short slide: the text never sits half outside the canvas in any frame
   (s.timeline as J[]).push({ t: at, action: 'tween', target: 'ja', prop: 'opacity', from: 0, to: 1, durationMs: 350, ease: 'easeOut' }, { t: at, action: 'tween', target: 'ja', prop: 'y', from: yEnd - 6, to: yEnd, durationMs: 450, ease: 'easeOut' });
@@ -255,7 +256,8 @@ function buildSocial(_row: PlanRow, r: Recipe, s: J): J | null {
     const intoOpen = on ? PROPS[on]?.defaults.open !== undefined : false; // bins, bags, suitcases: the lid opens and the thing goes in
     const onAt = on ? placeThing(s, 'place', on, placeX, { scale: onFloor(on) ? 1 : 1.2, ...(intoOpen ? { state: { open: 1 } } : {}) }, onFloor(on) ? null : 'table') : null;
     props.push({ id: 'thing', asset: put.prop, attachTo: { actor: 'p', hand: 'left' }, scale: 0.8, ...(put.state ? { state: put.state } : {}) });
-    const target = wide && onAt ? { x: 66, y: onAt.y - 56 } : onAt ? { x: onAt.x + (PROPS[on!]?.mouth?.[0] ?? 0), y: onAt.y + (PROPS[on!]?.mouth?.[1] ?? -4) } : { x: 92, y: 70 }; if (!onAt) props.push({ id: 'table', asset: 'table', at: { x: 92, y: 100 }, z: -1 });
+    const floorThing = onFloor(put.prop as string);
+    const target = wide && onAt ? { x: 66, y: onAt.y - 56 } : onAt ? { x: onAt.x + (PROPS[on!]?.mouth?.[0] ?? 0), y: onAt.y + (PROPS[on!]?.mouth?.[1] ?? -4) } : floorThing ? { x: 94, y: 100 } : { x: 92, y: 70 }; if (!onAt && !floorThing) props.push({ id: 'table', asset: 'table', at: { x: 92, y: 100 }, z: -1 }); // furniture goes on the floor, never on a table
     tl.push({ t: 200, action: 'walk', actor: 'p', to: { x: wide ? 28 : 62, y: 100 } }, { t: 1500, action: 'put', actor: 'p', prop: 'thing', at: target, durationMs: 800 }, { t: 2400, action: 'idle', actor: 'p', durationMs: 1200 });
     if (intoOpen) tl.push({ t: 2300, action: 'tween', target: 'thing', prop: 'opacity', from: 1, to: 0, durationMs: 250 }, { t: 2600, action: 'set', target: 'place', prop: 'full', value: 1 }); // it is inside now
     (s.focus as J).targets = ['thing']; }
@@ -346,8 +348,8 @@ export function runBatch(plan: Plan, moduleTitle: string, existingBySense: Map<s
     const pick = recipeFor(row);
     if (pick.recipe && !pick.manual) {
       const sig = JSON.stringify({ ...pick.recipe, note: undefined, generated: undefined });
-      const twin = seen.get(sig); if (twin) { out.push({ senseId: row.senseId, lemma: row.lemma, status: 'manual', note: handoffNote(`samma bild som *${twin}* – två ord får inte ha identiska scener`, [`skilj dem åt (föremål, tillstånd, tempo, slutläge) eller markera det ena som synonym i receptet`], []) }); continue; }
-      seen.set(sig, row.lemma);
+      const twin = seen.get(sig); if (twin && !synonymsOf(row.lemma).includes(twin)) { out.push({ senseId: row.senseId, lemma: row.lemma, status: 'manual', note: handoffNote(`samma bild som *${twin}* – två ord får inte ha identiska scener`, [`skilj dem åt (föremål, tillstånd, tempo, slutläge) eller markera det ena som synonym i receptet`], []) }); continue; }
+      if (!twin) seen.set(sig, row.lemma); // declared synonyms may share the picture (they are confusableWith, never quizzed against each other)
     }
     if (pick.manual) { out.push({ senseId: row.senseId, lemma: row.lemma, status: 'manual', note: handoffNote(pick.manual.reason, pick.manual.hints, pick.manual.nearest) }); continue; }
     const recipe = pick.recipe;

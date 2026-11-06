@@ -28,7 +28,7 @@ export const NOUN_ASSET: [RegExp, string][] = B([
   [/\bglas/, 'glass'], [/\bkanna|\btillbringare/, 'jug'],
   // food
   [/\bäpple/, 'food.apple'], [/\bbanan/, 'food.banana'], [/\bmorot|\bmorötter/, 'food.carrot'], [/\btomat/, 'food.tomato'], [/\blök/, 'food.onion'], [/\bpotatis/, 'food.potato'],
-  [/\bbröd|\bmacka|\bsmörgås|\brostbröd|\bskiva\b/, 'food.bread'], [/\bdeg/, 'food.dough'], [/\bägg/, 'food.egg'], [/\bost/, 'food.cheese'], [/\bfisk/, 'food.fish'], [/\bpannkaka/, 'food.pancake'], [/\btårta|\bkaka/, 'food.cake'],
+  [/\bbröd|\bmacka|\bsmörgås|\brostbröd|\bskiva\b|\bbak(a|at|ad|ar|ning|verk)\b|\bbulle/, 'food.bread'], [/\bdeg/, 'food.dough'], [/\bägg/, 'food.egg'], [/\bost/, 'food.cheese'], [/\bfisk/, 'food.fish'], [/\bpannkaka/, 'food.pancake'], [/\btårta|\bkaka/, 'food.cake'],
   [/\bgrönsak|\bsallad|\bfrukt|\bråvar|\bingrediens/, 'food.carrot'],
   // garments
   [/\btröja|\bskjorta|\bblus|\bt-shirt|\bplagg|\bkläder|\btyg\b|\btyget/, 'garment.shirt'], [/\bbyxor|\bjeans/, 'garment.trousers'], [/\bstrump|\bsocka/, 'garment.sock'], [/\bhandduk/, 'garment.towel'], [/\bklänning|\bkjol/, 'garment.dress'], [/\bjacka|\bkappa|\brock\b/, 'garment.jacket'],
@@ -95,6 +95,7 @@ export const TOOL_VERBS: Record<string, ToolRule> = {
   klippa: { tool: 'tool.scissors', motion: 'tap', target: 'garment.shirt', surface: null, effects: [], period: 500 },
   sy: { tool: 'tool.needle', motion: 'pull', target: 'garment.shirt', surface: null, effects: [] },
   skriva: { tool: 'tool.pen', motion: 'wipe', target: 'container.board', surface: null, effects: [], period: 500 },
+  märka: { tool: 'tool.pen', motion: 'wipe', target: 'container.crate', surface: null, effects: [], period: 500 }, flyttstäda: { tool: 'tool.broom', motion: 'sweep', target: 'food.pile', surface: null, effects: [{ key: 'amount', to: 0 }], targetState: { amount: 1, size: 0.6 } },
   'borsta tänderna': { tool: 'tool.toothbrush', motion: 'brush', target: 'fixture.mirror', surface: null, effects: [], period: 300 },
   raka: { tool: 'tool.razor', motion: 'wipe', target: 'fixture.mirror', surface: null, effects: [], period: 700 },
   vattna: { tool: 'jug', motion: 'hold', target: 'fixture.plant', surface: null, effects: [{ key: 'wilt', to: 0 }], targetState: { wilt: 1 } },
@@ -171,7 +172,7 @@ export const PROPERTIES: Record<string, PropertyRule> = {
   frasig: { taste: { food: 'food.bread', reaction: 'happy', icon: 'wave' } }, knaprig: { taste: { food: 'food.bread', reaction: 'happy', icon: 'wave' } }, mjuk: { taste: { food: 'food.cake', reaction: 'content', icon: 'heart' } }, seg: { taste: { food: 'food.bread', reaction: 'tired', icon: 'ellipsis' } },
   arg: { emotion: { emotion: 'angry' } }, glad: { emotion: { emotion: 'happy' } }, ledsen: { emotion: { emotion: 'sad' } }, trött: { emotion: { emotion: 'tired', cause: 'fixture.clock' } }, rädd: { emotion: { emotion: 'surprised' } },
   förvånad: { emotion: { emotion: 'surprised', cause: 'container.crate' } }, mätt: { emotion: { emotion: 'full', cause: 'container.plate' } }, hungrig: { emotion: { emotion: 'sad', cause: 'container.plate' } }, nöjd: { emotion: { emotion: 'content', cause: 'container.plate' } },
-  stolt: { emotion: { emotion: 'proud', cause: 'food.cake' } }, nyfiken: { emotion: { emotion: 'curious', cause: 'container.crate' } }, äcklad: { emotion: { emotion: 'disgusted', cause: 'food.fish' } }, kall_person: { emotion: { emotion: 'cold' } },
+  stolt: { emotion: { emotion: 'proud', cause: 'food.cake' } }, sakna: { emotion: { emotion: 'sad', cause: 'phone' } }, längta: { emotion: { emotion: 'sad', cause: 'phone' } }, orolig: { emotion: { emotion: 'surprised', cause: 'fixture.clock' } }, lugn: { emotion: { emotion: 'content' } }, generad: { emotion: { emotion: 'surprised' } }, uttråkad: { emotion: { emotion: 'tired', cause: 'fixture.clock' } }, nyfiken: { emotion: { emotion: 'curious', cause: 'container.crate' } }, äcklad: { emotion: { emotion: 'disgusted', cause: 'food.fish' } }, kall_person: { emotion: { emotion: 'cold' } },
   försiktig: { manner: { manner: 'careful', prop: 'container.bowl' } }, varsam: { manner: { manner: 'careful', prop: 'container.bowl' } },
   snabb: { icon: 'lightning', note: 'hastighet som egenskap: blixt-ikon; kontrastera mot långsam' }, långsam: { icon: 'hourglass' },
   billig_: { icon: 'coin' }, gratis: { icon: 'coin', asset: 'container.bag' }, sen: { icon: 'clock' }, tidig: { icon: 'sun' }, farlig: { icon: 'exclaim' }, säker: { icon: 'shield' }, låst: { asset: 'door', icon: 'lock', surface: null },
@@ -190,7 +191,7 @@ export const ABSTRACT_ICON: [RegExp, string][] = B([
 
 /** Communication verbs: keywords in the definition → bubble icon + mood. */
 export const SAY_BY_DEF: [RegExp, string, string][] = ([
-  [/\bförlåt|\bursäkt/, 'palms', 'sad'], [/\btack/, 'palms', 'happy'],
+  [/\bförlåt|\bursäkt/, 'palms', 'sad'], [/\btack/, 'palms', 'happy'], [/\bavbryt|\bstör(a|ande)?\b|\bsluta\b/, 'no', 'angry'],
   [/\bmat\b|\bbeställ|\brestaurang|\bmeny/, 'fork-knife', 'neutral'], [/\bbetal|\bpris|\bnota|\bkvitto|\bpengar/, 'banknote', 'neutral'], [/\bklaga|\bmissnöjd|\bfel\b|\bdåligt/, 'cross', 'angry'],
   [/\bvarna|\bfara|\bakta/, 'exclaim', 'surprised'], [/\bskämt|\brolig|\bskratt/, 'smile', 'happy'], [/\bfråg|\bundra/, 'question', 'question'], [/\bsvar/, 'check', 'neutral'], [/\brekommend|\btips|\bföreslå/, 'star', 'happy'],
   [/\bförklar|\bberätt|\bbeskriv/, 'ellipsis', 'neutral'], [/\bhot|\barg\b/, 'lightning', 'angry'], [/\bbok(a|ning)|\breserv/, 'calendar', 'neutral'], [/\bansök|\bblankett|\bskriv under|\bkontrakt/, 'document', 'neutral'],
@@ -238,7 +239,7 @@ export const SOCIAL_VERBS: Record<string, { prop: string; state?: Record<string,
 /** Cooking in a pan (template cook-rhythm). */
 export const COOK_VERBS: Record<string, { kind: 'fry' | 'brown' | 'sear' | 'burn' | 'melt'; contents: string; flip?: boolean; splash?: boolean }> = { steka: { kind: 'fry', contents: 'egg' }, bryna: { kind: 'brown', contents: 'onion' }, fräsa: { kind: 'sear', contents: 'onion' }, bränna: { kind: 'burn', contents: 'pancake' }, 'bränna vid': { kind: 'burn', contents: 'pancake' }, smälta: { kind: 'melt', contents: 'butter' }, vända: { kind: 'fry', contents: 'pancake', flip: true }, 'vända på': { kind: 'fry', contents: 'pancake', flip: true }, skvätta: { kind: 'fry', contents: 'steak', splash: true }, laga: { kind: 'fry', contents: 'egg' }, 'laga mat': { kind: 'fry', contents: 'egg' }, tillaga: { kind: 'fry', contents: 'steak' }, grilla: { kind: 'sear', contents: 'steak' }, 'steka på': { kind: 'fry', contents: 'egg' } };
 /** Things people name that the catalogue does not have yet – the generator says exactly what is missing instead of picking a wrong one. */
-export const MISSING_ASSET: [RegExp, string][] = ([[/\bdammsug/, 'dammsugare'], [/\bparaply/, 'paraply'], [/\bbil\b|\bbilen\b/, 'bil'], [/\bbuss/, 'buss'], [/\btåg/, 'tåg'], [/\bdator/, 'dator'], [/\btv\b|\bteve/, 'tv'], [/\bkudde/, 'kudde'], [/\bgardin/, 'gardin'], [/\btavla/, 'tavla'], [/\btrapp/, 'trappa'], [/\bhiss/, 'hiss'], [/\bplånbok/, 'plånbok'], [/\bgrill\b|\bgrillen/, 'grill'], [/\bfritös/, 'fritös'], [/\bmatta/, 'matta'], [/\bsoptunn/, 'soptunna (finns: container.bin)'], [/\bvas\b|\bvasen/, 'vas'], [/\bbesticks?\b/, 'bestick (finns: tool.fork, tool.knife, tool.spoon)']] as [RegExp, string][]).map(([re, n]) => [sv(re), n]);
+export const MISSING_ASSET: [RegExp, string][] = ([[/\bdammsug/, 'dammsugare'], [/\btejp/, 'tejp'], [/\bflyttlåda/, 'flyttlåda (finns: container.crate)'], [/\bparaply/, 'paraply'], [/\bbil\b|\bbilen\b/, 'bil'], [/\bbuss/, 'buss'], [/\btåg/, 'tåg'], [/\bdator/, 'dator'], [/\btv\b|\bteve/, 'tv'], [/\bkudde/, 'kudde'], [/\bgardin/, 'gardin'], [/\btavla/, 'tavla'], [/\btrapp/, 'trappa'], [/\bhiss/, 'hiss'], [/\bplånbok/, 'plånbok'], [/\bgrill\b|\bgrillen/, 'grill'], [/\bfritös/, 'fritös'], [/\bmatta/, 'matta'], [/\bsoptunn/, 'soptunna (finns: container.bin)'], [/\bvas\b|\bvasen/, 'vas'], [/\bbesticks?\b/, 'bestick (finns: tool.fork, tool.knife, tool.spoon)']] as [RegExp, string][]).map(([re, n]) => [sv(re), n]);
 
 /** Words the tool knows it cannot do yet, with the honest reason – the generator hands these off instead of building something misleading. */
 export const HARD_WORDS: Record<string, string> = {
@@ -251,6 +252,42 @@ export const HARD_WORDS: Record<string, string> = {
 };
 
 /** Near-synonyms that the same picture legitimately covers: never offered against each other in blind tests or picture quizzes (declared as confusableWith). */
-export const SYNONYM_GROUPS: string[][] = [['laga', 'tillaga', 'laga mat', 'steka'], ['servera', 'lägga upp', 'duka', 'ställa fram'], ['värma upp', 'värma', 'koka'], ['städa', 'sopa'], ['plocka undan', 'duka av'], ['slänga', 'kasta', 'återvinna', 'källsortera', 'sortera'], ['tvätta', 'diska', 'skölja'], ['ta av sig', 'klä av sig'], ['ta på sig', 'klä på sig', 'sätta på sig']];
+export const SYNONYM_GROUPS: string[][] = [['rutten', 'skämd', 'möglig', 'härsken', 'unken', 'dålig'], ['färsk', 'fräsch', 'nybakad', 'dagsfärsk', 'nyplockad'], ['vissen', 'slokig'], ['mogen', 'mogna'], ['laga', 'tillaga', 'laga mat', 'steka'], ['servera', 'lägga upp', 'duka', 'ställa fram'], ['värma upp', 'värma', 'koka'], ['städa', 'sopa'], ['plocka undan', 'duka av'], ['slänga', 'kasta', 'återvinna', 'källsortera', 'sortera'], ['tvätta', 'diska', 'skölja'], ['ta av sig', 'klä av sig'], ['ta på sig', 'klä på sig', 'sätta på sig']];
 export const synonymsOf = (lemma: string): string[] => SYNONYM_GROUPS.find((g) => g.includes(lemma))?.filter((x) => x !== lemma) ?? [];
+
+/** Adjective keywords → a state that shows the property on whatever thing the definition names (applied only when the thing has that key; otherwise the fallback asset is used). */
+export const STATE_BY_ADJ: [RegExp, { key: string; to: number; fallback: string; glint?: boolean }][] = ([
+  [/^övermog|\bövermogen/, { key: 'rot', to: 0.45, fallback: 'food.banana' }],
+  [/^mog(en|na)\b/, { key: 'ripeness', to: 1, fallback: 'food.banana' }],
+  [/^omog/, { key: 'ripeness', to: 0.1, fallback: 'food.banana' }],
+  [/^(rutten|skämd|möglig|härsken|unken|dålig|gammal)\b|\bmögel|\bruttn/, { key: 'rot', to: 1, fallback: 'food.apple' }],
+  [/^(vissen|slokig|slak)\b|\bvissn|\bslokar/, { key: 'wilt', to: 1, fallback: 'fixture.flower' }],
+  [/^(nybakad|nygräddad|färskbakad)\b/, { key: 'toast', to: 0, fallback: 'food.bread', glint: true }],
+  [/^(färsk|fräsch|nyplockad|dagsfärsk|krispig|spänstig)\b/, { key: 'ripeness', to: 0.9, fallback: 'food.apple', glint: true }],
+  [/^(blöt|våt|fuktig|genomblöt)\b/, { key: 'wet', to: 1, fallback: 'garment.towel' }],
+  [/^(torr|torkad)\b/, { key: 'wet', to: 0, fallback: 'garment.towel' }],
+  [/^(skrynklig|ostruken)\b/, { key: 'wrinkled', to: 1, fallback: 'garment.shirt' }],
+  [/^(struken|slät)\b/, { key: 'wrinkled', to: 0, fallback: 'garment.shirt' }],
+  [/^(fläckig|smutsig|kladdig|flottig)\b/, { key: 'stain', to: 1, fallback: 'garment.shirt' }],
+  [/^(urtvättad|blekt|sliten|nött)\b/, { key: 'faded', to: 0.9, fallback: 'garment.shirt' }],
+  [/^(krympt|för liten)\b/, { key: 'shrink', to: 1, fallback: 'garment.shirt' }],
+  [/^(vikt|hopvikt)\b/, { key: 'folded', to: 1, fallback: 'garment.shirt' }],
+  [/^(tänd|påslagen|upplyst)\b/, { key: 'on', to: 1, fallback: 'fixture.lamp' }],
+  [/^(släckt|avstängd)\b/, { key: 'on', to: 0, fallback: 'fixture.lamp' }],
+  [/^(full|fylld)\b/, { key: 'fill', to: 1, fallback: 'glass' }],
+  [/^tom\b/, { key: 'fill', to: 0, fallback: 'glass' }],
+  [/^(kokt|hårdkokt)\b/, { key: 'boiled', to: 1, fallback: 'food.egg' }],
+  [/^(rostad|bränd)\b/, { key: 'toast', to: 1, fallback: 'food.bread' }],
+  [/^(riven)\b/, { key: 'grated', to: 1, fallback: 'food.cheese' }],
+  [/^(skalad)\b/, { key: 'peeled', to: 1, fallback: 'food.potato' }],
+  [/^(mosad)\b/, { key: 'mashed', to: 1, fallback: 'food.potato' }],
+  [/^(skivad|hackad|skuren|tärnad)\b/, { key: 'pieces', to: 1, fallback: 'food.carrot' }],
+  [/^(öppen|uppslagen)\b/, { key: 'angle', to: 70, fallback: 'door' }],
+  [/^(stängd)\b/, { key: 'angle', to: 0, fallback: 'door' }],
+  [/^(smält)\b/, { key: 'melt', to: 1, fallback: 'fixture.ice' }],
+  [/^(fryst|frusen)\b/, { key: 'melt', to: 0, fallback: 'fixture.ice' }],
+] as [RegExp, { key: string; to: number; fallback: string; glint?: boolean }][]).map(([re, v]) => [sv(re), v]);
+
+/** Eating verbs that differ by sound or manner. */
+export const EAT_VERBS: Record<string, { prop: string; sound: 'crunch' | 'splash' | 'none'; reaction?: string }> = { äta: { prop: 'food.apple', sound: 'none' }, tugga: { prop: 'food.bread', sound: 'none' }, bita: { prop: 'food.apple', sound: 'crunch' }, knapra: { prop: 'food.carrot', sound: 'crunch' }, krasa: { prop: 'food.apple', sound: 'crunch' }, smaska: { prop: 'food.apple', sound: 'splash' }, sörpla: { prop: 'container.cup', sound: 'splash' }, dricka: { prop: 'container.cup', sound: 'none' }, smutta: { prop: 'container.cup', sound: 'none' }, smaka: { prop: 'tool.spoon', sound: 'none' }, 'smaka av': { prop: 'tool.spoon', sound: 'none' }, provsmaka: { prop: 'tool.spoon', sound: 'none' }, mumsa: { prop: 'food.cake', sound: 'none', reaction: 'happy' } };
 

@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.flytta.1",
+  "kind": "word",
+  "template": "arrange",
+  "senseId": "s.flytta.1",
+  "titleSv": "flytta",
+  "meaningHint": "Börja bo på ett nytt ställe. Också: ställa en sak på en annan plats.",
+  "category": "action",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 1900,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 40,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.9
+    }
+  ],
+  "props": [
+    {
+      "id": "thing",
+      "asset": "fixture.chair",
+      "scale": 0.8,
+      "rotate": 0,
+      "z": 0,
+      "state": {},
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 200,
+      "action": "walk",
+      "actor": "p",
+      "to": {
+        "x": 62,
+        "y": 100
+      },
+      "manner": "normal"
+    },
+    {
+      "t": 1500,
+      "action": "put",
+      "actor": "p",
+      "prop": "thing",
+      "at": {
+        "x": 94,
+        "y": 100
+      },
+      "durationMs": 800
+    },
+    {
+      "t": 2400,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 1200,
+      "style": "breathe"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "thing"
+    ],
+    "feature": "puts down fixture.chair"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "flytta till ny bostad",
+    "confusableWith": [
+      "s.packa.1",
+      "s.packa-upp.1",
+      "s.märka.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (arrange)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

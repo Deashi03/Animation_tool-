@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.sakna.1",
+  "kind": "word",
+  "template": "emotion",
+  "senseId": "s.sakna.1",
+  "titleSv": "sakna",
+  "meaningHint": "Vara ledsen för att någon eller något inte finns där längre. Också: inte ha något.",
+  "category": "emotion",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 50,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 1
+    }
+  ],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 90,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": -1,
+      "state": {}
+    },
+    {
+      "id": "cause",
+      "asset": "phone",
+      "at": {
+        "x": 90,
+        "y": 70
+      },
+      "scale": 1.2,
+      "rotate": 0,
+      "z": 1,
+      "state": {}
+    }
+  ],
+  "shapes": [
+    {
+      "type": "text",
+      "id": "ja",
+      "x": 60,
+      "y": -20,
+      "text": "恋しく思う",
+      "size": 11,
+      "weight": 800,
+      "fill": "ink",
+      "anchor": "middle",
+      "opacity": 0,
+      "z": 5,
+      "bg": "panel",
+      "pad": 6
+    }
+  ],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 500,
+      "style": "breathe"
+    },
+    {
+      "t": 300,
+      "action": "lookAt",
+      "actor": "p",
+      "target": "cause",
+      "durationMs": 300
+    },
+    {
+      "t": 600,
+      "action": "express",
+      "actor": "p",
+      "emotion": "sad",
+      "durationMs": 500
+    },
+    {
+      "t": 1100,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 2500,
+      "style": "none"
+    },
+    {
+      "t": 1600,
+      "action": "tween",
+      "target": "ja",
+      "prop": "opacity",
+      "to": 1,
+      "from": 0,
+      "durationMs": 350,
+      "ease": "easeOut"
+    },
+    {
+      "t": 1600,
+      "action": "tween",
+      "target": "ja",
+      "prop": "y",
+      "to": 18,
+      "from": 12,
+      "durationMs": 450,
+      "ease": "easeOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "face and posture: sad caused by phone"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "flytta till ny bostad",
+    "confusableWith": [
+      "s.flytta.1",
+      "s.packa.1",
+      "s.packa-upp.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (emotion)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

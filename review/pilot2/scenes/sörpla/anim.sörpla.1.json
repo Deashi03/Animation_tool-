@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.sörpla.1",
+  "kind": "word",
+  "template": "manipulate-prop",
+  "senseId": "s.sörpla.1",
+  "titleSv": "sörpla",
+  "meaningHint": "Dricka eller äta med ett högt ljud, till exempel soppa.",
+  "category": "action",
+  "durationMs": 4000,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2200,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "c",
+      "at": {
+        "x": 50,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 1
+    }
+  ],
+  "props": [
+    {
+      "id": "food",
+      "asset": "container.cup",
+      "scale": 0.9,
+      "rotate": 0,
+      "z": 0,
+      "state": {},
+      "attachTo": {
+        "actor": "p",
+        "hand": "left"
+      }
+    }
+  ],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 300,
+      "action": "eat",
+      "actor": "p",
+      "prop": "food",
+      "durationMs": 2200,
+      "reaction": "happy",
+      "sound": "splash"
+    },
+    {
+      "t": 2600,
+      "action": "idle",
+      "actor": "p",
+      "durationMs": 1400,
+      "style": "breathe"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p",
+      "food"
+    ],
+    "feature": "eats container.cup with splash sound"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matbordets samtal",
+    "confusableWith": [
+      "s.skicka.1",
+      "s.smaska.1",
+      "s.vänta-in.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (manipulate-prop)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

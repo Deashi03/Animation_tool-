@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.skämta.1",
+  "kind": "word",
+  "template": "communicate",
+  "senseId": "s.skämta.1",
+  "titleSv": "skämta",
+  "meaningHint": "Säga något roligt som inte är på allvar.",
+  "category": "action",
+  "durationMs": 3800,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 1600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 38,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.85
+    },
+    {
+      "id": "q",
+      "asset": "character.base",
+      "variant": "b",
+      "at": {
+        "x": 84,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.85
+    }
+  ],
+  "props": [],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 3800,
+      "style": "breathe"
+    },
+    {
+      "t": 400,
+      "action": "say",
+      "actor": "p",
+      "icon": "smile",
+      "mood": "happy",
+      "to": "q",
+      "durationMs": 1800,
+      "gesture": true
+    },
+    {
+      "t": 2400,
+      "action": "say",
+      "actor": "q",
+      "icon": "check",
+      "mood": "happy",
+      "to": "p",
+      "durationMs": 1000,
+      "gesture": false
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "says smile (happy) to q, q reacts"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "matbordets samtal",
+    "confusableWith": [
+      "s.skicka.1",
+      "s.sörpla.1",
+      "s.smaska.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (communicate)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

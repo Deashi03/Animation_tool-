@@ -9,3 +9,4 @@ review/posters
 review/blind
 *.tsbuildinfo
 review/pilot
+.claude/worktrees

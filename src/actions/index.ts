@@ -355,7 +355,7 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     const path2 = (t: number): P => {
       const u = cyc(t), s2 = Math.sin(2 * Math.PI * u), c2 = Math.cos(2 * Math.PI * u);
       switch (a.motion) {
-        case 'chop': { const up = u < 0.6 ? 1 - Math.pow(u / 0.6, 0.6) : Math.pow((u - 0.6) / 0.4, 2.2); return handAt(0, -Math.min(9, 9 * (T / 420)) * up); } // slow lift, fast strike; short fast chops lift less
+        case 'chop': { const up = u < 0.6 ? 1 - Math.pow(u / 0.6, 0.6) : Math.pow((u - 0.6) / 0.4, 2.2); return handAt(0, -Math.min(6, 6 * (T / 420)) * up); } // slow lift, fast strike; short fast chops lift less; the lift is small so the hand stays near the board, not at the face
         case 'tap': return handAt(0, u < 0.3 ? -6 * (1 - u / 0.3) : u > 0.85 ? -6 * ((u - 0.85) / 0.15) : 0);
         case 'press': return handAt(0, u < 0.7 ? 2 : -3);
         case 'knead': return handAt(-2 * f + 3 * f * s2, u < 0.5 ? 1 + 2.5 * Math.sin(2 * Math.PI * u) : -1.5); // push down into the dough, lift, repeat

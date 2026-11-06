@@ -378,6 +378,15 @@
       "expected": "skära",
       "description": "Personen för en kniv längs en orange morot som bit för bit blir till orangea skivor i rad på bordet – skära i skivor.",
       "reviewer": "claude-blind-subagent"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b10",
+      "passed": true,
+      "choice": "skära",
+      "expected": "skära",
+      "description": "En person står vid ett bord med en hel morot och en kniv; kniven förs upprepade gånger ned mot moroten från vänster till höger och moroten delas steg för steg i flera ungefär lika stora bitar – animationen visar att något skärs i bitar med kniv.",
+      "reviewer": "claude-blind"
     }
   ],
   "anim.salta.1": [
@@ -910,6 +919,15 @@
       "choice": "skära",
       "expected": "halvera",
       "description": "En person står vid ett bord med ett äpple, lyfter en kniv och för den upprepade gånger ner mot äpplet; äpplet får ett enda vitt snitt mitt igenom men delas inte och faller inte isär – jag läser det som 'skära' (skära i/igenom något med kniv).",
+      "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b10",
+      "passed": true,
+      "choice": "halvera",
+      "expected": "halvera",
+      "description": "Ett helt rött äpple ligger på bordet i första rutan; redan i nästa ruta är äpplet borta och ersatt av en liten röd halvmåneformad bit (som ett halvt äpple sett från sidan) med en tunn lodrät linje ovanför, medan personen håller kniven uppe vid sitt ansikte och andra handen på bordet – det ser ut som att äpplet delas (halveras) med kniv, men själva snittet syns inte.",
       "reviewer": "claude-blind"
     }
   ],

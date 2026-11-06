@@ -99,13 +99,13 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
   ],
   "anim.hacka.1": [
     "14207ec65eeb",
-    "34caa9b0b7a7",
-    "f867579cb1e2",
+    "8cddddf6a943",
+    "03b31f71477a",
   ],
   "anim.halvera.1": [
-    "461b090e6e1a",
-    "5b3fd7dfb581",
-    "501344b9a7f2",
+    "c36bca2dcb76",
+    "03330ad013ca",
+    "ea62b3c6d45d",
   ],
   "anim.hoppa.1": [
     "2b38a9bfd6aa",
@@ -269,8 +269,8 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
   ],
   "anim.skära.1": [
     "d3b60dd891db",
-    "a6cdcf056fd6",
-    "63be8aa6e65c",
+    "2dcb27a8aec1",
+    "98d783ceed4e",
   ],
   "anim.skölja.1": [
     "0abbe0b2c48d",

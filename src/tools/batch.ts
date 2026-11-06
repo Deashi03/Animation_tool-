@@ -161,7 +161,9 @@ function buildTool(_row: PlanRow, r: Recipe, s: J): J {
   const target = r.target as string | undefined, tool = r.tool as string | undefined, surface = r.surface === null ? null : ((r.surface as string | undefined) ?? 'container.board');
   (s.actors as J[]).push({ id: 'p', variant: 'a', at: { x: 48, y: 100 }, facing: 'right', wardrobe: { top: 'navy' } });
   let targetId = 'target';
-  if (target) { const st = stateOf(r.targetState); placeThing(s, 'target', target, 76, { ...(st.state ? { state: st.state } : {}), ...(onFloor(target) ? {} : {}) }, onFloor(target) ? null : surface); }
+  // round, tall foods (apple, onion, potato, tomato) are drawn large for readability; on a board they reach the figure's chest, so shrink them for hand work
+  const tall = target ? /^food\.(apple|onion|potato|tomato)$/.test(target) : false;
+  if (target) { const st = stateOf(r.targetState); placeThing(s, 'target', target, 76, { ...(st.state ? { state: st.state } : {}), ...(tall ? { scale: 0.75 } : {}) }, onFloor(target) ? null : surface); }
   else if (surface) { placeThing(s, 'surface', surface, 76, {}, null); targetId = 'surface'; }
   const extra = r.extra as J | undefined; if (extra) { const st = stateOf(extra.state); props.push(propAt('extra', extra.asset as string, { x: 92, y: (props.find((p) => p.id === 'target')?.at as Pt | undefined)?.y ?? 70 }, { ...(st.state ? { state: st.state } : {}) })); }
   if (tool) props.push({ id: 'tool', asset: tool, attachTo: { actor: 'p', hand: 'left' }, ...(tool === 'tool.grater' ? { scale: 0.75 } : {}) });

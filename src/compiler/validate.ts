@@ -4,7 +4,7 @@ import { compileScene, type CompiledScene } from './compile';
 import { checkLayout } from './layout';
 import { checkContrast, evaluateFeature } from './contrast';
 import { TEMPLATES } from './templates';
-import { bearerOf } from './contrast';
+import { bearerOf, GESTURE_ICONS, BODY_ACTIONS } from './contrast';
 import { renderFrame } from '../engine/render';
 import { bboxOfId } from '../engine/frame';
 
@@ -30,6 +30,11 @@ export function validateScene(raw: unknown, others: Map<string, SceneT> = new Ma
   if (scene.contrast) for (const p of checkContrast(compiled, others)) problems.push(p);
   if (scene.kind === 'word' && !scene.contrast) problems.push({ level: 'warning', message: 'no contrast pair declared – add contrast.with if a neighbouring word exists' });
   // the word must be borne by something: a prop, a wardrobe detail, an icon or a bodily action – never a person with text only
+  if (scene.kind === 'word') {
+    // a gesture icon (hand, palms, wave) is culturally unsafe on its own: the body must carry the meaning too (a bow, an expression, a walk …)
+    const gestureSay = scene.timeline.find((x) => x.action === 'say' && GESTURE_ICONS.includes((x as { icon?: string }).icon ?? ''));
+    if (gestureSay && !scene.timeline.some((x) => BODY_ACTIONS.includes(x.action) && x.action !== 'walk')) problems.push({ level: 'error', message: `pratbubblan visar en gest (${(gestureSay as { icon?: string }).icon}) utan kroppslig handling – gester bär aldrig ensamma; lägg till t.ex. bow eller express (CLAUDE.md §8)` });
+  }
   if (scene.kind === 'word' && !bearerOf(scene)) problems.push({ level: 'error', message: 'scenen saknar bärare: inget föremål, ingen klädseldetalj, ingen ikon och ingen kroppslig handling visar ordet (en figur som bara säger ordet är inte ett typexempel)' });
   // template contract: every word scene should instantiate an approved concept family
   if (scene.kind === 'word') {

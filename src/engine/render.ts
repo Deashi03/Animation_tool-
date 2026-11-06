@@ -146,7 +146,7 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
     const mouth: P = [head[0] + aw.facing * 5 * aw.scale, head[1] + 4 * aw.scale];
     const isIcon = content.startsWith('icon:');
     const body = isIcon ? content.slice(5) : content.slice(5);
-    const bw = isIcon ? 22 : Math.min(60, textWidth(body, 8) + 10), bh = isIcon ? 20 : 15;
+    const bw = isIcon ? 28 : Math.min(60, textWidth(body, 8) + 10), bh = isIcon ? 26 : 15; // icon bubbles are large enough for the icon to read at 140 px
     // the bubble sits above and in front of the head, clamped inside the canvas
     let bx = head[0] + aw.facing * (9 + bw / 2) * Math.min(1, aw.scale), by = head[1] - 20 * aw.scale - bh / 2;
     bx = Math.max(bw / 2 + 2, Math.min(w - bw / 2 - 2, bx)); by = Math.max(bh / 2 + 2, by);
@@ -157,7 +157,7 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
       path(`M${r1(ex + nx * tailBase)} ${r1(ey + ny * tailBase)} L${r1(mouth[0])} ${r1(mouth[1])} L${r1(ex - nx * tailBase)} ${r1(ey - ny * tailBase)} Z`, { fill: C.white, stroke: C.ink, sw: 1.4 }),
       rect(bx - bw / 2, by - bh / 2, bw, bh, { rx: mood === 'angry' ? 2 : bh / 2, fill: C.white, stroke: C.ink, sw: mood === 'angry' ? 2 : 1.4 }),
       path(`M${r1(ex + nx * tailBase * 0.8)} ${r1(ey + ny * tailBase * 0.8)} L${r1(mouth[0])} ${r1(mouth[1])} L${r1(ex - nx * tailBase * 0.8)} ${r1(ey - ny * tailBase * 0.8)}`, { fill: C.white, stroke: 'none' }),
-      isIcon ? g([drawIcon(body as IconName, 14, pop, undefined, C.ink)], { x: bx, y: by }) : text(bx, by + 3, body, 8, { fill: C.ink, weight: 800, anchor: 'middle' }),
+      isIcon ? g([drawIcon(body as IconName, 19, pop, undefined, C.ink)], { x: bx, y: by }) : text(bx, by + 3, body, 8, { fill: C.ink, weight: 800, anchor: 'middle' }),
     ], { scale: 0.6 + 0.4 * pop, px: mouth[0], py: mouth[1] });
     fx.push(bubble);
   }

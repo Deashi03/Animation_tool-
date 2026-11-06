@@ -89,7 +89,7 @@ function faceNodes(head: P, f: Face, facing: 1 | -1, skin: string): FrameNode[] 
     o: ellipse(hx, my + 0.4, 1.7, 2.1, { stroke: INK, sw: 1.3, fill: INK }),
     frown: path(`M${r1(hx - 3)} ${r1(my + 1.5)} q3 -2.6 6 0`, { stroke: INK, sw: 1.5, fill: 'none' }),
   };
-  out.push(mouth[f.mouth]);
+  out.push(mouth[f.mouth] ?? mouth.neutral); // an unknown mouth value from a track must never become an undefined node
   void skin;
   return out;
 }

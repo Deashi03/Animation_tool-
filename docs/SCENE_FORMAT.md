@@ -132,7 +132,7 @@ Varje ordscen anger `template`. Kontraktet kontrolleras av validatorn; produktä
 | `cook-rhythm` | steka, bryna, fräsa, smälta, vända, bränna, skvätta | aktör; `pan` + `stove`; `cook`/`flip`/`splash`. Verben skiljs genom hur långt färgen går, tempot och följden |
 | `tool-rhythm` | skära, hacka, vispa, röra, knåda, kavla, skala, riva, mosa, salta, vika, stryka, borsta, såga, odla, mjölka … | aktör; ≥ 1 föremål; `use`; råvaran/ytan ändrar tillstånd |
 | `process` | koka, sjuda, smälta, mogna, ruttna, brinna, släcka, droppa, rinna, läcka, jäsa, växa, vissna, flagna, regna, krympa, blekna, brumma, dunka | inga människor; ≥ 1 föremål; `tween`/`set`/`sound` |
-| `communicate` | beställa, klaga, varna, skämta, förklara, rekommendera, ursäkta, köa | aktör; `say` |
+| `communicate` | beställa, klaga, varna, skämta, förklara, rekommendera, köa; ursäkta/tacka/hälsa med `bow` | aktör; `say`; gest-ikon bara tillsammans med kroppslig handling |
 | `social` | lämna över, ge, skicka, bjuda på | ≥ 2 aktörer; föremål; `give` |
 | `arrange` | duka, packa, stapla, hänga upp, slänga, plocka undan | ≥ 1 aktör; föremål; `put`/`take` – föremålet hamnar synligt på platsen |
 | `dress-self` | ta på/av sig, klä på/av sig, byta om, knäppa (upp), dra upp/ner, kavla upp, knyta, sätta på sig | aktör; `dress`/`fasten` |
@@ -140,6 +140,6 @@ Varje ordscen anger `template`. Kontraktet kontrolleras av validatorn; produktä
 
 Garderob: `wear:<aktör>.<nyckel>>=v | <=v | ==värde` (vid slutet), `wear-start:…` (vid starten, t.ex. `wear-start:p.top==red`, `wear:p.buttons>=0.9`). Tal och ljud: `has:say-icon:a|b`, `has:say-mood:a|b`, `has:sound:a|b`, `has:prop:asset|asset`.
 
-Extra `has:`-features för kontrakt och kontrastpar: `has:actors>=N`, `has:actors==0`, `has:props>=N`, `has:entities>=N`, `has:action:a|b`, `has:icon:a|b`, `has:cjk-text`, `has:contrast`, `has:bearer`, `has:emphasis:a|b`, `has:express:a|b`.
+Extra `has:`-features för kontrakt och kontrastpar: `has:actors>=N`, `has:actors==0`, `has:props>=N`, `has:entities>=N`, `has:action:a|b`, `has:icon:a|b`, `has:cjk-text`, `has:contrast`, `has:bearer`, `has:emphasis:a|b`, `has:express:a|b`, `has:walk-manner:normal|careful`, `has:bow:light|deep`.
 
 **Bärar-regeln:** varje ordscen (alla mallar utom `ui`) måste ha en bärare – annars fel. Vad som räknas som bärare och vilken förinställd lösning varje ordfunktion har står i `docs/WORD_FUNCTIONS.md`. Receptformatet för `anim:batch` står där också.

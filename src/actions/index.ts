@@ -56,7 +56,29 @@ function reachJoints(ctx: Ctx, a: string, hand: 'left' | 'right', target: P, t: 
 }
 
 const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
-  walk(ctx, a) { locomote(ctx, a.actor, a.t, a.to, a.durationMs, 'walk'); },
+  walk(ctx, a) {
+    locomote(ctx, a.actor, a.t, a.to, a.durationMs, a.manner === 'careful' ? 'careful' : 'walk');
+    if (a.manner === 'careful') {
+      // eyes on the load: head tilted down, gaze forward-down, arms held still in front (the gait's arm swing is tiny)
+      const tr = ctx.tracks, A = a.actor; const end = a.t + (a.durationMs ?? 2000);
+      tween(tr, M.J(A, 'head'), a.t, a.t + 300, 18, 'easeInOut'); addKey(tr, `${A}.eyes`, { t: a.t, v: 'open' }); addKey(tr, `${A}.brows`, { t: a.t, v: 'neutral' }); addKey(tr, `${A}.mouth`, { t: a.t, v: 'calm' }); // concentration, not fear
+      addKey(tr, `${A}.gaze`, { t: a.t, v: facingAt(ctx, A, a.t) });
+      tween(tr, M.J(A, 'head'), end, end + 300, 0, 'easeInOut'); addKey(tr, `${A}.mouth`, { t: end + 300, v: 'smile' }); addKey(tr, `${A}.brows`, { t: end + 300, v: 'neutral' });
+    }
+  },
+  /** bow: the torso and head bend forward (light 25°, deep 50°), hands together in front or hanging; held for a moment, then back up */
+  bow(ctx, a) {
+    const tr = ctx.tracks, A = a.actor, end = a.t + a.durationMs;
+    if (a.to) { const tp = targetPoint(ctx, a.to, a.t); faceToward(ctx, A, a.t, tp[0]); if (ctx.actors.has(a.to)) faceToward(ctx, a.to, a.t, actorPos(ctx, A, a.t)[0]); }
+    const g0 = poseAt(ctx, A, a.t); const deep = a.depth === 'deep';
+    const down = Math.min(700, a.durationMs * 0.35), up = Math.min(600, a.durationMs * 0.3);
+    const arms = a.hands === 'together' ? { uArmL: 28, fArmL: 95, uArmR: 28, fArmR: 95 } : { uArmL: deep ? 10 : 4, fArmL: 6, uArmR: deep ? 10 : 4, fArmR: 6 };
+    M.poseTo(tr, A, a.t, a.t + down, { torso: deep ? 50 : 25, head: deep ? 20 : 14, ...arms }, 'easeInOut');
+    addKey(tr, `${A}.eyes`, { t: a.t + down * 0.6, v: 'closed' }); addKey(tr, `${A}.brows`, { t: a.t, v: deep ? 'worried' : 'neutral' }); addKey(tr, `${A}.mouth`, { t: a.t, v: deep ? 'calm' : 'smile' });
+    M.poseTo(tr, A, end - up, end, { torso: g0.torso, head: g0.head, uArmL: g0.uArmL, fArmL: g0.fArmL, uArmR: g0.uArmR, fArmR: g0.fArmR }, 'easeInOut');
+    addKey(tr, `${A}.eyes`, { t: end - up * 0.4, v: 'open' }); addKey(tr, `${A}.brows`, { t: end, v: 'neutral' }); addKey(tr, `${A}.mouth`, { t: end, v: 'smile' });
+    M.blinks(tr, A, end, end + 1);
+  },
   run(ctx, a) { locomote(ctx, a.actor, a.t, a.to, a.durationMs, 'run'); },
   jump(ctx, a) {
     M.jump(ctx.tracks, a.actor, a.t, a.durationMs, a.height);
@@ -580,7 +602,7 @@ function trackId(ctx: Ctx, target: string, prop: string): string {
  * and the environment scrolls at the remaining speed (treadmill). Either way
  * planted feet move at exactly the ground speed.
  */
-function locomote(ctx: Ctx, a: string, t: number, to: { x: number; y: number }, durationMs: number | undefined, gaitKind: 'walk' | 'run'): void {
+function locomote(ctx: Ctx, a: string, t: number, to: { x: number; y: number }, durationMs: number | undefined, gaitKind: 'walk' | 'run' | 'careful'): void {
   const [x0, y0] = actorPos(ctx, a, t);
   const g = M.GAITS[gaitKind];
   const v = M.gaitSpeed(g); // units per second the feet demand

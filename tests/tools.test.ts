@@ -131,3 +131,33 @@ describe('recipes and the bearer rule', () => {
     expect(validateScene(withKnife as unknown).problems.some((p) => p.level === 'error' && /saknar bärare/.test(p.message))).toBe(false);
   });
 });
+
+describe('gestures and manner (after the ursäkta/försiktig review)', () => {
+  it('a gesture icon in a bubble without a bodily action is rejected; with a bow it passes', async () => {
+    const { validateScene } = await import('../src/compiler/validate');
+    const base = { schemaVersion: 1, animationId: 'anim.ursäkta.9', senseId: 's.ursäkta.9', titleSv: 'ursäkta', template: 'communicate', meaningHint: 'x', category: 'action', durationMs: 3000, loop: true, holdMs: 300, posterMs: 1500, environment: { id: 'room', time: 'day' },
+      actors: [{ id: 'p', variant: 'a', at: { x: 30, y: 100 }, facing: 'right' }, { id: 'q', variant: 'b', at: { x: 88, y: 100 }, facing: 'left' }], props: [], timeline: [{ t: 200, action: 'say', actor: 'p', icon: 'palms', mood: 'sad', to: 'q', durationMs: 1500 }], focus: { targets: ['p'] }, pedagogy: { quizEligible: false, group: 'x', confusableWith: [] } };
+    expect(validateScene(base as unknown).problems.some((p) => p.level === 'error' && /gest/.test(p.message))).toBe(true);
+    const withBow = { ...base, timeline: [{ t: 100, action: 'bow', actor: 'p', depth: 'deep', hands: 'together', to: 'q', durationMs: 2000 }, ...base.timeline] };
+    expect(validateScene(withBow as unknown).problems.filter((p) => p.level === 'error')).toEqual([]);
+  });
+  it('bow bends torso and head forward and straightens again; careful walk is slower than a normal walk', async () => {
+    const { compileScene } = await import('../src/compiler/compile');
+    const { sampleNumber } = await import('../src/engine/track');
+    const { GAITS, gaitSpeed } = await import('../src/motions/index');
+    const sc = { schemaVersion: 1, animationId: 'ui.test.bow', senseId: 's.x.1', titleSv: 'x', kind: 'word', template: 'communicate', meaningHint: 'x', category: 'action', durationMs: 3000, loop: false, holdMs: 0, posterMs: 1000, environment: { id: 'room', time: 'day' },
+      actors: [{ id: 'p', variant: 'a', at: { x: 40, y: 100 }, facing: 'right' }], props: [], timeline: [{ t: 0, action: 'bow', actor: 'p', depth: 'deep', hands: 'together', durationMs: 2000 }], focus: { targets: ['p'] }, pedagogy: { quizEligible: false, group: 'x', confusableWith: [] } };
+    const { Scene } = await import('../src/schema/scene');
+    const c = compileScene(Scene.parse(sc));
+    expect(sampleNumber(c.tracks, 'p.j.torso', 1000, 0)).toBeGreaterThan(40);
+    expect(sampleNumber(c.tracks, 'p.j.head', 1000, 0)).toBeGreaterThan(10);
+    expect(Math.abs(sampleNumber(c.tracks, 'p.j.torso', 2100, 0))).toBeLessThan(2);
+    expect(gaitSpeed(GAITS.careful)).toBeLessThan(gaitSpeed(GAITS.walk) * 0.5);
+  });
+  it('batch writes no draft for a recipe marked TODO/weak', async () => {
+    const { runBatch } = await import('../src/tools/batch');
+    const plan = { moduleId: 'm.test', titleSv: 'Test', rows: [{ senseId: 's.sjunka.1', lemma: 'sjunka', pos: 'verb', defSv: 'x', kind: 'animation' as const, confidence: 'high' as const, contrast: [], jaGloss: '沈む', note: '' }] };
+    const res = runBatch(plan as never, 'Test', new Map(), { write: false });
+    expect(res[0]!.status).toBe('blocked');
+  });
+});

@@ -30,6 +30,8 @@ Inget får synbart strida mot fysiken: planterade fötter glider inte (gångmode
 
 - **Bärar-regeln (2026-11-05):** varje ordscen visar ett typexempel – föremål, förändring, klädseldetalj, ikon eller kroppslig handling. En figur som bara säger ordet är ett valideringsfel. Tabellen *funktion → förinställd lösning* finns i `docs/WORD_FUNCTIONS.md`.
 
+- **Gester (2026-11-06):** händer, tummar och fingrar läses olika i Sverige och Japan och blir lätt något annat i 140 px. En gest-ikon (`hand`, `palms`, `wave`) får bara förstärka en kroppslig handling (`bow`, `express`, …) – validatorn stoppar annat. Förlåt/tack/hälsning bärs av en bugning med händerna ihop; ikonen `palms` (🙏) är den enda handgest som får stå i en bubbla för dessa ord. Titta på varje ny ikon i 140 px innan den används.
+
 ## Läsbarhet och pedagogik
 - Det som bär betydelsen ska vara ≥ 6 enheter stort och synligt i posterbilden i 140 px.
 - Designa mot grannordet: deklarera `contrast.with` och `distinctiveFeatures`. Testa utan etikett (`--label` av i bildremsan).

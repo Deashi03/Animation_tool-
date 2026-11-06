@@ -9,7 +9,7 @@
   "durationMs": 3600,
   "loop": true,
   "holdMs": 700,
-  "posterMs": 1400,
+  "posterMs": 1500,
   "environment": {
     "id": "room",
     "time": "day"
@@ -19,7 +19,7 @@
       "id": "p",
       "variant": "a",
       "at": {
-        "x": 38,
+        "x": 30,
         "y": 100
       },
       "facing": "right",
@@ -29,7 +29,7 @@
       "id": "q",
       "variant": "c",
       "at": {
-        "x": 84,
+        "x": 88,
         "y": 100
       },
       "facing": "left",
@@ -41,7 +41,7 @@
       "id": "cup",
       "asset": "container.cup",
       "at": {
-        "x": 58,
+        "x": 56,
         "y": 100
       },
       "z": 1,
@@ -54,7 +54,7 @@
       "id": "puddle",
       "asset": "fixture.puddle",
       "at": {
-        "x": 62,
+        "x": 60,
         "y": 100
       },
       "z": 0,
@@ -73,37 +73,25 @@
     },
     {
       "t": 200,
-      "action": "pose",
+      "action": "bow",
       "actor": "p",
-      "joints": {
-        "torso": 22,
-        "head": 10
-      },
-      "durationMs": 500,
-      "ease": "easeInOut"
+      "depth": "deep",
+      "hands": "together",
+      "to": "q",
+      "durationMs": 2300
     },
     {
-      "t": 300,
+      "t": 600,
       "action": "say",
       "actor": "p",
-      "icon": "hand",
+      "icon": "palms",
       "mood": "sad",
       "to": "q",
-      "durationMs": 1800
+      "durationMs": 1500,
+      "gesture": false
     },
     {
-      "t": 2300,
-      "action": "pose",
-      "actor": "p",
-      "joints": {
-        "torso": 0,
-        "head": 0
-      },
-      "durationMs": 500,
-      "ease": "easeInOut"
-    },
-    {
-      "t": 1600,
+      "t": 2600,
       "action": "express",
       "actor": "q",
       "emotion": "content",
@@ -114,7 +102,7 @@
     "targets": [
       "p"
     ],
-    "feature": "a spilled cup on the floor; the one who did it bows and apologises with an open hand; the other softens"
+    "feature": "a spilled cup on the floor; the one who did it bows deeply with palms together (🙏) and the other softens"
   },
   "contrast": {
     "with": [
@@ -122,7 +110,7 @@
     ],
     "distinctiveFeatures": [
       "has:say-mood:sad",
-      "has:say-icon:hand"
+      "has:bow:deep"
     ]
   },
   "pedagogy": {

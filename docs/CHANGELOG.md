@@ -88,3 +88,13 @@
 - **Tester (63):** varje recept bygger en scen som validerar (564/564); bärar-regeln avvisar person + text och godkänner kniv + glint.
 - **Täckning (606 betydelser):** 52 klara med blindtest, 12 scener utan blindtest, 370 redo, 79 blockerade (svaga recept), 71 utan recept, 22 bild. Siffrorna är lägre än i 0.5.0 därför att de nu är ärliga.
 
+## 0.6.1 – 2026-11-06 (gester, bugning, gångsätt – efter produktägarens granskning av ursäkta och försiktig)
+- **Orsak:** *ursäkta* visade en hand-ikon som lästes som ett långfinger; *försiktig* var en figur som gick med en bricka. Rotorsaker: ikonen hade ett utstickande finger och granskades aldrig i 140 px; betydelsen låg i bubblan i stället för i kroppen; blindtestet frågade inte efter missförstånd; batchen skrev utkast från ett recept märkt TODO.
+- **Handling `bow`** (djup/lätt, händer ihop/längs sidorna, mot någon) – kroppen bär förlåt, tack och hälsning. Ikon **`palms`** (🙏); `hand` omritad som öppen handflata utan utstickande finger.
+- **Validatorn** stoppar en gest-ikon (`hand`, `palms`, `wave`) i pratbubbla utan kroppslig handling (CLAUDE.md §8).
+- **Gångsätt:** `walk.manner: careful` (korta långsamma steg, blicken ner, nästan ingen armpendling) och bäraren `manner` för sätt-adjektiv; *försiktig* = går försiktigt med ett fullt glas.
+- **Blindtest:** tredje frågan "kan något missförstås eller vara stötande?"; ett flaggat svar räknas inte som godkänt i täckning, rapport och validering (`flag` i `registry/blind.json`).
+- **Batch:** inget utkast för recept märkta TODO/SVAGT/saknas (status *blocked*) – produktägaren ser aldrig en scen verktyget själv vet är fel.
+- **Blindtest b12** (ursäkta, försiktig, skära): rätt val 3/3 men alla tre flaggade – bubbelikonen för liten, försiktig lästes som rädd, kniven i viloläge såg hotfull ut. Åtgärder: ikonbubblor 28×26 med ikon 19, lugnt ansikte i `careful`, en full skål soppa i stället för glas. b13 efter det – se `registry/blind.json`.
+- Ansiktsritningen tål okända munvärden (fallback neutral). Tester: 66. Snapshot uppdaterad (ursäkta, försiktig, alla ikonbubblor).
+

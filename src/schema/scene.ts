@@ -83,7 +83,7 @@ const Base = { t: Ms };
 /** Semantic actions (closed set). Each compiles to tracks – see src/actions. */
 export const Action = z.discriminatedUnion('action', [
   // locomotion
-  z.object({ ...Base, action: z.literal('walk'), actor: Id, to: Pt, durationMs: Dur.optional() }).strict(),
+  z.object({ ...Base, action: z.literal('walk'), actor: Id, to: Pt, durationMs: Dur.optional(), /** how the walk reads: careful = small slow steps, eyes on what is carried */ manner: z.enum(['normal', 'careful']).default('normal') }).strict(),
   z.object({ ...Base, action: z.literal('run'), actor: Id, to: Pt, durationMs: Dur.optional() }).strict(),
   z.object({ ...Base, action: z.literal('jump'), actor: Id, height: z.number().min(4).max(60).default(22), to: Pt.optional(), durationMs: Dur.default(900) }).strict(),
   z.object({ ...Base, action: z.literal('turn'), actor: Id, facing: z.enum(['left', 'right']) }).strict(),
@@ -127,6 +127,8 @@ export const Action = z.discriminatedUnion('action', [
   /** A sound comes from a thing or a person: arcs ")))" or impact marks beside it. */
   z.object({ ...Base, action: z.literal('sound'), target: Target, kind: z.enum(['hum', 'ring', 'bark', 'thump', 'crunch', 'splash']).default('hum'), durationMs: Dur.default(1500) }).strict(),
   /** Hand a held prop to another actor: both reach, the prop changes hands midway. */
+  /** a bow: the body bears apology, thanks or greeting – torso and head bend, hands together or at the sides, then the figure straightens */
+  z.object({ ...Base, action: z.literal('bow'), actor: Id, depth: z.enum(['light', 'deep']).default('light'), hands: z.enum(['sides', 'together']).default('sides'), to: Id.optional(), durationMs: Dur.default(1800) }).strict(),
   z.object({ ...Base, action: z.literal('give'), from: Id, to: Id, prop: Id, durationMs: Dur.default(1400) }).strict(),
   /** Put a held prop down on a prop (its top/mouth) or at a point; `take` picks it up (alias of grab). */
   z.object({ ...Base, action: z.literal('put'), actor: Id, prop: Id, on: Id.optional(), at: Pt.optional(), z: z.number().int().optional(), durationMs: Dur.default(700) }).strict(),

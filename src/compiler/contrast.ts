@@ -16,7 +16,7 @@
  *   has:cjk-text                                           (a text shape with Japanese characters)
  *   has:contrast                                           (a contrast pair is declared)
  *   has:say-icon:<a|b> | has:say-mood:<a|b> | has:sound:<a|b> | has:prop:<asset|asset>
- *   has:emphasis:<glint|ring|…> | has:express:<emotion|emotion>
+ *   has:emphasis:<glint|ring|…> | has:express:<emotion|emotion> | has:walk-manner:<normal|careful> | has:bow:<light|deep>
  */
 import { JOINTS } from '../schema/scene';
 import { fractionEqual, sample, sampleNumber, sampleBool, sampleString } from '../engine/track';
@@ -48,6 +48,8 @@ export function evaluateFeature(c: CompiledScene, feature: string): { ok: boolea
     if (rhsRaw.startsWith('say-icon:')) { const names = rhsRaw.slice(9).split('|'); const have = sc.timeline.filter((x) => x.action === 'say').map((x) => (x as { icon?: string }).icon ?? ''); return { ok: names.some((x) => have.includes(x)), detail: `say icons: ${have.filter(Boolean).join(', ') || 'none'}` }; }
     if (rhsRaw.startsWith('say-mood:')) { const names = rhsRaw.slice(9).split('|'); const have = sc.timeline.filter((x) => x.action === 'say').map((x) => (x as { mood: string }).mood); return { ok: names.some((x) => have.includes(x)), detail: `say moods: ${have.join(', ') || 'none'}` }; }
     if (rhsRaw.startsWith('sound:')) { const names = rhsRaw.slice(6).split('|'); const have = sc.timeline.filter((x) => x.action === 'sound').map((x) => (x as { kind: string }).kind); return { ok: names.some((x) => have.includes(x)), detail: `sounds: ${have.join(', ') || 'none'}` }; }
+    if (rhsRaw.startsWith('walk-manner:')) { const names = rhsRaw.slice(12).split('|'); const have = sc.timeline.filter((x) => x.action === 'walk').map((x) => (x as { manner?: string }).manner ?? 'normal'); return { ok: names.some((x) => have.includes(x)), detail: `walk manners: ${have.join(', ') || 'none'}` }; }
+    if (rhsRaw.startsWith('bow:')) { const names = rhsRaw.slice(4).split('|'); const have = sc.timeline.filter((x) => x.action === 'bow').map((x) => (x as { depth?: string }).depth ?? 'light'); return { ok: names.some((x) => have.includes(x)), detail: `bows: ${have.join(', ') || 'none'}` }; }
     if (rhsRaw.startsWith('emphasis:')) { const names = rhsRaw.slice(9).split('|'); const have = sc.timeline.filter((x) => x.action === 'emphasis').map((x) => (x as { kind: string }).kind); return { ok: names.some((x) => have.includes(x)), detail: `emphasis: ${have.join(', ') || 'none'}` }; }
     if (rhsRaw.startsWith('express:')) { const names = rhsRaw.slice(8).split('|'); const have = sc.timeline.filter((x) => x.action === 'express').map((x) => (x as { emotion: string }).emotion); return { ok: names.some((x) => have.includes(x)), detail: `expressions: ${have.join(', ') || 'none'}` }; }
     if (rhsRaw.startsWith('prop:')) { const names = rhsRaw.slice(5).split('|'); const have = sc.props.map((x) => x.asset); return { ok: names.some((x) => have.includes(x)), detail: `props: ${have.join(', ') || 'none'}` }; }
@@ -130,7 +132,9 @@ export function checkContrast(c: CompiledScene, others: Map<string, Scene>): Pro
 
 /** The entity that bears the word: a prop, a wardrobe detail, an icon, or a bodily action. Null when the scene is only a person (and text). */
 export const WARDROBE_DETAILS = ['hat', 'glasses', 'scarf', 'buttons', 'zipper', 'sleeves', 'apron', 'laces', 'pattern', 'headband', 'number', 'shorts', 'topLength', 'top', 'bottom', 'shoes'];
-export const BODY_ACTIONS = ['walk', 'run', 'jump', 'exercise', 'express', 'dress', 'fasten', 'climb', 'roll', 'relax', 'sleep', 'eat', 'give', 'use', 'cook', 'flip', 'pour', 'open', 'close'];
+export const BODY_ACTIONS = ['walk', 'run', 'jump', 'exercise', 'express', 'dress', 'fasten', 'climb', 'roll', 'relax', 'sleep', 'eat', 'give', 'use', 'cook', 'flip', 'pour', 'open', 'close', 'bow'];
+/** icons that depict a gesture: never the sole bearer (CLAUDE.md §8) – a bodily action must accompany them */
+export const GESTURE_ICONS = ['hand', 'palms', 'wave'];
 export function bearerOf(sc: { props: { asset: string }[]; shapes: { type: string }[]; actors: { wardrobe?: Record<string, unknown> }[]; timeline: { action: string }[] }): string | null {
   if (sc.props.length) return `prop ${sc.props[0]!.asset}`;
   const icon = sc.shapes.find((x) => x.type === 'icon'); if (icon) return 'icon';

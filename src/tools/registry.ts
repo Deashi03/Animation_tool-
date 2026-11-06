@@ -7,8 +7,10 @@ export function approvedTemplates(): Set<string> {
   const r = readJson<{ templates: Record<string, { approved: boolean }> }>(path.join(registryDir(), 'templates.json'), { templates: {} });
   return new Set(Object.entries(r.templates).filter(([, v]) => v.approved).map(([k]) => k));
 }
-export type BlindResult = { date: string; batch: string; passed: boolean; choice: string; expected: string; description?: string; reviewer?: string };
+export type BlindResult = { date: string; batch: string; passed: boolean; choice: string; expected: string; description?: string; reviewer?: string; /** what the reviewer thought could be misread or offensive – a flagged scene is not done even if the choice was right */ flag?: string };
 export function blindResults(): Record<string, BlindResult[]> { return readJson(path.join(registryDir(), 'blind.json'), {}); }
 export function writeBlindResults(r: Record<string, BlindResult[]>): void { fs.mkdirSync(registryDir(), { recursive: true }); fs.writeFileSync(path.join(registryDir(), 'blind.json'), JSON.stringify(r, null, 2) + '\n'); }
 /** Latest blind result for a scene, if any. */
 export function blindStatus(animationId: string): BlindResult | undefined { const all = blindResults()[animationId]; return all?.[all.length - 1]; }
+/** a blind result counts only if the choice was right AND the reviewer flagged nothing as misleading or offensive */
+export const blindOk = (r: BlindResult | undefined): boolean => !!r && r.passed && !r.flag;

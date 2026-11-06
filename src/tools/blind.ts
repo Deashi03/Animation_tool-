@@ -16,7 +16,7 @@ import { blindResults, writeBlindResults, type BlindResult } from './registry';
 import { reviewDir } from './scenes';
 
 export type BlindKey = { batch: string; createdAt: string; items: { letter: string; animationId: string; expected: string; options: string[] }[] };
-export type BlindAnswers = Record<string, { choice: string; description?: string }>;
+export type BlindAnswers = Record<string, { choice: string; description?: string; flag?: string; confidence?: number }>;
 
 /** deterministic shuffle (mulberry32 seeded from a string) */
 function shuffled<T>(arr: T[], seed: string): T[] {
@@ -45,7 +45,7 @@ export async function makeBlindBatch(scenes: Map<string, Scene>, ids: string[], 
   const dir = path.join(reviewDir(), 'blind'); fs.mkdirSync(dir, { recursive: true });
   const key: BlindKey = { batch, createdAt: new Date().toISOString().slice(0, 10), items };
   const keyFile = path.join(dir, `${batch}.key.json`); fs.writeFileSync(keyFile, JSON.stringify(key, null, 2) + '\n');
-  const q = [`# Blindtest ${batch}`, '', 'Du ser bildremsor av korta animationer för svenska ord, utan etiketter. För varje remsa:', '1. Beskriv med en mening vad som händer och vad animationen betyder.', '2. Välj det alternativ som passar bäst. Om inget passar, skriv "inget".', '', 'Svara som JSON: `{ "A": { "description": "...", "choice": "ordet" }, ... }`', '',
+  const q = [`# Blindtest ${batch}`, '', 'Du ser bildremsor av korta animationer för svenska ord, utan etiketter. För varje remsa:', '1. Beskriv med en mening vad som händer och vad animationen betyder.', '2. Välj det alternativ som passar bäst. Om inget passar, skriv "inget".', '3. Finns det något i remsan som kan missförstås, ser fel ut eller kan uppfattas som stötande (gester, poser, föremål)? Skriv "nej" eller beskriv det i fältet "flag".', '', 'Svara som JSON: `{ "A": { "description": "...", "choice": "ordet", "flag": "nej" }, ... }`', '',
     ...items.map((it) => `- **${it.letter}**: ${it.options.join(' · ')}`), ''].join('\n');
   const qFile = path.join(dir, `${batch}.questions.md`); fs.writeFileSync(qFile, q);
   return { png: sheet.png, questions: qFile, key: keyFile };
@@ -58,10 +58,11 @@ export function gradeBlind(key: BlindKey, answers: BlindAnswers, reviewer = 'cla
     const a = answers[it.letter];
     const norm = (s: string) => s.trim().toLowerCase();
     const passed = !!a && norm(a.choice) === norm(it.expected);
-    const r: BlindResult & { animationId: string; letter: string } = { animationId: it.animationId, letter: it.letter, date: new Date().toISOString().slice(0, 10), batch: key.batch, passed, choice: a?.choice ?? '', expected: it.expected, description: a?.description, reviewer };
-    (store[it.animationId] ??= []).push({ date: r.date, batch: r.batch, passed: r.passed, choice: r.choice, expected: r.expected, description: r.description, reviewer });
+    const flagRaw = (a?.flag ?? '').trim(); const flag = /^(nej|no|-|inget|ingen|none)?\.?$/i.test(flagRaw) ? undefined : flagRaw;
+    const r: BlindResult & { animationId: string; letter: string } = { animationId: it.animationId, letter: it.letter, date: new Date().toISOString().slice(0, 10), batch: key.batch, passed, choice: a?.choice ?? '', expected: it.expected, description: a?.description, reviewer, ...(flag ? { flag } : {}) };
+    (store[it.animationId] ??= []).push({ date: r.date, batch: r.batch, passed: r.passed, choice: r.choice, expected: r.expected, description: r.description, reviewer, ...(flag ? { flag } : {}) });
     return r;
   });
   writeBlindResults(store);
-  return { results, passed: results.filter((r) => r.passed).length, total: results.length };
+  return { results, passed: results.filter((r) => r.passed && !r.flag).length, total: results.length }; // a flagged scene is not passed
 }

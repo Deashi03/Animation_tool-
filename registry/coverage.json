@@ -245,7 +245,7 @@
    "lemma": "skära",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "done-blind",
+   "state": "done",
    "missing": [],
    "note": "",
    "animationId": "anim.skära.1"
@@ -284,11 +284,9 @@
    "lemma": "försiktig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "done-blind",
-   "missing": [
-    "svagt recept"
-   ],
-   "note": "TODO: långsam gång saknas – gången har fast tempo; brickan bärs",
+   "state": "done",
+   "missing": [],
+   "note": "går försiktigt med en full skål soppa: korta långsamma steg, blicken på skålen",
    "animationId": "anim.försiktig.1"
   },
   {
@@ -2576,9 +2574,9 @@
    "lemma": "ursäkta",
    "pos": "verb",
    "template": "communicate",
-   "state": "done-blind",
+   "state": "done",
    "missing": [],
-   "note": "",
+   "note": "djup bugning med händerna ihop, spilld kopp på golvet som orsak",
    "animationId": "anim.ursäkta.1"
   },
   {
@@ -5692,9 +5690,9 @@
   "ready": 370,
   "blocked": 79,
   "no-recipe": 71,
-  "done-blind": 58,
-  "image": 22,
-  "done": 6
+  "done-blind": 55,
+  "done": 9,
+  "image": 22
  },
  "byTemplate": {
   "attribute-gloss": 250,
@@ -5715,6 +5713,6 @@
   "manipulate-prop": 8
  },
  "missingBlocks": {
-  "svagt recept": 84
+  "svagt recept": 83
  }
 }

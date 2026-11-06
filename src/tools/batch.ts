@@ -17,11 +17,15 @@ import { sceneFilePath, writeScene } from './scenes';
 import { registryDir } from './registry';
 import { PROPS } from '../assets/props';
 
-export type BatchResult = { senseId: string; lemma: string; animationId?: string; template?: string; status: 'created' | 'exists' | 'skipped' | 'invalid' | 'no-recipe' | 'image'; file?: string; note: string; problems?: string[] };
+export type BatchResult = { senseId: string; lemma: string; animationId?: string; template?: string; status: 'created' | 'exists' | 'skipped' | 'invalid' | 'no-recipe' | 'image' | 'blocked'; file?: string; note: string; problems?: string[] };
 type J = Record<string, unknown>;
 type Pt = { x: number; y: number };
 
-const SAY_ICON: Record<string, [string, string]> = { beställa: ['fork-knife', 'neutral'], klaga: ['cross', 'angry'], förklara: ['ellipsis', 'neutral'], varna: ['exclaim', 'surprised'], skämta: ['smile', 'happy'], ursäkta: ['hand', 'sad'], 'be om ursäkt': ['hand', 'sad'], rekommendera: ['star', 'happy'], fråga: ['question', 'question'], svara: ['check', 'neutral'], hota: ['lightning', 'angry'], avbryta: ['hand', 'angry'], boka: ['calendar', 'neutral'], ansöka: ['document', 'neutral'], 'skriva under': ['pen', 'neutral'], godkänna: ['check', 'happy'], reklamera: ['cross', 'neutral'], felanmäla: ['phone', 'neutral'], översätta: ['swap', 'neutral'], påminna: ['bell', 'neutral'], inspirera: ['bulb', 'happy'], beskriva: ['eye', 'neutral'], uttrycka: ['heart', 'neutral'], störa: ['bell', 'angry'], 'säga upp': ['document', 'sad'], köa: ['hourglass', 'neutral'], 'vänta in': ['hourglass', 'neutral'] };
+const SAY_ICON: Record<string, [string, string]> = { beställa: ['fork-knife', 'neutral'], klaga: ['cross', 'angry'], förklara: ['ellipsis', 'neutral'], varna: ['exclaim', 'surprised'], skämta: ['smile', 'happy'], ursäkta: ['palms', 'sad'], 'be om ursäkt': ['palms', 'sad'], tacka: ['palms', 'happy'], hälsa: ['smile', 'happy'], buga: ['palms', 'neutral'], rekommendera: ['star', 'happy'], fråga: ['question', 'question'], svara: ['check', 'neutral'], hota: ['lightning', 'angry'], avbryta: ['no', 'angry'], boka: ['calendar', 'neutral'], ansöka: ['document', 'neutral'], 'skriva under': ['pen', 'neutral'], godkänna: ['check', 'happy'], reklamera: ['cross', 'neutral'], felanmäla: ['phone', 'neutral'], översätta: ['swap', 'neutral'], påminna: ['bell', 'neutral'], inspirera: ['bulb', 'happy'], beskriva: ['eye', 'neutral'], uttrycka: ['heart', 'neutral'], störa: ['bell', 'angry'], 'säga upp': ['document', 'sad'], köa: ['hourglass', 'neutral'], 'vänta in': ['hourglass', 'neutral'] };
+/** verbs whose meaning the body carries as a bow: deep = apology, light = thanks/greeting */
+const BOW: Record<string, 'light' | 'deep'> = { ursäkta: 'deep', 'be om ursäkt': 'deep', tacka: 'light', buga: 'deep', hälsa: 'light', 'säga hej': 'light' };
+/** what the apology is for: a visible cause on the floor between the two */
+const BOW_CAUSE: Record<string, { asset: string; rotate?: number; state: J }> = { ursäkta: { asset: 'container.cup', rotate: 90, state: { fill: 0 } }, 'be om ursäkt': { asset: 'container.cup', rotate: 90, state: { fill: 0 } } };
 const DRESS: Record<string, { garment: string; on: boolean; value?: string; start: J }> = { 'ta på sig': { garment: 'top', on: true, value: 'green', start: { top: '#f7f3ea', sleeves: 'short' } }, 'ta av sig': { garment: 'top', on: false, start: { top: 'green' } }, 'klä på sig': { garment: 'top', on: true, value: 'denim', start: { top: '#f7f3ea', sleeves: 'short', bottom: '#efe7d6', shorts: true, shoes: 'skin' } }, 'klä av sig': { garment: 'top', on: false, start: { top: 'denim', bottom: 'navy', shoes: 'brown' } }, 'sätta på sig': { garment: 'hat', on: true, value: 'red', start: {} }, 'byta om': { garment: 'top', on: true, value: 'green', start: { top: 'red' } }, 'klä upp sig': { garment: 'scarf', on: true, value: 'red', start: { top: 'navy', buttons: 1 } }, 'stoppa in': { garment: 'apron', on: true, value: 'white', start: {} } };
 const FASTEN: Record<string, { what: string; on: boolean; start: J }> = { knäppa: { what: 'buttons', on: true, start: { top: 'sky', buttons: 0 } }, 'knäppa upp': { what: 'buttons', on: false, start: { top: 'sky', buttons: 1 } }, 'dra upp': { what: 'zipper', on: true, start: { top: 'orange', zipper: 0 } }, 'dra ner': { what: 'zipper', on: false, start: { top: 'orange', zipper: 1 } }, 'kavla upp': { what: 'sleeves', on: true, start: { top: 'navy', sleeves: 'long', bottom: 'tan' } }, knyta: { what: 'laces', on: true, start: { shoes: 'white' } } };
 const FLOOR_ASSETS = /^(fixture\.(sink|shower|washingmachine|oven|fridge|radiator|clothesline|ironingboard|chair|shelf|wall|bike|cart|tent|tree|bush|toilet|cow|hen|lamp|mirror|puddle|fire|plant|flower|nest|drip)|stove|table|sofa|bed|door|castle|ladder|window)$/;
@@ -142,6 +146,17 @@ function buildAttribute(row: PlanRow, r: Recipe, s: J): J | null {
       (s.focus as J).targets = ['bearer']; (s.focus as J).feature = `${b.asset} ${b.motion}s`;
       if (s.contrast) (s.contrast as J).distinctiveFeatures = [`has:emphasis:${b.motion}`, ...bearerFeatures('bearer', b.asset as string, st.state as J | undefined)];
       return s; }
+    case 'manner': {
+      // a property seen only in how someone moves: the walk itself changes (careful = short slow steps, eyes on a full glass), gloss on a panel
+      s.environment = { id: (b.env as string) ?? 'room', time: 'day' }; s.durationMs = 4600; s.posterMs = 2400;
+      (s.actors as J[]).push({ id: 'p', variant: 'a', at: { x: 28, y: 100 }, facing: 'right' });
+      const held = (b.prop as string | undefined) ?? 'container.bowl';
+      (s.props as J[]).push({ id: 'held', asset: held, attachTo: { actor: 'p', hand: 'left' }, scale: held === 'glass' ? 0.6 : 0.8, ...(held === 'glass' ? { state: { fill: 0.95 } } : held === 'container.bowl' ? { state: { fill: 0.95, contents: '#e8a33c' } } : {}) });
+      tl.push({ t: 200, action: 'walk', actor: 'p', to: { x: 84, y: 100 }, durationMs: 4000, manner: (b.manner as string) ?? 'careful' });
+      addGloss(s, ja, 1500, 60, 12, 'panel');
+      (s.focus as J).targets = ['p', 'held']; (s.focus as J).feature = `walks ${b.manner ?? 'careful'} with ${held}`;
+      if (s.contrast) (s.contrast as J).distinctiveFeatures = [`has:walk-manner:${(b.manner as string) ?? 'careful'}`, `has:prop:${held}`];
+      return s; }
     case 'person': {
       s.environment = { id: (b.env as string) ?? 'room', time: 'day' }; s.durationMs = 4200;
       (s.actors as J[]).push({ id: 'p', variant: 'a', at: { x: 30, y: 100 }, facing: 'right' });
@@ -203,9 +218,16 @@ function buildCommunicate(row: PlanRow, r: Recipe, s: J): J {
   const tl = s.timeline as J[]; const say = (r.say as J | undefined) ?? { icon: SAY_ICON[row.lemma]?.[0] ?? 'question', mood: SAY_ICON[row.lemma]?.[1] ?? 'question' };
   s.environment = { id: 'room', time: 'day' }; s.durationMs = 3800; s.posterMs = 1600;
   (s.actors as J[]).push({ id: 'p', variant: 'a', at: { x: 38, y: 100 }, facing: 'right', scale: 0.85 }, { id: 'q', variant: 'b', at: { x: 84, y: 100 }, facing: 'left', scale: 0.85 });
-  tl.push({ t: 0, action: 'idle', actor: 'q', durationMs: 3800 }, { t: 400, action: 'say', actor: 'p', icon: say.icon, mood: say.mood, to: 'q', durationMs: 1800 }, { t: 2400, action: 'say', actor: 'q', icon: say.mood === 'angry' ? 'ellipsis' : 'check', mood: say.mood === 'angry' ? 'sad' : 'happy', to: 'p', durationMs: 1000, gesture: false });
+  // the body carries apology, thanks and greeting: a bow (deep for sorry, light for thanks) with the palms icon; a cause on the floor makes the apology readable
+  const bow = (say.bow as string | undefined) ?? BOW[row.lemma];
+  if (bow) {
+    (s.actors as J[])[0]!.at = { x: 30, y: 100 }; (s.actors as J[])[1]!.at = { x: 88, y: 100 }; // room for a deep bow between them
+    if (BOW_CAUSE[row.lemma]) (s.props as J[]).push({ id: 'cause', asset: BOW_CAUSE[row.lemma]!.asset, at: { x: 58, y: 100 }, z: 1, ...(BOW_CAUSE[row.lemma]!.rotate ? { rotate: BOW_CAUSE[row.lemma]!.rotate } : {}), state: BOW_CAUSE[row.lemma]!.state });
+    tl.push({ t: 0, action: 'idle', actor: 'q', durationMs: 3800 }, { t: 300, action: 'bow', actor: 'p', depth: bow, hands: 'together', to: 'q', durationMs: 2200 }, { t: 700, action: 'say', actor: 'p', icon: say.icon, mood: say.mood, to: 'q', durationMs: 1500, gesture: false }, { t: 2600, action: 'express', actor: 'q', emotion: say.mood === 'sad' ? 'content' : 'happy', durationMs: 400 });
+    s.posterMs = 1500;
+  } else tl.push({ t: 0, action: 'idle', actor: 'q', durationMs: 3800 }, { t: 400, action: 'say', actor: 'p', icon: say.icon, mood: say.mood, to: 'q', durationMs: 1800 }, { t: 2400, action: 'say', actor: 'q', icon: say.mood === 'angry' ? 'ellipsis' : 'check', mood: say.mood === 'angry' ? 'sad' : 'happy', to: 'p', durationMs: 1000, gesture: false });
   (s.focus as J).targets = ['p']; (s.focus as J).feature = `says ${say.icon} (${say.mood}) to q, q reacts`;
-  if (s.contrast) (s.contrast as J).distinctiveFeatures = [`has:say-icon:${say.icon}`, `has:say-mood:${say.mood}`];
+  if (s.contrast) (s.contrast as J).distinctiveFeatures = [`has:say-icon:${say.icon}`, `has:say-mood:${say.mood}`, ...(bow ? [`has:bow:${bow}`] : [])];
   return s;
 }
 function buildSocial(_row: PlanRow, r: Recipe, s: J): J | null {
@@ -285,6 +307,8 @@ export function runBatch(plan: Plan, moduleTitle: string, existingBySense: Map<s
     const recipe = recipes[row.senseId] ?? recipes[row.lemma];
     if (!recipe) { out.push({ senseId: row.senseId, lemma: row.lemma, status: 'no-recipe', note: 'inget recept – skriv ett recept med bärare/följd i registry/recipes.json innan scenen görs' }); continue; }
     if (recipe.template === 'image') { out.push({ senseId: row.senseId, lemma: row.lemma, status: 'image', note: recipe.note ?? 'bild' }); continue; }
+    // a recipe marked TODO/SVAGT/saknas is a known gap: no draft is written, so the product owner never sees a scene the tool itself knows is wrong
+    if (/TODO|SVAGT|svag|saknas/i.test(recipe.note ?? '')) { out.push({ senseId: row.senseId, lemma: row.lemma, template: recipe.template, status: 'blocked', note: `receptet är märkt som svagt – ingen scen skapas: ${recipe.note}` }); continue; }
     const draft = draftScene(row, recipe, moduleTitle, willExist);
     if (!draft) { out.push({ senseId: row.senseId, lemma: row.lemma, template: recipe.template, status: 'no-recipe', note: `receptet kan inte byggas (${recipe.template}${recipe.bearer ? '' : ', ingen bärare'})` }); continue; }
     const v = validateScene(draft as unknown);
@@ -300,7 +324,7 @@ export function runBatch(plan: Plan, moduleTitle: string, existingBySense: Map<s
 
 export function batchMarkdown(plan: Plan, results: BatchResult[]): string {
   const count = (k: BatchResult['status']) => results.filter((r) => r.status === k).length;
-  return [`# Batch: ${plan.titleSv} (${plan.moduleId})`, '', `Skapade ${count('created')} utkast, ${count('exists')} fanns, ${count('skipped')} ej animation, ${count('image')} bild, ${count('invalid')} ogiltiga, ${count('no-recipe')} utan recept.`, '',
+  return [`# Batch: ${plan.titleSv} (${plan.moduleId})`, '', `Skapade ${count('created')} utkast, ${count('exists')} fanns, ${count('skipped')} ej animation, ${count('image')} bild, ${count('blocked')} blockerade (svagt recept, ingen scen), ${count('invalid')} ogiltiga, ${count('no-recipe')} utan recept.`, '',
     '**Regel:** ett utkast är klart först när remsan är granskad och blindtestet godkänt (`anim:blindtest`). Rader märkta ⚠ har ett recept med känd svaghet – läs anmärkningen och förbättra scenen eller receptet innan blindtest.', '',
     '| Ord | Status | Scen | Mall | Anmärkning |', '|---|---|---|---|---|',
     ...results.map((r) => `| ${r.lemma} | ${r.status} | ${r.animationId ?? '–'} | ${r.template ?? '–'} | ${[r.note, ...(r.problems ?? [])].filter(Boolean).join('; ')} |`), ''].join('\n');

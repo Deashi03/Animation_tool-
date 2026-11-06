@@ -13,7 +13,7 @@ import { loadSwechan, stripFurigana } from './plan';
 import { TEMPLATES } from '../compiler/templates';
 import { isPropAsset } from '../assets/catalog';
 import { ACTION_NAMES } from '../schema/scene';
-import { registryDir, blindResults } from './registry';
+import { registryDir, blindResults, blindOk } from './registry';
 
 export type Recipe = { template: string; actions?: string[]; props?: string[]; note?: string; bearer?: Record<string, unknown>; [k: string]: unknown };
 export type CoverageRow = { senseId: string; lemma: string; pos: string; template: string; state: 'done-blind' | 'done' | 'ready' | 'blocked' | 'no-recipe' | 'image'; missing: string[]; note: string; animationId?: string };
@@ -50,7 +50,7 @@ export function buildCoverage(swechanDir: string, scenesBySense: Map<string, str
       const weak = /saknas|svag|TODO|SVAGT/i.test(rec.note ?? '');
       if (rec.template === 'attribute-gloss' && !rec.bearer) missing.push('bärare saknas i receptet');
       const animationId = scenesBySense.get(s.id);
-      const passed = animationId ? (blind[animationId] ?? []).some((r) => r.passed) : false;
+      const passed = animationId ? blindOk((blind[animationId] ?? []).at(-1)) : false;
       const state: CoverageRow['state'] = animationId ? (passed ? 'done-blind' : 'done') : missing.length || weak ? 'blocked' : 'ready';
       if (weak && !missing.length) missing.push('svagt recept');
       rows.push({ senseId: s.id, lemma, pos, template: rec.template, state, missing, note: rec.note ?? '', animationId });

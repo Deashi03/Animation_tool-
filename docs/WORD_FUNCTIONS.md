@@ -17,7 +17,9 @@ Validatorn upprätthåller detta med **bärar-regeln**: en ordscen utan bärare 
 | **Verktygsarbete / rytmiskt verb** | skära, hacka, vispa, röra, knåda, skala, borsta, såga | `tool-rhythm` | verktyg i hand + råvara/yta som **ändrar form eller tillstånd** (`parts`, `foam`, `pile`, `peel`) i takt med rörelsen; tempot skiljer grannar (hacka > skära) | ingen | verktyg som rör sig över något som inte förändras |
 | **Matlagning i panna** | steka, bryna, fräsa, bränna, vända, skvätta | `cook-rhythm` | panna på tänd platta; innehållets färg/fräs går *så långt som verbet säger* (`browning`, `burnt`, `sizzle`); vändning/skvätt som egen handling | ingen | samma slutläge för steka och bränna |
 | **Process utan människa** | koka, sjuda, smälta, mogna, brinna, droppa, krympa, blekna | `process` | ett föremål i närbild vars tillstånd tweenas; effekter (bubblor, ånga, droppar) sitter fast vid föremålet; grad och tempo skiljer grannar | ingen | människor; pratbubbla |
-| **Tal och kommunikation** | beställa, klaga, varna, förklara, fråga | `communicate` | pratbubbla **med ikon** som visar innehållet (bestick, utropstecken, fråga) + mun/bryn/hållning + motpartens reaktion | ikon, ej ord | bubbla med enbart det japanska ordet |
+| **Tal och kommunikation** | beställa, klaga, varna, förklara, fråga | `communicate` | pratbubbla **med ikon** som visar innehållet (bestick, utropstecken, fråga) + mun/bryn/hållning + motpartens reaktion | ikon, ej ord | bubbla med enbart det japanska ordet; **gest-ikon (hand, palms, wave) utan kroppslig handling** |
+| **Artighet och ritual** | ursäkta, be om ursäkt, tacka, hälsa, buga | `communicate` med `say.bow` | **kroppen bär**: en bugning (`bow`, djup för förlåt, lätt för tack), händerna ihop, 🙏-ikonen (`palms`) i bubblan, en synlig orsak (spilld kopp) och motpartens mjuknande | ikon | en gest i bubblan som enda bärare – gester läses olika i olika kulturer och en ikon med ett utstickande finger blev ett långfinger |
+| **Sätt att röra sig** | försiktig, varsam, hastig | `attribute-gloss` (`bearer.kind: manner`) | gången själv ändras (`walk.manner: careful` = korta långsamma steg, nästan ingen armpendling, blicken ner) och något som står på spel (ett fullt glas i handen) | japanskt ord | en vanlig gång med ett föremål – då läses det som *bära* |
 | **Mellan människor med föremål** | ge, lämna över, bjuda på, skicka | `social` | två figurer; föremålet byter hand mitt i rörelsen | ingen | – |
 | **Ställa/ta/ordna föremål** | duka, packa, stapla, hänga upp, slänga, sortera | `arrange` | figuren går fram; föremålet lämnar handen och hamnar synligt på platsen (eller tas därifrån); slutläget hålls | ingen | föremål som bara försvinner |
 | **Klä sig** | ta på/av sig, knäppa (upp), dra upp, kavla upp, knyta | `dress-self` | garderobsspår ändras synligt (`hat 0→1`, `buttons 1→0`), händerna är där förändringen sker | ingen | byte som syns från t = 0 |
@@ -26,7 +28,7 @@ Validatorn upprätthåller detta med **bärar-regeln**: en ordscen utan bärare 
 | **Händelse med flera** | stormning, fest, flytt, möte | `event` | ≥ 2 figurer och ett föremål som förändras (fana, bord, lådor) | ingen | – |
 | **Egenskap buren av ett föremål** | vass, slö, grov, fin, tung, mogen, trasig, blank | `attribute-gloss` (`bearer.kind: prop`) | ett föremål som **har** egenskapen, gärna med en liten betoning som visar den (kniv + glint = vass; tandad egg = slö; stora bitar = grov) | japanskt ord i bubbla med svans mot föremålet | en person som säger ordet |
 | **Egenskap buren av kläder/utseende** | randig, sportig, elegant, skrynklig, beige | `attribute-gloss` (`bearer.kind: wardrobe`) | figur vars klädsel **har** egenskapen (mönster, färg, plagg); lugn andning | japanskt ord, svans mot bålen | aktivitet som är ett eget verb (kicka ≠ sportig) |
-| **Egenskap som bara syns i rörelse** | vinglig, seg, snabb, försiktig | `attribute-gloss` (`bearer.kind: motion`) | liten loopad rörelse som inte är ett eget verb (vinglar, drar sig långsamt) | japanskt ord | – (svag kategori: markera `TODO` i receptet om rörelsen inte räcker) |
+| **Egenskap som bara syns i rörelse** | vinglig, seg, elastisk | `attribute-gloss` (`bearer.kind: motion`) | liten loopad rörelse hos ett föremål som inte är ett eget verb (vinglar, töjs) | japanskt ord | – (markera `TODO` i receptet om rörelsen inte räcker; **ett recept märkt TODO ger inget utkast**) |
 | **Egenskap som smak/känsla i kroppen** | salt, söt, sur, bitter, mätt, hungrig | `attribute-gloss` (`bearer.kind: taste`/`emotion`) | figur som smakar/känner + ansikte + föremålet som orsakar | japanskt ord | – |
 | **Egenskap med motsats som poäng** | tung/lätt, ren/smutsig, full/tom | `property-contrast` | båda i samma bild, bäraren är föremålen | japanskt ord | kontrast utan bärare |
 | **Abstraktion med kulturneutral symbol** | tid, pris, mod, vis, ordning | `attribute-gloss` (`bearer.kind: icon`) | en ikon ur ikonbiblioteket (klocka, mynt, våg …), ensam på duken eller på en panel | japanskt ord | västerländska djurmetaforer (uggla, lejon, fyrklöver) |
@@ -45,11 +47,11 @@ Nyckel: lemma (`"vass"`) eller betydelse (`"s.slö.1"` – vinner över lemmat; 
 
 | Mall | Fält |
 |---|---|
-| `attribute-gloss` | `bearer: { kind: prop\|wardrobe\|icon\|contrast\|emotion\|taste\|motion\|person, asset?, state?, scale?, color?, surface?, env?, wardrobe?, icon?, tail?, emphasis?, motion? }` |
+| `attribute-gloss` | `bearer: { kind: prop\|wardrobe\|icon\|contrast\|emotion\|taste\|motion\|manner, asset?, state?, scale?, color?, surface?, env?, wardrobe?, icon?, tail?, emphasis?, motion?, manner?, prop? }` |
 | `tool-rhythm` | `tool`, `target`, `surface?`, `motion`, `effects: [{ role: target\|surface\|extra, key, to, at? }]`, `claim?: []`, `period?`, `bothHands?`, `extra?` |
 | `process` | `asset`, `change: [{ key, from?, to, at? }]`, `state?`, `extra?: [{ asset, change? }]`, `sound?`, `claim?` |
 | `cook-rhythm` | `kind: fry\|brown\|sear\|burn\|melt`, `contents`, `flip?`, `splash?` |
-| `communicate` | `say: { icon, mood?, reply? }` |
+| `communicate` | `say: { icon, mood?, bow?: light\|deep }` – med `bow` bär kroppen (bugning) och ikonen förstärker |
 | `social` | `give: { prop }` |
 | `arrange` | `put: { prop, on? }` eller `take: { prop }` |
 | `manipulate-prop` | `eat: { prop, sound? }` eller `pour: { from, into }` |
@@ -63,3 +65,10 @@ Nyckel: lemma (`"vass"`) eller betydelse (`"s.slö.1"` – vinner över lemmat; 
 ## Varför detta skrevs
 
 Produktägaren fann 2026-11-05 att batch-utkast för *vass*, *grov*, *halvera* och *skölja* var tomma eller fel: en figur som sa ordet på japanska, en morot i fyra delar för *halvera*, *skölja* utan vatten. Orsaken var att mallkontraktet för egenskaper bara krävde text, att startscenen var tom, att 285 adjektivrecept skrevs i bulk utan bärare, och att täckningsrapporten räknade dem som *redo*. Åtgärden är den här tabellen, bärar-regeln i validatorn, bärare i varje recept, byggare som komponerar hela scener och testet ovan.
+
+## Tillägg 2026-11-06: gester och sätt (efter *ursäkta* och *försiktig*)
+
+Produktägaren såg att *ursäkta* visade en hand-ikon som lästes som ett långfinger, och att *försiktig* bara var en figur som gick med en bricka. Orsaker: (1) ikonen `hand` hade ett finger högre än de andra – i 140 px blir det en gest; (2) betydelsen hade lagts i bubblan, inte i kroppen, trots regeln att gester aldrig bär ensamma; (3) blindtestet frågade bara *vilket ord*, aldrig *kan något missförstås*; (4) receptet för *försiktig* var märkt TODO men batchen skrev ändå ett utkast som produktägaren fick se.
+
+Förinställda lösningar nu: handlingen `bow` (bugning, djup/lätt, händer ihop) bär förlåt/tack/hälsning; ikonen `palms` (🙏) finns och `hand` är omritad som öppen handflata; validatorn **stoppar** en gest-ikon i bubbla utan kroppslig handling; gångsättet `walk.manner: careful` och bäraren `manner` finns för sätt-adjektiv; blindtestet har en tredje fråga om missförstånd/stötande innehåll och ett flaggat svar räknas inte som godkänt; batchen skriver **inget utkast** för recept märkta TODO/SVAGT/saknas.
+

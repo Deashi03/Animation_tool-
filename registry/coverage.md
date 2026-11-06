@@ -4,8 +4,8 @@
 
 | Läge | Antal |
 |---|---|
-| Klar med godkänt blindtest | 58 (10 %) |
-| Scen finns, blindtest saknas | 6 (1 %) |
+| Klar med godkänt blindtest | 55 (9 %) |
+| Scen finns, blindtest saknas | 9 (1 %) |
 | Redo: recept och byggstenar finns | 370 (61 %) |
 | Blockerad: byggsten saknas, bärare saknas eller receptet är märkt TODO/svagt | 79 (13 %) |
 | Utan recept | 71 (12 %) |
@@ -13,7 +13,7 @@
 
 ## Saknade byggstenar (antal betydelser)
 
-- svagt recept: 84
+- svagt recept: 83
 
 ## Per mall
 

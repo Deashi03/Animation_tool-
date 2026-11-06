@@ -2949,12 +2949,12 @@
   "försiktig": {
    "template": "attribute-gloss",
    "bearer": {
-    "kind": "person",
-    "action": "walk-slow",
-    "env": "room",
-    "prop": "container.tray"
+    "kind": "manner",
+    "manner": "careful",
+    "prop": "container.bowl",
+    "env": "room"
    },
-   "note": "TODO: långsam gång saknas – gången har fast tempo; brickan bärs"
+   "note": "går försiktigt med en full skål soppa: korta långsamma steg, blicken på skålen"
   },
   "fransk": {
    "template": "image",
@@ -5560,7 +5560,13 @@
    "template": "communicate"
   },
   "ursäkta": {
-   "template": "communicate"
+   "template": "communicate",
+   "say": {
+    "icon": "palms",
+    "mood": "sad",
+    "bow": "deep"
+   },
+   "note": "djup bugning med händerna ihop, spilld kopp på golvet som orsak"
   },
   "rekommendera": {
    "template": "communicate"
@@ -5617,7 +5623,13 @@
    "template": "communicate"
   },
   "be om ursäkt": {
-   "template": "communicate"
+   "template": "communicate",
+   "say": {
+    "icon": "palms",
+    "mood": "sad",
+    "bow": "deep"
+   },
+   "note": "djup bugning med händerna ihop, spilld kopp på golvet som orsak"
   },
   "köa": {
    "template": "communicate",
@@ -6663,6 +6675,30 @@
     "mark": "b"
    },
    "note": "fina bitar bredvid grova"
+  },
+  "tacka": {
+   "template": "communicate",
+   "say": {
+    "icon": "palms",
+    "mood": "happy",
+    "bow": "light"
+   }
+  },
+  "buga": {
+   "template": "communicate",
+   "say": {
+    "icon": "palms",
+    "mood": "neutral",
+    "bow": "deep"
+   }
+  },
+  "hälsa": {
+   "template": "communicate",
+   "say": {
+    "icon": "smile",
+    "mood": "happy",
+    "bow": "light"
+   }
   }
  }
 }

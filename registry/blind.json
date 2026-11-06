@@ -376,6 +376,16 @@
       "expected": "hacka",
       "description": "En person vid en köksbänk med kniv över en rund gul lök; för varje ruta blir löken alltmer sönderdelad i många små bitar som sprids över skärbrädan (små vita ringar), medan kniven går upp och ner i en snabb rytm – fint hackande av en lök.",
       "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b13",
+      "passed": true,
+      "choice": "hacka",
+      "expected": "hacka",
+      "description": "En person står vid ett bord i ett kök med en kniv i handen; hen lyfter kniven över en rund gul grönsak (lök?) och hugger upprepade gånger så att allt fler små bitar sprids ut åt sidan på bordet tills grönsaken är i strimlor – animationen betyder att hacka något i små bitar.",
+      "reviewer": "claude-blind",
+      "flag": "Ja: (1) i första rutan (0 ms) håller personen kniven hängande med spetsen nedåt längs benet, vilket isolerat kan se hotfullt ut; (2) vid 982 ms har personen slutna ögon medan kniven är i luften – ser ut som att man hugger med ögonen stängda, vilket ser farligt/fel ut; (3) de avhuggna bitarna ritas som små vita cirklar på pinnar och kan läsas som blommor eller popcorn snarare än lökbitar; (4) handen som håller fast grönsakan syns inte och den beige lådan till vänster är oklar (kyl? diskmaskin?). Skillnaden mot 'skära' bygger helt på snabbheten och mängden bitar – i en stillbild blir det 'skära'."
     }
   ],
   "anim.skära.1": [
@@ -722,6 +732,16 @@
       "description": "Två personer inomhus; en vit kon-/megafonliknande sak ligger omkullvält på golvet mellan dem, mannen i grön tröja bugar djupt mot kvinnan med en pratbubbla som innehåller ett litet ansikte, hon ler, och sedan rätar han upp sig – han ber om ursäkt för det han vält.",
       "reviewer": "claude-blind",
       "flag": "Bugningen kan lika gärna läsas som tacka (båda har buga + bubbla); det som styr mot ursäkt är det omkullvälta föremålet, men det är otydligt vad det är (lampa? megafon? tratt?) och det blir aldrig upprättat. Ikonen i pratbubblan är för liten för att tydas (ser ut som ett litet ansikte eller en hand). Mannens nacke/huvud ser lite onaturligt sträckt ut i de djupaste bugningsrutorna."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b13",
+      "passed": true,
+      "choice": "ursäkta",
+      "expected": "ursäkta",
+      "description": "Två personer står mittemot varandra i ett rum; mellan dem ligger en vält megafon/tratt på golvet; personen i grönt bugar djupt mot personen i rött med en pratbubbla som innehåller en uppsträckt öppen handflata, och rätar sedan upp sig igen medan den andra ler – jag tolkar det som att be om ursäkt (djup bugning + hand + något som vält på golvet).",
+      "reviewer": "claude-blind",
+      "flag": "Ja: (1) 'ursäkta' och 'tacka' är båda djupa bugningar – det enda som skiljer är handflatan i bubblan och det vältade föremålet, och ikonen med handflatan kan lika gärna läsas som 'stopp', 'vinka' eller 'high five'; (2) föremålet på golvet är svårt att identifiera (megafon? strut? tratt?) och det syns aldrig att personen i grönt är den som har vält det, så orsaken är otydlig; (3) handflatan framför ansiktet under bugning är en japansk ursäktsgest som en svensk inte nödvändigtvis läser; (4) i de djupaste bugningsrutorna (982–1636 ms) ser huvudet ut att sitta något löst/framför kroppen och handen hamnar framför ansiktet som om personen täcker munnen. Inget stötande."
     }
   ],
   "anim.skämta.1": [
@@ -917,6 +937,16 @@
       "description": "En man håller ett glas med båda händerna och går långsamt, nästan på tå med böjda knän och öppen O-mun, medan en vit bubbla med texten 注意深い dyker upp – han bär glaset försiktigt så att inget spills.",
       "reviewer": "claude-blind",
       "flag": "Utan texten läser jag snarare 'förvånad/rädd' eller 'smyga' – O-munnen ser skrämd ut, och den vaggande gången med korsade ben ser lite onaturlig ut (höften svänger utåt i rutorna 1255–2091 ms). Textpanelen klipps i rutan 1673 ms (halvt synlig text). Glaset ser mest ut som en vit rektangel; ingen vätska som riskerar spillas, så själva orsaken till försiktigheten syns inte."
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b13",
+      "passed": true,
+      "choice": "försiktig",
+      "expected": "försiktig",
+      "description": "En person i grön tröja går långsamt och lite framåtböjd medan hen bär en skål/ett fat med gul mat framför sig med båda händerna, med små försiktiga steg och blicken rakt fram; halvvägs in dyker en pratbubbla upp med japansk text (注意深い) – animationen betyder att göra något försiktigt/aktsamt.",
+      "reviewer": "claude-blind",
+      "flag": "Ja, flera små saker: (1) i rutan vid 1673 ms är pratbubblan avklippt i bildens överkant så att texten inte går att läsa; (2) själva rörelsen är svag – utan texten läses det mest som 'en person går med en skål', det finns ingen tydlig fara (inget som skvalpar, inget hinder, ingen spilld droppe) som visar att det är försiktigheten som är poängen, så 'slö' (långsam) är en möjlig feltolkning; (3) bakre armen syns nästan inte så skålen ser ut att hållas med en hand på ett ostadigt sätt. Inget stötande."
     }
   ],
   "anim.slö.1": [

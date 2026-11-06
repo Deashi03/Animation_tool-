@@ -82,10 +82,13 @@
     },
     {
       "t": 1500,
-      "action": "set",
+      "action": "tween",
       "target": "ja",
       "prop": "opacity",
-      "value": 1
+      "to": 1,
+      "from": 0,
+      "durationMs": 350,
+      "ease": "easeOut"
     },
     {
       "t": 1500,
@@ -93,7 +96,7 @@
       "target": "ja",
       "prop": "y",
       "to": 12,
-      "from": -20,
+      "from": 6,
       "durationMs": 450,
       "ease": "easeOut"
     }

@@ -314,7 +314,7 @@
    "lemma": "hacka",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "done-blind",
+   "state": "done",
    "missing": [],
    "note": "extra: food.pile fin",
    "animationId": "anim.hacka.1"
@@ -5690,8 +5690,8 @@
   "ready": 370,
   "blocked": 79,
   "no-recipe": 71,
-  "done-blind": 55,
-  "done": 9,
+  "done-blind": 54,
+  "done": 10,
   "image": 22
  },
  "byTemplate": {

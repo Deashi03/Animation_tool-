@@ -424,7 +424,7 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     if ((a.motion === 'knead' || a.motion === 'press') && target) { fxStart(tr, `${a.on}.s.squash`, t0, 0); dense(tr, `${a.on}.s.squash`, t0, end, (t) => { const u = cyc(t); return a.motion === 'knead' ? Math.max(0, Math.sin(2 * Math.PI * u)) : u < 0.7 ? 1 : 0; }, 0, 30); addKey(tr, `${a.on}.s.squash`, { t: end + 1, v: 0 }); }
     // phase for props that animate with it (dough wobble, bowl swirl)
     if (target) { const ph0 = sampleNumber(tr, `${a.on}.s.phase`, a.t, 0); dense(tr, `${a.on}.s.phase`, t0, end, (t) => ph0 + (t - t0) / T, 0, 60); }
-    M.blinks(tr, A, a.t, end);
+    if (!a.tool) M.blinks(tr, A, a.t, end); // eyes stay open while a tool is at work – a blink mid-chop looks like cutting blind
     // settle: upright, tool stays in hand
     tween(tr, M.J(A, 'torso'), end, end + 400, 4, 'easeInOut'); tween(tr, M.J(A, 'head'), end, end + 400, -6, 'easeInOut');
   },

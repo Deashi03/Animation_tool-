@@ -6,10 +6,10 @@
   "titleSv": "ursäkta",
   "meaningHint": "Säga förlåt när man har gjort något fel",
   "category": "action",
-  "durationMs": 3600,
+  "durationMs": 4200,
   "loop": true,
   "holdMs": 700,
-  "posterMs": 1500,
+  "posterMs": 1900,
   "environment": {
     "id": "room",
     "time": "day"
@@ -67,12 +67,24 @@
   "timeline": [
     {
       "t": 0,
-      "action": "idle",
-      "actor": "q",
-      "durationMs": 3600
+      "action": "lookAt",
+      "actor": "p",
+      "target": "cup"
     },
     {
-      "t": 200,
+      "t": 0,
+      "action": "lookAt",
+      "actor": "q",
+      "target": "cup"
+    },
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 4200
+    },
+    {
+      "t": 700,
       "action": "bow",
       "actor": "p",
       "depth": "deep",
@@ -81,7 +93,7 @@
       "durationMs": 2300
     },
     {
-      "t": 600,
+      "t": 1100,
       "action": "say",
       "actor": "p",
       "icon": "palms",
@@ -91,7 +103,7 @@
       "gesture": false
     },
     {
-      "t": 2600,
+      "t": 3100,
       "action": "express",
       "actor": "q",
       "emotion": "content",

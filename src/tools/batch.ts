@@ -46,7 +46,8 @@ function addGloss(s: J, text: string, at: number, x: number, y: number, bg: 'pan
   if (!text) return;
   const g = gloss(text, x, y, bg, tail); const yEnd = g._y as number; delete g._y;
   (s.shapes as J[]).push(g);
-  (s.timeline as J[]).push({ t: at, action: 'set', target: 'ja', prop: 'opacity', value: 1 }, { t: at, action: 'tween', target: 'ja', prop: 'y', from: -20, to: yEnd, durationMs: 450, ease: 'easeOut' });
+  // fade + a short slide: the text never sits half outside the canvas in any frame
+  (s.timeline as J[]).push({ t: at, action: 'tween', target: 'ja', prop: 'opacity', from: 0, to: 1, durationMs: 350, ease: 'easeOut' }, { t: at, action: 'tween', target: 'ja', prop: 'y', from: yEnd - 6, to: yEnd, durationMs: 450, ease: 'easeOut' });
 }
 const propAt = (id: string, asset: string, at: Pt, extra: J = {}): J => ({ id, asset, at, z: 1, ...extra });
 /** Place a thing: fixtures and furniture stand on the floor; small things stand on a table at y 70 (or on the given surface's mouth). */
@@ -222,8 +223,9 @@ function buildCommunicate(row: PlanRow, r: Recipe, s: J): J {
   const bow = (say.bow as string | undefined) ?? BOW[row.lemma];
   if (bow) {
     (s.actors as J[])[0]!.at = { x: 30, y: 100 }; (s.actors as J[])[1]!.at = { x: 88, y: 100 }; // room for a deep bow between them
-    if (BOW_CAUSE[row.lemma]) (s.props as J[]).push({ id: 'cause', asset: BOW_CAUSE[row.lemma]!.asset, at: { x: 58, y: 100 }, z: 1, ...(BOW_CAUSE[row.lemma]!.rotate ? { rotate: BOW_CAUSE[row.lemma]!.rotate } : {}), state: BOW_CAUSE[row.lemma]!.state });
-    tl.push({ t: 0, action: 'idle', actor: 'q', durationMs: 3800 }, { t: 300, action: 'bow', actor: 'p', depth: bow, hands: 'together', to: 'q', durationMs: 2200 }, { t: 700, action: 'say', actor: 'p', icon: say.icon, mood: say.mood, to: 'q', durationMs: 1500, gesture: false }, { t: 2600, action: 'express', actor: 'q', emotion: say.mood === 'sad' ? 'content' : 'happy', durationMs: 400 });
+    if (BOW_CAUSE[row.lemma]) (s.props as J[]).push({ id: 'cause', asset: BOW_CAUSE[row.lemma]!.asset, at: { x: 56, y: 100 }, z: 1, ...(BOW_CAUSE[row.lemma]!.rotate ? { rotate: BOW_CAUSE[row.lemma]!.rotate } : {}), state: BOW_CAUSE[row.lemma]!.state }, { id: 'puddle', asset: 'fixture.puddle', at: { x: 61, y: 100 }, z: 0, state: { size: 0.4, col: '#8a5a3a' } });
+    if (BOW_CAUSE[row.lemma]) { tl.push({ t: 0, action: 'lookAt', actor: 'p', target: 'cause' }, { t: 0, action: 'lookAt', actor: 'q', target: 'cause' }); s.durationMs = 4200; }
+    tl.push({ t: 0, action: 'idle', actor: 'q', durationMs: 3800 }, { t: BOW_CAUSE[row.lemma] ? 700 : 300, action: 'bow', actor: 'p', depth: bow, hands: 'together', to: 'q', durationMs: 2200 }, { t: 700, action: 'say', actor: 'p', icon: say.icon, mood: say.mood, to: 'q', durationMs: 1500, gesture: false }, { t: 2600, action: 'express', actor: 'q', emotion: say.mood === 'sad' ? 'content' : 'happy', durationMs: 400 });
     s.posterMs = 1500;
   } else tl.push({ t: 0, action: 'idle', actor: 'q', durationMs: 3800 }, { t: 400, action: 'say', actor: 'p', icon: say.icon, mood: say.mood, to: 'q', durationMs: 1800 }, { t: 2400, action: 'say', actor: 'q', icon: say.mood === 'angry' ? 'ellipsis' : 'check', mood: say.mood === 'angry' ? 'sad' : 'happy', to: 'p', durationMs: 1000, gesture: false });
   (s.focus as J).targets = ['p']; (s.focus as J).feature = `says ${say.icon} (${say.mood}) to q, q reacts`;

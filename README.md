@@ -35,6 +35,8 @@ npm run anim:new -- s.ordet.1 --template tool-rhythm                      # en e
 npm run anim:poster -- anim.skära.1 · anim:sheet · anim:report · anim:export
 ```
 
+Instruktion att klistra in i Swechan-chatten: `docs/SWECHAN_CHAT_PROMPT.md`.
+
 Regel: **ingen scen rapporteras klar utan att bildremsan har granskats och blindtestet är godkänt.** Vilken förinställd lösning varje ordfunktion har (och vad som räknas som bärare) står i `docs/WORD_FUNCTIONS.md`. Saknas handrecept genererar `anim:batch` ett ur ordboken; kan det inte, får raden status *manual* med skäl – då gäller `docs/MANUAL_SCENES.md`. Mätningar körs med `--generated --out <dir>` så att biblioteket i `scenes/` aldrig rörs. Mallar (begreppsfamiljer) finns i `src/compiler/templates.ts`; recepten per ord i `registry/recipes.json`; vilka mallar produktägaren godkänt i `registry/templates.json`.
 
 Bildremsor och kontaktark renderas till PNG med den globalt installerade Playwright-paketet (`/opt/node22/lib/node_modules/playwright` i molnmiljön, `npm install -g playwright@1.63.0 && playwright install chromium` lokalt). Saknas Playwright skrivs bara HTML-filen.

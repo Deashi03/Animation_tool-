@@ -49,8 +49,12 @@ Den svåra änden: tyg- och stilegenskaper. Före mätningen fick generatorn rö
 
 Sammanlagt över tre mätningar: 84 scener, blindtest **96 av 103 rätt ord**; felen inom synonymkluster eller där granskaren svarade "inget" när följden inte syntes.
 
+## Överlämningstestet (2026-11-06)
+
+En ny session fick tre ord verktyget sagt ifrån om – *mysig*, *dammsuga*, *dela* – och bara dokumentationen som instruktion. Resultat: *mysig* (kvällsuppställning med ljus, kopp och pläd) och *dammsuga* (ny byggsten `tool.vacuum` med ljud) blev klara med godkänt blindtest utan flaggor; *dela* (ny handling `split`, halvt bröd ges bort) lästes rätt av två oberoende granskare men har en kosmetisk flagga kvar (brödet ser ut som en låda före brytningen). Tid: cirka två timmar, fem byggen för *dela*. Sessionen hittade dessutom fyra motorfel (burna föremål utan `opacity`, markeringar som inte hittade burna föremål, negativ tween vid tidig `at`, startnycklar) och lämnade tolv punkter där dokumentationen brast: fel gren utan dokumenten, handrecept som skuggar nya regler, två saknade ordfunktioner (egenskap hos ett rum; dela), dold standardyta i `tool-rhythm`, inget sätt att bygga ett enskilt ord, död kod för kontrastpartner, ingen reservväg för blindtest utan subagent, ikonfärger, odokumenterade motorkonventioner. Allt utom grenfrågan (löses när PR:en slås ihop) är åtgärdat i 0.7.2.
+
 ## Nästa steg
 
 1. Kör samma mätning på tre nya moduler efter varje regeltillägg; målet är att andelen *manuellt* sjunker och att felvalen stannar inom synonymkluster.
 2. Bygg de byggstenar som flest manuella ord pekar på (dammsugare, bryta i två, gardin/vind för rum).
-3. Låt en separat Claude-session göra tre manuella ord med bara `docs/MANUAL_SCENES.md` som instruktion och mät hur det går.
+3. ~~Låt en separat Claude-session göra tre manuella ord med bara `docs/MANUAL_SCENES.md` som instruktion~~ – gjort, se ovan; upprepa med tre nya ord efter varje större dokumentändring.

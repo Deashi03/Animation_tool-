@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.slö.1",
+  "kind": "word",
+  "template": "attribute-gloss",
+  "senseId": "s.slö.1",
+  "titleSv": "slö",
+  "meaningHint": "Som inte skär bra längre.",
+  "category": "property",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": -1,
+      "state": {}
+    },
+    {
+      "id": "surface",
+      "asset": "container.board",
+      "at": {
+        "x": 60,
+        "y": 70
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": 0,
+      "state": {}
+    },
+    {
+      "id": "bearer",
+      "asset": "tool.knife",
+      "at": {
+        "x": 60,
+        "y": 66
+      },
+      "scale": 1.8,
+      "rotate": 90,
+      "z": 1,
+      "state": {
+        "dull": 1
+      }
+    }
+  ],
+  "shapes": [
+    {
+      "type": "text",
+      "id": "ja",
+      "x": 60,
+      "y": -20,
+      "text": "切れ味が悪い",
+      "size": 11,
+      "weight": 800,
+      "fill": "ink",
+      "anchor": "middle",
+      "opacity": 0,
+      "z": 5,
+      "bg": "bubble",
+      "tail": {
+        "x": 0,
+        "y": 30
+      },
+      "pad": 6
+    }
+  ],
+  "timeline": [
+    {
+      "t": 1200,
+      "action": "set",
+      "target": "ja",
+      "prop": "opacity",
+      "value": 1
+    },
+    {
+      "t": 1200,
+      "action": "tween",
+      "target": "ja",
+      "prop": "y",
+      "to": 30.4,
+      "from": -20,
+      "durationMs": 450,
+      "ease": "easeOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "bearer"
+    ],
+    "feature": "tool.knife bears the property; gloss in a bubble"
+  },
+  "contrast": {
+    "with": [
+      "anim.vass.1",
+      "anim.försiktig.1",
+      "anim.grov.1"
+    ],
+    "distinctiveFeatures": [
+      "has:prop:tool.knife",
+      "start:bearer.dull>=1"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "skära och hacka",
+    "confusableWith": [
+      "s.vass.1",
+      "s.försiktig.1",
+      "s.grov.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (attribute-gloss). kniv utan glans och med hackig egg"
+  },
+  "label": {
+    "show": "optional"
+  }
+}

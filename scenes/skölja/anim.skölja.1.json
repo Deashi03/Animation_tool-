@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.skölja.1",
+  "kind": "word",
+  "template": "tool-rhythm",
+  "senseId": "s.skölja.1",
+  "titleSv": "skölja",
+  "meaningHint": "Ta bort smuts från något med vatten, till exempel grönsaker.",
+  "category": "action",
+  "durationMs": 4400,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 48,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 1,
+      "wardrobe": {
+        "top": "navy"
+      }
+    }
+  ],
+  "props": [
+    {
+      "id": "surface",
+      "asset": "fixture.sink",
+      "at": {
+        "x": 76,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": 0,
+      "state": {}
+    },
+    {
+      "id": "target",
+      "asset": "food.carrot",
+      "at": {
+        "x": 76,
+        "y": 82
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": 1,
+      "state": {}
+    }
+  ],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "use",
+      "actor": "p",
+      "on": "target",
+      "hand": "left",
+      "motion": "scrub",
+      "durationMs": 4000,
+      "effect": [
+        {
+          "prop": "surface",
+          "key": "flow",
+          "to": 1,
+          "at": 0.1
+        }
+      ],
+      "bothHands": false
+    }
+  ],
+  "focus": {
+    "targets": [
+      "target"
+    ],
+    "feature": "hands scrub on food.carrot; effects: surface.flow→1"
+  },
+  "contrast": {
+    "with": [
+      "anim.skära.1",
+      "anim.halvera.1",
+      "anim.hacka.1"
+    ],
+    "distinctiveFeatures": [
+      "end:surface.flow>=0.9"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "skära och hacka",
+    "confusableWith": [
+      "s.skära.1",
+      "s.halvera.1",
+      "s.hacka.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (tool-rhythm). kranen rinner över grönsaken"
+  },
+  "label": {
+    "show": "optional"
+  }
+}

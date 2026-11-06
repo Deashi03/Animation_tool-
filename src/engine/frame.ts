@@ -33,8 +33,11 @@ export function transformAttr(t?: Transform): string {
   const parts: string[] = [];
   if (t.x || t.y) parts.push(`translate(${r2(t.x ?? 0)} ${r2(t.y ?? 0)})`);
   if (t.rotate) parts.push(t.px !== undefined || t.py !== undefined ? `rotate(${r2(t.rotate)} ${r2(t.px ?? 0)} ${r2(t.py ?? 0)})` : `rotate(${r2(t.rotate)})`);
+  const pivot = !t.rotate && (t.px !== undefined || t.py !== undefined) && (t.scale !== undefined || t.scaleX !== undefined || t.scaleY !== undefined);
+  if (pivot) parts.push(`translate(${r2(t.px ?? 0)} ${r2(t.py ?? 0)})`);
   if (t.scale !== undefined && t.scale !== 1) parts.push(`scale(${r2(t.scale)})`);
   if (t.scaleX !== undefined || t.scaleY !== undefined) parts.push(`scale(${r2(t.scaleX ?? 1)} ${r2(t.scaleY ?? 1)})`);
+  if (pivot) parts.push(`translate(${r2(-(t.px ?? 0))} ${r2(-(t.py ?? 0))})`);
   return parts.join(' ');
 }
 
@@ -69,7 +72,8 @@ export function applyTransform(t: Transform | undefined, x: number, y: number): 
   if (!t) return [x, y];
   let px = x, py = y;
   const sx = t.scale ?? t.scaleX ?? 1, sy = t.scale ?? t.scaleY ?? 1;
-  px *= sx; py *= sy;
+  if (!t.rotate && (t.px !== undefined || t.py !== undefined)) { const ox = t.px ?? 0, oy = t.py ?? 0; px = ox + (px - ox) * sx; py = oy + (py - oy) * sy; }
+  else { px *= sx; py *= sy; }
   if (t.rotate) {
     const a = (t.rotate * Math.PI) / 180, ox = t.px ?? 0, oy = t.py ?? 0;
     const dx = px - ox, dy = py - oy;

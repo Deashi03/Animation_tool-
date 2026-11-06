@@ -34,7 +34,7 @@ export const TEMPLATES: Record<string, Template> = {
   'manipulate-prop': {
     id: 'manipulate-prop', titleSv: 'Hantera föremål med synlig följd',
     describes: 'Verb där en person gör något med ett föremål och föremålet förändras: öppna, stänga, hälla, knäppa, tända. Följden måste synas på föremålet.',
-    contract: ['has:actors>=1', 'has:props>=1', 'has:action:open|close|pour|grab|release|sip|tween|set|exercise'],
+    contract: ['has:actors>=1', 'has:props>=1', 'has:action:open|close|pour|grab|release|sip|tween|set|exercise|eat'],
     make: (senseId, lemma, n) => ({
       schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'manipulate-prop', meaningHint: 'TODO', category: 'action',
       durationMs: 3200, loop: true, posterMs: 2000, environment: { id: 'room', time: 'day' },
@@ -69,7 +69,7 @@ export const TEMPLATES: Record<string, Template> = {
   'property-contrast': {
     id: 'property-contrast', titleSv: 'Egenskap som kontrast i samma bild',
     describes: 'Adjektiv som syns bäst mot sin motsats eller mot det vanliga: sportig/vardaglig, tung/lätt, ren/smutsig. Två figurer eller två föremål sida vid sida; den som bär ordet markeras.',
-    contract: ['has:entities>=2', 'has:contrast'],
+    contract: ['has:entities>=2', 'has:bearer'],
     make: (senseId, lemma, n) => ({
       schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'property-contrast', meaningHint: 'TODO', category: 'property',
       durationMs: 4000, loop: true, posterMs: 1500, environment: { id: 'outdoors.park', time: 'day' },
@@ -143,7 +143,7 @@ export const TEMPLATES: Record<string, Template> = {
   social: {
     id: 'social', titleSv: 'Två personer och ett föremål',
     describes: 'Verb mellan människor med ett föremål: ge, servera, lämna över, skicka, bjuda på, dela, låna. En ger, en tar emot; föremålet byter hand mitt i rörelsen.',
-    contract: ['has:actors>=2', 'has:props>=1', 'has:action:give|put|take'],
+    contract: ['has:actors>=2', 'has:props>=1', 'has:action:give'],
     make: (senseId, lemma, n) => ({
       schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'social', meaningHint: 'TODO', category: 'action',
       durationMs: 3200, loop: true, holdMs: 700, posterMs: 1700, environment: { id: 'room', time: 'day' },
@@ -151,6 +151,19 @@ export const TEMPLATES: Record<string, Template> = {
       props: [{ id: 'thing', asset: 'container.bag', attachTo: { actor: 'p', hand: 'left' }, scale: 0.8 }],
       timeline: [{ t: 0, action: 'idle', actor: 'q', durationMs: 400 }, { t: 400, action: 'give', from: 'p', to: 'q', prop: 'thing', durationMs: 1600 }, { t: 2000, action: 'idle', actor: 'p', durationMs: 1200 }],
       focus: { targets: ['thing'] }, pedagogy: { quizEligible: false, group: 'mellan människor', confusableWith: [] },
+    }),
+  },
+  arrange: {
+    id: 'arrange', titleSv: 'En person ställer eller tar ett föremål',
+    describes: 'Verb där en person flyttar ett föremål till eller från en plats: duka, packa, lasta, stapla, placera, hänga upp, slänga, sortera, plocka undan, flytta. Personen går fram, föremålet lämnar handen och hamnar synligt på platsen (eller tas därifrån); slutläget hålls. Kontrast: put mot take (packa/packa upp, duka/duka av).',
+    contract: ['has:actors>=1', 'has:props>=1', 'has:action:put|take'],
+    make: (senseId, lemma, n) => ({
+      schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'arrange', meaningHint: 'TODO', category: 'action',
+      durationMs: 3600, loop: true, holdMs: 700, posterMs: 1900, environment: { id: 'room', time: 'day' },
+      actors: [{ id: 'p', variant: 'a', at: { x: 40, y: 100 }, facing: 'right', scale: 0.9 }],
+      props: [{ id: 'table', asset: 'table', at: { x: 92, y: 100 }, z: -1 }, { id: 'thing', asset: 'container.plate', attachTo: { actor: 'p', hand: 'left' }, scale: 0.8 }],
+      timeline: [{ t: 200, action: 'walk', actor: 'p', to: { x: 62, y: 100 } }, { t: 1500, action: 'put', actor: 'p', prop: 'thing', at: { x: 92, y: 70 }, durationMs: 800 }, { t: 2400, action: 'idle', actor: 'p', durationMs: 1200 }],
+      focus: { targets: ['thing'] }, pedagogy: { quizEligible: false, group: 'ordna', confusableWith: [] },
     }),
   },
   process: {
@@ -168,7 +181,7 @@ export const TEMPLATES: Record<string, Template> = {
   'tool-rhythm': {
     id: 'tool-rhythm', titleSv: 'Verktyg mot föremål med synlig förändring',
     describes: 'Verb där en person bearbetar något med ett verktyg eller händerna i en rytm och föremålet förändras: skära, hacka, vispa, röra, knåda, skala, riva, kavla, mosa, salta, borsta, torka av, putsa, stryka, såga, spika. Handlingen `use` med ett rörelsemönster (motion) och en följd (effect) på föremålet. Verben skiljs genom verktyg, mönster, tempo och vad som händer med föremålet.',
-    contract: ['has:actors>=1', 'has:props>=2', 'has:action:use'],
+    contract: ['has:actors>=1', 'has:props>=1', 'has:action:use'],
     make: (senseId, lemma, n) => ({
       schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'tool-rhythm', meaningHint: 'TODO', category: 'action',
       durationMs: 4200, loop: true, holdMs: 600, posterMs: 3200, environment: { id: 'kitchen', time: 'day' },
@@ -194,14 +207,15 @@ export const TEMPLATES: Record<string, Template> = {
   'attribute-gloss': {
     id: 'attribute-gloss', titleSv: 'Egenskap buren av utseende + japanskt ord',
     describes: 'Adjektiv och abstraktioner där egenskapen syns på kläder, föremål eller utseende utan att någon utför en aktivitet: sportig, elegant, randig. En figur eller ett föremål bär egenskapen, lugn andning, och det japanska ordet glider in på vitt. Ingen handling som kan läsas som ett verb. Normativ sedan 2026-11-05 (produktägaren valde den framför sportutövande för *sportig*): egenskaper bärs av utseende, föremål eller läge – inte av en aktivitet som själv är ett verb.',
-    contract: ['has:entities>=1', 'has:cjk-text'],
+    contract: ['has:bearer', 'has:cjk-text'],
+    // exemplar: *vass* – a knife lying on the board glints, then the word. The bearer (the knife) IS the property; a person alone is not allowed.
     make: (senseId, lemma, n) => ({
       schemaVersion: 1, animationId: `anim.${lemma}.${n}`, senseId, titleSv: lemma, template: 'attribute-gloss', meaningHint: 'TODO', category: 'property',
-      durationMs: 3200, loop: true, holdMs: 800, posterMs: 2400, environment: { id: 'neutral', time: 'day' },
-      actors: [{ id: 'p', at: { x: 56, y: 100 }, facing: 'right' }],
-      shapes: [{ type: 'text', id: 'ja', x: 60, y: -20, text: 'TODO 日本語', size: 12, weight: 800, fill: 'ink', anchor: 'middle', bg: 'panel', pad: 6, opacity: 0, z: 5 }],
-      timeline: [{ t: 0, action: 'idle', actor: 'p', durationMs: 3200 }, { t: 700, action: 'set', target: 'ja', prop: 'opacity', value: 1 }, { t: 700, action: 'tween', target: 'ja', prop: 'y', from: -20, to: 22, durationMs: 450, ease: 'easeOut' }],
-      focus: { targets: ['p'] }, pedagogy: { quizEligible: false, confusableWith: [] },
+      durationMs: 3400, loop: true, holdMs: 900, posterMs: 2600, environment: { id: 'kitchen', time: 'day' },
+      props: [{ id: 'table', asset: 'table', at: { x: 60, y: 100 }, z: -1 }, { id: 'surface', asset: 'container.board', at: { x: 60, y: 70 }, z: 0 }, { id: 'bearer', asset: 'tool.knife', at: { x: 60, y: 60 }, z: 1, rotate: 90, scale: 1.5 }],
+      shapes: [{ type: 'text', id: 'ja', x: 60, y: -20, text: 'TODO 日本語', size: 12, weight: 800, fill: 'ink', anchor: 'middle', bg: 'bubble', tail: { x: 0, y: 30 }, pad: 6, opacity: 0, z: 5 }],
+      timeline: [{ t: 300, action: 'emphasis', target: 'bearer', kind: 'glint', durationMs: 900 }, { t: 1500, action: 'emphasis', target: 'bearer', kind: 'glint', durationMs: 900 }, { t: 1200, action: 'set', target: 'ja', prop: 'opacity', value: 1 }, { t: 1200, action: 'tween', target: 'ja', prop: 'y', from: -20, to: 24, durationMs: 450, ease: 'easeOut' }],
+      focus: { targets: ['bearer'] }, pedagogy: { quizEligible: false, confusableWith: [] },
     }),
   },
   ui: {

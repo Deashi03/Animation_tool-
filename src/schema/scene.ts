@@ -40,6 +40,8 @@ const Wardrobe = z.object({
   shorts: z.boolean().optional(), number: z.string().max(2).optional(),
   /** extra garments: hat colour ('none' = no hat), glasses, scarf colour, buttons/zipper 0..1 closed (undefined = none drawn), sleeves, apron colour */
   hat: z.string().optional(), glasses: z.boolean().optional(), scarf: z.string().optional(), buttons: z.number().min(0).max(1).optional(), zipper: z.number().min(0).max(1).optional(), sleeves: z.enum(['long', 'short', 'rolled']).optional(), apron: z.string().optional(), laces: z.number().min(0).max(1).optional(),
+  /** pattern on the top: striped, dotted, checked, floral; `pattern2` = second colour */
+  pattern: z.enum(['none', 'striped', 'dotted', 'checked', 'floral']).optional(), pattern2: z.string().optional(), topLength: z.enum(['normal', 'long']).optional(),
 }).strict();
 
 export const Actor = z.object({
@@ -99,13 +101,13 @@ export const Action = z.discriminatedUnion('action', [
   z.object({ ...Base, action: z.literal('relax'), actor: Id, on: Id, durationMs: Dur, legsUp: z.boolean().default(true) }).strict(),
   z.object({ ...Base, action: z.literal('sleep'), actor: Id, on: Id, durationMs: Dur, zzz: z.boolean().default(true) }).strict(),
   z.object({ ...Base, action: z.literal('exercise'), actor: Id, kind: z.enum(['jog', 'stretch', 'kickups']).default('jog'), durationMs: Dur, ball: Id.optional() }).strict(),
-  z.object({ ...Base, action: z.literal('express'), actor: Id, emotion: z.enum(['happy', 'surprised', 'angry', 'sad', 'tired', 'content']), durationMs: Dur.default(400) }).strict(),
+  z.object({ ...Base, action: z.literal('express'), actor: Id, emotion: z.enum(['happy', 'surprised', 'angry', 'sad', 'tired', 'content', 'cold', 'hot', 'disgusted', 'proud', 'curious', 'full']), durationMs: Dur.default(400) }).strict(),
   z.object({ ...Base, action: z.literal('face'), actor: Id, eyes: z.enum(EYES).optional(), brows: z.enum(BROWS).optional(), mouth: z.enum(MOUTHS).optional(), gaze: z.number().min(-2).max(2).optional() }).strict(),
   // low level
   z.object({ ...Base, action: z.literal('pose'), actor: Id, joints: z.record(z.enum(JOINTS), z.number().min(-180).max(180)), durationMs: Dur.default(400), ease: Ease.default('easeInOut'), lift: z.number().optional(), bodyRotate: z.number().optional() }).strict(),
   z.object({ ...Base, action: z.literal('set'), target: Target, prop: z.string(), value: z.union([z.number(), z.string(), z.boolean()]) }).strict(),
   z.object({ ...Base, action: z.literal('tween'), target: Target, prop: z.string(), to: z.number(), from: z.number().optional(), durationMs: Dur, ease: Ease.default('easeInOut') }).strict(),
-  z.object({ ...Base, action: z.literal('emphasis'), target: Target, kind: z.enum(['ring', 'glow', 'arrowDown']).default('ring'), durationMs: Dur.default(800) }).strict(),
+  z.object({ ...Base, action: z.literal('emphasis'), target: Target, kind: z.enum(['ring', 'glow', 'arrowDown', 'glint', 'wobble', 'stretch', 'bounce']).default('ring'), durationMs: Dur.default(800) }).strict(),
   // objects without people
   z.object({ ...Base, action: z.literal('roll'), prop: Id, to: Pt, durationMs: Dur, z: z.number().int().optional() }).strict(),
   z.object({ ...Base, action: z.literal('climb'), actor: Id, prop: Id, durationMs: Dur }).strict(),
@@ -133,6 +135,8 @@ export const Action = z.discriminatedUnion('action', [
   z.object({ ...Base, action: z.literal('dress'), actor: Id, garment: z.enum(['top', 'bottom', 'shoes', 'hat', 'glasses', 'scarf', 'apron']), on: z.boolean().default(true), value: z.string().optional(), durationMs: Dur.default(1600) }).strict(),
   /** Fasten or unfasten: buttons, a zipper, shoelaces, or roll sleeves up/down; hands work at the right place and the wardrobe state follows. */
   z.object({ ...Base, action: z.literal('fasten'), actor: Id, what: z.enum(['buttons', 'zipper', 'laces', 'sleeves']), on: z.boolean().default(true), durationMs: Dur.default(1600) }).strict(),
+  /** Eat or drink from a held prop: bring it to the mouth, bite/sip, chew; `reaction` sets the face afterwards. */
+  z.object({ ...Base, action: z.literal('eat'), actor: Id, prop: Id, durationMs: Dur.default(1600), reaction: z.enum(['happy', 'disgusted', 'hot', 'neutral', 'surprised']).default('happy'), sound: z.enum(['crunch', 'splash', 'none']).default('none') }).strict(),
   /** Hot fat spatters out of the pan; the actor (if given) flinches. */
   z.object({ ...Base, action: z.literal('splash'), pan: Id, actor: Id.optional(), durationMs: Dur.default(900) }).strict(),
 ]);
@@ -212,7 +216,7 @@ export const Scene = z.object({
   if (s.posterMs !== undefined && s.posterMs > s.durationMs) ctx.addIssue({ code: 'custom', message: 'posterMs must be ≤ durationMs', path: ['posterMs'] });
   if (s.kind === 'word' && !s.senseId) ctx.addIssue({ code: 'custom', message: 'word scenes need a senseId', path: ['senseId'] });
   s.shapes.forEach((sh, i) => { if (s.kind === 'word' && sh.type === 'text' && sh.bg === 'none') ctx.addIssue({ code: 'custom', message: `text "${sh.id}" must have a white background (bg: pill | bubble | panel) – text never sits directly on the scene`, path: ['shapes', i] }); });
-  if (s.kind === 'word' && s.actors.length === 0 && s.props.length === 0) ctx.addIssue({ code: 'custom', message: 'a word scene needs at least one actor or prop', path: ['actors'] });
+  if (s.kind === 'word' && s.actors.length === 0 && s.props.length === 0 && !s.shapes.some((x) => x.type === 'icon')) ctx.addIssue({ code: 'custom', message: 'a word scene needs at least one actor, prop or icon', path: ['actors'] });
 });
 export type Scene = z.infer<typeof Scene>;
 export type SceneInput = z.input<typeof Scene>;

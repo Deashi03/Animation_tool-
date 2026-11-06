@@ -124,19 +124,22 @@ Varje ordscen anger `template`. Kontraktet kontrolleras av validatorn; produktä
 | `locomotion` | gå, springa, hoppa … | minst en aktör; `walk`/`run`/`jump`; rörelse ≥ 40 % |
 | `manipulate-prop` | öppna, hälla, knäppa … | aktör + föremål; en föremålshandling |
 | `relation-arrow` | bakom, framför, under … | inga människor; ≥ 2 föremål; pil-ikon; japanskt ord |
-| `property-contrast` | sportig, tung, ren … | ≥ 2 entiteter; kontrastpar deklarerat |
+| `property-contrast` | tung/lätt, ren/smutsig, full/tom | ≥ 2 entiteter; bärare; japanskt ord |
 | `emotion` | arg, glad, förvånad … | aktör; `express` |
 | `state` | slappa, sova, vila … | aktör; `relax`/`sleep`/`idle`; kontrastpar |
 | `event` | stormning, flytt, fest … | ≥ 2 aktörer; ≥ 1 föremål |
-| `attribute-gloss` | sportig, randig, skrynklig, mogen … | ≥ 1 entitet som bär egenskapen; japanskt ord på vitt; ingen verbhandling. **Standardmall för egenskaper** (normativ 2026-11-05) |
+| `attribute-gloss` | vass, slö, grov, sportig, randig, mogen … | **bärare** (`has:bearer`: föremål, ikon, klädseldetalj eller kroppslig handling); japanskt ord på vitt; ingen verbhandling. **Standardmall för egenskaper** (normativ 2026-11-05). Godkänd av produktägaren |
 | `cook-rhythm` | steka, bryna, fräsa, smälta, vända, bränna, skvätta | aktör; `pan` + `stove`; `cook`/`flip`/`splash`. Verben skiljs genom hur långt färgen går, tempot och följden |
-| `tool-rhythm` | skära, hacka, vispa, röra, knåda, kavla, skala, riva, mosa, salta, vika, stryka, borsta, såga … | aktör; ≥ 2 föremål; `use` |
+| `tool-rhythm` | skära, hacka, vispa, röra, knåda, kavla, skala, riva, mosa, salta, vika, stryka, borsta, såga, odla, mjölka … | aktör; ≥ 1 föremål; `use`; råvaran/ytan ändrar tillstånd |
 | `process` | koka, sjuda, smälta, mogna, ruttna, brinna, släcka, droppa, rinna, läcka, jäsa, växa, vissna, flagna, regna, krympa, blekna, brumma, dunka | inga människor; ≥ 1 föremål; `tween`/`set`/`sound` |
 | `communicate` | beställa, klaga, varna, skämta, förklara, rekommendera, ursäkta, köa | aktör; `say` |
-| `social` | servera, lämna över, ge, skicka, bjuda på | ≥ 2 aktörer; föremål; `give`/`put`/`take` |
+| `social` | lämna över, ge, skicka, bjuda på | ≥ 2 aktörer; föremål; `give` |
+| `arrange` | duka, packa, stapla, hänga upp, slänga, plocka undan | ≥ 1 aktör; föremål; `put`/`take` – föremålet hamnar synligt på platsen |
 | `dress-self` | ta på/av sig, klä på/av sig, byta om, knäppa (upp), dra upp/ner, kavla upp, knyta, sätta på sig | aktör; `dress`/`fasten` |
 | `ui` | paneler, bockar | – |
 
 Garderob: `wear:<aktör>.<nyckel>>=v | <=v | ==värde` (vid slutet), `wear-start:…` (vid starten, t.ex. `wear-start:p.top==red`, `wear:p.buttons>=0.9`). Tal och ljud: `has:say-icon:a|b`, `has:say-mood:a|b`, `has:sound:a|b`, `has:prop:asset|asset`.
 
-Extra `has:`-features för kontrakt och kontrastpar: `has:actors>=N`, `has:actors==0`, `has:props>=N`, `has:entities>=N`, `has:action:a|b`, `has:icon:a|b`, `has:cjk-text`, `has:contrast`.
+Extra `has:`-features för kontrakt och kontrastpar: `has:actors>=N`, `has:actors==0`, `has:props>=N`, `has:entities>=N`, `has:action:a|b`, `has:icon:a|b`, `has:cjk-text`, `has:contrast`, `has:bearer`, `has:emphasis:a|b`, `has:express:a|b`.
+
+**Bärar-regeln:** varje ordscen (alla mallar utom `ui`) måste ha en bärare – annars fel. Vad som räknas som bärare och vilken förinställd lösning varje ordfunktion har står i `docs/WORD_FUNCTIONS.md`. Receptformatet för `anim:batch` står där också.

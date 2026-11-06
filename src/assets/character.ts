@@ -11,7 +11,7 @@ import type { EYES, BROWS, MOUTHS } from '../schema/scene';
 export type Eyes = (typeof EYES)[number];
 export type Brows = (typeof BROWS)[number];
 export type Mouth = (typeof MOUTHS)[number];
-export type Wardrobe = { top: string; bottom: string; shoes: string; hair: string; skin: string; hairStyle: 'short' | 'long' | 'bun' | 'curly'; headband?: string; shorts?: boolean; number?: string; hat?: string; glasses?: boolean; scarf?: string; buttons?: number; zipper?: number; sleeves?: 'long' | 'short' | 'rolled'; apron?: string; laces?: number };
+export type Wardrobe = { top: string; bottom: string; shoes: string; hair: string; skin: string; hairStyle: 'short' | 'long' | 'bun' | 'curly'; headband?: string; shorts?: boolean; number?: string; hat?: string; glasses?: boolean; scarf?: string; buttons?: number; zipper?: number; sleeves?: 'long' | 'short' | 'rolled'; apron?: string; laces?: number; pattern?: 'none' | 'striped' | 'dotted' | 'checked' | 'floral'; pattern2?: string; topLength?: 'normal' | 'long' };
 export type Face = { eyes: Eyes; brows: Brows; mouth: Mouth; gaze: number; blush: boolean; blink: boolean };
 export type CharacterState = { pose: Pose; facing: 1 | -1; lift: number; bodyRotate: number; face: Face; wardrobe: Wardrobe; holding: { left?: FrameNode; right?: FrameNode } };
 
@@ -119,6 +119,18 @@ export function drawCharacter(s: CharacterState): FrameNode {
   const P4 = (x: number, y: number) => `${r1(x)} ${r1(y)}`;
   nodes.push(path(`M${P4(sx - px * sw - ux * 1.5, sy - py * sw - uy * 1.5)} Q${P4(sx - ux * 5, sy - uy * 5)} ${P4(sx + px * sw - ux * 1.5, sy + py * sw - uy * 1.5)} L${P4(hx0 + px * hwT, hy0 + py * hwT)} Q${P4(hx0 + ux * -2, hy0 + uy * -2)} ${P4(hx0 - px * hwT, hy0 - py * hwT)} Z`, { fill: w.top, stroke: INK, sw: 2.2 }));
   nodes.push(path(`M${P4(hx0 - px * 5 - ux * 5, hy0 - py * 5 - uy * 5)} Q${P4(hx0 - ux * 3, hy0 - uy * 3)} ${P4(hx0 + px * 5 - ux * 5, hy0 + py * 5 - uy * 5)}`, { stroke: 'rgba(0,0,0,0.12)', sw: 1.6, fill: 'none' }));
+  if (w.pattern && w.pattern !== 'none') {
+    // pattern drawn in torso space (u along the torso from hip to shoulder, v lateral), clipped by a rounded quad approximation
+    const c2 = w.pattern2 ? color(w.pattern2) : '#ffffff';
+    const pat: FrameNode[] = [];
+    const at = (u: number, v: number): [number, number] => [hx0 + ux * u + px * v, hy0 + uy * u + py * v];
+    if (w.pattern === 'striped') for (let u = 3; u < SEG.torso - 1; u += 5) { const [x1, y1] = at(u, -sw + 0.5), [x2, y2] = at(u, sw - 0.5); pat.push(line([[x1, y1], [x2, y2]], { stroke: c2, sw: 2.2, opacity: 0.9 })); }
+    if (w.pattern === 'dotted') for (let u = 3; u < SEG.torso - 1; u += 5) for (let v = -sw + 2.5; v < sw - 1; v += 5) { const [x, y] = at(u + ((v / 5) % 2 ? 2 : 0), v); pat.push(circle(x, y, 1.3, { fill: c2, opacity: 0.9 })); }
+    if (w.pattern === 'checked') { for (let u = 1; u < SEG.torso; u += 6) { const [x1, y1] = at(u, -sw + 0.5), [x2, y2] = at(u, sw - 0.5); pat.push(line([[x1, y1], [x2, y2]], { stroke: c2, sw: 2, opacity: 0.7 })); } for (let v = -sw + 3; v < sw; v += 6) { const [x1, y1] = at(1, v), [x2, y2] = at(SEG.torso - 1, v); pat.push(line([[x1, y1], [x2, y2]], { stroke: c2, sw: 2, opacity: 0.7 })); } }
+    if (w.pattern === 'floral') for (let u = 4; u < SEG.torso - 2; u += 7) for (let v = -sw + 3; v < sw - 1; v += 7) { const [x, y] = at(u, v); pat.push(circle(x, y, 1.1, { fill: C.yellow }), circle(x - 1.6, y, 1, { fill: c2, opacity: 0.9 }), circle(x + 1.6, y, 1, { fill: c2, opacity: 0.9 }), circle(x, y - 1.6, 1, { fill: c2, opacity: 0.9 }), circle(x, y + 1.6, 1, { fill: c2, opacity: 0.9 })); }
+    nodes.push(g(pat, undefined, { clip: { x: Math.min(sx, hx0) - sw - 2, y: Math.min(sy, hy0) - 2, w: Math.abs(sx - hx0) + 2 * sw + 4, h: Math.abs(sy - hy0) + 6 } }));
+  }
+  if (w.topLength === 'long') nodes.push(path(`M${P4(hx0 - px * hwT - px * 1, hy0 - py * hwT)} L${P4(hx0 + px * hwT + px * 1, hy0 + py * hwT)} L${P4(hx0 + px * (hwT + 1.5) - ux * 10, hy0 + py * (hwT + 1.5) - uy * 10)} L${P4(hx0 - px * (hwT + 1.5) - ux * 10, hy0 - py * (hwT + 1.5) - uy * 10)} Z`, { fill: w.top, stroke: INK, sw: 2 }));
   if (w.number) { const cx = (sx + hx0) / 2 - ux * 2 + 3.5, cy = (sy + hy0) / 2 - uy * 2; nodes.push(text(cx, cy + 3, w.number, 8, { fill: '#ffffff', weight: 800, anchor: 'middle' })); }
   // front opening: buttons (fraction closed) or a zipper; open part shows a lighter undershirt in a V
   const front = (k: number): [number, number] => [sx + ux * -(SEG.torso * k) + px * 1.5, sy + uy * -(SEG.torso * k) + py * 1.5]; // k = 0 at the shoulder line, 1 at the hip

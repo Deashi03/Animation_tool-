@@ -1,24 +1,24 @@
 # Batch: Skära och hacka (m.skara-och-hacka)
 
-Skapade 7 utkast, 3 fanns, 6 ej animation, 0 ogiltiga, 0 utan recept.
+Skapade 1 utkast, 8 fanns, 6 ej animation, 0 bild, 0 ogiltiga, 1 utan recept.
 
-**Nästa steg för varje utkast:** läs anmärkningen, justera scenen, `anim:validate`, `anim:strip`, titta, `anim:blindtest`. Ett utkast är inte en färdig scen.
+**Regel:** ett utkast är klart först när remsan är granskad och blindtestet godkänt (`anim:blindtest`). Rader märkta ⚠ har ett recept med känd svaghet – läs anmärkningen och förbättra scenen eller receptet innan blindtest.
 
 | Ord | Status | Scen | Mall | Anmärkning |
 |---|---|---|---|---|
 | skära | exists | anim.skära.1 | – | scen finns |
 | skärbräda | skipped | – | – | image – ingen animation |
-| vass | created | anim.vass.1 | attribute-gloss | standardrecept från planen |
-| slö | created | anim.slö.1 | attribute-gloss | standardrecept från planen |
-| försiktig | created | anim.försiktig.1 | attribute-gloss | standardrecept från planen |
+| vass | exists | anim.vass.1 | – | scen finns |
+| slö | exists | anim.slö.1 | – | scen finns |
+| försiktig | exists | anim.försiktig.1 | – | scen finns |
 | finger | skipped | – | – | image – ingen animation |
 | sax | skipped | – | – | image – ingen animation |
-| skölja | created | anim.skölja.1 | tool-rhythm |  |
-| halvera | created | anim.halvera.1 | tool-rhythm |  |
+| skölja | exists | anim.skölja.1 | – | scen finns |
+| halvera | created | anim.halvera.1 | tool-rhythm | ett snitt, två halvor (parts 2) |
 | hacka | exists | anim.hacka.1 | – | scen finns |
-| grov | created | anim.grov.1 | attribute-gloss | standardrecept från planen |
+| grov | exists | anim.grov.1 | – | scen finns |
 | skiva | skipped | – | – | image – ingen animation |
 | strimla | skipped | – | – | image – ingen animation |
-| tärning | created | anim.tärning.1 | event | standardrecept från planen |
+| tärning | no-recipe | – | – | inget recept – skriv ett recept med bärare/följd i registry/recipes.json innan scenen görs |
 | klyfta | skipped | – | – | image – ingen animation |
 | riva | exists | anim.riva.1 | – | scen finns |

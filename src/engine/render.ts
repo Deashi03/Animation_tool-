@@ -121,6 +121,8 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
       const gy = aw0.pos[1] - 1;
       for (let i = 0; i < 4; i++) { const dir = i < 2 ? -1 : 1, k = i % 2; fx.push(circle(aw0.pos[0] + dir * (6 + k * 6 + dust * 12), gy - 2 - dust * (4 + k * 3), 2.2 + dust * 2.5 - k * 0.6, { fill: C.beige, stroke: C.ink, sw: 1, opacity: 0.7 * (1 - dust) })); }
     }
+    const sw = sampleNumber(tracks, `fx.${a.id}.sweat`, t, -1);
+    if (sw >= 0 && sw <= 1 && aw0) { const head = worldPoint(aw0, aw0.rig.head); for (let i = 0; i < 2; i++) { const u = ((t / 700) + i * 0.5) % 1; fx.push(path(`M${r1(head[0] + aw0.facing * (10 + i * 3) * aw0.scale)} ${r1(head[1] - 6 + u * 10)} q2 3 0 4 q-2 -1 0 -4 Z`, { fill: C.water2, stroke: C.ink, sw: 0.8, opacity: 1 - u })); } }
     const z = sampleNumber(tracks, `fx.${a.id}.zzz`, t, -1);
     const aw = actorWorld.get(a.id);
     if (z >= 0 && aw) {
@@ -182,8 +184,18 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
     const sh = sampleNumber(tracks, `fx.${p.id}.shake`, t, 0);
     if (sh > 0.5) { const l = layers.find((l) => (l.node as { id?: string }).id === `entity.${p.id}`); if (l) l.node = g([l.node], { x: Math.sin(t * 0.9) * 0.8, y: -0.6 }); }
   }
+  for (const p of scene.props) {
+    for (const kind of ['wobble', 'stretch', 'bounce'] as const) {
+      const u = sampleNumber(tracks, `fx.${p.id}.${kind}`, t, -1); if (u < 0 || u > 1) continue;
+      const l = layers.find((l) => (l.node as { id?: string }).id === `entity.${p.id}`); if (!l) continue;
+      const bb = bboxOf(l.node); if (!bb) continue; const cx = (bb.x1 + bb.x2) / 2, by = bb.y2;
+      if (kind === 'wobble') l.node = g([l.node], { rotate: Math.sin(u * Math.PI * 6) * 9 * (1 - u * 0.3), px: cx, py: by });
+      if (kind === 'stretch') { const k = Math.sin(u * Math.PI); l.node = g([l.node], { scaleX: 1 + 0.5 * k, scaleY: 1 - 0.18 * k, px: cx, py: by }); }
+      if (kind === 'bounce') { const k = Math.abs(Math.sin(u * Math.PI * 3)); l.node = g([l.node], { y: -6 * k, scaleY: 1 - 0.1 * (1 - k), px: cx, py: by }); }
+    }
+  }
   for (const id of [...scene.actors.map((a) => a.id), ...scene.props.map((p) => p.id), ...scene.shapes.map((s) => s.id)]) {
-    for (const kind of ['ring', 'glow', 'arrowDown'] as const) {
+    for (const kind of ['ring', 'glow', 'arrowDown', 'glint'] as const) {
       const u = sampleNumber(tracks, `fx.${id}.${kind}`, t, -1);
       if (u < 0 || u > 1) continue;
       const node = layers.find((l) => (l.node as { id?: string }).id === `entity.${id}`)?.node;
@@ -193,6 +205,9 @@ export function renderFrame(c: CompiledScene, tIn: number, opts: RenderOptions =
       if (kind === 'ring') fx.push(circle(cx, cy, rad + u * 10, { stroke: C.accent, sw: 2.5 - u * 2, fill: 'none', opacity: 1 - u }));
       if (kind === 'glow') fx.push(circle(cx, cy, rad + 2, { fill: C.yellow, opacity: 0.25 * Math.sin(u * Math.PI) }));
       if (kind === 'arrowDown') fx.push(g([path('M0 0 l0 10 M-4 6 l4 4 l4 -4', { stroke: C.accent, sw: 2.6, fill: 'none', linecap: 'round' })], { x: cx, y: b.y1 - 16 + Math.sin(u * Math.PI * 2) * 2 }));
+      if (kind === 'glint') { // a four-point sparkle travelling along the top edge, plus a small second one: "blank, ny, vass"
+        const star = (x: number, y: number, r: number, o: number) => path(`M${r1(x)} ${r1(y - r)} q${r1(r * 0.2)} ${r1(r * 0.8)} ${r1(r)} ${r1(r)} q${r1(-r * 0.8)} ${r1(r * 0.2)} ${r1(-r)} ${r1(r)} q${r1(-r * 0.2)} ${r1(-r * 0.8)} ${r1(-r)} ${r1(-r)} q${r1(r * 0.8)} ${r1(-r * 0.2)} ${r1(r)} ${r1(-r)} Z`, { fill: C.white, stroke: C.ink, sw: 1, opacity: o });
+        const k = Math.sin(u * Math.PI); fx.push(star(b.x1 + (b.x2 - b.x1) * (0.2 + 0.6 * u), b.y1 + 1, 2 + 3.5 * k, 0.95), star(b.x2 - 3, b.y1 + (b.y2 - b.y1) * 0.4, 1.2 + 1.8 * Math.sin(u * Math.PI * 2 + 1), 0.8)); }
     }
   }
   const children: FrameNode[] = [];

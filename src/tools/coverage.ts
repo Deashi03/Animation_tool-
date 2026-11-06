@@ -15,7 +15,7 @@ import { isPropAsset } from '../assets/catalog';
 import { ACTION_NAMES } from '../schema/scene';
 import { registryDir, blindResults } from './registry';
 
-export type Recipe = { template: string; actions: string[]; props: string[]; note?: string };
+export type Recipe = { template: string; actions?: string[]; props?: string[]; note?: string; bearer?: Record<string, unknown>; [k: string]: unknown };
 export type CoverageRow = { senseId: string; lemma: string; pos: string; template: string; state: 'done-blind' | 'done' | 'ready' | 'blocked' | 'no-recipe' | 'image'; missing: string[]; note: string; animationId?: string };
 export type Coverage = { generatedAt: string; rows: CoverageRow[]; totals: Record<string, number>; byTemplate: Record<string, number>; missingBlocks: Record<string, number> };
 
@@ -40,13 +40,15 @@ export function buildCoverage(swechanDir: string, scenesBySense: Map<string, str
       if (pos === 'noun' && (ACTIVITY_NOUN.test(lemma) || /^Att /.test(s.defSv ?? ''))) needs = true;
       if (!needs) continue;
       if (pos === 'adjective' && STATIC_ADJ.test(lemma)) { rows.push({ senseId: s.id, lemma, pos, template: '–', state: 'image', missing: [], note: 'statisk egenskap → bild' }); continue; }
-      const rec = recipes[lemma] ?? defaultRecipe(pos, lemma);
+      const rec = recipes[s.id] ?? recipes[lemma] ?? null; void defaultRecipe;
       const missing: string[] = [];
       if (!rec) { rows.push({ senseId: s.id, lemma, pos, template: '–', state: 'no-recipe', missing: [], note: '' }); continue; }
+      if (rec.template === 'image') { rows.push({ senseId: s.id, lemma, pos, template: '–', state: 'image', missing: [], note: rec.note ?? '' }); continue; }
       if (!TEMPLATES[rec.template]) missing.push(`mall:${rec.template}`);
-      for (const a of rec.actions) if (!(ACTION_NAMES as readonly string[]).includes(a)) missing.push(`handling:${a}`);
-      for (const p of rec.props) if (!isPropAsset(p)) missing.push(`föremål:${p}`);
-      const weak = /saknas|svag/.test(rec.note ?? '');
+      for (const a of rec.actions ?? []) if (!(ACTION_NAMES as readonly string[]).includes(a)) missing.push(`handling:${a}`);
+      for (const p of rec.props ?? []) if (!isPropAsset(p)) missing.push(`föremål:${p}`);
+      const weak = /saknas|svag|TODO|SVAGT/i.test(rec.note ?? '');
+      if (rec.template === 'attribute-gloss' && !rec.bearer) missing.push('bärare saknas i receptet');
       const animationId = scenesBySense.get(s.id);
       const passed = animationId ? (blind[animationId] ?? []).some((r) => r.passed) : false;
       const state: CoverageRow['state'] = animationId ? (passed ? 'done-blind' : 'done') : missing.length || weak ? 'blocked' : 'ready';
@@ -72,7 +74,7 @@ export function coverageMarkdown(c: Coverage): string {
   const t = c.totals; const n = c.rows.length;
   const pct = (k: string) => `${t[k] ?? 0} (${Math.round(((t[k] ?? 0) / Math.max(1, n)) * 100)} %)`;
   const lines = [`# Täckning av Swechans ordbok (${c.generatedAt})`, '', `${n} betydelser behöver animation (verb, fraser, adjektiv, adverb, prepositioner, aktivitetssubstantiv; statiska adjektiv räknas som bild).`, '',
-    `| Läge | Antal |`, `|---|---|`, `| Klar med godkänt blindtest | ${pct('done-blind')} |`, `| Scen finns, blindtest saknas | ${pct('done')} |`, `| Redo: recept och byggstenar finns | ${pct('ready')} |`, `| Blockerad: byggsten saknas eller svagt recept | ${pct('blocked')} |`, `| Utan recept | ${pct('no-recipe')} |`, `| Bild (statisk egenskap) | ${pct('image')} |`, '',
+    `| Läge | Antal |`, `|---|---|`, `| Klar med godkänt blindtest | ${pct('done-blind')} |`, `| Scen finns, blindtest saknas | ${pct('done')} |`, `| Redo: recept och byggstenar finns | ${pct('ready')} |`, `| Blockerad: byggsten saknas, bärare saknas eller receptet är märkt TODO/svagt | ${pct('blocked')} |`, `| Utan recept | ${pct('no-recipe')} |`, `| Bild (statisk egenskap) | ${pct('image')} |`, '',
     '## Saknade byggstenar (antal betydelser)', '', ...Object.entries(c.missingBlocks).sort((a, b) => b[1] - a[1]).map(([k, v]) => `- ${k}: ${v}`), '',
     '## Per mall', '', ...Object.entries(c.byTemplate).sort((a, b) => b[1] - a[1]).map(([k, v]) => `- ${k}: ${v}`), '',
     '## Blockerade och receptlösa', '', '| Ord | Ordklass | Mall | Saknas | Anm. |', '|---|---|---|---|---|',

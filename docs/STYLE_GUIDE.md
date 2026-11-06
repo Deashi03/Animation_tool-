@@ -28,6 +28,8 @@ Inget får synbart strida mot fysiken: planterade fötter glider inte (gångmode
 - **Egenskaper, relationer och abstraktioner** visas som en **symbolisk, nästan stilla scen tillsammans med det japanska ordet på vitt** (pratbubbla med svans mot bäraren, eller panel som glider in). Egenskapen bärs av utseende, föremål eller läge – *sportig* är fotbollskläder och en boll vid fötterna, inte någon som kickar (det är *kicka*). Mallar: `attribute-gloss`, `relation-arrow`; `property-contrast` bara när motsatsen är poängen, och även då med gloss.
 - Skälet: en aktivitet läses alltid som sitt verb. Översättningen gör att den stilla scenen får vara symbolisk utan att bli gåtfull, och posterbilden fungerar som stillbild i Swechan. Sådana scener är därför inte `quizEligible` (glossen avslöjar svaret) om inte `posterMs` ligger före glossen.
 
+- **Bärar-regeln (2026-11-05):** varje ordscen visar ett typexempel – föremål, förändring, klädseldetalj, ikon eller kroppslig handling. En figur som bara säger ordet är ett valideringsfel. Tabellen *funktion → förinställd lösning* finns i `docs/WORD_FUNCTIONS.md`.
+
 ## Läsbarhet och pedagogik
 - Det som bär betydelsen ska vara ≥ 6 enheter stort och synligt i posterbilden i 140 px.
 - Designa mot grannordet: deklarera `contrast.with` och `distinctiveFeatures`. Testa utan etikett (`--label` av i bildremsan).

@@ -114,3 +114,10 @@
 - **Motorrättningar:** burna föremål respekterar `opacity`-spåret; ljudmarkeringar hittar ett buret (nästlat) föremål; en `use`-effekt med `at` före handens ankomst klämdes tidigare till negativ längd.
 - **Scener:** anim.mysig.1 (kontrast anim.modern.1), anim.dammsuga.1 (kontrast anim.sopa.1, ny), anim.dela.1 (kontrast anim.lämna-över.1, anim.servera.1); anim.modern.1 och anim.sopa.1 som partner. Blindtest h1: sopa, dammsuga, mysig rätt utan flagga; modern rätt men flaggad (textburen lampa); dela fel (tårta lästes som låda) → bröd, `split` med smulor; h2 flaggad, h3 och h4 rätt ord med kosmetisk flagga kvar (se REVIEW_LOG).
 - **Dokument:** `WORD_FUNCTIONS` (nya rader *dela något med någon* och *egenskap hos ett rum/en plats*, receptfält), `SCENE_FORMAT` (`split`, `half`, `vacuum`), `MANUAL_SCENES` (handrecept skuggar regler, filtrerade planfiler, partner före batch, tre nya rader i felloggen).
+
+## 0.7.2 – 2026-11-06 (efter överlämningstestet)
+- Överlämningstestet (ny session, bara dokumentationen): *mysig* och *dammsuga* klara utan flaggor, *dela* läses rätt av två granskare men har en kosmetisk flagga; tolv punkter där dokumentationen brast – de flesta rättade i `docs/MANUAL_SCENES.md`, `WORD_FUNCTIONS.md`, `SCENE_FORMAT.md`.
+- **Svaga handrecept skuggar inte längre generatorn:** är handreceptet märkt TODO/svagt och en regel ger hög/medel säkerhet används regeln (rapporten säger vilket). Kontrastpartner som skapas i samma körning förregistreras nu på riktigt (död kod ersatt). `confusableWith` kopierar inte längre modulkamrater – bara deklarerade synonymer.
+- `anim:batch --word <lemma>` bygger ett enskilt ord; bildremsor markerar alltid rutan närmast `posterMs`; ledtrådarna vid *manuellt* pekar på rätt tabell (TOOL/PROCESS/ARRANGE).
+- Tredje mätningen (tyg, grannar, outfit): 12 scener av 34, blindtest 12/12 rätt, flaggor för textburna egenskaper; ikonfärger efter betydelse. Över tre mätningar 84 scener, 96 av 103 rätt ord.
+

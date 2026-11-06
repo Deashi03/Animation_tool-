@@ -5,17 +5,17 @@
 | Läge | Antal |
 |---|---|
 | Klar med godkänt blindtest | 54 (9 %) |
-| Scen finns, blindtest saknas | 10 (2 %) |
-| Redo: handskrivet recept och byggstenar finns | 370 (61 %) |
+| Scen finns, blindtest saknas | 15 (2 %) |
+| Redo: handskrivet recept och byggstenar finns | 366 (60 %) |
 | Redo: receptet genereras ur ordboken | 13 (2 %) |
 | Manuellt: verktyget säger ifrån (skäl i tabellen nedan, se docs/MANUAL_SCENES.md) | 58 (10 %) |
-| Blockerad: byggsten saknas, bärare saknas eller receptet är märkt TODO/svagt | 79 (13 %) |
+| Blockerad: byggsten saknas, bärare saknas eller receptet är märkt TODO/svagt | 78 (13 %) |
 | Utan recept | 0 (0 %) |
 | Bild (statisk egenskap) | 22 (4 %) |
 
 ## Saknade byggstenar (antal betydelser)
 
-- svagt recept: 83
+- svagt recept: 82
 
 ## Per mall
 
@@ -42,7 +42,6 @@
 |---|---|---|---|---|
 | stökig | adjective | attribute-gloss | svagt recept | TODO: flera saker huller om buller |
 | tvätt | noun | – |  | tvätt: aktivitetssubstantiv – använd verbet tvätta eller en event-scen |
-| dammsuga | verb | tool-rhythm | svagt recept | TODO: dammsugarkropp |
 | bädda | verb | tool-rhythm | svagt recept | TODO: täcke slätas ut |
 | laga | verb | cook-rhythm | svagt recept | fritera/grilla: TODO egna föremål (fritös, grill) |
 | laga | verb | cook-rhythm | svagt recept | fritera/grilla: TODO egna föremål (fritös, grill) |

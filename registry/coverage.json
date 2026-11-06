@@ -99,11 +99,10 @@
    "lemma": "dammsuga",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "blocked",
-   "missing": [
-    "svagt recept"
-   ],
-   "note": "TODO: dammsugarkropp"
+   "state": "done-blind",
+   "missing": [],
+   "note": "stavdammsugare (tool.vacuum): lampan tänds, maskinen brummar, dammhögen försvinner under munstycket – kontrast mot sopa (kvast, tyst)",
+   "animationId": "anim.dammsuga.1"
   },
   {
    "senseId": "s.bädda.1",
@@ -304,7 +303,7 @@
    "lemma": "halvera",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "done-blind",
+   "state": "done",
    "missing": [],
    "note": "ett snitt, två halvor (parts 2)",
    "animationId": "anim.halvera.1"
@@ -538,18 +537,20 @@
    "lemma": "mysig",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
+   "state": "done-blind",
    "missing": [],
-   "note": ""
+   "note": "rummets stämning: tänt ljus, ångande kopp, soffa med pläd, kvällsljus + 居心地のよい på panel (egenskap hos en plats = liten uppställning, inte ett föremål)",
+   "animationId": "anim.mysig.1"
   },
   {
    "senseId": "s.modern.1",
    "lemma": "modern",
    "pos": "adjective",
    "template": "attribute-gloss",
-   "state": "ready",
+   "state": "done",
    "missing": [],
-   "note": ""
+   "note": "",
+   "animationId": "anim.modern.1"
   },
   {
    "senseId": "s.renovera.1",
@@ -1633,9 +1634,10 @@
    "lemma": "sopa",
    "pos": "verb",
    "template": "tool-rhythm",
-   "state": "ready",
+   "state": "done-blind",
    "missing": [],
-   "note": ""
+   "note": "högen ligger på golvet (surface null) – inte på ett bord",
+   "animationId": "anim.sopa.1"
   },
   {
    "senseId": "s.sladdlös.1",
@@ -2294,7 +2296,7 @@
    "lemma": "lämna över",
    "pos": "verb",
    "template": "social",
-   "state": "done-blind",
+   "state": "done",
    "missing": [],
    "note": "",
    "animationId": "anim.lämna-över.1"
@@ -4681,7 +4683,7 @@
    "lemma": "servera",
    "pos": "verb",
    "template": "arrange",
-   "state": "done-blind",
+   "state": "done",
    "missing": [],
    "note": "",
    "animationId": "anim.servera.1"
@@ -4736,9 +4738,10 @@
    "lemma": "dela",
    "pos": "verb",
    "template": "social",
-   "state": "ready",
+   "state": "done",
    "missing": [],
-   "note": ""
+   "note": "ett bröd bryts i två (split, bruten kant, smulor) och ena halvan ges bort – kontrast mot ge/lämna över där hela saken byter hand; tårta lästes som en låda i blindtest h1/h2",
+   "animationId": "anim.dela.1"
   },
   {
    "senseId": "s.spola.1",
@@ -5687,11 +5690,11 @@
   }
  ],
  "totals": {
-  "ready": 370,
-  "blocked": 79,
+  "ready": 366,
+  "blocked": 78,
   "manual": 58,
   "done-blind": 54,
-  "done": 10,
+  "done": 15,
   "image": 22,
   "generated": 13
  },
@@ -5714,6 +5717,6 @@
   "manipulate-prop": 8
  },
  "missingBlocks": {
-  "svagt recept": 83
+  "svagt recept": 82
  }
 }

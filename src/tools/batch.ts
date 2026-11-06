@@ -41,7 +41,7 @@ function base(row: PlanRow, template: string, moduleTitle: string, recipe: Recip
   return { schemaVersion: 1, animationId: `anim.${m[1]}.${m[2]}`, template, senseId: row.senseId, titleSv: row.lemma, meaningHint: row.defSv ?? `TODO: ${row.lemma}`, category,
     durationMs: 3600, loop: true, holdMs: 800, posterMs: 2600, environment: { id: env, time }, actors: [], props: [], shapes: [], timeline: [],
     focus: { targets: [] as string[], feature: '' }, ...(partners.length ? { contrast: { with: partners, distinctiveFeatures: ['has:bearer'] } } : {}),
-    pedagogy: { quizEligible: false, group: moduleTitle.toLowerCase(), confusableWith: row.contrast.slice(0, 4), reviewStatus: 'ai-draft', note: `Utkast från recept (${template}). ${recipe.note ?? ''}`.trim() } };
+    pedagogy: { quizEligible: false, group: moduleTitle.toLowerCase(), confusableWith: [], reviewStatus: 'ai-draft', note: `Utkast från recept (${template}). ${recipe.note ?? ''}`.trim() } };
 }
 const gloss = (text: string, x: number, y: number, bg: 'panel' | 'bubble', tail?: Pt): J => ({ type: 'text', id: 'ja', x, y: -20, text: text.slice(0, 12) || '…', size: 11, weight: 800, fill: 'ink', anchor: 'middle', bg, pad: 6, opacity: 0, z: 5, ...(bg === 'bubble' && tail ? { tail } : {}), _y: y });
 function addGloss(s: J, text: string, at: number, x: number, y: number, bg: 'panel' | 'bubble', tail?: Pt): void {
@@ -358,22 +358,27 @@ export function handoffNote(reason: string, hints: string[], nearest: string[]):
   return [`MANUELLT – ${reason}`, ...hints.map((h) => `• ${h}`), nearest.length ? `• liknande lösta ord: ${nearest.join(', ')} (registry/recipes.json)` : '', '• läs docs/MANUAL_SCENES.md: arbetsgång, checklista och vad som gått fel förut'].filter(Boolean).join(' ');
 }
 
-export function runBatch(plan: Plan, moduleTitle: string, existingBySense: Map<string, string>, opts: { write?: boolean; force?: boolean; files?: Map<string, string>; /** 'fallback': generate when no hand recipe exists (default); 'only': ignore hand recipes – for measuring the generator */ generate?: 'fallback' | 'only' | 'off'; /** build low-confidence generated recipes too (default: they are handed off as proposals) */ allowLow?: boolean; /** write scenes under this directory instead of scenes/ (measurements never touch the library) */ outDir?: string } = {}): BatchResult[] {
+export function runBatch(plan: Plan, moduleTitle: string, existingBySense: Map<string, string>, opts: { /** only these lemmas or senseIds (a single word without rebuilding the module) */ words?: string[]; write?: boolean; force?: boolean; files?: Map<string, string>; /** 'fallback': generate when no hand recipe exists (default); 'only': ignore hand recipes – for measuring the generator */ generate?: 'fallback' | 'only' | 'off'; /** build low-confidence generated recipes too (default: they are handed off as proposals) */ allowLow?: boolean; /** write scenes under this directory instead of scenes/ (measurements never touch the library) */ outDir?: string } = {}): BatchResult[] {
   const hand = loadRecipes(); const out: BatchResult[] = [];
   const generate = opts.generate ?? 'fallback'; const seen = new Map<string, string>();
   const recipeFor = (row: PlanRow): { recipe?: Recipe; manual?: { reason: string; hints: string[]; nearest: string[] }; generated?: string } => {
     const h = generate === 'only' ? undefined : hand[row.senseId] ?? hand[row.lemma];
-    if (h) return { recipe: h };
-    if (generate === 'off') return {};
+    const weakHand = !!h && /TODO|SVAGT|svag|saknas/i.test(h.note ?? '');
+    if (h && !weakHand) return { recipe: h };
+    if (generate === 'off') return h ? { recipe: h } : {};
     const inf = inferRecipe({ senseId: row.senseId, lemma: row.lemma, pos: row.pos, defSv: row.defSv, examples: row.examples, jaGloss: row.jaGloss, antonyms: row.antonyms }, hand);
+    // a weak hand recipe (TODO/svag) must not shadow a confident rule: the generator wins, the old recipe is reported
+    if (h && weakHand && inf.ok && inf.confidence !== 'low') return { recipe: inf.recipe, generated: `${inf.confidence}: ${inf.why.join('; ')} – ersätter svagt handrecept (${h.note})` };
+    if (h && weakHand) return { recipe: h };
     if (inf.ok && inf.confidence === 'low' && !opts.allowLow) return { manual: { reason: `bara familjen är säker (${inf.why.join('; ')}) – förslag: ${JSON.stringify(inf.recipe)}`, hints: ['bekräfta eller ändra förslaget och skriv det som regel i lexicon.ts eller recept i recipes.json'], nearest: [] } };
     return inf.ok ? { recipe: inf.recipe, generated: `${inf.confidence}: ${inf.why.join('; ')}` } : { manual: { reason: inf.reason, hints: inf.hints, nearest: inf.nearest } };
   };
-  const recipes = new Proxy({} as Record<string, Recipe>, { get: () => undefined }); void recipes;
+
   // contrast partners may be created in this same run: every row that has a buildable recipe will exist afterwards
   const willExist = new Map(existingBySense);
-  for (const row of plan.rows) { if (row.kind !== 'animation' || willExist.has(row.senseId)) continue; const rec = recipes[row.senseId] ?? recipes[row.lemma]; if (!rec || rec.template === 'image') continue; const m = /^s\.([^.]+)\.(\d+)$/.exec(row.senseId); if (m) willExist.set(row.senseId, `anim.${m[1]}.${m[2]}`); }
+  for (const row of plan.rows) { if (row.kind !== 'animation' || willExist.has(row.senseId)) continue; const pick = recipeFor(row); if (!pick.recipe || pick.recipe.template === 'image') continue; const m = /^s\.([^.]+)\.(\d+)$/.exec(row.senseId); if (m) willExist.set(row.senseId, `anim.${m[1]}.${m[2]}`); }
   for (const row of plan.rows) {
+    if (opts.words?.length && !opts.words.includes(row.lemma) && !opts.words.includes(row.senseId)) continue;
     if (row.kind !== 'animation') { out.push({ senseId: row.senseId, lemma: row.lemma, status: 'skipped', note: `${row.kind} – ingen animation` }); continue; }
     if (existingBySense.has(row.senseId) && !opts.force && !opts.outDir) { out.push({ senseId: row.senseId, lemma: row.lemma, animationId: existingBySense.get(row.senseId), status: 'exists', note: 'scen finns' }); continue; }
     const pick = recipeFor(row);

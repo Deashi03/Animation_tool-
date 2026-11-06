@@ -11,7 +11,7 @@ Verktyget ska klara de vanliga ordfunktionerna utan översikt. För resten ska d
 3. **Definitionsregler** (`DEF_CATEGORY`, `SAY_BY_DEF`, `ABSTRACT_ICON`) med substantiv i definitionen översatta till katalogföremål (`NOUN_ASSET`). Säkerhet *medel* när ett föremål hittades, *låg* när bara familjen är känd.
 4. Annars **manuellt** med skäl, vad som saknas och tre liknande lösta ord.
 
-Verktyget gissar aldrig en bärare. Typiska skäl till *manuellt*:
+Verktyget gissar aldrig en bärare. Säkerheten *hög* betyder att regeln kom ur en tabell – inte att bilden är läsbar; det avgör bara remsan och blindtestet (*modern* byggs med hög säkerhet och flaggas ändå som textburen). Typiska skäl till *manuellt*:
 
 | Skäl | Betyder | Vad Claude gör |
 |---|---|---|
@@ -28,7 +28,7 @@ Verktyget gissar aldrig en bärare. Typiska skäl till *manuellt*:
 2. Bestäm **funktionen** med tabellen i `docs/WORD_FUNCTIONS.md`. Fråga: *vad i bilden pekar i sig på ordet?* Om svaret är "texten" är det inget typexempel.
 3. Skriv receptet – helst som **regel** (`PROPERTIES`, `TOOL_VERBS`, `PROCESS_VERBS`, `SAY_BY_DEF`, `NOUN_ASSET` …), annars som handrecept under `s.<lemma>.<n>`.
 4. Saknas en byggsten (föremål, tillstånd, ikon, rörelse): lägg till den i `assets/`, `motions/` eller `actions/` med test och remsa. Aldrig TypeScript för ett enskilt ord.
-5. `anim:batch --write --strips` → **titta på remsan** → `anim:blindtest make` → oberoende granskare → `grade`. Flagga eller fel val = inte klar. Bygg bara de ord du arbetar med: skriv en filtrerad planfil (samma format som `registry/plan/<modul>.json`, bara dina rader) och kör `anim:batch -- <planfil> --write --strips`; annars skriver batchen utkast för hela modulen. Kontrastpartnern måste finnas **före** körningen (batchen länkar bara `contrast.with` till scener som redan finns) – bygg partnern först, eller sätt `contrast` i JSON efteråt.
+5. `anim:batch --module m.x --word <lemma> --write --strips` (bygger bara ordet, inte hela modulen) → **titta på remsan** → `anim:blindtest make` → oberoende granskare → `grade`. Flagga eller fel val = inte klar. Bygg bara de ord du arbetar med: skriv en filtrerad planfil (samma format som `registry/plan/<modul>.json`, bara dina rader) och kör `anim:batch -- <planfil> --write --strips`; annars skriver batchen utkast för hela modulen. Kontrastpartnern måste finnas **före** körningen (batchen länkar bara `contrast.with` till scener som redan finns) – bygg partnern först, eller sätt `contrast` i JSON efteråt.
 6. Logga i `docs/REVIEW_LOG.md` vad som var svårt och vad som löste det. Är ordet för svårt: skriv `{"template":"image"}` eller en `TODO`-not – verktyget skapar då inget utkast.
 
 ## 3. Checklista innan en manuell scen räknas som klar
@@ -39,7 +39,8 @@ Verktyget gissar aldrig en bärare. Typiska skäl till *manuellt*:
 - [ ] Inga gester som enda bärare; inga västerländska djurmetaforer; inget som kan läsas som ett annat verb.
 - [ ] Remsan granskad i 140 px: detaljer ≥ 6 enheter, inget utanför duken, ingen ruta med halvt synlig text.
 - [ ] Fysiken håller: fötter glider inte, verktyg över råvaran, inga blinkningar mitt i ett hugg.
-- [ ] Blindtest godkänt utan flaggor efter den senaste betydelseändringen.
+- [ ] Ett nytt eller stort föremål i handen läses som sig självt i 140 px (låt blindtestet avgöra detta tidigt, innan koreografin – tre granskare läste en tårta som "låda"). Titta i `anim:props`-bladet innan första blindtestet.
+- [ ] Blindtest godkänt utan flaggor efter den senaste betydelseändringen. Saknar sessionen ett Agent-verktyg: starta en syskonsession som bara får PNG:n och frågefilen (t.ex. via en privat artefakt) och låt den skriva `review/blind/<batch>.answers.json`.
 - [ ] Regeln är tillagd i `lexicon.ts` eller receptet i `recipes.json`; en rad i `REVIEW_LOG.md`.
 
 ## 4. Vad som har gått fel förut (läs innan du gör samma sak)

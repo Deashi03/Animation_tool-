@@ -2,6 +2,7 @@
  * anim:batch – drafts for a module from recipes.
  *   npm run anim:batch -- registry/plan/steka-och-bryna.json [--write] [--force] [--strips] [--generated] [--out <dir>]
  *   --generated ignores the hand-written recipes (measures the generator); --out writes scenes elsewhere than scenes/ (never touches the library)
+ *   --word mysig[,dammsuga]  builds only these words of the module (lemma or senseId)
  *   npm run anim:batch -- --swechan ../swechan --module m.steka-och-bryna --write
  * Without --write it only reports what would be created. With --strips it renders a strip per new draft.
  */
@@ -19,7 +20,7 @@ for (const s of scenes.values()) if (s.senseId && !bySense.has(s.senseId)) bySen
 let plan: Plan;
 if (opt('module')) { const sw = opt('swechan') ?? fail('Ange --swechan'); plan = buildPlan(path.resolve(sw), opt('module')!, bySense); }
 else { const f = args()[0] ?? fail('Ange en planfil eller --swechan + --module'); plan = JSON.parse(fs.readFileSync(f, 'utf8')) as Plan; }
-const results = runBatch(plan, plan.titleSv, bySense, { write: flag('write'), force: flag('force'), files, generate: flag('generated') ? 'only' : flag('no-generate') ? 'off' : 'fallback', allowLow: flag('allow-low'), outDir: opt('out') ? path.resolve(opt('out')!) : undefined });
+const results = runBatch(plan, plan.titleSv, bySense, { write: flag('write'), force: flag('force'), files, generate: flag('generated') ? 'only' : flag('no-generate') ? 'off' : 'fallback', allowLow: flag('allow-low'), words: opt('word') ? opt('word')!.split(',') : undefined, outDir: opt('out') ? path.resolve(opt('out')!) : undefined });
 fs.mkdirSync(batchDir(), { recursive: true });
 const report = path.join(batchDir(), `${plan.moduleId.replace(/^m\./, '')}.md`);
 fs.writeFileSync(report, batchMarkdown(plan, results));

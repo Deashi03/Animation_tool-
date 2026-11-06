@@ -19,7 +19,8 @@ export function frameTimes(c: CompiledScene, frames: number): number[] {
 export function stripHtml(scene: Scene, opts: { frames?: number; size?: number; label?: boolean; title?: string } = {}): string {
   const c = compileScene(scene);
   const frames = opts.frames ?? 8, size = opts.size ?? 150;
-  const cells = frameTimes(c, frames).map((t) => `<figure class="${Math.abs(t - c.posterMs) <= c.durationMs / frames / 2 ? 'poster' : ''}">${frameToSvg(renderFrame(c, t, { showLabel: opts.label }), { width: size })}<figcaption>${t} ms</figcaption></figure>`);
+  const times = frameTimes(c, frames); const posterT = times.reduce((best, t) => (Math.abs(t - c.posterMs) < Math.abs(best - c.posterMs) ? t : best), times[0]!); // always mark the frame nearest the poster
+  const cells = times.map((t) => `<figure class="${t === posterT ? 'poster' : ''}">${frameToSvg(renderFrame(c, t, { showLabel: opts.label }), { width: size })}<figcaption>${t} ms</figcaption></figure>`);
   return `<section class="strip"><h3>${esc(opts.title ?? `${scene.animationId} · ${scene.titleSv}`)}<small>${esc(scene.meaningHint ?? '')} · ${c.durationMs} ms${scene.loop ? ' · loop' : ''}</small></h3><div class="row">${cells.join('')}</div></section>`;
 }
 export function compareHtml(a: Scene, b: Scene, opts: { frames?: number; size?: number } = {}): string {

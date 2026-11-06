@@ -119,7 +119,7 @@ function inferVerb(w: Word, lemma: string, text: string, found: string[], _hand:
   }
   if (cat === 'arrange') {
     const prop = nonTools.find((a) => !isFixture(a)); const on = nonTools.find(isFixture);
-    if (!prop) return manual(missing ? `${lemma}: byggsten saknas i katalogen – ${missing}` : `${lemma}: att ställa/ta något – men vilket föremål? Inget hittades i definitionen`, 'arrange', missing ? ['lägg till föremålet i src/assets/props/ och ett ARRANGE_VERBS-recept'] : ['ange put.prop (och on) i ARRANGE_VERBS eller receptet']);
+    if (!prop) return manual(missing ? `${lemma}: byggsten saknas i katalogen – ${missing}` : `${lemma}: att ställa/ta något – men vilket föremål? Inget hittades i definitionen`, 'arrange', missing ? [`lägg till föremålet i src/assets/props/ och en regel i lexicon.ts (TOOL_VERBS om det är ett redskap som används, ARRANGE_VERBS om det flyttas)`] : ['ange put.prop (och on) i ARRANGE_VERBS eller receptet']);
     const take = /\bta (bort|ut|fram|ner)|\bplocka (undan|bort)|\bpacka upp|\bduka av|\blasta av/.test(`${lemma} ${text}`);
     return { ok: true, recipe: { template: 'arrange', ...(take ? { take: { prop } } : { put: { prop, ...(on ? { on } : {}) } }) }, confidence: 'medium', why: [`ordna: ${take ? 'tar' : 'ställer'} ${prop}${on ? ` på ${on}` : ''}`] };
   }
@@ -134,7 +134,7 @@ function inferVerb(w: Word, lemma: string, text: string, found: string[], _hand:
     return manual(`${lemma} är en process${asset ? ` på ${asset}` : ''} – vilken tillståndsnyckel ändras och åt vilket håll?`, 'process', [asset ? `skriv PROCESS_VERBS[${lemma}] = { asset: '${asset}', change: [{ key, to }] }` : 'definitionen nämner inget föremål i katalogen – lägg till ett eller välj det närmaste']);
   }
   if (cat === 'emotion') { const p = PROPERTIES[lemma]; if (p?.emotion) return { ok: true, recipe: { template: 'emotion', bearer: { kind: 'emotion', ...p.emotion, env: 'room' } }, confidence: 'high', why: ['känsloverb i tabellen'] }; return manual(`${lemma}: känsla utan uttryck i tabellen`, 'emotion', ['välj emotion (happy|surprised|angry|sad|tired|content|cold|hot|disgusted|proud|curious|full) och en synlig orsak']); }
-  if (missing) return manual(`${lemma}: byggsten saknas i katalogen – ${missing}`, cat === 'tool' ? 'tool-rhythm' : cat === 'arrange' ? 'arrange' : undefined, [`lägg till föremålet i src/assets/props/ (med tillstånd som visar följden) och ett recept i lexicon.ts`]);
+  if (missing) return manual(`${lemma}: byggsten saknas i katalogen – ${missing}`, cat === 'tool' ? 'tool-rhythm' : cat === 'arrange' ? 'arrange' : undefined, [`lägg till föremålet i src/assets/props/ (med tillstånd som visar följden) och en regel i lexicon.ts: TOOL_VERBS om redskapet används på något, PROCESS_VERBS om saken förändras av sig själv, ARRANGE_VERBS om den flyttas`]);
   return manual(`verbet ${lemma} passar ingen känd familj utifrån definitionen "${w.defSv ?? ''}"`, undefined, [`hittade föremål: ${found.join(', ') || 'inga'}`, 'avgör familj (verktygsarbete, process, ordna, kommunikation, förflyttning …) och skriv ett recept enligt docs/WORD_FUNCTIONS.md – eller "ingen visualisering"']);
 }
 

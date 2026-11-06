@@ -17,6 +17,8 @@ Publicerad studio: `https://deashi03.github.io/Animation_tool-/` när GitHub Pag
 
 ## Arbetsflöde för en modul (Claude eller människa)
 
+**Gren:** verktygets senaste läge ligger på `main` när motsvarande PR är sammanslagen; arbetar du i en annan gren, kontrollera att `docs/MANUAL_SCENES.md` och `src/tools/lexicon.ts` finns – annars är du på en för gammal commit.
+
 ```bash
 npm run anim:coverage -- --swechan ../swechan                             # hur mycket av ordboken recepten och byggstenarna täcker → registry/coverage.md
 npm run anim:plan -- --swechan ../swechan --module m.skara-och-hacka      # plan per ord: typ, mall, kontrast, japanskt ord → registry/plan/<modul>.md

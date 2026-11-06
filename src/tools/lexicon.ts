@@ -142,7 +142,7 @@ export const PROCESS_VERBS: Record<string, ProcessRule> = {
   spola: { asset: 'fixture.toilet', change: [{ key: 'flush', to: 1 }] },
   ringa: { asset: 'phone', change: [{ key: 'on', to: 1 }], sound: 'ring' },
   brumma: { asset: 'fixture.fridge', change: [], sound: 'hum' },
-  dunka: { asset: 'fixture.washingmachine', change: [{ key: 'spin', to: 1 }], sound: 'thud' },
+  dunka: { asset: 'fixture.washingmachine', change: [{ key: 'spin', to: 1 }], sound: 'thump' },
   ånga: { asset: 'container.pot', change: [{ key: 'steam', to: 1 }], state: { fill: 0.7 } },
   svalna: { asset: 'container.cup', change: [{ key: 'steam', from: 1, to: 0 }], state: { fill: 0.8 } },
   puttra: { asset: 'container.pot', change: [{ key: 'boil', to: 0.4 }, { key: 'steam', to: 0.6 }], state: { fill: 0.7 }, extra: [{ asset: 'stove', change: { key: 'heat', to: 0.6 } }], sound: 'hum' },
@@ -163,7 +163,7 @@ export const PROCESS_VERBS: Record<string, ProcessRule> = {
 };
 
 /** Properties: lemma → bearer. `pair` names the antonym whose scene is the same picture with the opposite state. */
-export type PropertyRule = { asset?: string; state?: Record<string, number | string>; glint?: boolean; surface?: string | null; env?: string; wardrobe?: Record<string, string | number | boolean>; icon?: string; contrast?: { a: Record<string, unknown>; b: Record<string, unknown>; mark?: 'a' | 'b' }; taste?: { food: string; reaction: string; icon: string }; emotion?: { emotion: string; cause?: string }; manner?: { manner: string; prop: string }; note?: string };
+export type PropertyRule = { asset?: string; state?: Record<string, number | string>; glint?: boolean; surface?: string | null; env?: string; wardrobe?: Record<string, string | number | boolean>; icon?: string; contrast?: { a: Record<string, unknown>; b: Record<string, unknown>; mark?: 'a' | 'b' }; taste?: { food: string; reaction: string; icon: string }; emotion?: { emotion: string; cause?: string }; manner?: { manner: string; prop: string }; /** a looped small motion of a thing that is not a verb of its own: stretch, wobble, bounce */ motion?: { asset: string; motion: 'stretch' | 'wobble' | 'bounce' | 'glow' }; /** a change over time that establishes the property (the towel dries fast) */ change?: { key: string; from?: number; to: number }; note?: string };
 export const PROPERTIES: Record<string, PropertyRule> = {
   vass: { asset: 'tool.knife', state: { rotate: 90 }, glint: true, surface: 'container.board', env: 'kitchen' },
   slö: { asset: 'tool.knife', state: { rotate: 90, dull: 1 }, surface: 'container.board', env: 'kitchen' },
@@ -194,6 +194,11 @@ export const PROPERTIES: Record<string, PropertyRule> = {
   förvånad: { emotion: { emotion: 'surprised', cause: 'container.crate' } }, mätt: { emotion: { emotion: 'full', cause: 'container.plate' } }, hungrig: { emotion: { emotion: 'sad', cause: 'container.plate' } }, nöjd: { emotion: { emotion: 'content', cause: 'container.plate' } },
   stolt: { emotion: { emotion: 'proud', cause: 'food.cake' } }, sakna: { emotion: { emotion: 'sad', cause: 'phone' } }, längta: { emotion: { emotion: 'sad', cause: 'phone' } }, orolig: { emotion: { emotion: 'surprised', cause: 'fixture.clock' } }, lugn: { emotion: { emotion: 'content' } }, generad: { emotion: { emotion: 'surprised' } }, uttråkad: { emotion: { emotion: 'tired', cause: 'fixture.clock' } }, nyfiken: { emotion: { emotion: 'curious', cause: 'container.crate' } }, äcklad: { emotion: { emotion: 'disgusted', cause: 'food.fish' } }, kall_person: { emotion: { emotion: 'cold' } },
   försiktig: { manner: { manner: 'careful', prop: 'container.bowl' } }, varsam: { manner: { manner: 'careful', prop: 'container.bowl' } },
+  tålig: { motion: { asset: 'container.crate', motion: 'bounce' } }, slitstark: { motion: { asset: 'garment.trousers', motion: 'bounce' } }, hållbar: { motion: { asset: 'container.crate', motion: 'bounce' } },
+  elastisk: { motion: { asset: 'garment.sock', motion: 'stretch' } }, töjbar: { motion: { asset: 'garment.sock', motion: 'stretch' } }, stretchig: { motion: { asset: 'garment.trousers', motion: 'stretch' } }, mjuk_tyg: { motion: { asset: 'garment.towel', motion: 'wobble' } },
+  vinglig: { motion: { asset: 'fixture.lamp', motion: 'wobble' } }, ostadig: { motion: { asset: 'fixture.chair', motion: 'wobble' } }, stadig: { asset: 'fixture.chair', surface: null, glint: true },
+  snabbtorkande: { asset: 'garment.towel', state: { wet: 1 }, change: { key: 'wet', from: 1, to: 0 }, env: 'room' }, vattentät: { asset: 'garment.jacket', icon: 'droplet', env: 'outdoors.park' }, vindtät: { asset: 'garment.jacket', icon: 'wind', env: 'outdoors.park' }, varmhållande: { asset: 'garment.jacket', icon: 'thermometer', env: 'outdoors.park' }, luftig: { asset: 'garment.shirt', icon: 'wind', env: 'room' },
+  varm_kläder: { asset: 'garment.jacket', icon: 'thermometer' }, genomskinlig: { asset: 'glass', state: { fill: 0.6 }, glint: true, env: 'kitchen' },
   snabb: { icon: 'lightning', note: 'hastighet som egenskap: blixt-ikon; kontrastera mot långsam' }, långsam: { icon: 'hourglass' },
   billig_: { icon: 'coin' }, gratis: { icon: 'coin', asset: 'container.bag' }, sen: { icon: 'clock' }, tidig: { icon: 'sun' }, farlig: { icon: 'exclaim' }, säker: { icon: 'shield' }, låst: { asset: 'door', icon: 'lock', surface: null },
   ledig: { asset: 'fixture.chair', icon: 'check', surface: null }, upptagen: { asset: 'fixture.chair', icon: 'cross', surface: null }, modern: { asset: 'fixture.lamp', state: { on: 1 }, surface: null }, gammaldags: { asset: 'fixture.candle', state: { lit: 1 } },
@@ -259,13 +264,14 @@ export const SOCIAL_VERBS: Record<string, { prop: string; state?: Record<string,
 /** Cooking in a pan (template cook-rhythm). */
 export const COOK_VERBS: Record<string, { kind: 'fry' | 'brown' | 'sear' | 'burn' | 'melt'; contents: string; flip?: boolean; splash?: boolean }> = { steka: { kind: 'fry', contents: 'egg' }, bryna: { kind: 'brown', contents: 'onion' }, fräsa: { kind: 'sear', contents: 'onion' }, bränna: { kind: 'burn', contents: 'pancake' }, 'bränna vid': { kind: 'burn', contents: 'pancake' }, smälta: { kind: 'melt', contents: 'butter' }, vända: { kind: 'fry', contents: 'pancake', flip: true }, 'vända på': { kind: 'fry', contents: 'pancake', flip: true }, skvätta: { kind: 'fry', contents: 'steak', splash: true }, laga: { kind: 'fry', contents: 'egg' }, 'laga mat': { kind: 'fry', contents: 'egg' }, tillaga: { kind: 'fry', contents: 'steak' }, grilla: { kind: 'sear', contents: 'steak' }, 'steka på': { kind: 'fry', contents: 'egg' } };
 /** Things people name that the catalogue does not have yet – the generator says exactly what is missing instead of picking a wrong one. */
-export const MISSING_ASSET: [RegExp, string][] = ([[/\bdammsug/, 'dammsugare'], [/\btejp/, 'tejp'], [/\bflyttlåda/, 'flyttlåda (finns: container.crate)'], [/\bparaply/, 'paraply'], [/\bbil\b|\bbilen\b/, 'bil'], [/\bbuss/, 'buss'], [/\btåg/, 'tåg'], [/\bdator/, 'dator'], [/\btv\b|\bteve/, 'tv'], [/\bkudde/, 'kudde'], [/\bgardin/, 'gardin'], [/\btavla/, 'tavla'], [/\btrapp/, 'trappa'], [/\bhiss/, 'hiss'], [/\bplånbok/, 'plånbok'], [/\bgrill\b|\bgrillen/, 'grill'], [/\bfritös/, 'fritös'], [/\bmatta/, 'matta'], [/\bsoptunn/, 'soptunna (finns: container.bin)'], [/\bvas\b|\bvasen/, 'vas'], [/\bbesticks?\b/, 'bestick (finns: tool.fork, tool.knife, tool.spoon)']] as [RegExp, string][]).map(([re, n]) => [sv(re), n]);
+export const MISSING_ASSET: [RegExp, string][] = ([[/\bdammsug/, 'dammsugare'], [/\btejp/, 'tejp'], [/\bhund/, 'hund'], [/\bkatt\b|\bkatten/, 'katt'], [/\bfågel/, 'fågel (finns: fixture.hen)'], [/\bflyttlåda/, 'flyttlåda (finns: container.crate)'], [/\bparaply/, 'paraply'], [/\bbil\b|\bbilen\b/, 'bil'], [/\bbuss/, 'buss'], [/\btåg/, 'tåg'], [/\bdator/, 'dator'], [/\btv\b|\bteve/, 'tv'], [/\bkudde/, 'kudde'], [/\bgardin/, 'gardin'], [/\btavla/, 'tavla'], [/\btrapp/, 'trappa'], [/\bhiss/, 'hiss'], [/\bplånbok/, 'plånbok'], [/\bgrill\b|\bgrillen/, 'grill'], [/\bfritös/, 'fritös'], [/\bmatta/, 'matta'], [/\bsoptunn/, 'soptunna (finns: container.bin)'], [/\bvas\b|\bvasen/, 'vas'], [/\bbesticks?\b/, 'bestick (finns: tool.fork, tool.knife, tool.spoon)']] as [RegExp, string][]).map(([re, n]) => [sv(re), n]);
 
 /** Words the tool knows it cannot do yet, with the honest reason – the generator hands these off instead of building something misleading. */
 export const HARD_WORDS: Record<string, string> = {
   dela: 'delning kräver att ett föremål delas i två och ena halvan ges bort – ingen byggsten bryter ett bröd ännu',
   'dela upp': 'kräver att något delas i delar – ingen byggsten bryter ett bröd ännu',
   skåla: 'två glas som höjs mot varandra saknas som pose',
+  styv: 'styvhet syns bara mot något som böjer sig – en kontrastbyggsten (böjd mot rak) saknas',
   sjunka: 'vatten/bassäng saknas i katalogen',
   fika: 'händelse med flera figurer, kaffe och bulle – kräver en event-scen',
   tvätt: 'aktivitetssubstantiv – använd verbet tvätta eller en event-scen',

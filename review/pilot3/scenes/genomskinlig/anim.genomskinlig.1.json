@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.genomskinlig.1",
+  "kind": "word",
+  "template": "attribute-gloss",
+  "senseId": "s.genomskinlig.1",
+  "titleSv": "genomskinlig",
+  "meaningHint": "Som man kan se igenom.",
+  "category": "property",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 50,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": -1,
+      "state": {}
+    },
+    {
+      "id": "bearer",
+      "asset": "glass",
+      "at": {
+        "x": 50,
+        "y": 70
+      },
+      "scale": 1.3,
+      "rotate": 0,
+      "z": 1,
+      "state": {
+        "fill": 0.6
+      }
+    }
+  ],
+  "shapes": [
+    {
+      "type": "text",
+      "id": "ja",
+      "x": 83.5,
+      "y": -20,
+      "text": "透けている",
+      "size": 11,
+      "weight": 800,
+      "fill": "ink",
+      "anchor": "middle",
+      "opacity": 0,
+      "z": 5,
+      "bg": "bubble",
+      "tail": {
+        "x": -19.5,
+        "y": 18
+      },
+      "pad": 6
+    }
+  ],
+  "timeline": [
+    {
+      "t": 300,
+      "action": "emphasis",
+      "target": "bearer",
+      "kind": "glint",
+      "durationMs": 900
+    },
+    {
+      "t": 1700,
+      "action": "emphasis",
+      "target": "bearer",
+      "kind": "glint",
+      "durationMs": 900
+    },
+    {
+      "t": 1200,
+      "action": "tween",
+      "target": "ja",
+      "prop": "opacity",
+      "to": 1,
+      "from": 0,
+      "durationMs": 350,
+      "ease": "easeOut"
+    },
+    {
+      "t": 1200,
+      "action": "tween",
+      "target": "ja",
+      "prop": "y",
+      "to": 44.4,
+      "from": 38.4,
+      "durationMs": 450,
+      "ease": "easeOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "bearer"
+    ],
+    "feature": "glass bears the property; gloss in a bubble"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "tygers egenskaper",
+    "confusableWith": [
+      "s.vattentät.1",
+      "s.vindtät.1",
+      "s.luftig.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (attribute-gloss)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

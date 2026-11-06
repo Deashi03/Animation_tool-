@@ -151,7 +151,7 @@ function buildAttribute(row: PlanRow, r: Recipe, s: J): J | null {
       return s; }
     case 'motion': {
       s.environment = { id: (b.env as string) ?? 'room', time: 'day' };
-      const st = stateOf(b.state); placeThing(s, 'bearer', b.asset as string, 60, { scale: onFloor(b.asset as string) ? 1 : 1.4, ...(st.state ? { state: st.state } : {}) }, onFloor(b.asset as string) ? null : 'table');
+      const st = stateOf(b.state); placeThing(s, 'bearer', b.asset as string, 60, { scale: onFloor(b.asset as string) ? (/^fixture\.(lamp|plant|shelf)/.test(b.asset as string) ? 0.9 : 1.4) : 1.4, ...(st.state ? { state: st.state } : {}) }, onFloor(b.asset as string) ? null : 'table'); // small floor things (crates) are drawn larger so the motion reads
       for (let t = 300; t + 1000 <= 3400; t += 1100) tl.push({ t, action: 'emphasis', target: 'bearer', kind: b.motion, durationMs: 1000 });
       addGloss(s, ja, 1400, 60, 18, 'panel');
       (s.focus as J).targets = ['bearer']; (s.focus as J).feature = `${b.asset} ${b.motion}s`;

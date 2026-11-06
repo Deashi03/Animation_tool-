@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.vattentät.1",
+  "kind": "word",
+  "template": "attribute-gloss",
+  "senseId": "s.vattentät.1",
+  "titleSv": "vattentät",
+  "meaningHint": "Som vatten inte kan komma igenom.",
+  "category": "property",
+  "durationMs": 3600,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 2600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "outdoors.park",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "table",
+      "asset": "table",
+      "at": {
+        "x": 46,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": -1,
+      "state": {}
+    },
+    {
+      "id": "bearer",
+      "asset": "garment.jacket",
+      "at": {
+        "x": 46,
+        "y": 70
+      },
+      "scale": 1.4,
+      "rotate": 0,
+      "z": 1,
+      "state": {}
+    }
+  ],
+  "shapes": [
+    {
+      "type": "icon",
+      "id": "sym",
+      "icon": "droplet",
+      "x": 84,
+      "y": 52,
+      "size": 30,
+      "fill": "accent",
+      "stroke": "accent",
+      "opacity": 0,
+      "z": 4
+    },
+    {
+      "type": "text",
+      "id": "ja",
+      "x": 60,
+      "y": -20,
+      "text": "防水の",
+      "size": 11,
+      "weight": 800,
+      "fill": "ink",
+      "anchor": "middle",
+      "opacity": 0,
+      "z": 5,
+      "bg": "panel",
+      "pad": 6
+    }
+  ],
+  "timeline": [
+    {
+      "t": 300,
+      "action": "set",
+      "target": "sym",
+      "prop": "opacity",
+      "value": 1
+    },
+    {
+      "t": 300,
+      "action": "tween",
+      "target": "sym",
+      "prop": "progress",
+      "to": 1,
+      "from": 0,
+      "durationMs": 900,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 1400,
+      "action": "tween",
+      "target": "ja",
+      "prop": "opacity",
+      "to": 1,
+      "from": 0,
+      "durationMs": 350,
+      "ease": "easeOut"
+    },
+    {
+      "t": 1400,
+      "action": "tween",
+      "target": "ja",
+      "prop": "y",
+      "to": 20,
+      "from": 14,
+      "durationMs": 450,
+      "ease": "easeOut"
+    }
+  ],
+  "focus": {
+    "targets": [
+      "bearer"
+    ],
+    "feature": "symbol droplet with garment.jacket + gloss"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "tygers egenskaper",
+    "confusableWith": [
+      "s.vindtät.1",
+      "s.luftig.1",
+      "s.varmhållande.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (attribute-gloss)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

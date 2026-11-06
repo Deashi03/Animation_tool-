@@ -166,10 +166,11 @@ function recipeFromProperty(p: NonNullable<(typeof PROPERTIES)[string]>): Recipe
   if (p.taste) return { template: 'attribute-gloss', bearer: { kind: 'taste', ...p.taste, env: 'kitchen' } };
   if (p.emotion) return { template: 'emotion', bearer: { kind: 'emotion', ...p.emotion, env: 'room' } };
   if (p.manner) return { template: 'attribute-gloss', bearer: { kind: 'manner', ...p.manner, env: 'room' } };
+  if (p.motion) return { template: 'attribute-gloss', bearer: { kind: 'motion', ...p.motion, env: p.env ?? 'room' }, ...(p.note ? { note: p.note } : {}) };
   if (p.contrast) return { template: 'attribute-gloss', bearer: { kind: 'contrast', ...p.contrast, mark: p.contrast.mark ?? 'b', env: p.env ?? 'room' } };
   if (p.wardrobe) return { template: 'attribute-gloss', bearer: { kind: 'wardrobe', wardrobe: p.wardrobe, tail: 'torso', env: 'room' } };
   if (p.icon) return { template: 'attribute-gloss', bearer: { kind: 'icon', icon: p.icon, ...(p.asset ? { asset: p.asset, ...(p.state ? { state: p.state } : {}) } : {}), env: p.env ?? 'neutral' }, ...(p.note ? { note: p.note } : {}) };
-  return { template: 'attribute-gloss', bearer: { kind: 'prop', asset: p.asset, ...(p.state ? { state: p.state } : {}), ...(p.glint ? { glint: true } : {}), ...(p.surface !== undefined ? { surface: p.surface } : {}), env: p.env ?? 'room' }, ...(p.note ? { note: p.note } : {}) };
+  return { template: 'attribute-gloss', bearer: { kind: 'prop', asset: p.asset, ...(p.state ? { state: p.state } : {}), ...(p.change ? { change: p.change } : {}), ...(p.glint ? { glint: true } : {}), ...(p.surface !== undefined ? { surface: p.surface } : {}), env: p.env ?? 'room' }, ...(p.note ? { note: p.note } : {}) };
 }
 
 /** How close a generated recipe is to a hand-written one: template, then the slots that decide the picture. */

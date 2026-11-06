@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.dunka.1",
+  "kind": "word",
+  "template": "process",
+  "senseId": "s.dunka.1",
+  "titleSv": "dunka",
+  "meaningHint": "Låta med ett tungt ljud som kommer om och om igen.",
+  "category": "action",
+  "durationMs": 4200,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 3400,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "kitchen",
+    "time": "day"
+  },
+  "actors": [],
+  "props": [
+    {
+      "id": "thing",
+      "asset": "fixture.washingmachine",
+      "at": {
+        "x": 60,
+        "y": 100
+      },
+      "scale": 1,
+      "rotate": 0,
+      "z": 1,
+      "state": {}
+    }
+  ],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 300,
+      "action": "tween",
+      "target": "thing",
+      "prop": "spin",
+      "to": 1,
+      "durationMs": 3200,
+      "ease": "easeInOut"
+    },
+    {
+      "t": 0,
+      "action": "tween",
+      "target": "thing",
+      "prop": "phase",
+      "to": 4,
+      "from": 0,
+      "durationMs": 4200,
+      "ease": "linear"
+    },
+    {
+      "t": 0,
+      "action": "sound",
+      "target": "thing",
+      "kind": "thump",
+      "durationMs": 4200
+    }
+  ],
+  "focus": {
+    "targets": [
+      "thing"
+    ],
+    "feature": "fixture.washingmachine changes by itself: spin→1"
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "grannar och störningar",
+    "confusableWith": [
+      "s.störa.1",
+      "s.festa.1",
+      "s.skälla.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (process)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

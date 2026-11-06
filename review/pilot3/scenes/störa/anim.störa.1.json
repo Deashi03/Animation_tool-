@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "assetsVersion": 1,
+  "motionsVersion": 1,
+  "animationId": "anim.störa.1",
+  "kind": "word",
+  "template": "communicate",
+  "senseId": "s.störa.1",
+  "titleSv": "störa",
+  "meaningHint": "Göra något som gör att andra inte får vara i fred.",
+  "category": "action",
+  "durationMs": 3800,
+  "loop": true,
+  "holdMs": 800,
+  "posterMs": 1600,
+  "canvas": {
+    "w": 120,
+    "h": 120
+  },
+  "environment": {
+    "id": "room",
+    "time": "day"
+  },
+  "actors": [
+    {
+      "id": "p",
+      "asset": "character.base",
+      "variant": "a",
+      "at": {
+        "x": 38,
+        "y": 100
+      },
+      "facing": "right",
+      "scale": 0.85
+    },
+    {
+      "id": "q",
+      "asset": "character.base",
+      "variant": "b",
+      "at": {
+        "x": 84,
+        "y": 100
+      },
+      "facing": "left",
+      "scale": 0.85
+    }
+  ],
+  "props": [],
+  "shapes": [],
+  "timeline": [
+    {
+      "t": 0,
+      "action": "idle",
+      "actor": "q",
+      "durationMs": 3800,
+      "style": "breathe"
+    },
+    {
+      "t": 400,
+      "action": "say",
+      "actor": "p",
+      "icon": "no",
+      "mood": "angry",
+      "to": "q",
+      "durationMs": 1800,
+      "gesture": true
+    },
+    {
+      "t": 2400,
+      "action": "say",
+      "actor": "q",
+      "icon": "ellipsis",
+      "mood": "sad",
+      "to": "p",
+      "durationMs": 1000,
+      "gesture": false
+    }
+  ],
+  "focus": {
+    "targets": [
+      "p"
+    ],
+    "feature": "says no (angry) to q, q reacts"
+  },
+  "contrast": {
+    "with": [
+      "anim.dunka.1"
+    ],
+    "distinctiveFeatures": [
+      "has:say-icon:no",
+      "has:say-mood:angry"
+    ]
+  },
+  "pedagogy": {
+    "quizEligible": false,
+    "group": "grannar och störningar",
+    "confusableWith": [
+      "s.festa.1",
+      "s.dunka.1",
+      "s.skälla.1"
+    ],
+    "reviewStatus": "ai-draft",
+    "note": "Utkast från recept (communicate)."
+  },
+  "label": {
+    "show": "optional"
+  }
+}

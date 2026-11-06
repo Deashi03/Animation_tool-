@@ -187,3 +187,21 @@ describe('recipe generator (anim:recipe)', () => {
     expect(res[1]!.status).toBe('manual'); expect(res[1]!.note).toMatch(/MANUELLT/); expect(res[1]!.note).toMatch(/MANUAL_SCENES/);
   });
 });
+
+describe('recipe generator rules (regression)', () => {
+  it('resolves common word functions and hands off the rest with the right reason', async () => {
+    const { inferRecipe } = await import('../src/tools/recipe');
+    const v = (lemma: string, pos: string, defSv: string, examples: string[] = []) => inferRecipe({ senseId: `s.${lemma}.1`, lemma, pos, defSv, examples });
+    const t = (r: ReturnType<typeof v>) => (r.ok ? `${r.recipe.template}:${r.confidence}` : `manual:${r.reason.split(':')[0]}`);
+    expect(t(v('puttra', 'verb', 'Sjuda lugnt och göra ett litet ljud.'))).toBe('process:high');
+    expect(t(v('städning', 'noun', 'Att göra rent i ett rum.'))).toBe('tool-rhythm:medium'); // the verb behind the noun
+    expect(t(v('märka', 'verb', 'Skriva på något vad det är.'))).toBe('tool-rhythm:low'); // no visible consequence → proposal only
+    expect(t(v('möglig', 'adjective', 'Med mögel på.'))).toBe('attribute-gloss:medium');
+    expect(t(v('vissen', 'adjective', 'Om växter: torr och svag.', ['Blomman är vissen.']))).toBe('attribute-gloss:high');
+    expect(t(v('dela på notan', 'phrase', 'Betala lika mycket var.'))).toBe('communicate:medium');
+    expect(t(v('packa upp', 'verb', 'Ta ut sakerna ur lådor eller väskor.'))).toBe('arrange:high');
+    expect(t(v('praktisk', 'adjective', 'Lätt och bra att använda.'))).toMatch(/^manual:egenskapen praktisk har ingen bärare/);
+    expect(t(v('dammsuga', 'verb', 'Göra rent golvet med en dammsugare.'))).toMatch(/^manual:dammsuga/);
+    expect(t(v('dela', 'verb', 'Ta delar av något och ge till flera.'))).toMatch(/^manual:dela/);
+  });
+});

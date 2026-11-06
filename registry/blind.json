@@ -367,6 +367,15 @@
       "expected": "hacka",
       "description": "Personen hugger med en kniv rakt ner i en brun lök och en hög av små bitar/ringar växer bredvid; ögonen sluts en gång (lök i ögonen?) – hackning, men bitarna ser ut som ringar så det kan också vara skära.",
       "reviewer": "claude-blind-subagent"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b11",
+      "passed": true,
+      "choice": "hacka",
+      "expected": "hacka",
+      "description": "En person vid en köksbänk med kniv över en rund gul lök; för varje ruta blir löken alltmer sönderdelad i många små bitar som sprids över skärbrädan (små vita ringar), medan kniven går upp och ner i en snabb rytm – fint hackande av en lök.",
+      "reviewer": "claude-blind"
     }
   ],
   "anim.skära.1": [
@@ -386,6 +395,15 @@
       "choice": "skära",
       "expected": "skära",
       "description": "En person står vid ett bord med en hel morot och en kniv; kniven förs upprepade gånger ned mot moroten från vänster till höger och moroten delas steg för steg i flera ungefär lika stora bitar – animationen visar att något skärs i bitar med kniv.",
+      "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b11",
+      "passed": true,
+      "choice": "skära",
+      "expected": "skära",
+      "description": "En person med kniv över en hel orange morot med gröna blast; kniven skär av den ena skivan efter den andra och morotsskivorna ställs upp som jämna rundlar bredvid den kvarvarande stumpen – att skära en morot i skivor.",
       "reviewer": "claude-blind"
     }
   ],
@@ -928,6 +946,15 @@
       "choice": "halvera",
       "expected": "halvera",
       "description": "Ett helt rött äpple ligger på bordet i första rutan; redan i nästa ruta är äpplet borta och ersatt av en liten röd halvmåneformad bit (som ett halvt äpple sett från sidan) med en tunn lodrät linje ovanför, medan personen håller kniven uppe vid sitt ansikte och andra handen på bordet – det ser ut som att äpplet delas (halveras) med kniv, men själva snittet syns inte.",
+      "reviewer": "claude-blind"
+    },
+    {
+      "date": "2026-11-06",
+      "batch": "b11",
+      "passed": true,
+      "choice": "halvera",
+      "expected": "halvera",
+      "description": "En person med kniv över ett helt rött äpple; kniven gör ett enda nedåthugg och äpplet delas i två halvor som står kvar på brädan med en liten springa emellan – att dela/halvera ett äpple.",
       "reviewer": "claude-blind"
     }
   ],

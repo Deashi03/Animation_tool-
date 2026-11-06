@@ -79,7 +79,7 @@ function inferVerb(w: Word, lemma: string, text: string, found: string[], _hand:
     if (tv.tool) r.tool = tv.tool;
     // the definition may name the thing worked on: prefer it when it is the same family as the rule's default
     const named = found.find((a) => !isTool(a) && tv.target && ((isFood(tv.target) && isFood(a)) || (isGarment(tv.target) && isGarment(a)) || (isContainer(tv.target) && isContainer(a))));
-    r.target = named ?? tv.target; if (tv.surface !== undefined) r.surface = tv.surface; if (tv.period) r.period = tv.period; if (tv.targetState) r.targetState = tv.targetState; if (tv.bothHands) r.bothHands = true;
+    r.target = named ?? tv.target; if (tv.surface !== undefined) r.surface = tv.surface; if (tv.period) r.period = tv.period; if (tv.targetState) r.targetState = tv.targetState; if (tv.bothHands) r.bothHands = true; if (tv.sound) r.sound = tv.sound;
     if (tv.effects.length) r.claim = tv.effects.filter((e) => typeof e.to === 'number' && (!e.role || e.role === 'target')).map((e) => `end:target.${e.key}${(e.to as number) >= 0.5 ? '>=' : '<='}${e.to}`);
     if (!r.target || !isPropAsset(r.target as string)) return manual(`verktygsverbet ${lemma} saknar råvara/yta i katalogen`, 'tool-rhythm', [`lägg till föremålet i assets/props/ eller välj närmaste (hittade: ${found.join(', ') || 'inget'})`]);
     return { ok: true, recipe: r, confidence: named ? 'high' : 'high', why: [`verktygsverb i tabellen${named ? `, råvara från definitionen: ${named}` : ''}`] };
@@ -154,7 +154,7 @@ function recipeFromProperty(p: NonNullable<(typeof PROPERTIES)[string]>): Recipe
   if (p.contrast) return { template: 'attribute-gloss', bearer: { kind: 'contrast', ...p.contrast, mark: p.contrast.mark ?? 'b', env: p.env ?? 'room' } };
   if (p.wardrobe) return { template: 'attribute-gloss', bearer: { kind: 'wardrobe', wardrobe: p.wardrobe, tail: 'torso', env: 'room' } };
   if (p.icon) return { template: 'attribute-gloss', bearer: { kind: 'icon', icon: p.icon, ...(p.asset ? { asset: p.asset, ...(p.state ? { state: p.state } : {}) } : {}), env: p.env ?? 'neutral' }, ...(p.note ? { note: p.note } : {}) };
-  return { template: 'attribute-gloss', bearer: { kind: 'prop', asset: p.asset, ...(p.state ? { state: p.state } : {}), ...(p.glint ? { glint: true } : {}), ...(p.surface !== undefined ? { surface: p.surface } : {}), env: p.env ?? 'room' }, ...(p.note ? { note: p.note } : {}) };
+  return { template: 'attribute-gloss', bearer: { kind: 'prop', asset: p.asset, ...(p.state ? { state: p.state } : {}), ...(p.glint ? { glint: true } : {}), ...(p.surface !== undefined ? { surface: p.surface } : {}), ...(p.time ? { time: p.time } : {}), ...(p.extra ? { extra: p.extra } : {}), env: p.env ?? 'room' }, ...(p.note ? { note: p.note } : {}) };
 }
 
 /** How close a generated recipe is to a hand-written one: template, then the slots that decide the picture. */

@@ -6,7 +6,7 @@ Verktyget ska klara de vanliga ordfunktionerna utan översikt. För resten ska d
 
 `anim:recipe` läser ordets ordklass, definition, exempelmening och antonymer i Swechans ordbok och väljer recept i denna ordning:
 
-1. **Handskrivet recept** i `registry/recipes.json` (per betydelse `s.<lemma>.<n>` eller per lemma) – vinner alltid.
+1. **Handskrivet recept** i `registry/recipes.json` (per betydelse `s.<lemma>.<n>` eller per lemma) – vinner alltid. **Kontrollera det först:** ett gammalt handrecept kan vara just det som är fel (2026-11-06 låg `dammsuga` som TODO, `dela` som en kopia av *ge* och `mysig` som en ensam soffa) och det skuggar en ny regel i `lexicon.ts`. Batchrapporter körda med `--generated` ignorerar handrecepten – en rad *manual* där säger inte om ett handrecept finns.
 2. **Lemmatabeller** i `lexicon.ts`: verktygsverb (`TOOL_VERBS`), processverb (`PROCESS_VERBS`), egenskaper (`PROPERTIES`), mönster/färger, klädfraser, förflyttning, tillstånd. Säkerhet *hög*.
 3. **Definitionsregler** (`DEF_CATEGORY`, `SAY_BY_DEF`, `ABSTRACT_ICON`) med substantiv i definitionen översatta till katalogföremål (`NOUN_ASSET`). Säkerhet *medel* när ett föremål hittades, *låg* när bara familjen är känd.
 4. Annars **manuellt** med skäl, vad som saknas och tre liknande lösta ord.
@@ -28,7 +28,7 @@ Verktyget gissar aldrig en bärare. Typiska skäl till *manuellt*:
 2. Bestäm **funktionen** med tabellen i `docs/WORD_FUNCTIONS.md`. Fråga: *vad i bilden pekar i sig på ordet?* Om svaret är "texten" är det inget typexempel.
 3. Skriv receptet – helst som **regel** (`PROPERTIES`, `TOOL_VERBS`, `PROCESS_VERBS`, `SAY_BY_DEF`, `NOUN_ASSET` …), annars som handrecept under `s.<lemma>.<n>`.
 4. Saknas en byggsten (föremål, tillstånd, ikon, rörelse): lägg till den i `assets/`, `motions/` eller `actions/` med test och remsa. Aldrig TypeScript för ett enskilt ord.
-5. `anim:batch --write --strips` → **titta på remsan** → `anim:blindtest make` → oberoende granskare → `grade`. Flagga eller fel val = inte klar.
+5. `anim:batch --write --strips` → **titta på remsan** → `anim:blindtest make` → oberoende granskare → `grade`. Flagga eller fel val = inte klar. Bygg bara de ord du arbetar med: skriv en filtrerad planfil (samma format som `registry/plan/<modul>.json`, bara dina rader) och kör `anim:batch -- <planfil> --write --strips`; annars skriver batchen utkast för hela modulen. Kontrastpartnern måste finnas **före** körningen (batchen länkar bara `contrast.with` till scener som redan finns) – bygg partnern först, eller sätt `contrast` i JSON efteråt.
 6. Logga i `docs/REVIEW_LOG.md` vad som var svårt och vad som löste det. Är ordet för svårt: skriv `{"template":"image"}` eller en `TODO`-not – verktyget skapar då inget utkast.
 
 ## 3. Checklista innan en manuell scen räknas som klar
@@ -55,6 +55,9 @@ Verktyget gissar aldrig en bärare. Typiska skäl till *manuellt*:
 | 2026-11-06 | *försiktig* | figur som bara gick med en bricka | TODO-recept gav ändå ett utkast; ingen byggsten för sätt | batch skriver inget för TODO-recept; `walk.manner: careful`; bäraren `manner` |
 | 2026-11-06 | *grov* | hög av bitar, oläsbar ensam | egenskap som bara finns relativt | kontrast mot *fin* på samma bord när motsatsen är poängen |
 | 2026-11-06 | alla gloss-scener | panel halvt utanför duken i en ruta | glidning in från utanför duken | glossen tonas in på plats |
+| 2026-11-06 | *mysig* | generatorn: "ingen bärare"; handreceptet: en ensam soffa (= *soffa*) | egenskaper hos rum/platser saknade rad i `WORD_FUNCTIONS` – inget enskilt föremål är egenskapen | ny rad *egenskap hos ett rum*: `extra`-uppställning + `time` i `PROPERTIES`; pläden hamnade först på golvet (`extra.y` för saker på en sits) |
+| 2026-11-06 | *dammsuga* | handreceptet TODO; *sopa* (partnern) sopade ett bord | dammsugare saknades; `surface` utelämnat i handreceptet = skärbräda på bord | `tool.vacuum` + `TOOL_VERBS.dammsuga` (ljus på, `sound: hum`); `surface: null` måste stå uttryckligen; effekt med `at` före handens ankomst gav negativ tween (rättat i `use`) |
+| 2026-11-06 | *dela* | handreceptet = *ge*; blindtest h1: "låda med röda saker", halvorna lästes som två lådor/dubbleringsfel | ingen byggsten bröt något i två; tårtan 1,15 för liten; burna föremål ignorerade `opacity` och `half` saknade startnyckel | handlingen `split` + `half`-tillstånd på mat; råvara 1,5; brytningen hålls med halvorna nära varandra; slutbild med snittytorna mot varandra; blindtest h2 flaggade ännu "låda" → bröd + bruten kant + smulor; h3/h4 läser *dela* rätt, kosmetisk flagga kvar (brödets form) |
 
 ## 5. När svaret är "ingen visualisering"
 

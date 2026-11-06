@@ -42,6 +42,16 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "a471cfa7b09c",
     "6314ce01ae2f",
   ],
+  "anim.dammsuga.1": [
+    "4a05e5126fb5",
+    "4365e5a4c204",
+    "e707942e168a",
+  ],
+  "anim.dela.1": [
+    "955e5f790071",
+    "ad7fe764781c",
+    "1a275781b167",
+  ],
   "anim.dra-ner.1": [
     "2d16e6c389ec",
     "a8b6462aa24d",
@@ -197,6 +207,11 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "35bf062c7fc9",
     "d2432fa54d82",
   ],
+  "anim.modern.1": [
+    "3cca0f870754",
+    "0370ab0c0cb7",
+    "0370ab0c0cb7",
+  ],
   "anim.mogna.1": [
     "3b9ae28fdcc4",
     "8b8b85db9414",
@@ -206,6 +221,11 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "0bb7de17f773",
     "caf32e6115de",
     "9c406f9ea408",
+  ],
+  "anim.mysig.1": [
+    "dc99c7265f87",
+    "3611d10a1969",
+    "e4e9fb49f57e",
   ],
   "anim.regna.1": [
     "e2860a4d790b",
@@ -301,6 +321,11 @@ exports[`renderFrame determinism > snapshot of frame hashes (update deliberately
     "e3d82d49758f",
     "e25c25d5389a",
     "c1ea1b05455b",
+  ],
+  "anim.sopa.1": [
+    "ada17f3eb8cc",
+    "92a894397969",
+    "a17ac7dee224",
   ],
   "anim.sova.1": [
     "26e2641035e6",

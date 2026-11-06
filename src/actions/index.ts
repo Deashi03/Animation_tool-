@@ -417,7 +417,7 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     // visible consequence
     for (const e of a.effect) {
       const prop = e.prop ?? a.on; const id = trackId(ctx, prop, e.key);
-      if (typeof e.to === 'number') { const decl = ctx.props.get(prop)?.state?.[e.key]; const from = e.from ?? sampleNumber(tr, id, a.t, typeof decl === 'number' ? decl : (PROPS[ctx.props.get(prop)?.asset ?? '']?.defaults[e.key] as number | undefined) ?? 0); /* start from the declared state (a full pile, a dirty plate), not from 0 */ const tEnd = a.t + a.durationMs * (e.at ?? 1); tween(tr, id, t0, tEnd, e.to, 'linear', 0, from); }
+      if (typeof e.to === 'number') { const decl = ctx.props.get(prop)?.state?.[e.key]; const from = e.from ?? sampleNumber(tr, id, a.t, typeof decl === 'number' ? decl : (PROPS[ctx.props.get(prop)?.asset ?? '']?.defaults[e.key] as number | undefined) ?? 0); /* start from the declared state (a full pile, a dirty plate), not from 0 */ const tEnd = Math.max(t0 + 50, a.t + a.durationMs * (e.at ?? 1)); /* an effect that should be done early (a light that goes on) still needs the hand to have arrived first */ tween(tr, id, t0, tEnd, e.to, 'linear', 0, from); }
       else addKey(tr, id, { t: a.t + a.durationMs * (e.at ?? 0.5), v: e.to, e: 'step' });
     }
     // kneading/pressing squashes the target in rhythm (dough, potato)
@@ -469,6 +469,38 @@ const H: { [K in Action['action']]: (ctx: Ctx, a: ActionOf<K>) => void } = {
     M.poseTo(tr, a.from, mid + 100, a.t + d, { uArmL: REST_POSE.uArmL, fArmL: REST_POSE.fArmL, uArmR: REST_POSE.uArmR, fArmR: REST_POSE.fArmR }, 'easeInOut');
     M.poseTo(tr, a.to, mid + 100, a.t + d, { uArmL: 30, fArmL: 70 }, 'easeInOut');
     addKey(tr, `${a.to}.mouth`, { t: mid, v: 'smile' });
+  },
+  /** Split a held thing in two: the free hand joins the holding hand at the thing, a short pull apart, and from the midpoint the
+   *  held prop shows only its left half while `into` (hidden until now) is the right half in the other hand. The visible result
+   *  (one thing → two halves in two hands) is the pedagogical core of dela; a following `give` hands one half over. */
+  split(ctx, a) {
+    const tr = ctx.tracks, A = a.actor, d = a.durationMs, t0 = a.t, mid = t0 + d * 0.5, end = t0 + d;
+    const owner = sampleString<string>(tr, `${a.prop}.attach`, t0, '');
+    const hand: 'left' | 'right' = owner.endsWith(':right') ? 'right' : 'left';
+    const other: 'left' | 'right' = hand === 'left' ? 'right' : 'left';
+    if (!owner) addKey(tr, `${a.prop}.attach`, { t: t0, v: `${A}:${hand}` });
+    // the other half is hidden until the break
+    addKey(tr, `${a.into}.opacity`, { t: 0, v: 0 }); addKey(tr, `${a.into}.attach`, { t: 0, v: `${A}:${other}` });
+    // whole until the break: a track samples its first key's value before it, so the start must be written explicitly
+    addKey(tr, `${a.prop}.s.half`, { t: 0, v: 0 }); addKey(tr, `${a.into}.s.half`, { t: 0, v: 0 });
+    // bring the thing up to chest height in front of the body and look at it
+    const up = hand === 'left' ? { uArmL: 42, fArmL: 92 } : { uArmR: 42, fArmR: 92 };
+    M.poseTo(tr, A, t0, t0 + d * 0.3, { ...up, head: 10 }, 'easeInOut');
+    addKey(tr, `${A}.gaze`, { t: t0, v: facingAt(ctx, A, t0) }); addKey(tr, `${A}.eyes`, { t: t0, v: 'open' });
+    // the free hand comes to the thing and stays on it until the break
+    followGrip(ctx, A, a.prop, other, t0 + d * 0.3, mid, () => facingAt(ctx, A, t0) * 4);
+    // the break: halves, the second one appears in the other hand
+    addKey(tr, `${a.prop}.s.half`, { t: mid, v: 1, e: 'step' }); addKey(tr, `${a.into}.s.half`, { t: mid, v: 2, e: 'step' });
+    addKey(tr, `${a.into}.opacity`, { t: mid, v: 1, e: 'step' });
+    fxStart(tr, `fx.${a.prop}.shake`, mid - 1, 0); addKey(tr, `fx.${a.prop}.shake`, { t: mid, v: 1 }); addKey(tr, `fx.${a.prop}.shake`, { t: mid + 120, v: 0 });
+    (H.emphasis as (c: Ctx, x: ActionOf<'emphasis'>) => void)(ctx, { action: 'emphasis', t: mid - 60, target: a.prop, kind: 'crumbs', durationMs: 520 }); // crumbs fly: it broke, it did not get swapped
+    // hands move apart: each half clearly in its own hand
+    // a small gap opens between the halves at chest height and is held: one thing, visibly in two (the handover comes after)
+    const apart = other === 'right' ? { uArmR: 56, fArmR: 84 } : { uArmL: 56, fArmL: 84 };
+    const keep = hand === 'left' ? { uArmL: 34, fArmL: 96 } : { uArmR: 34, fArmR: 96 };
+    M.poseTo(tr, A, mid, mid + d * 0.25, { ...apart, ...keep, head: 6 }, 'easeOut');
+    addKey(tr, `${A}.mouth`, { t: mid, v: 'smile' });
+    tween(tr, M.J(A, 'head'), end - 200, end, 0, 'easeInOut');
   },
   put(ctx, a) { (H.release as (c: Ctx, x: ActionOf<'release'>) => void)(ctx, { action: 'release', t: a.t, actor: a.actor, prop: a.prop, at: a.at, on: a.on, z: a.z, durationMs: a.durationMs }); },
   take(ctx, a) { (H.grab as (c: Ctx, x: ActionOf<'grab'>) => void)(ctx, { action: 'grab', t: a.t, actor: a.actor, prop: a.prop, hand: a.hand, durationMs: a.durationMs }); },

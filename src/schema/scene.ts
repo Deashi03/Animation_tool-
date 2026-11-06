@@ -107,7 +107,7 @@ export const Action = z.discriminatedUnion('action', [
   z.object({ ...Base, action: z.literal('pose'), actor: Id, joints: z.record(z.enum(JOINTS), z.number().min(-180).max(180)), durationMs: Dur.default(400), ease: Ease.default('easeInOut'), lift: z.number().optional(), bodyRotate: z.number().optional() }).strict(),
   z.object({ ...Base, action: z.literal('set'), target: Target, prop: z.string(), value: z.union([z.number(), z.string(), z.boolean()]) }).strict(),
   z.object({ ...Base, action: z.literal('tween'), target: Target, prop: z.string(), to: z.number(), from: z.number().optional(), durationMs: Dur, ease: Ease.default('easeInOut') }).strict(),
-  z.object({ ...Base, action: z.literal('emphasis'), target: Target, kind: z.enum(['ring', 'glow', 'arrowDown', 'glint', 'wobble', 'stretch', 'bounce']).default('ring'), durationMs: Dur.default(800) }).strict(),
+  z.object({ ...Base, action: z.literal('emphasis'), target: Target, kind: z.enum(['ring', 'glow', 'arrowDown', 'glint', 'wobble', 'stretch', 'bounce', 'crumbs']).default('ring'), durationMs: Dur.default(800) }).strict(),
   // objects without people
   z.object({ ...Base, action: z.literal('roll'), prop: Id, to: Pt, durationMs: Dur, z: z.number().int().optional() }).strict(),
   z.object({ ...Base, action: z.literal('climb'), actor: Id, prop: Id, durationMs: Dur }).strict(),
@@ -130,6 +130,8 @@ export const Action = z.discriminatedUnion('action', [
   /** a bow: the body bears apology, thanks or greeting – torso and head bend, hands together or at the sides, then the figure straightens */
   z.object({ ...Base, action: z.literal('bow'), actor: Id, depth: z.enum(['light', 'deep']).default('light'), hands: z.enum(['sides', 'together']).default('sides'), to: Id.optional(), durationMs: Dur.default(1800) }).strict(),
   z.object({ ...Base, action: z.literal('give'), from: Id, to: Id, prop: Id, durationMs: Dur.default(1400) }).strict(),
+  /** Break a held thing in two: both hands come to it, it becomes the left half (`half` 1) and `into` (a hidden prop of the same asset) appears as the right half in the other hand – ready to be given away (dela). */
+  z.object({ ...Base, action: z.literal('split'), actor: Id, prop: Id, into: Id, durationMs: Dur.default(1400) }).strict(),
   /** Put a held prop down on a prop (its top/mouth) or at a point; `take` picks it up (alias of grab). */
   z.object({ ...Base, action: z.literal('put'), actor: Id, prop: Id, on: Id.optional(), at: Pt.optional(), z: z.number().int().optional(), durationMs: Dur.default(700) }).strict(),
   z.object({ ...Base, action: z.literal('take'), actor: Id, prop: Id, hand: z.enum(['left', 'right']).default('left'), durationMs: Dur.default(600) }).strict(),

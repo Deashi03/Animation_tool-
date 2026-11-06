@@ -171,8 +171,10 @@ describe('recipe generator (anim:recipe)', () => {
     expect(assetsIn('lägga något på bordet')).not.toContain('food.egg'); // "lägga" must not match ägg
     const urs = inferRecipe({ senseId: 's.ursäkta.1', lemma: 'ursäkta', pos: 'verb', defSv: 'Säga förlåt när man har gjort något fel.' });
     expect(urs.ok && (urs.recipe.say as { icon: string; bow?: string })).toMatchObject({ icon: 'palms', bow: 'deep' });
-    const mysig = inferRecipe({ senseId: 's.mysig.1', lemma: 'mysig', pos: 'adjective', defSv: 'Skön, varm och trevlig att vara i.' });
-    expect(mysig.ok).toBe(false); expect(!mysig.ok && mysig.reason).toMatch(/ingen bärare/);
+    const praktisk = inferRecipe({ senseId: 's.praktisk.1', lemma: 'praktisk', pos: 'adjective', defSv: 'Lätt och bra att använda.' });
+    expect(praktisk.ok).toBe(false); expect(!praktisk.ok && praktisk.reason).toMatch(/ingen bärare/);
+    const mysig = inferRecipe({ senseId: 's.mysig.1', lemma: 'mysig', pos: 'adjective', defSv: 'Skön, varm och trevlig att vara i.' }); // solved 2026-11-06: a room's atmosphere as an arrangement
+    expect(mysig.ok && (mysig.recipe.bearer as { extra?: unknown[] }).extra?.length).toBeGreaterThan(1);
     const randig = inferRecipe({ senseId: 's.randig.1', lemma: 'randig', pos: 'adjective', defSv: 'Med ränder.' });
     expect(randig.ok && (randig.recipe.bearer as { kind: string }).kind).toBe('wardrobe');
   });

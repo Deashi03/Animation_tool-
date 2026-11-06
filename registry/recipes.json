@@ -2240,12 +2240,44 @@
    "template": "attribute-gloss",
    "bearer": {
     "kind": "prop",
-    "asset": "sofa",
+    "asset": "fixture.candle",
+    "state": {
+     "lit": 1
+    },
+    "surface": "table",
     "env": "room",
-    "surface": null,
-    "scale": 1.4
+    "time": "evening",
+    "extra": [
+     {
+      "asset": "sofa",
+      "x": 32,
+      "scale": 0.75,
+      "surface": null,
+      "color": "red"
+     },
+     {
+      "asset": "blanket",
+      "x": 48,
+      "y": 87,
+      "state": {
+       "length": 24,
+       "bulge": 9
+      },
+      "z": 2,
+      "color": "yellow"
+     },
+     {
+      "asset": "container.cup",
+      "x": 76,
+      "state": {
+       "fill": 0.8,
+       "steam": 1
+      },
+      "scale": 1.1
+     }
+    ]
    },
-   "note": ""
+   "note": "rummets stämning: tänt ljus, ångande kopp, soffa med pläd, kvällsljus + 居心地のよい på panel (egenskap hos en plats = liten uppställning, inte ett föremål)"
   },
   "obekväm": {
    "template": "attribute-gloss",
@@ -3890,33 +3922,44 @@
     "end:target.amount<=0.1"
    ],
    "env": "kitchen",
-   "note": "",
+   "note": "högen ligger på golvet (surface null) – inte på ett bord",
    "targetState": {
     "contents": "#9aa3ad",
     "amount": 1
-   }
+   },
+   "surface": null
   },
   "dammsuga": {
    "template": "tool-rhythm",
-   "tool": "tool.nozzle",
+   "tool": "tool.vacuum",
    "target": "food.pile",
+   "surface": null,
    "motion": "sweep",
    "effects": [
     {
      "role": "target",
      "key": "amount",
      "to": 0
+    },
+    {
+     "role": "tool",
+     "key": "on",
+     "to": 1,
+     "at": 0.08
     }
    ],
    "claim": [
     "end:target.amount<=0.1"
    ],
-   "env": "kitchen",
-   "note": "TODO: dammsugarkropp",
+   "env": "room",
+   "period": 900,
+   "sound": "hum",
    "targetState": {
     "contents": "#9aa3ad",
-    "amount": 1
-   }
+    "amount": 1,
+    "size": 0.6
+   },
+   "note": "stavdammsugare (tool.vacuum): lampan tänds, maskinen brummar, dammhögen försvinner under munstycket – kontrast mot sopa (kvast, tyst)"
   },
   "skrapa": {
    "template": "tool-rhythm",
@@ -5947,8 +5990,10 @@
   "dela": {
    "template": "social",
    "give": {
-    "prop": "container.bag"
-   }
+    "prop": "food.bread",
+    "split": true
+   },
+   "note": "ett bröd bryts i två (split, bruten kant, smulor) och ena halvan ges bort – kontrast mot ge/lämna över där hela saken byter hand; tårta lästes som en låda i blindtest h1/h2"
   },
   "dela upp": {
    "template": "social",

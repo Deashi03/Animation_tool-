@@ -11,7 +11,7 @@ import { type PropSpec, n, clamp01 } from '../propSpec';
 const INK = C.ink;
 const handle = (len: number, col: string, w = 2.6): FrameNode[] => [line([[0, -2], [0, -len]], { stroke: INK, sw: w + 1.8, linecap: 'round' }), line([[0, -2], [0, -len]], { stroke: col, sw: w, linecap: 'round' })];
 
-export const TOOL_SHAPES = ['knife', 'masher', 'spoon', 'ladle', 'fork', 'whisk', 'peeler', 'grater', 'rollingpin', 'brush', 'toothbrush', 'cloth', 'sponge', 'broom', 'mop', 'hammer', 'saw', 'drill', 'screwdriver', 'pen', 'iron', 'shaker', 'scraper', 'razor', 'scissors', 'needle', 'paintbrush', 'roller', 'tongs', 'nozzle'] as const;
+export const TOOL_SHAPES = ['knife', 'masher', 'spoon', 'ladle', 'fork', 'whisk', 'peeler', 'grater', 'rollingpin', 'brush', 'toothbrush', 'cloth', 'sponge', 'broom', 'mop', 'hammer', 'saw', 'drill', 'screwdriver', 'pen', 'iron', 'shaker', 'scraper', 'razor', 'scissors', 'needle', 'paintbrush', 'roller', 'tongs', 'nozzle', 'vacuum'] as const;
 export type ToolShape = (typeof TOOL_SHAPES)[number];
 
 const T: Record<ToolShape, PropSpec> = {
@@ -44,8 +44,11 @@ const T: Record<ToolShape, PropSpec> = {
   paintbrush: { defaults: {}, grip: [0, -12], heldTilt: 60, draw: (_s, col) => g([...handle(18, color(col ?? C.tan), 2.4), rect(-3.5, -3, 7, 3, { fill: C.silver, stroke: INK, sw: 1 }), path('M-3.5 0 h7 l-1 6 h-5 Z', { fill: color(C.sky), stroke: INK, sw: 1.2 })]) },
   roller: { defaults: {}, grip: [0, -12], heldTilt: 60, draw: (_s, col) => g([...handle(16, color(col ?? C.dark), 2.4), path('M0 -2 q6 0 6 4', { fill: 'none', stroke: C.silver, sw: 1.6 }), rect(-2, 1, 16, 6, { rx: 3, fill: color(C.sky), stroke: INK, sw: 1.4 })]) },
   tongs: { defaults: {}, grip: [0, -12], heldTilt: 80, draw: (_s, col) => g([path('M0 -16 l-3 20 M0 -16 l3 20', { fill: 'none', stroke: INK, sw: 3.2 }), path('M0 -16 l-3 20 M0 -16 l3 20', { fill: 'none', stroke: color(col ?? C.silver), sw: 1.8 })]) },
+  /** Upright (stick) vacuum cleaner: handle, motor body with a light, flat floor head on wheels. `on` 1 draws suction marks in front of the head; the machine hums via the `sound` action. */
+  vacuum: { defaults: { on: 0 }, grip: [0, -40], heldTilt: 25, draw: (s, col) => { const on = clamp01(n(s, 'on', 0)); const body = color(col ?? C.navy);
+    return g([...handle(50, C.grey, 2.4), path('M-3 -50 h6 v-3 h-6 Z', { fill: C.dark, stroke: INK, sw: 1.2 }), rect(-6.5, -26, 13, 20, { rx: 4, fill: body, stroke: INK, sw: 1.8 }), circle(0, -20, 1.6, { fill: on > 0.5 ? C.yellow : C.grey2, stroke: INK, sw: 0.8 }), path('M-4 -12 h8 M-4 -9 h8', { fill: 'none', stroke: INK, sw: 0.8, opacity: 0.5 }), line([[0, -6], [0, -2]], { stroke: INK, sw: 3 }), rect(-11, -3.5, 22, 4, { rx: 2, fill: C.dark, stroke: INK, sw: 1.6 }), circle(-7, 0, 1.4, { fill: C.grey, stroke: INK, sw: 0.8 }), circle(7, 0, 1.4, { fill: C.grey, stroke: INK, sw: 0.8 }), ...(on > 0.5 ? [path('M-14 -4 q-3 2 -2 5 M-17 -5 q-4 3 -3 7', { fill: 'none', stroke: INK, sw: 1.1, opacity: 0.55 * on })] : [])]); } },
   nozzle: { defaults: {}, grip: [0, -22], heldTilt: 20, draw: (_s, col) => g([...handle(30, color(col ?? C.grey), 3), path('M-7 0 h14 l-2 -4 h-10 Z', { fill: color(col ?? C.grey), stroke: INK, sw: 1.6 }), line([[-5, -0.5], [5, -0.5]], { stroke: INK, sw: 0.8, opacity: 0.5 })]) },
 };
-void clamp01; void n;
+
 
 export const TOOLS: Record<string, PropSpec> = Object.fromEntries(Object.entries(T).map(([k, v]) => [`tool.${k}`, v]));
